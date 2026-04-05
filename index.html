@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRIO — Creative Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:      #080808;
+      --bg2:     #0f0f0f;
+      --bg3:     #161616;
+      --border:  #1e1e1e;
+      --text:    #f0f0f0;
+      --sec:     #888;
+      --muted:   #444;
+      --accent:  #c8ff47;
+      --acc-rgb: 200,255,71;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* ── CURSOR ── */
+    #cur {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--accent); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform .15s, background .2s;
+    }
+    #cur-ring {
+      position: fixed; width: 38px; height: 38px;
+      border: 1px solid rgba(var(--acc-rgb),.35); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform .2s, border-color .2s;
+    }
+    body.cursor-hover #cur { transform: translate(-50%,-50%) scale(3); background: rgba(var(--acc-rgb),.5); }
+    body.cursor-hover #cur-ring { transform: translate(-50%,-50%) scale(1.6); border-color: rgba(var(--acc-rgb),.7); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 26px 52px;
+      transition: padding .4s, background .4s, border-color .4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.pinned {
+      padding: 16px 52px;
+      background: rgba(8,8,8,.88);
+      backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+    .logo {
+      font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 22px;
+      letter-spacing: -.5px; color: var(--text); text-decoration: none;
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    .nav-r { display: flex; align-items: center; gap: 28px; }
+    .langs {
+      display: flex; gap: 3px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 100px; padding: 4px;
+    }
+    .lang {
+      font-size: 11px; font-weight: 500; letter-spacing: .5px;
+      color: var(--sec); background: none; border: none;
+      padding: 5px 13px; border-radius: 100px; cursor: none;
+      transition: all .2s;
+    }
+    .lang.on { background: var(--accent); color: #000; }
+    .nav-cta {
+      font-size: 13px; font-weight: 500; color: #000;
+      background: var(--accent); border: none;
+      padding: 10px 22px; border-radius: 100px; cursor: none;
+      text-decoration: none; transition: background .25s, transform .25s;
+    }
+    .nav-cta:hover { background: #fff; transform: scale(1.04); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 140px 52px 100px;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(var(--acc-rgb),.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--acc-rgb),.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    #hero::after {
+      content: ''; position: absolute;
+      width: 700px; height: 700px; pointer-events: none;
+      background: radial-gradient(circle, rgba(var(--acc-rgb),.055) 0%, transparent 65%);
+      top: 40%; left: 35%; transform: translate(-50%,-50%);
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 500; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 36px;
+      opacity: 0; animation: fadeup .7s .1s forwards; position: relative; z-index: 1;
+    }
+    .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+    .hero-h {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(52px, 8vw, 118px);
+      font-weight: 800; line-height: .94; letter-spacing: -2px;
+      max-width: 1100px; margin-bottom: 48px;
+      position: relative; z-index: 1;
+    }
+    .hero-h .ln {
+      display: block; opacity: 0; transform: translateY(90px);
+      animation: slideup .9s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .hero-h .ln:nth-child(1) { animation-delay: .3s; }
+    .hero-h .ln:nth-child(2) { animation-delay: .45s; }
+    .hero-h .ln:nth-child(3) { animation-delay: .6s; }
+    .hero-h .ac { color: var(--accent); }
+    .hero-bot {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 40px; opacity: 0; animation: fadeup .7s .95s forwards;
+      position: relative; z-index: 1;
+    }
+    .hero-desc { font-size: 16px; line-height: 1.75; color: var(--sec); max-width: 420px; }
+    .hero-acts { display: flex; align-items: center; gap: 18px; flex-shrink: 0; }
+    .btn-p {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; color: #000;
+      background: var(--accent); padding: 14px 28px;
+      border-radius: 100px; text-decoration: none; border: none; cursor: none;
+      transition: background .25s, transform .25s;
+    }
+    .btn-p:hover { background: #fff; transform: scale(1.04); }
+    .btn-s {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; color: var(--sec); text-decoration: none;
+      transition: color .2s; cursor: none;
+    }
+    .btn-s:hover { color: var(--text); }
+    .btn-s .arr { transition: transform .3s; display: inline-block; }
+    .btn-s:hover .arr { transform: translate(4px,-4px); }
+
+    /* ── TICKER ── */
+    .ticker {
+      display: flex; overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 18px 0;
+    }
+    .ticker-t {
+      display: flex; animation: tick 24s linear infinite; white-space: nowrap;
+    }
+    .tick-i {
+      display: inline-flex; align-items: center; gap: 28px; padding: 0 28px;
+      font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+    }
+    .tick-i .d { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* ── SERVICES ── */
+    #services { padding: 130px 52px; }
+    .sec-hd { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; }
+    .sec-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--accent);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .sec-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .sec-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(34px, 4vw, 62px);
+      font-weight: 800; line-height: 1.05; letter-spacing: -1px;
+    }
+    .srv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .srv {
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 52px; position: relative; overflow: hidden; cursor: none;
+      transition: border-color .4s;
+    }
+    .srv::after {
+      content: ''; position: absolute; inset: 0;
+      background: var(--accent);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform .55s cubic-bezier(.16,1,.3,1); z-index: 0;
+    }
+    .srv:hover { border-color: var(--accent); }
+    .srv:hover::after { transform: scaleY(1); }
+    .srv > * { position: relative; z-index: 1; transition: color .3s; }
+    .srv:hover .srv-n, .srv:hover .srv-t, .srv:hover .srv-d { color: #000; }
+    .srv:hover .srv-tag { border-color: rgba(0,0,0,.25); color: #000; }
+    .srv-n {
+      font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700;
+      color: var(--muted); letter-spacing: 1px; margin-bottom: 44px;
+    }
+    .srv-ico { font-size: 36px; margin-bottom: 20px; }
+    .srv-t {
+      font-family: 'Manrope', sans-serif; font-size: 28px; font-weight: 800;
+      letter-spacing: -.5px; margin-bottom: 16px;
+    }
+    .srv-d { font-size: 14px; line-height: 1.75; color: var(--sec); margin-bottom: 32px; }
+    .srv-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .srv-tag {
+      font-size: 11px; font-weight: 500; letter-spacing: .5px;
+      color: var(--sec); border: 1px solid var(--border);
+      padding: 6px 14px; border-radius: 100px; transition: all .3s;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat {
+      padding: 52px 44px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(44px, 5vw, 76px);
+      font-weight: 800; letter-spacing: -1.5px; line-height: 1; margin-bottom: 8px;
+    }
+    .stat-n em { color: var(--accent); font-style: normal; }
+    .stat-l { font-size: 13px; color: var(--muted); }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { padding: 130px 52px; }
+    .port-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: 14px; margin-top: 64px;
+    }
+    .port-c {
+      position: relative; overflow: hidden; border-radius: 6px;
+      aspect-ratio: 4/3; background: var(--bg3); cursor: none;
+    }
+    /* Explicit placement — 8 cards */
+    .port-c:nth-child(1) { grid-column: 1 / 3; grid-row: 1; aspect-ratio: unset; } /* Brand Video — высота = ряд */
+    .port-c:nth-child(2) { grid-column: 3;     grid-row: 1; aspect-ratio: 9/16; } /* Instagram — задаёт высоту ряда */
+    .port-c:nth-child(3) { grid-column: 1;     grid-row: 2; } /* Facebook Ads */
+    .port-c:nth-child(4) { grid-column: 2 / 4; grid-row: 2 / 4; aspect-ratio: unset; } /* Business Websites — wide, 2 строки */
+    .port-c:nth-child(5) { grid-column: 1;     grid-row: 3; } /* Google Ads */
+    .port-c:nth-child(6) { grid-column: 1; grid-row: 4; } /* AI 1 */
+    .port-c:nth-child(7) { grid-column: 2; grid-row: 4; } /* AI 2 */
+    .port-c:nth-child(8) { grid-column: 3; grid-row: 4; } /* AI 3 */
+
+    .port-img, .port-vid {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .8s cubic-bezier(.16,1,.3,1), filter .5s;
+      filter: saturate(.75) brightness(.9);
+    }
+    .port-c:hover .port-img,
+    .port-c:hover .port-vid { transform: scale(1.07); filter: saturate(1) brightness(1); }
+    .port-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,.85) 0%, transparent 55%);
+      opacity: 0; transition: opacity .4s;
+      display: flex; align-items: flex-end; padding: 28px;
+    }
+    .port-c:hover .port-ov { opacity: 1; }
+    .port-inf h4 { font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .port-inf p { font-size: 12px; color: rgba(240,240,240,.6); }
+
+    /* 2x2 website screenshots with browser chrome */
+    .port-sites {
+      display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+      width: 100%; height: 100%; min-height: 0; gap: 8px; padding: 14px;
+      background: #0d0d0d; position: absolute; inset: 0;
+    }
+    .site-frame {
+      border-radius: 7px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      display: flex; flex-direction: column;
+      transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s;
+    }
+    .port-c:hover .site-frame { transform: scale(1.03); box-shadow: 0 8px 32px rgba(0,0,0,.6); }
+    .site-bar {
+      background: #1c1c1c; padding: 6px 10px;
+      display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+    }
+    .site-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .site-dot:nth-child(1) { background: #ff5f56; }
+    .site-dot:nth-child(2) { background: #ffbd2e; }
+    .site-dot:nth-child(3) { background: #27c93f; }
+    .site-name {
+      margin-left: 6px; font-size: 9px; font-weight: 500;
+      color: rgba(255,255,255,.35); flex: 1; text-align: center;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .site-frame img {
+      flex: 1; width: 100%; object-fit: cover; object-position: top center;
+      filter: saturate(.85) brightness(.92);
+      transition: filter .5s, transform .8s cubic-bezier(.16,1,.3,1);
+      min-height: 0;
+    }
+    .port-c:hover .site-frame img { filter: saturate(1) brightness(1); }
+
+    /* Facebook Ads mock dashboard */
+    .fb-mock {
+      position: absolute; inset: 0; padding: 28px;
+      background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 60%, #0a1628 100%);
+      display: flex; flex-direction: column; gap: 18px; overflow: hidden;
+    }
+    .fb-mock::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 70% 30%, rgba(24,119,242,.12) 0%, transparent 60%);
+    }
+    .fb-hd {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7);
+    }
+    .fb-logo {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: #1877f2; display: flex; align-items: center;
+      justify-content: center; font-size: 16px; font-weight: 800; color: #fff;
+    }
+    .fb-live { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      color: #1877f2; border: 1px solid rgba(24,119,242,.5); padding: 3px 8px; border-radius: 4px; }
+    .fb-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .fb-stat {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px; padding: 12px 10px;
+    }
+    .fb-val { font-family: 'Manrope', sans-serif; font-size: 20px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; }
+    .fb-val em { color: #1877f2; font-style: normal; font-size: 13px; }
+    .fb-lbl { font-size: 10px; color: rgba(255,255,255,.4); font-weight: 500; }
+    .fb-chart { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .fb-bar-row { display: flex; align-items: center; gap: 10px; }
+    .fb-bar-lbl { font-size: 10px; color: rgba(255,255,255,.4); width: 56px; flex-shrink: 0; }
+    .fb-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+    .fb-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #1877f2, #42a5f5); }
+    .fb-bar-num { font-size: 10px; color: rgba(255,255,255,.5); width: 32px; text-align: right; flex-shrink: 0; }
+    .fb-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.06); }
+    .fb-footer span { font-size: 10px; color: rgba(255,255,255,.3); }
+    .fb-roas { font-size: 12px; font-weight: 700; color: #4ade80; }
+
+    /* Google Ads mock */
+    .ga-mock {
+      position: absolute; inset: 0; padding: 28px;
+      background: linear-gradient(135deg, #0a0e0a 0%, #0b1a0e 60%, #081408 100%);
+      display: flex; flex-direction: column; gap: 18px; overflow: hidden;
+    }
+    .ga-mock::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 65% 35%, rgba(52,168,83,.1) 0%, transparent 60%);
+    }
+    .ga-hd { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7); }
+    .ga-logo {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .ga-logo-g { font-size: 15px; font-weight: 800; background: linear-gradient(135deg,#4285F4,#EA4335,#FBBC05,#34A853); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .ga-badge { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #34A853; border: 1px solid rgba(52,168,83,.4); padding: 3px 8px; border-radius: 4px; }
+    .ga-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .ga-stat { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07); border-radius: 8px; padding: 12px 10px; }
+    .ga-val { font-family: 'Manrope',sans-serif; font-size: 20px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; }
+    .ga-val em { color: #34A853; font-style: normal; font-size: 13px; }
+    .ga-lbl { font-size: 10px; color: rgba(255,255,255,.4); font-weight: 500; }
+    .ga-chart { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .ga-bar-row { display: flex; align-items: center; gap: 10px; }
+    .ga-bar-lbl { font-size: 10px; color: rgba(255,255,255,.4); width: 56px; flex-shrink: 0; }
+    .ga-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+    .ga-bar-fill { height: 100%; border-radius: 3px; }
+    .ga-bar-num { font-size: 10px; color: rgba(255,255,255,.5); width: 32px; text-align: right; flex-shrink: 0; }
+    .ga-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.06); }
+    .ga-footer span { font-size: 10px; color: rgba(255,255,255,.3); }
+    .ga-conv { font-size: 12px; font-weight: 700; color: #34A853; }
+
+    /* ── TEAM ── */
+    #team { padding: 130px 52px; background: var(--bg2); }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 64px; }
+    .tm {
+      padding: 44px; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); cursor: none;
+      transition: border-color .3s, transform .4s cubic-bezier(.16,1,.3,1);
+    }
+    .tm:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .tm-av {
+      width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      margin-bottom: 24px;
+      filter: brightness(1.08) saturate(1.3) contrast(1.05);
+      transition: transform .4s cubic-bezier(.16,1,.3,1), filter .3s;
+    }
+    .tm:hover .tm-av {
+      transform: scale(1.07);
+      filter: brightness(1.12) saturate(1.5) contrast(1.05);
+    }
+    .tm-role {
+      font-size: 11px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .tm-name {
+      font-family: 'Manrope', sans-serif; font-size: 24px; font-weight: 800;
+      letter-spacing: -.5px; margin-bottom: 16px;
+    }
+    .tm-bio { font-size: 14px; line-height: 1.75; color: var(--sec); }
+
+    /* ── CALCULATOR ── */
+    #calc { padding: 130px 52px; }
+    .calc-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start; margin-top: 64px;
+    }
+    .calc-left { display: flex; flex-direction: column; gap: 4px; }
+    .grp { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .grp-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 26px; background: var(--bg2); cursor: none; user-select: none;
+    }
+    .grp-hd h4 { font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700; }
+    .grp-icon { color: var(--accent); font-size: 22px; line-height: 1; transition: transform .35s; }
+    .grp.open .grp-icon { transform: rotate(45deg); }
+    .grp-body { max-height: 0; overflow: hidden; transition: max-height .45s cubic-bezier(.16,1,.3,1); }
+    .grp.open .grp-body { max-height: 700px; }
+    .ci {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 26px; border-top: 1px solid var(--border); gap: 12px;
+    }
+    .ci-l { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .chk {
+      width: 22px; height: 22px; border: 1.5px solid var(--muted); border-radius: 5px;
+      cursor: none; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .chk.on { background: var(--accent); border-color: var(--accent); }
+    .chk.on::after { content: '✓'; font-size: 13px; font-weight: 700; color: #000; }
+    .ci-name { font-size: 14px; color: var(--text); }
+    .ci-name small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .ci-qty { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .qb {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg3);
+      color: var(--text); font-size: 18px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      cursor: none; transition: border-color .2s, color .2s;
+    }
+    .qb:hover { border-color: var(--accent); color: var(--accent); }
+    .qn { width: 26px; text-align: center; font-family: 'Syne',sans-serif; font-size: 15px; font-weight: 700; }
+    .ci-price {
+      font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--accent); min-width: 80px; text-align: right; flex-shrink: 0;
+    }
+    /* Result */
+    .calc-r {
+      position: sticky; top: 110px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 44px;
+    }
+    .calc-r-title {
+      font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 32px;
+    }
+    .calc-items { min-height: 110px; margin-bottom: 32px; }
+    .ci-row {
+      display: flex; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px;
+    }
+    .ci-row-l { color: var(--sec); }
+    .ci-row-v { font-weight: 500; }
+    .calc-empty { color: var(--muted); font-size: 14px; text-align: center; padding: 36px 0; }
+    .calc-tot {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .calc-tot-l { font-size: 12px; color: var(--sec); text-transform: uppercase; letter-spacing: 1.5px; }
+    .calc-tot-v {
+      font-family: 'Manrope', sans-serif; font-size: 44px; font-weight: 800;
+      letter-spacing: -2px; color: var(--accent);
+    }
+    .calc-btn {
+      display: block; width: 100%; margin-top: 24px; text-align: center;
+      padding: 16px; background: var(--accent); color: #000;
+      font-size: 14px; font-weight: 600; border-radius: 8px;
+      text-decoration: none; cursor: none; transition: background .25s;
+    }
+    .calc-btn:hover { background: #fff; }
+    .calc-note { margin-top: 16px; font-size: 12px; color: var(--muted); text-align: center; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 130px 52px; background: var(--bg2); }
+    .contact-in { max-width: 820px; margin: 0 auto; text-align: center; }
+    .contact-in .sec-label { justify-content: center; }
+    .contact-h {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(48px, 6.5vw, 96px);
+      font-weight: 800; letter-spacing: -2px; line-height: .94;
+      margin: 20px 0 40px;
+    }
+    .contact-h .ac { color: var(--accent); }
+    .contact-d { font-size: 16px; color: var(--sec); line-height: 1.75; margin-bottom: 52px; }
+    .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+    .contact-phone {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 800; letter-spacing: -1.5px;
+      color: var(--text); text-decoration: none; cursor: none;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
+      transition: color .3s, border-color .3s;
+    }
+    .contact-phone:hover { color: var(--accent); border-color: var(--accent); }
+    .contact-phone .ph-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--accent); display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+      transition: transform .4s cubic-bezier(.16,1,.3,1), background .3s;
+    }
+    .contact-phone:hover .ph-icon { transform: rotate(15deg) scale(1.1); background: #fff; }
+    .contact-phone-sub { font-size: 13px; color: var(--muted); margin-top: 16px; letter-spacing: .5px; }
+    .cl {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 26px; border: 1px solid var(--border); border-radius: 100px;
+      font-size: 14px; font-weight: 500; color: var(--text); text-decoration: none;
+      background: var(--bg); cursor: none; transition: border-color .25s, color .25s;
+    }
+    .cl:hover { border-color: var(--accent); color: var(--accent); }
+    .cl.prim { background: var(--accent); color: #000; border-color: var(--accent); }
+    .cl.prim:hover { background: #fff; border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 36px 52px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .f-copy { font-size: 13px; color: var(--muted); }
+    .f-links { display: flex; gap: 24px; }
+    .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; cursor: none; transition: color .2s; }
+    .f-links a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideup {
+      from { opacity: 0; transform: translateY(90px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes tick {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .rv { opacity: 0; transform: translateY(36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+    .rv.vis { opacity: 1; transform: translateY(0); }
+    .rv.d1 { transition-delay: .1s; }
+    .rv.d2 { transition-delay: .2s; }
+    .rv.d3 { transition-delay: .3s; }
+    .rv.d4 { transition-delay: .4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      nav, #hero, #services, #portfolio, #team, #calc, #contact { padding-left: 36px; padding-right: 36px; }
+      nav.pinned { padding-left: 36px; padding-right: 36px; }
+      .calc-wrap { grid-template-columns: 1fr; }
+      .calc-r { position: static; }
+    }
+    @media (max-width: 860px) {
+      nav { padding: 18px 24px; }
+      nav.pinned { padding: 14px 24px; }
+      .nav-cta { display: none; }
+      #hero, #services, #portfolio, #team, #calc, #contact { padding-left: 24px; padding-right: 24px; }
+      footer { padding: 28px 24px; }
+      .hero-bot { flex-direction: column; align-items: flex-start; }
+      .srv-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3) { border-top: 1px solid var(--border); }
+      .port-grid { grid-template-columns: 1fr 1fr; }
+      .port-c:nth-child(1), .port-c:nth-child(4) { grid-column: span 2; }
+      .team-grid { grid-template-columns: 1fr; }
+      .sec-hd { flex-direction: column; align-items: flex-start; gap: 24px; }
+      footer { flex-direction: column; gap: 18px; text-align: center; }
+    }
+    @media (max-width: 500px) {
+      .port-grid { grid-template-columns: 1fr; }
+      .port-c:nth-child(1), .port-c:nth-child(4) { grid-column: span 1; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { border-right: none !important; border-top: 1px solid var(--border); }
+      .stat:first-child { border-top: none; }
+      .hero-acts { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">TRIO<em>.</em></a>
+  <div class="nav-r">
+    <div class="langs">
+      <button class="lang"    data-l="pl">PL</button>
+      <button class="lang on" data-l="en">EN</button>
+      <button class="lang"    data-l="ru">RU</button>
+    </div>
+    <a href="#contact" class="nav-cta" data-k="nav_cta">Let's talk</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag" data-k="hero_tag">Creative Agency</div>
+  <h1 class="hero-h">
+    <span class="ln" data-k="hero_l1">We create</span>
+    <span class="ln"><span class="ac" data-k="hero_ac">content</span>&nbsp;<span data-k="hero_mid">that</span></span>
+    <span class="ln" data-k="hero_l3">sells.</span>
+  </h1>
+  <div class="hero-bot">
+    <p class="hero-desc" data-k="hero_d">Video production, social media, advertising & web — all in one team. Three brothers, one mission.</p>
+    <div class="hero-acts">
+      <a href="#calc" class="btn-p" data-k="hero_cta">Calculate price</a>
+      <a href="#portfolio" class="btn-s"><span data-k="hero_p">View work</span><span class="arr">&nbsp;↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-t" id="ttk"></div></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-hd rv">
+    <div>
+      <div class="sec-label" data-k="s_lbl">What we do</div>
+      <h2 class="sec-title" data-k="s_ttl">Our services</h2>
+    </div>
+  </div>
+  <div class="srv-grid">
+    <div class="srv rv d1">
+      <div class="srv-n">01</div>
+      <div class="srv-ico">🎬</div>
+      <h3 class="srv-t" data-k="s1t">Video Production</h3>
+      <p class="srv-d" data-k="s1d">Short-form, long-form, vertical or horizontal — from YouTube to TikTok. Trending cuts, AI video, podcasts, branded content and more.</p>
+      <div class="srv-tags">
+        <span class="srv-tag">YouTube</span><span class="srv-tag">TikTok</span><span class="srv-tag">Reels</span><span class="srv-tag">AI Video</span><span class="srv-tag">Podcast</span>
+      </div>
+    </div>
+    <div class="srv rv d2">
+      <div class="srv-n">02</div>
+      <div class="srv-ico">📱</div>
+      <h3 class="srv-t" data-k="s2t">Social Media</h3>
+      <p class="srv-d" data-k="s2d">Daily posts, stories, reels — complete profile management across every major platform. We grow audiences that actually buy.</p>
+      <div class="srv-tags">
+        <span class="srv-tag">Instagram</span><span class="srv-tag">Facebook</span><span class="srv-tag">TikTok</span><span class="srv-tag">Daily content</span>
+      </div>
+    </div>
+    <div class="srv rv d3">
+      <div class="srv-n">03</div>
+      <div class="srv-ico">🎯</div>
+      <h3 class="srv-t" data-k="s3t">Paid Advertising</h3>
+      <p class="srv-d" data-k="s3d">Facebook & Instagram campaigns optimised for ROI. We've managed large-budget accounts and know how to turn spend into leads.</p>
+      <div class="srv-tags">
+        <span class="srv-tag">Facebook Ads</span><span class="srv-tag">Instagram Ads</span><span class="srv-tag">Lead gen</span><span class="srv-tag">Retargeting</span>
+      </div>
+    </div>
+    <div class="srv rv d4">
+      <div class="srv-n">04</div>
+      <div class="srv-ico">🌐</div>
+      <h3 class="srv-t" data-k="s4t">Web Development</h3>
+      <p class="srv-d" data-k="s4d">Modern, functional sites for businesses and individuals — with monthly support or full handover. Built with vibe coding at speed.</p>
+      <div class="srv-tags">
+        <span class="srv-tag">Landing pages</span><span class="srv-tag">Business sites</span><span class="srv-tag">Maintenance</span><span class="srv-tag">Vibe coding</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat rv"><div class="stat-n"><span class="cnt" data-t="150">0</span><em>+</em></div><div class="stat-l" data-k="st1">Projects completed</div></div>
+  <div class="stat rv d1"><div class="stat-n"><span class="cnt" data-t="50">0</span><em>+</em></div><div class="stat-l" data-k="st2">Happy clients</div></div>
+  <div class="stat rv d2"><div class="stat-n">$<span class="cnt" data-t="500">0</span><em>K+</em></div><div class="stat-l" data-k="st3">Ad spend managed</div></div>
+  <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="3">0</span></div><div class="stat-l" data-k="st4">Brothers, one team</div></div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="sec-hd rv">
+    <div>
+      <div class="sec-label" data-k="p_lbl">Selected work</div>
+      <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
+    </div>
+  </div>
+  <div class="port-grid">
+
+    <!-- 1. Brand Video Campaign — широкая, природа-заглушка -->
+    <div class="port-c rv">
+      <img class="port-img" src="trio/nature.jpg" alt="" style="object-position:center center;">
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p1t">Brand Video Campaign</h4><p data-k="p1c">Video Production</p></div></div>
+    </div>
+
+    <!-- 2. Instagram Growth — вертикальная, реальное видео -->
+    <div class="port-c rv d1">
+      <video class="port-vid" src="trio/work1_preview.mp4" autoplay muted loop playsinline preload="auto" style="object-fit:cover;object-position:center;"></video>
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p2t">Instagram Growth</h4><p data-k="p2c">Social Media</p></div></div>
+    </div>
+
+    <!-- 3. Facebook Ads Campaign — CSS Facebook Ads dashboard -->
+    <div class="port-c rv d2">
+      <div class="fb-mock">
+        <div class="fb-hd">
+          <div class="fb-logo">f</div>
+          Ads Manager
+          <span class="fb-live">● LIVE</span>
+        </div>
+        <div class="fb-stats">
+          <div class="fb-stat"><div class="fb-val">$4,287</div><div class="fb-lbl">Amount Spent</div></div>
+          <div class="fb-stat"><div class="fb-val">218<em>K</em></div><div class="fb-lbl">Reach</div></div>
+          <div class="fb-stat"><div class="fb-val">3.8<em>%</em></div><div class="fb-lbl">CTR</div></div>
+        </div>
+        <div class="fb-chart">
+          <div class="fb-bar-row"><span class="fb-bar-lbl">Awareness</span><div class="fb-bar-track"><div class="fb-bar-fill" style="width:88%"></div></div><span class="fb-bar-num">88%</span></div>
+          <div class="fb-bar-row"><span class="fb-bar-lbl">Traffic</span><div class="fb-bar-track"><div class="fb-bar-fill" style="width:72%"></div></div><span class="fb-bar-num">72%</span></div>
+          <div class="fb-bar-row"><span class="fb-bar-lbl">Leads</span><div class="fb-bar-track"><div class="fb-bar-fill" style="width:61%"></div></div><span class="fb-bar-num">61%</span></div>
+          <div class="fb-bar-row"><span class="fb-bar-lbl">Conversions</span><div class="fb-bar-track"><div class="fb-bar-fill" style="width:45%"></div></div><span class="fb-bar-num">45%</span></div>
+        </div>
+        <div class="fb-footer">
+          <span>Last 30 days · 3 active campaigns</span>
+          <span class="fb-roas">ROAS 4.2×</span>
+        </div>
+      </div>
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p3t">Facebook Ads Campaign</h4><p data-k="p3c">Facebook Ads</p></div></div>
+    </div>
+
+    <!-- 4. Business Websites — wide 2×2 скриншоты (cols 2-3) -->
+    <div class="port-c rv d1">
+      <div class="port-sites">
+        <div class="site-frame">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">gucio-bar.com</span></div>
+          <img src="trio/site1.jpg" alt="Gucio Bar">
+        </div>
+        <div class="site-frame">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">magshaurma.com</span></div>
+          <img src="trio/site2.jpg" alt="Mag Shaurma">
+        </div>
+        <div class="site-frame">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">jewelry-katowice.com</span></div>
+          <img src="trio/site3.jpg" alt="Jewelry Katowice">
+        </div>
+        <div class="site-frame">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">maya-gold.com</span></div>
+          <img src="trio/site4.jpg" alt="Maya Gold">
+        </div>
+      </div>
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p4t">Business Websites</h4><p data-k="p4c">Web Development</p></div></div>
+    </div>
+
+    <!-- 5. Google Ads mock -->
+    <div class="port-c rv d2">
+      <div class="ga-mock">
+        <div class="ga-hd">
+          <div class="ga-logo"><span class="ga-logo-g">G</span></div>
+          Google Ads
+          <span class="ga-badge">● ACTIVE</span>
+        </div>
+        <div class="ga-stats">
+          <div class="ga-stat"><div class="ga-val">1.4<em>M</em></div><div class="ga-lbl">Impressions</div></div>
+          <div class="ga-stat"><div class="ga-val">38<em>K</em></div><div class="ga-lbl">Clicks</div></div>
+          <div class="ga-stat"><div class="ga-val">2.7<em>%</em></div><div class="ga-lbl">CTR</div></div>
+        </div>
+        <div class="ga-chart">
+          <div class="ga-bar-row"><span class="ga-bar-lbl">Search</span><div class="ga-bar-track"><div class="ga-bar-fill" style="width:91%;background:linear-gradient(90deg,#4285F4,#34A853)"></div></div><span class="ga-bar-num">91%</span></div>
+          <div class="ga-bar-row"><span class="ga-bar-lbl">Display</span><div class="ga-bar-track"><div class="ga-bar-fill" style="width:67%;background:linear-gradient(90deg,#4285F4,#34A853)"></div></div><span class="ga-bar-num">67%</span></div>
+          <div class="ga-bar-row"><span class="ga-bar-lbl">Shopping</span><div class="ga-bar-track"><div class="ga-bar-fill" style="width:54%;background:linear-gradient(90deg,#4285F4,#34A853)"></div></div><span class="ga-bar-num">54%</span></div>
+          <div class="ga-bar-row"><span class="ga-bar-lbl">YouTube</span><div class="ga-bar-track"><div class="ga-bar-fill" style="width:38%;background:linear-gradient(90deg,#4285F4,#34A853)"></div></div><span class="ga-bar-num">38%</span></div>
+        </div>
+        <div class="ga-footer">
+          <span>Last 30 days · 4 campaigns</span>
+          <span class="ga-conv">↑ 312 conversions</span>
+        </div>
+      </div>
+      <div class="port-ov"><div class="port-inf"><h4>Google Ads Campaign</h4><p>Google Advertising</p></div></div>
+    </div>
+
+    <!-- 6. AI Content 1 — preview1 -->
+    <div class="port-c rv d3">
+      <video class="port-vid" src="trio/preview1.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p5t">AI Content Series</h4><p data-k="p5c">AI Production</p></div></div>
+    </div>
+
+    <!-- 7. AI Content 2 — preview2 -->
+    <div class="port-c rv d4">
+      <video class="port-vid" src="trio/preview2.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p5t">AI Content Series</h4><p data-k="p5c">AI Production</p></div></div>
+    </div>
+
+    <!-- 8. AI Content 3 — preview3, wide -->
+    <div class="port-c rv">
+      <video class="port-vid" src="trio/preview3.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="port-ov"><div class="port-inf"><h4 data-k="p5t">AI Content Series</h4><p data-k="p5c">AI Production</p></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="sec-hd rv">
+    <div>
+      <div class="sec-label" data-k="tm_lbl">Who we are</div>
+      <h2 class="sec-title" data-k="tm_ttl">The team</h2>
+    </div>
+  </div>
+  <div class="team-grid">
+    <div class="tm rv d1">
+      <img class="tm-av" src="trio/Митя.jpg" alt="Mitya">
+      <div class="tm-role" data-k="m1r">Senior Creative Director</div>
+      <div class="tm-name">Mitya, 25</div>
+      <p class="tm-bio" data-k="m1b">The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.</p>
+    </div>
+    <div class="tm rv d2">
+      <img class="tm-av" src="trio/саша.jpg" alt="Sasha">
+      <div class="tm-role" data-k="m2r">Video Producer & Marketer</div>
+      <div class="tm-name" data-k="m2n">Your Name, 21</div>
+      <p class="tm-bio" data-k="m2b">Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing across every platform.</p>
+    </div>
+    <div class="tm rv d3">
+      <img class="tm-av" src="trio/захар.jpg" alt="Zakhar">
+      <div class="tm-role" data-k="m3r">Web Developer & Creator</div>
+      <div class="tm-name" data-k="m3n">Youngest, 19</div>
+      <p class="tm-bio" data-k="m3b">The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calc">
+  <div class="sec-hd rv">
+    <div>
+      <div class="sec-label" data-k="c_lbl">Transparent pricing</div>
+      <h2 class="sec-title" data-k="c_ttl">Price calculator</h2>
+    </div>
+    <p style="max-width:380px;font-size:14px;color:var(--sec);line-height:1.75" class="rv" data-k="c_d">
+      Pick the services you need and get an instant estimate. Every project is unique — this is a starting point.
+    </p>
+  </div>
+  <div class="calc-wrap">
+    <div class="calc-left">
+
+      <!-- VIDEO -->
+      <div class="grp open" id="gv">
+        <div class="grp-hd" onclick="tog('gv')">
+          <h4 data-k="g1">🎬 Video Editing</h4>
+          <span class="grp-icon">+</span>
+        </div>
+        <div class="grp-body">
+          <div class="ci" data-id="v1" data-price="15" data-type="qty">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="v1n">Short video (under 1 min)</span><small data-k="v1h">Vertical or horizontal · TikTok / Reels</small></div></div>
+            <div class="ci-qty"><button class="qb" data-d="-1">−</button><span class="qn">1</span><button class="qb" data-d="1">+</button></div>
+            <div class="ci-price">$15</div>
+          </div>
+          <div class="ci" data-id="v2" data-price="30" data-type="qty">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="v2n">Medium video (1–5 min)</span><small data-k="v2h">YouTube · branded content</small></div></div>
+            <div class="ci-qty"><button class="qb" data-d="-1">−</button><span class="qn">1</span><button class="qb" data-d="1">+</button></div>
+            <div class="ci-price">$30</div>
+          </div>
+          <div class="ci" data-id="v3" data-price="60" data-type="qty">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="v3n">Long video (5+ min)</span><small data-k="v3h">Podcast · full YouTube video</small></div></div>
+            <div class="ci-qty"><button class="qb" data-d="-1">−</button><span class="qn">1</span><button class="qb" data-d="1">+</button></div>
+            <div class="ci-price">$60</div>
+          </div>
+          <div class="ci" data-id="v4" data-price="35" data-type="qty">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="v4n">AI-generated video</span><small data-k="v4h">Trending AI content for any niche</small></div></div>
+            <div class="ci-qty"><button class="qb" data-d="-1">−</button><span class="qn">1</span><button class="qb" data-d="1">+</button></div>
+            <div class="ci-price">$35</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SMM -->
+      <div class="grp" id="gs">
+        <div class="grp-hd" onclick="tog('gs')">
+          <h4 data-k="g2">📱 Social Media Management</h4>
+          <span class="grp-icon">+</span>
+        </div>
+        <div class="grp-body">
+          <div class="ci" data-id="s1" data-price="150" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="s1n">Basic management</span><small data-k="s1h">From $150/mo · custom plan per platform</small></div></div>
+            <div class="ci-price">$150/mo</div>
+          </div>
+          <div class="ci" data-id="s2" data-price="300" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="s2n">Standard plan</span><small data-k="s2h">1 post/day + 2 videos/week</small></div></div>
+            <div class="ci-price">$300/mo</div>
+          </div>
+          <div class="ci" data-id="s3" data-price="600" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="s3n">Premium plan</span><small data-k="s3h">3 posts/day + 3 videos/week</small></div></div>
+            <div class="ci-price">$600/mo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADS -->
+      <div class="grp" id="ga">
+        <div class="grp-hd" onclick="tog('ga')">
+          <h4 data-k="g3">🎯 Paid Advertising</h4>
+          <span class="grp-icon">+</span>
+        </div>
+        <div class="grp-body">
+          <div class="ci" data-id="a1" data-price="300" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="a1n">Campaign setup & management</span><small data-k="a1h">From $300/mo · Facebook & Instagram</small></div></div>
+            <div class="ci-price">$300/mo</div>
+          </div>
+          <div class="ci" data-id="a2" data-price="150" data-type="qty">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="a2n">Ad creatives pack</span><small data-k="a2h">Photo + video materials for ads</small></div></div>
+            <div class="ci-qty"><button class="qb" data-d="-1">−</button><span class="qn">1</span><button class="qb" data-d="1">+</button></div>
+            <div class="ci-price">$150</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEB -->
+      <div class="grp" id="gw">
+        <div class="grp-hd" onclick="tog('gw')">
+          <h4 data-k="g4">🌐 Web Development</h4>
+          <span class="grp-icon">+</span>
+        </div>
+        <div class="grp-body">
+          <div class="ci" data-id="w1" data-price="300" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="w1n">Landing page</span><small data-k="w1h">From $300 · single-page site</small></div></div>
+            <div class="ci-price">from $300</div>
+          </div>
+          <div class="ci" data-id="w2" data-price="600" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="w2n">Multi-page website</span><small data-k="w2h">Business site with full handover</small></div></div>
+            <div class="ci-price">from $600</div>
+          </div>
+          <div class="ci" data-id="w3" data-price="100" data-type="once">
+            <div class="ci-l"><div class="chk"></div><div class="ci-name"><span data-k="w3n">Monthly maintenance</span><small data-k="w3h">Updates, edits, support</small></div></div>
+            <div class="ci-price">$100/mo</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /calc-left -->
+
+    <div class="calc-r">
+      <div class="calc-r-title" data-k="c_sum">Your estimate</div>
+      <div class="calc-items" id="citems">
+        <div class="calc-empty" data-k="c_emp">Select services to see your estimate</div>
+      </div>
+      <div class="calc-tot">
+        <span class="calc-tot-l" data-k="c_tot">Total from</span>
+        <span class="calc-tot-v" id="ctotal">$0</span>
+      </div>
+      <a href="#contact" class="calc-btn" data-k="c_ord">Order this package →</a>
+      <p class="calc-note" data-k="c_note">Final price depends on project details. Free consultation included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-in">
+    <div class="sec-label rv" data-k="ct_lbl">Ready to start?</div>
+    <h2 class="contact-h rv">Let's build<br><span class="ac" data-k="ct_h">something great</span></h2>
+    <p class="contact-d rv" data-k="ct_d">Tell us about your project. We'll get back within 24 hours with a tailored proposal.</p>
+    <div class="contact-links rv">
+      <a href="https://t.me/YOUR_TELEGRAM" class="cl prim" target="_blank" rel="noopener noreferrer">✈ Telegram</a>
+      <a href="https://instagram.com/YOUR_INSTAGRAM" class="cl" target="_blank" rel="noopener noreferrer">📷 Instagram</a>
+      <a href="mailto:YOUR@EMAIL.COM" class="cl">✉ Email</a>
+      <a href="https://wa.me/YOUR_PHONE" class="cl" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+    </div>
+    <a href="tel:+48571795097" class="contact-phone rv">
+      <span class="ph-icon">📞</span>
+      +48 571 795 097
+    </a>
+    <p class="contact-phone-sub rv" data-k="ph_sub">Call us to schedule a meeting or video call</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-copy">© 2025 TRIO. <span data-k="ft_r">All rights reserved.</span></div>
+  <a href="tel:+48571795097" style="font-size:13px;color:var(--sec);text-decoration:none;letter-spacing:.5px;transition:color .2s;cursor:none;" onmouseenter="this.style.color='var(--accent)'" onmouseleave="this.style.color='var(--sec)'">+48 571 795 097</a>
+  <div class="f-links">
+    <a href="#services" data-k="ft_s">Services</a>
+    <a href="#portfolio" data-k="ft_w">Work</a>
+    <a href="#calc" data-k="ft_p">Pricing</a>
+    <a href="#contact" data-k="ft_c">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ── TRANSLATIONS ──────────────────────────────────────────────────────────────
+const T = {
+  en: {
+    nav_cta:"Let's talk",
+    hero_tag:"Creative Agency", hero_l1:"We create", hero_ac:"content", hero_mid:"that", hero_l3:"sells.",
+    hero_d:"Video production, social media, advertising & web — all in one team. Three brothers, one mission.",
+    hero_cta:"Calculate price", hero_p:"View work",
+    s_lbl:"What we do", s_ttl:"Our services",
+    s1t:"Video Production", s1d:"Short-form, long-form, vertical or horizontal — from YouTube to TikTok. Trending cuts, AI video, podcasts, branded content and more.",
+    s2t:"Social Media", s2d:"Daily posts, stories, reels — complete profile management across every major platform. We grow audiences that actually buy.",
+    s3t:"Paid Advertising", s3d:"Facebook & Instagram campaigns optimised for ROI. We've managed large-budget accounts and know how to turn spend into leads.",
+    s4t:"Web Development", s4d:"Modern, functional sites for businesses and individuals — with monthly support or full handover. Built with vibe coding at speed.",
+    st1:"Projects completed", st2:"Happy clients", st3:"Ad spend managed", st4:"Brothers, one team",
+    p_lbl:"Selected work", p_ttl:"Recent projects",
+    p1t:"Brand Video Campaign", p1c:"Video Production",
+    p2t:"Instagram Growth", p2c:"Social Media",
+    p3t:"Facebook Ads Campaign", p3c:"Facebook Ads",
+    p4t:"Business Website", p4c:"Web Development",
+    p5t:"AI Content Series", p5c:"AI Production",
+    tm_lbl:"Who we are", tm_ttl:"The team",
+    m1r:"Senior Creative Director", m1b:"The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.",
+    m2r:"Video Producer & Marketer", m2n:"Sasha, 21", m2b:"Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing.",
+    m3r:"Web Developer & Creator", m3n:"Zakhar, 19", m3b:"The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.",
+    c_lbl:"Transparent pricing", c_ttl:"Price calculator", c_d:"Pick the services you need and get an instant estimate. Every project is unique — this is a starting point.",
+    g1:"🎬 Video Editing", g2:"📱 Social Media Management", g3:"🎯 Paid Advertising", g4:"🌐 Web Development",
+    v1n:"Short video (under 1 min)", v1h:"Vertical or horizontal · TikTok / Reels",
+    v2n:"Medium video (1–5 min)", v2h:"YouTube · branded content",
+    v3n:"Long video (5+ min)", v3h:"Podcast · full YouTube video",
+    v4n:"AI-generated video", v4h:"Trending AI content for any niche",
+    s1n:"Basic management", s1h:"From $150/mo · custom plan per platform",
+    s2n:"Standard plan", s2h:"1 post/day + 2 videos/week",
+    s3n:"Premium plan", s3h:"3 posts/day + 3 videos/week",
+    a1n:"Campaign setup & management", a1h:"From $300/mo · Facebook & Instagram",
+    a2n:"Ad creatives pack", a2h:"Photo + video materials for ads",
+    w1n:"Landing page", w1h:"From $300 · single-page site",
+    w2n:"Multi-page website", w2h:"Business site with full handover",
+    w3n:"Monthly maintenance", w3h:"Updates, edits, support",
+    c_sum:"Your estimate", c_emp:"Select services to see your estimate",
+    c_tot:"Total from", c_ord:"Order this package →", c_note:"Final price depends on project details. Free consultation included.",
+    ct_lbl:"Ready to start?", ct_h:"something great", ct_d:"Tell us about your project. We'll get back within 24 hours with a tailored proposal.",
+    ph_sub:"Call us to schedule a meeting or video call",
+    ft_r:"All rights reserved.", ft_s:"Services", ft_w:"Work", ft_p:"Pricing", ft_c:"Contact"
+  },
+  ru: {
+    nav_cta:"Связаться",
+    hero_tag:"Креативное агентство", hero_l1:"Мы создаём", hero_ac:"контент", hero_mid:"который", hero_l3:"продаёт.",
+    hero_d:"Видеопродакшн, SMM, реклама и сайты — всё в одной команде. Три брата, одна миссия.",
+    hero_cta:"Рассчитать стоимость", hero_p:"Наши работы",
+    s_lbl:"Что мы делаем", s_ttl:"Наши услуги",
+    s1t:"Видеопродакшн", s1d:"Короткие и длинные, вертикальные и горизонтальные — от YouTube до TikTok. Трендовый монтаж, AI-видео, подкасты, брендовый контент и многое другое.",
+    s2t:"Социальные сети", s2d:"Ежедневные посты, истории, рилсы — полное ведение профилей на всех платформах. Строим аудиторию, которая покупает.",
+    s3t:"Платная реклама", s3d:"Рекламные кампании в Facebook и Instagram с ROI-фокусом. Управляем большими бюджетами и умеем превращать показы в заявки.",
+    s4t:"Веб-разработка", s4d:"Современные, функциональные сайты для бизнеса и частных лиц. С ежемесячным сопровождением или полной передачей — на ваш выбор.",
+    st1:"Завершённых проектов", st2:"Довольных клиентов", st3:"Управляемый рекл. бюджет", st4:"Брата, одна команда",
+    p_lbl:"Избранные работы", p_ttl:"Последние проекты",
+    p1t:"Брендовая видеокампания", p1c:"Видеопродакшн",
+    p2t:"Рост в Instagram", p2c:"Социальные сети",
+    p3t:"Рекламная кампания", p3c:"Facebook Ads",
+    p4t:"Корпоративный сайт", p4c:"Веб-разработка",
+    p5t:"AI-контент серия", p5c:"AI Продакшн",
+    tm_lbl:"Кто мы", tm_ttl:"Команда",
+    m1r:"Старший креативный директор", m1b:"Опытнейший в команде. Управляет рекламными кампаниями с большими бюджетами, создаёт вирусный контент и умеет превращать внимание в деньги.",
+    m2r:"Видеопродюсер и маркетолог", m2n:"Саша, 21", m2b:"Монтажёр, специалист по рекламе и вайб-кодер. Объединяю творческий продакшн с перформанс-маркетингом.",
+    m3r:"Веб-разработчик и создатель", m3n:"Захар, 19", m3b:"Строитель команды. Специализируется на вайб-кодинге — превращает идеи в быстрые, красивые сайты, которые конвертят.",
+    c_lbl:"Прозрачные цены", c_ttl:"Калькулятор стоимости", c_d:"Выберите нужные услуги и получите предварительную оценку. Каждый проект уникален — это отправная точка.",
+    g1:"🎬 Видеомонтаж", g2:"📱 Ведение соцсетей", g3:"🎯 Платная реклама", g4:"🌐 Веб-разработка",
+    v1n:"Короткое видео (до 1 мин)", v1h:"Вертикальное или горизонтальное · TikTok / Reels",
+    v2n:"Среднее видео (1–5 мин)", v2h:"YouTube · брендовый контент",
+    v3n:"Длинное видео (5+ мин)", v3h:"Подкаст · полноценное YouTube-видео",
+    v4n:"AI-видео", v4h:"Трендовый AI-контент для любой ниши",
+    s1n:"Базовое ведение", s1h:"От $150/мес · индивидуальный план",
+    s2n:"Стандартный план", s2h:"1 пост/день + 2 видео/неделю",
+    s3n:"Премиум план", s3h:"3 поста/день + 3 видео/неделю",
+    a1n:"Настройка и ведение кампании", a1h:"От $300/мес · Facebook & Instagram",
+    a2n:"Рекламные креативы", a2h:"Фото + видео материалы для рекламы",
+    w1n:"Лендинг", w1h:"От $300 · одностраничный сайт",
+    w2n:"Многостраничный сайт", w2h:"Корпоративный сайт с полной передачей",
+    w3n:"Ежемесячное сопровождение", w3h:"Обновления, правки, поддержка",
+    c_sum:"Ваша оценка", c_emp:"Выберите услуги для расчёта стоимости",
+    c_tot:"Итого от", c_ord:"Заказать этот пакет →", c_note:"Финальная цена зависит от деталей проекта. Консультация бесплатно.",
+    ct_lbl:"Готовы начать?", ct_h:"что-то крутое", ct_d:"Расскажите о своём проекте. Мы ответим в течение 24 часов с персональным предложением.",
+    ph_sub:"Позвоните нам, чтобы назначить встречу или видеозвонок",
+    ft_r:"Все права защищены.", ft_s:"Услуги", ft_w:"Работы", ft_p:"Цены", ft_c:"Контакт"
+  },
+  pl: {
+    nav_cta:"Porozmawiajmy",
+    hero_tag:"Agencja Kreatywna", hero_l1:"Tworzymy", hero_ac:"treści", hero_mid:"które", hero_l3:"sprzedają.",
+    hero_d:"Produkcja wideo, social media, reklama i strony WWW — wszystko w jednym zespole. Trzech braci, jedna misja.",
+    hero_cta:"Oblicz cenę", hero_p:"Nasze prace",
+    s_lbl:"Co robimy", s_ttl:"Nasze usługi",
+    s1t:"Produkcja wideo", s1d:"Krótkie i długie, pionowe i poziome — od YouTube do TikToka. Trendy edycje, wideo AI, podcasty i treści brandowe.",
+    s2t:"Social media", s2d:"Codzienne posty, stories, reelsy — pełne zarządzanie profilami na wszystkich platformach. Budujemy społeczności, które kupują.",
+    s3t:"Reklama płatna", s3d:"Kampanie na Facebooku i Instagramie skupione na ROI. Zarządzamy dużymi budżetami i wiemy, jak zamieniać wyświetlenia w leady.",
+    s4t:"Tworzenie stron WWW", s4d:"Nowoczesne strony dla firm i osób prywatnych. Z miesięcznym wsparciem lub pełnym przekazaniem. Zbudowane z vibe codingiem w ekspresowym tempie.",
+    st1:"Zrealizowanych projektów", st2:"Zadowolonych klientów", st3:"Zarządzany budżet reklamowy", st4:"Braci, jeden zespół",
+    p_lbl:"Wybrane prace", p_ttl:"Ostatnie projekty",
+    p1t:"Kampania wideo marki", p1c:"Produkcja wideo",
+    p2t:"Wzrost na Instagramie", p2c:"Social media",
+    p3t:"Kampania e-commerce", p3c:"Facebook Ads",
+    p4t:"Strona firmowa", p4c:"Strony WWW",
+    p5t:"Seria treści AI", p5c:"Produkcja AI",
+    tm_lbl:"Kim jesteśmy", tm_ttl:"Zespół",
+    m1r:"Starszy dyrektor kreatywny", m1b:"Filar doświadczenia. Prowadzi kampanie z dużymi budżetami, tworzy wirusowe treści i wie, jak zamieniać uwagę w zyski.",
+    m2r:"Producent wideo i marketer", m2n:"Sasha, 21", m2b:"Montażysta, specjalista od reklam i vibe coder. Łączy produkcję kreatywną z marketingiem efektywnościowym.",
+    m3r:"Deweloper i twórca", m3n:"Zakhar, 19", m3b:"Budowniczy grupy. Specjalizuje się w vibe codingu — zamienia pomysły w szybkie, piękne strony, które konwertują.",
+    c_lbl:"Przejrzyste ceny", c_ttl:"Kalkulator cen", c_d:"Wybierz potrzebne usługi i otrzymaj wstępną wycenę. Każdy projekt jest wyjątkowy — to punkt wyjścia.",
+    g1:"🎬 Montaż wideo", g2:"📱 Zarządzanie social mediami", g3:"🎯 Reklama płatna", g4:"🌐 Tworzenie stron",
+    v1n:"Krótkie wideo (do 1 min)", v1h:"Pionowe lub poziome · TikTok / Reels",
+    v2n:"Średnie wideo (1–5 min)", v2h:"YouTube · treści brandowe",
+    v3n:"Długie wideo (5+ min)", v3h:"Podcast · pełne wideo YouTube",
+    v4n:"Wideo generowane przez AI", v4h:"Trendy treści AI dla każdej niszy",
+    s1n:"Podstawowe zarządzanie", s1h:"Od $150/mies · plan dostosowany",
+    s2n:"Plan standardowy", s2h:"1 post/dzień + 2 wideo/tydzień",
+    s3n:"Plan premium", s3h:"3 posty/dzień + 3 wideo/tydzień",
+    a1n:"Konfiguracja i zarządzanie kampanią", a1h:"Od $300/mies · Facebook & Instagram",
+    a2n:"Kreacje reklamowe", a2h:"Materiały foto + wideo do reklam",
+    w1n:"Landing page", w1h:"Od $300 · strona jednostronicowa",
+    w2n:"Strona wielostronicowa", w2h:"Strona firmowa z pełnym przekazaniem",
+    w3n:"Miesięczne utrzymanie", w3h:"Aktualizacje, poprawki, wsparcie",
+    c_sum:"Twoja wycena", c_emp:"Wybierz usługi, aby zobaczyć wycenę",
+    c_tot:"Razem od", c_ord:"Zamów ten pakiet →", c_note:"Ostateczna cena zależy od szczegółów projektu. Konsultacja gratis.",
+    ct_lbl:"Gotowy na start?", ct_h:"coś wspaniałego", ct_d:"Opowiedz nam o swoim projekcie. Odezwiemy się w ciągu 24 godzin z indywidualną propozycją.",
+    ph_sub:"Zadzwoń, aby umówić spotkanie lub wideorozmowę",
+    ft_r:"Wszelkie prawa zastrzeżone.", ft_s:"Usługi", ft_w:"Prace", ft_p:"Cennik", ft_c:"Kontakt"
+  }
+};
+
+// ── LANGUAGE ──────────────────────────────────────────────────────────────────
+let lang = 'en';
+
+function detectLang() {
+  const l = (navigator.language || 'en').slice(0, 2).toLowerCase();
+  if (['ru','uk','be'].includes(l)) return 'ru';
+  if (l === 'pl') return 'pl';
+  return 'en';
+}
+
+function applyLang(l) {
+  lang = l;
+  const t = T[l];
+  document.querySelectorAll('[data-k]').forEach(el => {
+    const v = t[el.dataset.k];
+    if (v !== undefined) el.textContent = v;
+  });
+  document.querySelectorAll('.lang').forEach(b => b.classList.toggle('on', b.dataset.l === l));
+  document.documentElement.lang = l;
+  updateCalc();
+}
+
+document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.l)));
+
+// ── TICKER SETUP ──────────────────────────────────────────────────────────────
+const tickItems = ['Video Editing','Social Media','AI Content','Facebook Ads','Web Design','YouTube','TikTok','Instagram','Podcast','Reels'];
+const ttk = document.getElementById('ttk');
+const tickHTML = tickItems.map(i => `<span class="tick-i"><span class="d"></span>${i}</span>`).join('');
+ttk.innerHTML = tickHTML + tickHTML; // duplicate for seamless loop
+
+// ── CURSOR ────────────────────────────────────────────────────────────────────
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+});
+
+(function animRing() {
+  rx += (mx - rx) * .11;
+  ry += (my - ry) * .11;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
+
+const hoverEls = 'a, button, .srv, .port-c, .tm, .grp-hd, .chk, .qb';
+document.querySelectorAll(hoverEls).forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+// ── NAVBAR SCROLL ─────────────────────────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('pinned', scrollY > 50), { passive: true });
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
+new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 }).observe && (() => {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+})();
+
+// ── COUNTERS ──────────────────────────────────────────────────────────────────
+new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.t;
+    let n = 0; const step = target / 55;
+    const timer = setInterval(() => { n += step; if (n >= target) { n = target; clearInterval(timer); } el.textContent = Math.floor(n); }, 16);
+    cntObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+
+const cntObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.t;
+    let n = 0; const step = Math.max(target / 55, 0.05);
+    const timer = setInterval(() => { n += step; if (n >= target) { n = target; clearInterval(timer); } el.textContent = Math.floor(n); }, 16);
+    cntObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.cnt').forEach(el => cntObs.observe(el));
+
+// ── CALC GROUP TOGGLE ─────────────────────────────────────────────────────────
+function tog(id) { document.getElementById(id).classList.toggle('open'); }
+
+// ── CALCULATOR ────────────────────────────────────────────────────────────────
+let _totFrame = null;
+
+function animateTotal(to) {
+  if (_totFrame) cancelAnimationFrame(_totFrame);
+  const el = document.getElementById('ctotal');
+  const from = parseInt(el.textContent.replace(/[^0-9]/g, '')) || 0;
+  if (from === to) return;
+  const dur = Math.min(500, 80 + Math.abs(to - from) * 1.2);
+  const t0 = performance.now();
+  function step(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3); // ease-out cubic
+    el.textContent = '$' + Math.round(from + (to - from) * e);
+    if (p < 1) _totFrame = requestAnimationFrame(step);
+  }
+  _totFrame = requestAnimationFrame(step);
+}
+
+document.querySelectorAll('.chk').forEach(chk => {
+  chk.addEventListener('click', () => {
+    chk.classList.toggle('on');
+    updateCalc();
+  });
+});
+
+document.querySelectorAll('.qb').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const ci = btn.closest('.ci');
+    const qn = ci.querySelector('.qn');
+    let q = parseInt(qn.textContent) + parseInt(btn.dataset.d);
+    if (q < 1) q = 1; if (q > 99) q = 99;
+    qn.textContent = q;
+    if (ci.querySelector('.chk').classList.contains('on')) updateCalc();
+  });
+});
+
+function updateCalc() {
+  const t = T[lang];
+  const container = document.getElementById('citems');
+  let total = 0, html = '';
+
+  document.querySelectorAll('.ci').forEach(ci => {
+    if (!ci.querySelector('.chk').classList.contains('on')) return;
+    const price = parseInt(ci.dataset.price);
+    const type = ci.dataset.type;
+    const qty = type === 'qty' ? parseInt(ci.querySelector('.qn').textContent) : 1;
+    const name = ci.querySelector('.ci-name span').textContent.trim();
+    const line = price * qty;
+    total += line;
+    html += `<div class="ci-row"><span class="ci-row-l">${name}${qty > 1 ? ' × ' + qty : ''}</span><span class="ci-row-v">$${line}</span></div>`;
+  });
+
+  container.innerHTML = html || `<div class="calc-empty">${t.c_emp}</div>`;
+  animateTotal(total);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+applyLang(detectLang());
+</script>
+</body>
+</html>
