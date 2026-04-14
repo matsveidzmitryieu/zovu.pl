@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polityka Prywatności — ZOVU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:      #080808;
+      --bg2:     #0f0f0f;
+      --bg3:     #161616;
+      --border:  #1e1e1e;
+      --text:    #f0f0f0;
+      --sec:     #888;
+      --muted:   #444;
+      --accent:  #c8ff47;
+      --acc-rgb: 200,255,71;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.75;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 52px;
+      background: rgba(8,8,8,.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 22px;
+      letter-spacing: -.5px; color: var(--text); text-decoration: none;
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    .back-btn {
+      font-size: 13px; font-weight: 500; color: var(--sec);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: color .2s;
+    }
+    .back-btn:hover { color: var(--accent); }
+
+    /* HERO STRIP */
+    .pp-hero {
+      padding: 80px 52px 60px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .pp-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--accent);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 20px;
+    }
+    .pp-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .pp-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800; letter-spacing: -1.5px; line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .pp-meta {
+      font-size: 13px; color: var(--muted);
+    }
+
+    /* CONTENT */
+    .pp-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 72px 52px 100px;
+    }
+
+    .pp-section {
+      margin-bottom: 56px;
+    }
+
+    h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 22px; font-weight: 800; letter-spacing: -.3px;
+      margin-bottom: 16px; color: var(--text);
+      padding-left: 16px;
+      border-left: 3px solid var(--accent);
+    }
+
+    h3 {
+      font-size: 16px; font-weight: 700; color: var(--text);
+      margin-bottom: 10px; margin-top: 24px;
+    }
+
+    p {
+      font-size: 15px; color: var(--sec); line-height: 1.8; margin-bottom: 14px;
+    }
+
+    ul, ol {
+      margin: 0 0 14px 24px;
+    }
+
+    ul li, ol li {
+      font-size: 15px; color: var(--sec); line-height: 1.8; margin-bottom: 6px;
+    }
+
+    a {
+      color: var(--accent); text-decoration: none;
+      transition: opacity .2s;
+    }
+    a:hover { opacity: .75; }
+
+    .highlight {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+    .highlight p { margin-bottom: 0; color: var(--text); font-size: 14px; }
+
+    /* TABLE */
+    table {
+      width: 100%; border-collapse: collapse;
+      margin-bottom: 20px; font-size: 14px;
+    }
+    thead th {
+      background: var(--bg3); color: var(--text); font-weight: 700;
+      padding: 12px 16px; text-align: left;
+      border-bottom: 2px solid var(--accent);
+    }
+    tbody td {
+      padding: 12px 16px; color: var(--sec);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* FOOTER */
+    footer {
+      padding: 36px 52px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .f-copy { font-size: 13px; color: var(--muted); }
+    .f-links { display: flex; gap: 24px; }
+    .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .f-links a:hover { color: var(--accent); }
+
+    @media (max-width: 860px) {
+      nav { padding: 16px 20px; }
+      .pp-hero { padding: 52px 20px 40px; }
+      .pp-wrap { padding: 48px 20px 72px; }
+      footer { padding: 28px 20px; flex-direction: column; gap: 16px; text-align: center; }
+      .f-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">ZOVU<em>.</em></a>
+  <a href="index.html" class="back-btn">← Powrót do strony głównej</a>
+</nav>
+
+<div class="pp-hero">
+  <div class="pp-label">Dokument prawny</div>
+  <h1 class="pp-title">Polityka Prywatności</h1>
+  <p class="pp-meta">Ostatnia aktualizacja: 14 kwietnia 2026 &nbsp;·&nbsp; ZOVU Creative Agency</p>
+</div>
+
+<div class="pp-wrap">
+
+  <div class="highlight">
+    <p>Niniejsza Polityka Prywatności wyjaśnia, w jaki sposób ZOVU Creative Agency przetwarza dane osobowe użytkowników zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO) oraz polską ustawą o ochronie danych osobowych.</p>
+  </div>
+
+  <!-- 1 -->
+  <div class="pp-section">
+    <h2>1. Administrator danych</h2>
+    <p>Administratorem Twoich danych osobowych jest:</p>
+    <div class="highlight">
+      <p>
+        <strong>ZOVU Creative Agency</strong><br>
+        ul. [Twój adres], [Kod pocztowy] [Miasto], Polska<br>
+        E-mail: <a href="mailto:kontakt@zovu.pl">kontakt@zovu.pl</a><br>
+        Telefon: <a href="tel:+48571795097">+48 571 795 097</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="pp-section">
+    <h2>2. Jakie dane zbieramy</h2>
+    <p>W zależności od sposobu korzystania z naszej strony i usług możemy zbierać następujące dane:</p>
+    <ul>
+      <li><strong>Dane kontaktowe</strong> — imię i nazwisko, adres e-mail, numer telefonu (przekazywane dobrowolnie przez formularze kontaktowe lub czat).</li>
+      <li><strong>Dane techniczne</strong> — adres IP, typ przeglądarki, system operacyjny, strony odsyłające, czas wizyty (zbierane automatycznie przez serwer i narzędzia analityczne).</li>
+      <li><strong>Dane z komunikacji</strong> — treść wiadomości przesyłanych do nas przez e-mail, Telegram, WhatsApp lub Instagram.</li>
+      <li><strong>Dane biznesowe</strong> — informacje o projekcie lub firmie klienta, niezbędne do realizacji usług.</li>
+    </ul>
+    <p>Nie zbieramy wrażliwych kategorii danych osobowych (np. danych o zdrowiu, poglądach politycznych, wyznaniu).</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="pp-section">
+    <h2>3. Cele i podstawy prawne przetwarzania</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Cel przetwarzania</th>
+          <th>Podstawa prawna (RODO)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Odpowiedź na zapytania kontaktowe</td>
+          <td>Art. 6 ust. 1 lit. b — niezbędność do zawarcia umowy lub art. 6 ust. 1 lit. f — uzasadniony interes</td>
+        </tr>
+        <tr>
+          <td>Realizacja usług i zawieranie umów</td>
+          <td>Art. 6 ust. 1 lit. b — wykonanie umowy</td>
+        </tr>
+        <tr>
+          <td>Wystawianie faktur i rozliczenia</td>
+          <td>Art. 6 ust. 1 lit. c — obowiązek prawny</td>
+        </tr>
+        <tr>
+          <td>Analiza ruchu na stronie (statystyki)</td>
+          <td>Art. 6 ust. 1 lit. f — uzasadniony interes (poprawa jakości serwisu)</td>
+        </tr>
+        <tr>
+          <td>Marketing własny (newsletter, oferty)</td>
+          <td>Art. 6 ust. 1 lit. a — zgoda</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4 -->
+  <div class="pp-section">
+    <h2>4. Okres przechowywania danych</h2>
+    <p>Przechowujemy Twoje dane przez okres niezbędny do realizacji celu, w którym zostały zebrane:</p>
+    <ul>
+      <li><strong>Dane z zapytań kontaktowych</strong> — do 12 miesięcy od ostatniego kontaktu, chyba że nawiążemy współpracę.</li>
+      <li><strong>Dane umowne i fakturowe</strong> — przez 5 lat od zakończenia roku rozliczeniowego (wymóg prawa podatkowego).</li>
+      <li><strong>Dane analityczne (zanonimizowane)</strong> — przez 26 miesięcy.</li>
+      <li><strong>Dane na potrzeby marketingu</strong> — do czasu wycofania zgody.</li>
+    </ul>
+  </div>
+
+  <!-- 5 -->
+  <div class="pp-section">
+    <h2>5. Odbiorcy danych</h2>
+    <p>Twoje dane mogą być przekazywane wyłącznie zaufanym podmiotom przetwarzającym dane w naszym imieniu:</p>
+    <ul>
+      <li><strong>Dostawcy hostingu i infrastruktury IT</strong> (serwery w UE lub z odpowiednimi zabezpieczeniami).</li>
+      <li><strong>Narzędzia komunikacji</strong> — Telegram, WhatsApp, Meta (Instagram), Gmail — w zakresie koniecznym do prowadzenia korespondencji.</li>
+      <li><strong>Narzędzia analityczne</strong> — np. Google Analytics (dane zanonimizowane / z włączonym IP-anonymization).</li>
+      <li><strong>Biuro rachunkowe / księgowość</strong> — wyłącznie w zakresie danych niezbędnych do rozliczeń.</li>
+    </ul>
+    <p>Nie sprzedajemy danych osobowych stronom trzecim. Nie przekazujemy danych do państw spoza EOG bez odpowiednich zabezpieczeń (standardowe klauzule umowne lub decyzja Komisji Europejskiej o adekwatności).</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="pp-section">
+    <h2>6. Pliki cookie</h2>
+    <p>Nasza strona może używać plików cookie wyłącznie technicznie niezbędnych do jej działania oraz — za Twoją zgodą — plików analitycznych i marketingowych.</p>
+    <h3>Rodzaje cookie:</h3>
+    <ul>
+      <li><strong>Niezbędne</strong> — konieczne do prawidłowego funkcjonowania strony. Nie wymagają zgody.</li>
+      <li><strong>Analityczne</strong> — pomagają nam zrozumieć, jak użytkownicy korzystają ze strony (np. Google Analytics). Wymagają zgody.</li>
+      <li><strong>Marketingowe</strong> — umożliwiają wyświetlanie spersonalizowanych reklam. Wymagają zgody.</li>
+    </ul>
+    <p>Możesz zarządzać plikami cookie w ustawieniach przeglądarki lub za pośrednictwem naszego panelu preferencji cookie (jeśli jest dostępny na stronie).</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="pp-section">
+    <h2>7. Twoje prawa</h2>
+    <p>Na podstawie RODO przysługują Ci następujące prawa:</p>
+    <ul>
+      <li><strong>Prawo dostępu</strong> — możesz uzyskać kopię swoich danych oraz informację o sposobie ich przetwarzania (art. 15 RODO).</li>
+      <li><strong>Prawo do sprostowania</strong> — możesz żądać poprawienia nieprawidłowych lub uzupełnienia niekompletnych danych (art. 16 RODO).</li>
+      <li><strong>Prawo do usunięcia</strong> — w określonych przypadkach możesz zażądać usunięcia swoich danych ("prawo do bycia zapomnianym", art. 17 RODO).</li>
+      <li><strong>Prawo do ograniczenia przetwarzania</strong> — możesz żądać ograniczenia przetwarzania swoich danych (art. 18 RODO).</li>
+      <li><strong>Prawo do przenoszenia danych</strong> — możesz otrzymać swoje dane w ustrukturyzowanym formacie (art. 20 RODO).</li>
+      <li><strong>Prawo sprzeciwu</strong> — możesz sprzeciwić się przetwarzaniu danych opartemu na uzasadnionym interesie (art. 21 RODO).</li>
+      <li><strong>Prawo do wycofania zgody</strong> — jeśli przetwarzamy dane na podstawie zgody, możesz ją wycofać w dowolnym momencie bez wpływu na zgodność z prawem przetwarzania przed jej wycofaniem.</li>
+    </ul>
+    <p>Aby skorzystać z powyższych praw, skontaktuj się z nami na adres: <a href="mailto:kontakt@zovu.pl">kontakt@zovu.pl</a></p>
+    <p>Masz również prawo wnieść skargę do organu nadzorczego — <strong>Prezesa Urzędu Ochrony Danych Osobowych (UODO)</strong>, ul. Stawki 2, 00-193 Warszawa, <a href="https://uodo.gov.pl" target="_blank" rel="noopener noreferrer">uodo.gov.pl</a>.</p>
+  </div>
+
+  <!-- 8 -->
+  <div class="pp-section">
+    <h2>8. Bezpieczeństwo danych</h2>
+    <p>Stosujemy odpowiednie środki techniczne i organizacyjne w celu ochrony Twoich danych osobowych przed nieuprawnionym dostępem, utratą lub ujawnieniem, w tym:</p>
+    <ul>
+      <li>Szyfrowanie połączeń protokołem HTTPS/TLS.</li>
+      <li>Ograniczony dostęp do danych — tylko upoważnione osoby.</li>
+      <li>Regularne przeglądy bezpieczeństwa systemów.</li>
+      <li>Umowy powierzenia przetwarzania danych z podwykonawcami.</li>
+    </ul>
+  </div>
+
+  <!-- 9 -->
+  <div class="pp-section">
+    <h2>9. Media społecznościowe i linki zewnętrzne</h2>
+    <p>Nasza strona może zawierać linki do zewnętrznych serwisów (Instagram, Facebook, TikTok, Telegram, YouTube). Klikając te linki, opuszczasz naszą stronę — przetwarzanie danych przez te platformy odbywa się zgodnie z ich własnymi politykami prywatności, za które nie ponosimy odpowiedzialności.</p>
+  </div>
+
+  <!-- 10 -->
+  <div class="pp-section">
+    <h2>10. Zmiany w Polityce Prywatności</h2>
+    <p>Zastrzegamy sobie prawo do zmiany niniejszej Polityki Prywatności. Wszelkie zmiany wejdą w życie z chwilą opublikowania zaktualizowanej wersji na tej stronie. Data ostatniej aktualizacji jest wskazana na górze dokumentu. W przypadku istotnych zmian poinformujemy Cię drogą e-mailową lub poprzez wyraźne powiadomienie na stronie.</p>
+  </div>
+
+  <!-- 11 -->
+  <div class="pp-section">
+    <h2>11. Kontakt</h2>
+    <p>W przypadku pytań dotyczących niniejszej Polityki Prywatności lub przetwarzania Twoich danych osobowych, skontaktuj się z nami:</p>
+    <div class="highlight">
+      <p>
+        <strong>ZOVU Creative Agency</strong><br>
+        E-mail: <a href="mailto:kontakt@zovu.pl">kontakt@zovu.pl</a><br>
+        Telefon: <a href="tel:+48571795097">+48 571 795 097</a><br>
+        Telegram: <a href="https://t.me/YOUR_TELEGRAM" target="_blank" rel="noopener noreferrer">@zovu_agency</a>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="f-copy">© 2025 ZOVU. Wszelkie prawa zastrzeżone.</div>
+  <div class="f-links">
+    <a href="index.html#services">Usługi</a>
+    <a href="index.html#portfolio">Prace</a>
+    <a href="index.html#pricing">Cennik</a>
+    <a href="index.html#contact">Kontakt</a>
+    <a href="privacy-policy.html" style="color:var(--accent)">Polityka prywatności</a>
+  </div>
+</footer>
+
+</body>
+</html>
