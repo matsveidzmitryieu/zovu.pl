@@ -126,6 +126,7 @@
       font-size: 11px; font-weight: 500; letter-spacing: 1px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 36px;
       opacity: 0; animation: fadeup .7s .1s forwards; position: relative; z-index: 2;
+      align-self: flex-start;
     }
     .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
     .hero-h {
@@ -2447,7 +2448,7 @@ function rebuildHeroTitle() {
 })();
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-applyLang(detectLang());
+applyLang('pl');
 </script>
 </body>
 </html>
