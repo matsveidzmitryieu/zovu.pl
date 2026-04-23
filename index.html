@@ -192,8 +192,8 @@
     .tick-i .d { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
     /* ── SERVICES ── */
-    #services { padding: 130px 52px; }
-    .sec-hd { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; }
+    #services { padding: 72px 52px; }
+    .sec-hd { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 36px; }
     .sec-label {
       font-size: 11px; font-weight: 500; letter-spacing: 2.5px;
       text-transform: uppercase; color: var(--accent);
@@ -208,7 +208,7 @@
     .srv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
     .srv {
       background: var(--bg2); border: 1px solid var(--border);
-      padding: 52px; position: relative; overflow: hidden; cursor: none;
+      padding: 34px; position: relative; overflow: hidden; cursor: none;
       transition: border-color .4s, background .4s;
     }
     .srv::after {
@@ -224,14 +224,14 @@
     .srv:hover .srv-tag { border-color: rgba(0,0,0,.25); color: #000; }
     .srv-n {
       font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700;
-      color: var(--muted); letter-spacing: 1px; margin-bottom: 44px;
+      color: var(--muted); letter-spacing: 1px; margin-bottom: 20px;
     }
-    .srv-ico { font-size: 36px; margin-bottom: 20px; }
+    .srv-ico { font-size: 30px; margin-bottom: 10px; }
     .srv-t {
-      font-family: 'Manrope', sans-serif; font-size: 28px; font-weight: 800;
-      letter-spacing: -.5px; margin-bottom: 16px;
+      font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 800;
+      letter-spacing: -.5px; margin-bottom: 10px;
     }
-    .srv-d { font-size: 14px; line-height: 1.75; color: var(--sec); margin-bottom: 32px; }
+    .srv-d { font-size: 13px; line-height: 1.65; color: var(--sec); margin-bottom: 16px; }
     .srv-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .srv-tag {
       font-size: 11px; font-weight: 500; letter-spacing: .5px;
@@ -1161,9 +1161,7 @@
               <span class="g-icon-lbl">Premiere Pro</span>
             </div>
             <div class="g-icon">
-              <div class="g-icon-img" style="background:#FDFAF4">
-                <img class="g-ci" src="icon-veo3.jpg" alt="veo 3" style="mix-blend-mode:multiply">
-              </div>
+              <div class="g-icon-img" style="background:url('icon-veo3.jpg') center/cover #FDFAF4;background-blend-mode:multiply"></div>
               <span class="g-icon-lbl">veo 3</span>
             </div>
             <div class="g-icon">
@@ -1672,19 +1670,19 @@
     <div class="tm rv d1">
       <img class="tm-av" src="Митя.jpg" alt="Mitya">
       <div class="tm-role" data-k="m1r">Senior Creative Director</div>
-      <div class="tm-name">Mitya, 25</div>
+      <div class="tm-name">Mat</div>
       <p class="tm-bio" data-k="m1b">The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.</p>
     </div>
     <div class="tm rv d2">
       <img class="tm-av" src="саша.jpg" alt="Sasha">
       <div class="tm-role" data-k="m2r">Video Producer & Marketer</div>
-      <div class="tm-name" data-k="m2n">Your Name, 21</div>
+      <div class="tm-name">Alex</div>
       <p class="tm-bio" data-k="m2b">Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing across every platform.</p>
     </div>
     <div class="tm rv d3">
       <img class="tm-av" src="захар.jpg" alt="Zakhar">
       <div class="tm-role" data-k="m3r">Web Developer & Creator</div>
-      <div class="tm-name" data-k="m3n">Youngest, 19</div>
+      <div class="tm-name">Zakh</div>
       <p class="tm-bio" data-k="m3b">The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.</p>
     </div>
   </div>
@@ -1868,8 +1866,8 @@ const T = {
     p5t:"AI Content Series", p5c:"AI Production",
     tm_lbl:"Who we are", tm_ttl:"The team",
     m1r:"Senior Creative Director", m1b:"The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.",
-    m2r:"Video Producer & Marketer", m2n:"Sasha, 21", m2b:"Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing.",
-    m3r:"Web Developer & Creator", m3n:"Zakhar, 19", m3b:"The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.",
+    m2r:"Video Producer & Marketer", m2b:"Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing.",
+    m3r:"Web Developer & Creator", m3b:"The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.",
     c_lbl:"Transparent pricing", c_ttl:"Price calculator", c_d:"Pick the services you need and get an instant estimate. Every project is unique — this is a starting point.",
     g1:"🎬 Video Editing", g2:"📱 Social Media Management", g3:"🎯 Paid Advertising", g4:"🌐 Web Development",
     v1n:"Short video (under 1 min)", v1h:"Vertical or horizontal · TikTok / Reels",
@@ -1918,8 +1916,8 @@ const T = {
     p5t:"AI-контент серия", p5c:"AI Продакшн",
     tm_lbl:"Кто мы", tm_ttl:"Команда",
     m1r:"Старший креативный директор", m1b:"Опытнейший в команде. Управляет рекламными кампаниями с большими бюджетами, создаёт вирусный контент и умеет превращать внимание в деньги.",
-    m2r:"Видеопродюсер и маркетолог", m2n:"Саша, 21", m2b:"Монтажёр, специалист по рекламе и вайб-кодер. Объединяю творческий продакшн с перформанс-маркетингом.",
-    m3r:"Веб-разработчик и создатель", m3n:"Захар, 19", m3b:"Строитель команды. Специализируется на вайб-кодинге — превращает идеи в быстрые, красивые сайты, которые конвертят.",
+    m2r:"Видеопродюсер и маркетолог", m2b:"Монтажёр, специалист по рекламе и вайб-кодер. Объединяю творческий продакшн с перформанс-маркетингом.",
+    m3r:"Веб-разработчик и создатель", m3b:"Строитель команды. Специализируется на вайб-кодинге — превращает идеи в быстрые, красивые сайты, которые конвертят.",
     c_lbl:"Прозрачные цены", c_ttl:"Калькулятор стоимости", c_d:"Выберите нужные услуги и получите предварительную оценку. Каждый проект уникален — это отправная точка.",
     g1:"🎬 Видеомонтаж", g2:"📱 Ведение соцсетей", g3:"🎯 Платная реклама", g4:"🌐 Веб-разработка",
     v1n:"Короткое видео (до 1 мин)", v1h:"Вертикальное или горизонтальное · TikTok / Reels",
@@ -1968,8 +1966,8 @@ const T = {
     p5t:"Seria treści AI", p5c:"Produkcja AI",
     tm_lbl:"Kim jesteśmy", tm_ttl:"Zespół",
     m1r:"Starszy dyrektor kreatywny", m1b:"Filar doświadczenia. Prowadzi kampanie z dużymi budżetami, tworzy wirusowe treści i wie, jak zamieniać uwagę w zyski.",
-    m2r:"Producent wideo i marketer", m2n:"Sasha, 21", m2b:"Montażysta, specjalista od reklam i vibe coder. Łączy produkcję kreatywną z marketingiem efektywnościowym.",
-    m3r:"Deweloper i twórca", m3n:"Zakhar, 19", m3b:"Budowniczy grupy. Specjalizuje się w vibe codingu — zamienia pomysły w szybkie, piękne strony, które konwertują.",
+    m2r:"Producent wideo i marketer", m2b:"Montażysta, specjalista od reklam i vibe coder. Łączy produkcję kreatywną z marketingiem efektywnościowym.",
+    m3r:"Deweloper i twórca", m3b:"Budowniczy grupy. Specjalizuje się w vibe codingu — zamienia pomysły w szybkie, piękne strony, które konwertują.",
     c_lbl:"Przejrzyste ceny", c_ttl:"Kalkulator cen", c_d:"Wybierz potrzebne usługi i otrzymaj wstępną wycenę. Każdy projekt jest wyjątkowy — to punkt wyjścia.",
     g1:"🎬 Montaż wideo", g2:"📱 Zarządzanie social mediami", g3:"🎯 Reklama płatna", g4:"🌐 Tworzenie stron",
     v1n:"Krótkie wideo (do 1 min)", v1h:"Pionowe lub poziome · TikTok / Reels",
