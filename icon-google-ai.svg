@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="253.0061mm"
+   height="289.69199mm"
+   viewBox="0 0 253.0061 289.69199"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="Google AI 2018.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.16013082"
+     inkscape:cx="1302.0604"
+     inkscape:cy="930.4892"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(24.886918,-5.0997624)">
+    <g
+       fill="none"
+       fill-rule="evenodd"
+       id="g866"
+       transform="matrix(1.2650305,0,0,1.2650305,-43.862376,5.0997624)">
+      <circle
+         cx="68"
+         cy="39"
+         fill="#ea4335"
+         r="12"
+         id="circle824" />
+      <circle
+         cx="68"
+         cy="89"
+         fill="#ea4335"
+         r="12"
+         id="circle826" />
+      <circle
+         cx="68"
+         cy="139"
+         fill="#ea4335"
+         r="12"
+         id="circle828" />
+      <circle
+         cx="68"
+         cy="189"
+         fill="#ea4335"
+         r="12"
+         id="circle830" />
+      <g
+         fill="#fbbc04"
+         id="g842">
+        <circle
+           cx="111"
+           cy="14"
+           r="14"
+           id="circle832" />
+        <circle
+           cx="111"
+           cy="64"
+           r="14"
+           id="circle834" />
+        <circle
+           cx="111"
+           cy="114"
+           r="14"
+           id="circle836" />
+        <circle
+           cx="111"
+           cy="164"
+           r="14"
+           id="circle838" />
+        <circle
+           cx="111"
+           cy="215"
+           r="14"
+           id="circle840" />
+      </g>
+      <circle
+         cx="153.5"
+         cy="39.5"
+         fill="#34a853"
+         r="16.5"
+         id="circle844" />
+      <circle
+         cx="153.5"
+         cy="89.5"
+         fill="#34a853"
+         r="16.5"
+         id="circle846" />
+      <circle
+         cx="153.5"
+         cy="139.5"
+         fill="#34a853"
+         r="16.5"
+         id="circle848" />
+      <circle
+         cx="153.5"
+         cy="189.5"
+         fill="#34a853"
+         r="16.5"
+         id="circle850" />
+      <g
+         fill="#4285f4"
+         id="g864">
+        <circle
+           cx="196"
+           cy="64"
+           r="19"
+           id="circle852" />
+        <circle
+           cx="25"
+           cy="64"
+           r="10"
+           id="circle854" />
+        <circle
+           cx="25"
+           cy="114"
+           r="10"
+           id="circle856" />
+        <circle
+           cx="25"
+           cy="164"
+           r="10"
+           id="circle858" />
+        <circle
+           cx="196"
+           cy="114"
+           r="19"
+           id="circle860" />
+        <circle
+           cx="196"
+           cy="164"
+           r="19"
+           id="circle862" />
+      </g>
+    </g>
+  </g>
+</svg>
