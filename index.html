@@ -830,7 +830,7 @@
       position: relative; overflow: hidden;
     }
     .g-icon-img img { width: 34px; height: 34px; object-fit: contain; display: block; filter: drop-shadow(0 1px 3px rgba(0,0,0,.3)); }
-    .g-icon-img .g-ci { width: 100%; height: 100%; object-fit: contain; display: block; filter: none; }
+    .g-icon-img .g-ci { width: 100%; height: 100%; object-fit: cover; display: block; filter: none; }
     .g-icon-img::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, rgba(255,255,255,.28) 0%, transparent 55%);
@@ -881,7 +881,7 @@
     }
     .tools-tab.t-active { background: rgba(255,255,255,.17); color: #fff; }
     .tools-tab:hover:not(.t-active) { color: rgba(255,255,255,.62); }
-    .tools-slider-wrap { overflow: hidden; }
+    .tools-slider-wrap { overflow: hidden; padding-top: 8px; margin-top: -8px; }
     .tools-slider {
       display: flex;
       transition: transform .35s cubic-bezier(.4,0,.2,1);
@@ -1224,7 +1224,7 @@
               <span class="g-icon-lbl">Canva</span>
             </div>
             <div class="g-icon">
-              <div class="g-icon-img" style="background:#000000">
+              <div class="g-icon-img" style="background:#ffffff">
                 <img class="g-ci" src="icon-midjourney.svg" alt="Midjourney">
               </div>
               <span class="g-icon-lbl">Midjourney</span>
@@ -1301,7 +1301,7 @@
             </div>
             <div class="g-icon">
               <div class="g-icon-img" style="background:#4285F4">
-                <img class="g-ci" src="icon-google-ai.svg" alt="Google AI">
+                <img class="g-ci" src="icon-google-ai.svg" alt="Google AI" style="transform:rotate(90deg)">
               </div>
               <span class="g-icon-lbl">Google AI</span>
             </div>
@@ -2259,7 +2259,7 @@ document.querySelectorAll('.pf').forEach(btn => {
   if (!slider || !widget) return;
 
   const TOTAL = 4, DELAY = 2000;
-  let cur = 0, paused = false, timer = null, resumeTimer = null;
+  let cur = 0, paused = false, hovering = false, timer = null, resumeTimer = null;
 
   function goTo(idx) {
     slider.style.transform = 'translateX(-' + (idx * 100) + '%)';
@@ -2273,13 +2273,17 @@ document.querySelectorAll('.pf').forEach(btn => {
   }
 
   tabs.forEach(function(tab, i) {
-    tab.addEventListener('click', function() { goTo(i); paused = false; tick(); });
+    tab.addEventListener('click', function() {
+      goTo(i);
+      if (!hovering) { paused = false; tick(); }
+    });
   });
 
   widget.addEventListener('mouseenter', function() {
-    paused = true; clearTimeout(timer); clearTimeout(resumeTimer);
+    hovering = true; paused = true; clearTimeout(timer); clearTimeout(resumeTimer);
   });
   widget.addEventListener('mouseleave', function() {
+    hovering = false;
     clearTimeout(resumeTimer);
     resumeTimer = setTimeout(function() { paused = false; tick(); }, 300);
   });
