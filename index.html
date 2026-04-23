@@ -35,20 +35,26 @@
     /* ── CURSOR ── */
     #cur {
       position: fixed; width: 8px; height: 8px;
-      background: var(--accent); border-radius: 50%;
+      background: #fff; border-radius: 50%;
       pointer-events: none; z-index: 9999;
       transform: translate(-50%,-50%);
-      transition: transform .15s, background .2s;
+      transition: opacity .2s, transform .15s;
+      mix-blend-mode: difference;
     }
     #cur-ring {
-      position: fixed; width: 38px; height: 38px;
-      border: 1px solid rgba(var(--acc-rgb),.35); border-radius: 50%;
+      position: fixed; width: 40px; height: 40px;
+      border: 1.5px solid rgba(255,255,255,.55); border-radius: 50%;
       pointer-events: none; z-index: 9998;
       transform: translate(-50%,-50%);
-      transition: transform .2s, border-color .2s;
+      transition: width .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1),
+                  background .35s, border-color .35s;
     }
-    body.cursor-hover #cur { transform: translate(-50%,-50%) scale(3); background: rgba(var(--acc-rgb),.5); }
-    body.cursor-hover #cur-ring { transform: translate(-50%,-50%) scale(1.6); border-color: rgba(var(--acc-rgb),.7); }
+    body.cursor-hover #cur { opacity: 0; }
+    body.cursor-hover #cur-ring {
+      width: 64px; height: 64px;
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.75);
+    }
 
     /* ── NAV ── */
     nav {
@@ -130,12 +136,19 @@
       position: relative; z-index: 2;
     }
     .hero-h .ln {
-      display: block; opacity: 0; transform: translateY(90px);
-      animation: slideup .9s cubic-bezier(.16,1,.3,1) forwards;
+      display: flex; flex-wrap: wrap; gap: 0 .22em;
     }
-    .hero-h .ln:nth-child(1) { animation-delay: .3s; }
-    .hero-h .ln:nth-child(2) { animation-delay: .45s; }
-    .hero-h .ln:nth-child(3) { animation-delay: .6s; }
+    .word-wrap {
+      display: inline-block; overflow: hidden; vertical-align: bottom;
+    }
+    .word-inner {
+      display: block;
+      opacity: 0; transform: translateY(1em);
+      animation: wordSlideUp .75s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    @keyframes wordSlideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
     .hero-h .ac { color: var(--accent); }
     .hero-bot {
       display: flex; align-items: flex-end; justify-content: space-between;
@@ -247,30 +260,36 @@
     /* ── PORTFOLIO ── */
     #portfolio { padding: 130px 52px; }
     .port-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto auto auto;
+      display: flex; flex-direction: row;
+      overflow-x: auto; overflow-y: hidden;
       gap: 14px; margin-top: 64px;
+      padding-bottom: 12px;
+      cursor: grab;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(var(--acc-rgb),.45) var(--bg3);
+      user-select: none;
     }
+    .port-grid::-webkit-scrollbar { height: 4px; }
+    .port-grid::-webkit-scrollbar-track { background: var(--bg3); border-radius: 2px; }
+    .port-grid::-webkit-scrollbar-thumb { background: rgba(var(--acc-rgb),.5); border-radius: 2px; }
+    .port-grid.dragging { cursor: grabbing; }
+    .port-grid.dragging .port-c { pointer-events: none; }
+
     .port-c {
+      flex: 0 0 340px; height: 220px;
       position: relative; overflow: hidden; border-radius: 10px;
-      aspect-ratio: 4/3; background: var(--bg3); cursor: none;
+      background: var(--bg3); cursor: none;
       border: 1.5px solid rgba(var(--acc-rgb), .12);
       box-shadow: 0 0 0 0 rgba(var(--acc-rgb), 0), inset 0 0 0 0 rgba(var(--acc-rgb), 0);
       transition: border-color .4s, box-shadow .5s;
+      scroll-snap-align: start;
     }
     .port-c:hover {
       border-color: rgba(var(--acc-rgb), .55);
       box-shadow: 0 0 40px rgba(var(--acc-rgb), .18), 0 0 80px rgba(var(--acc-rgb), .07);
     }
-    /* Explicit placement — 8 cards */
-    .port-c:nth-child(1) { grid-column: 1 / 3; grid-row: 1; aspect-ratio: unset; } /* Brand Video — высота = ряд */
-    .port-c:nth-child(2) { grid-column: 3;     grid-row: 1; aspect-ratio: 9/16; } /* Instagram — задаёт высоту ряда */
-    .port-c:nth-child(3) { grid-column: 1;     grid-row: 2; } /* Facebook Ads */
-    .port-c:nth-child(4) { grid-column: 2 / 4; grid-row: 2 / 4; aspect-ratio: unset; } /* Business Websites — wide, 2 строки */
-    .port-c:nth-child(5) { grid-column: 1;     grid-row: 3; } /* Google Ads */
-    .port-c:nth-child(6) { grid-column: 1; grid-row: 4; } /* AI 1 */
-    .port-c:nth-child(7) { grid-column: 2; grid-row: 4; } /* AI 2 */
-    .port-c:nth-child(8) { grid-column: 3; grid-row: 4; } /* AI 3 */
 
     .port-img, .port-vid {
       width: 100%; height: 100%; object-fit: cover;
@@ -728,13 +747,13 @@
       background: rgba(244,63,94,.8); flex-shrink: 0;
     }
 
-    /* Hero title gradient */
-    #hero .hero-h .ln:first-child {
-      background: linear-gradient(to bottom, #fff, rgba(255,255,255,.8));
+    /* Hero title gradient — applied per word class */
+    #hero .hero-h .word-ln1 {
+      background: linear-gradient(to bottom, #fff, rgba(255,255,255,.78));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    #hero .hero-h .ac {
+    #hero .hero-h .word-ac {
       background: linear-gradient(to right, #a5b4fc, rgba(255,255,255,.9), #fda4af);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -744,7 +763,6 @@
     #hero .hero-tag { color: rgba(255,255,255,.75); }
     #hero .hero-tag::before { background: rgba(255,255,255,.5); }
     #hero .hero-h { color: #fff; }
-    #hero .hero-h .ac { color: #c4b5fd; }
     #hero .hero-desc { color: rgba(255,255,255,.72); }
     #hero .btn-s { color: rgba(255,255,255,.8); }
     #hero .btn-s:hover { color: #fff; }
@@ -924,16 +942,14 @@
       .stat:nth-child(4) { border-top: 1px solid var(--border); }
       .stat-n { letter-spacing: -1px; }
 
-      /* PORTFOLIO — сброс explicit grid, простая колонка */
+      /* PORTFOLIO — на мобайле вертикальный стек */
       .port-grid {
-        display: flex; flex-direction: column; gap: 12px;
+        flex-direction: column; overflow-x: visible; overflow-y: visible;
+        cursor: auto; scroll-snap-type: none; padding-bottom: 0;
       }
       .port-c {
-        grid-column: unset !important; grid-row: unset !important;
-        aspect-ratio: 16/9 !important; width: 100%;
+        flex: none; width: 100%; height: auto; aspect-ratio: 16/9;
       }
-      /* Instagram оставить вертикальным */
-      .port-c:nth-child(2) { aspect-ratio: 9/16 !important; max-height: 70vw; overflow: hidden; }
 
       /* TEAM */
       .team-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -958,6 +974,26 @@
       footer { flex-direction: column; gap: 16px; text-align: center; }
       .f-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
     }
+
+    /* ── FILM GRAIN ── */
+    #grain-svg {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9995;
+      opacity: .042;
+    }
+
+    /* ── PORTFOLIO HOVER PREVIEW ── */
+    #port-preview {
+      position: fixed; width: 320px; height: 200px;
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.25);
+      pointer-events: none; z-index: 9990;
+      opacity: 0; transform: scale(.93);
+      transition: opacity .22s cubic-bezier(.16,1,.3,1), transform .22s cubic-bezier(.16,1,.3,1);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    #port-preview.pp-active { opacity: 1; transform: scale(1); }
+    #pp-video, #pp-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     @media (max-width: 500px) {
       /* HERO */
@@ -990,6 +1026,21 @@
   </style>
 </head>
 <body>
+
+<!-- FILM GRAIN -->
+<svg id="grain-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <filter id="grain-f" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence id="grain-turb" type="fractalNoise" baseFrequency="0.68" numOctaves="3" seed="0" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#grain-f)"/>
+</svg>
+
+<!-- PORTFOLIO HOVER PREVIEW -->
+<div id="port-preview">
+  <video id="pp-video" autoplay muted loop playsinline></video>
+  <img id="pp-img" alt="">
+</div>
 
 <!-- CURSOR -->
 <div id="cur"></div>
@@ -1277,19 +1328,19 @@
   <div class="port-grid">
 
     <!-- 1. Brand Video Campaign — широкая, природа-заглушка -->
-    <div class="port-c rv" data-cat="video">
+    <div class="port-c rv" data-cat="video" data-preview="image" data-preview-src="nature.jpg">
       <img class="port-img" src="nature.jpg" alt="" style="object-position:center center;">
       <div class="port-ov"><div class="port-inf"><h4 data-k="p1t">Brand Video Campaign</h4><p data-k="p1c">Video Production</p></div></div>
     </div>
 
     <!-- 2. Instagram Growth — вертикальная, реальное видео -->
-    <div class="port-c rv d1" data-cat="social">
+    <div class="port-c rv d1" data-cat="social" data-preview="video" data-preview-src="work1_preview.mp4">
       <video class="port-vid" src="work1_preview.mp4" autoplay muted loop playsinline preload="auto" style="object-fit:cover;object-position:center;"></video>
       <div class="port-ov"><div class="port-inf"><h4 data-k="p2t">Instagram Growth</h4><p data-k="p2c">Social Media</p></div></div>
     </div>
 
     <!-- 3. Facebook Ads Campaign — CSS Facebook Ads dashboard -->
-    <div class="port-c rv d2" data-cat="ads">
+    <div class="port-c rv d2" data-cat="ads" data-preview="image" data-preview-src="PREVIEW_FB_ADS.jpg">
       <div class="fb-mock">
         <div class="fb-hd">
           <div class="fb-logo">f</div>
@@ -1316,7 +1367,7 @@
     </div>
 
     <!-- 4. Business Websites — wide 2×2 скриншоты (cols 2-3) -->
-    <div class="port-c rv d1" data-cat="web">
+    <div class="port-c rv d1" data-cat="web" data-preview="image" data-preview-src="site1.jpg">
       <div class="port-sites">
         <a href="https://inca1122.github.io/gucio_bar/index.html" target="_blank" rel="noopener" class="site-frame">
           <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">gucio-bar.pl</span></div>
@@ -1339,7 +1390,7 @@
     </div>
 
     <!-- 5. Google Ads mock -->
-    <div class="port-c rv d2" data-cat="ads">
+    <div class="port-c rv d2" data-cat="ads" data-preview="image" data-preview-src="PREVIEW_GOOGLE_ADS.jpg">
       <div class="ga-mock">
         <div class="ga-hd">
           <div class="ga-logo"><span class="ga-logo-g">G</span></div>
@@ -1366,25 +1417,25 @@
     </div>
 
     <!-- 6. AI Content 1 — preview1 -->
-    <div class="port-c rv d3" data-cat="ai">
+    <div class="port-c rv d3" data-cat="ai" data-preview="video" data-preview-src="preview1.mp4">
       <video class="port-vid" src="preview1.mp4" autoplay muted loop playsinline preload="auto"></video>
       <div class="port-ov"><div class="port-inf"><h4 data-k="p5t">AI Content Series</h4><p data-k="p5c">AI Production</p></div></div>
     </div>
 
     <!-- 7. AI Content 2 — preview2 -->
-    <div class="port-c rv d4" data-cat="ai">
+    <div class="port-c rv d4" data-cat="ai" data-preview="video" data-preview-src="preview2.mp4">
       <video class="port-vid" src="preview2.mp4" autoplay muted loop playsinline preload="auto"></video>
       <div class="port-ov"><div class="port-inf"><h4 data-k="p5t">AI Content Series</h4><p data-k="p5c">AI Production</p></div></div>
     </div>
 
     <!-- 8. AI Content 3 — preview3, wide -->
-    <div class="port-c rv" data-cat="ai">
+    <div class="port-c rv" data-cat="ai" data-preview="video" data-preview-src="preview3_small.mp4">
       <video class="port-vid" src="preview3_small.mp4" autoplay muted loop playsinline preload="auto"></video>
       <div class="port-ov"><div class="port-inf"><h4 data-k="p5t">AI Content Series</h4><p data-k="p5c">AI Production</p></div></div>
     </div>
 
     <!-- 9. PickActive -->
-    <div class="port-c rv d1" data-cat="web">
+    <div class="port-c rv d1" data-cat="web" data-preview="image" data-preview-src="PREVIEW_PICKACTIVE.jpg">
       <div class="port-sites" style="grid-template-columns:1fr;">
         <a href="https://pickactive.pl" target="_blank" rel="noopener" class="site-frame" style="height:100%">
           <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">pickactive.pl</span></div>
@@ -1395,7 +1446,7 @@
     </div>
 
     <!-- 10. Bee Gelato -->
-    <div class="port-c rv d2" data-cat="web">
+    <div class="port-c rv d2" data-cat="web" data-preview="image" data-preview-src="PREVIEW_BEEGELATO.jpg">
       <div class="port-sites" style="grid-template-columns:1fr;">
         <a href="https://beegelato.sk" target="_blank" rel="noopener" class="site-frame" style="height:100%">
           <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">beegelato.sk</span></div>
@@ -1406,7 +1457,7 @@
     </div>
 
     <!-- 11. Marketing AI -->
-    <div class="port-c rv d3" data-cat="web marketing">
+    <div class="port-c rv d3" data-cat="web marketing" data-preview="image" data-preview-src="PREVIEW_MARKETINGAI.jpg">
       <div class="port-sites" style="grid-template-columns:1fr;">
         <a href="https://marketingai.energiabiznesu.pl" target="_blank" rel="noopener" class="site-frame" style="height:100%">
           <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">marketingai.energiabiznesu.pl</span></div>
@@ -1786,6 +1837,7 @@ function applyLang(l) {
     el.textContent = isPLN ? 'zł' : '$';
   });
   updateCalc();
+  rebuildHeroTitle();
 }
 
 document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.l)));
@@ -1829,13 +1881,20 @@ const obs = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-// ── COUNTERS ──────────────────────────────────────────────────────────────────
+// ── COUNTERS (smooth 1.5s eased) ──────────────────────────────────────────────
 const cntObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     const el = e.target, target = +el.dataset.t;
-    let n = 0; const step = Math.max(target / 55, 0.05);
-    const timer = setInterval(() => { n += step; if (n >= target) { n = target; clearInterval(timer); } el.textContent = Math.floor(n); }, 16);
+    const dur = 1500;
+    const t0 = performance.now();
+    function tick(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
     cntObs.unobserve(el);
   });
 }, { threshold: 0.5 });
@@ -2002,6 +2061,149 @@ document.querySelectorAll('.pf').forEach(btn => {
     });
   });
 });
+
+// ── HERO TITLE: WORD-BY-WORD ANIMATION ───────────────────────────────────────
+function rebuildHeroTitle() {
+  const t = T[lang];
+  const h = document.querySelector('.hero-h');
+  if (!h) return;
+  let delay = 0.28;
+  const step = 0.1;
+
+  function makeWords(text, extraClass) {
+    return text.trim().split(/\s+/).map(word => {
+      const d = delay.toFixed(2);
+      delay += step;
+      const cls = 'word-inner' + (extraClass ? ' ' + extraClass : '');
+      return `<span class="word-wrap"><span class="${cls}" style="animation-delay:${d}s">${word}</span></span>`;
+    }).join(' ');
+  }
+
+  const line1 = `<span class="ln">${makeWords(t.hero_l1 || '', 'word-ln1')}</span>`;
+  const line2 = `<span class="ln">${makeWords(t.hero_ac || '', 'word-ac')} ${makeWords(t.hero_mid || '')}</span>`;
+  const line3 = `<span class="ln">${makeWords(t.hero_l3 || '')}</span>`;
+  h.innerHTML = line1 + line2 + line3;
+}
+
+// ── FILM GRAIN ANIMATION ──────────────────────────────────────────────────────
+(function() {
+  const turb = document.getElementById('grain-turb');
+  if (!turb) return;
+  let lastTs = 0;
+  function animGrain(ts) {
+    if (ts - lastTs > 60) { // ~15fps
+      turb.setAttribute('seed', (Math.random() * 999) | 0);
+      lastTs = ts;
+    }
+    requestAnimationFrame(animGrain);
+  }
+  requestAnimationFrame(animGrain);
+})();
+
+// ── PORTFOLIO HOVER PREVIEW ───────────────────────────────────────────────────
+(function() {
+  const preview = document.getElementById('port-preview');
+  const ppVid   = document.getElementById('pp-video');
+  const ppImg   = document.getElementById('pp-img');
+  if (!preview) return;
+
+  let active = false;
+  let curX = 0, curY = 0;
+
+  document.addEventListener('mousemove', e => {
+    if (!active) return;
+    curX = e.clientX; curY = e.clientY;
+    const pw = 320, ph = 200, gap = 24;
+    let x = curX + gap;
+    let y = curY + gap;
+    if (x + pw > window.innerWidth)  x = curX - pw - gap;
+    if (y + ph > window.innerHeight) y = curY - ph - gap;
+    preview.style.left = x + 'px';
+    preview.style.top  = y + 'px';
+  });
+
+  document.querySelectorAll('.port-c[data-preview]').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const type = card.dataset.preview;
+      const src  = card.dataset.previewSrc;
+      if (!src || src.startsWith('PREVIEW_')) return;
+
+      if (type === 'video') {
+        ppVid.src = src;
+        ppVid.style.display = 'block';
+        ppImg.style.display = 'none';
+        ppVid.play().catch(() => {});
+      } else {
+        ppImg.src = src;
+        ppImg.style.display = 'block';
+        ppVid.style.display = 'none';
+        ppVid.src = '';
+      }
+
+      active = true;
+      preview.classList.add('pp-active');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      active = false;
+      preview.classList.remove('pp-active');
+      ppVid.src = '';
+    });
+  });
+})();
+
+// ── PORTFOLIO DRAG-TO-SCROLL WITH INERTIA ─────────────────────────────────────
+(function() {
+  const slider = document.querySelector('.port-grid');
+  if (!slider) return;
+
+  let isDown = false, startX = 0, scrollLeft = 0;
+  let velX = 0, lastX = 0, rafId = null;
+  const FRICTION = 0.91;
+
+  function stopInertia() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  function inertia() {
+    if (Math.abs(velX) < 0.4) return;
+    slider.scrollLeft -= velX;
+    velX *= FRICTION;
+    rafId = requestAnimationFrame(inertia);
+  }
+
+  slider.addEventListener('mousedown', e => {
+    // allow clicks on links inside cards
+    if (e.target.closest('a[href]') && !e.target.closest('.port-c')) return;
+    isDown = true;
+    slider.classList.add('dragging');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    velX = 0; lastX = e.pageX;
+    stopInertia();
+    e.preventDefault();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDown) return;
+    isDown = false;
+    slider.classList.remove('dragging');
+    inertia();
+  });
+
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    const x = e.pageX - slider.offsetLeft;
+    velX = (e.pageX - lastX) * 1.2;
+    lastX = e.pageX;
+    slider.scrollLeft = scrollLeft - (x - startX);
+  });
+
+  // reset scroll on filter change
+  document.querySelectorAll('.pf').forEach(btn => {
+    btn.addEventListener('click', () => {
+      slider.scrollLeft = 0;
+    }, true);
+  });
+})();
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 applyLang(detectLang());
