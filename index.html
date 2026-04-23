@@ -669,36 +669,75 @@
       .pf { font-size: 11px; padding: 7px 14px; }
     }
 
-    /* ── AURORA BACKGROUND ── */
-    #hero-aurora {
-      position: absolute; inset: -10px; z-index: 0;
-      pointer-events: none;
-      background-image:
-        repeating-linear-gradient(100deg, #000 0%, #000 7%, transparent 10%, transparent 12%, #000 16%),
-        repeating-linear-gradient(100deg, #3b82f6 10%, #a5b4fc 15%, #93c5fd 20%, #ddd6fe 25%, #60a5fa 30%);
-      background-size: 300%, 200%;
-      background-position: 50% 50%, 50% 50%;
-      filter: blur(10px);
-      opacity: 0.55;
-      will-change: background-position;
-      animation: aurora 60s linear infinite;
-      mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+    /* ── HERO GEOMETRIC BACKGROUND ── */
+    #hero { background: #030303; }
+
+    .hero-bg-grad {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(99,102,241,.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 80%, rgba(244,63,94,.06) 0%, transparent 55%);
+      filter: blur(40px);
     }
-    #hero-aurora::after {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        repeating-linear-gradient(100deg, #000 0%, #000 7%, transparent 10%, transparent 12%, #000 16%),
-        repeating-linear-gradient(100deg, #3b82f6 10%, #a5b4fc 15%, #93c5fd 20%, #ddd6fe 25%, #60a5fa 30%);
-      background-size: 200%, 100%;
-      background-attachment: fixed;
-      mix-blend-mode: difference;
-      animation: aurora 60s linear infinite;
+
+    /* Floating shapes */
+    .hero-shapes { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+
+    .sh-wrap {
+      position: absolute; opacity: 0;
+      animation: shEnter 2.4s cubic-bezier(.23,.86,.39,.96) forwards;
     }
-    @keyframes aurora {
-      from { background-position: 50% 50%, 50% 50%; }
-      to   { background-position: 350% 50%, 350% 50%; }
+    @keyframes shEnter {
+      from { opacity: 0; transform: translateY(-150px) rotate(var(--rf, 0deg)); }
+      to   { opacity: 1; transform: translateY(0)      rotate(var(--rt, 0deg)); }
+    }
+
+    .elegant-shape {
+      border-radius: 9999px;
+      background: linear-gradient(to right, var(--sc, rgba(255,255,255,.08)), transparent);
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+      border: 2px solid rgba(255,255,255,.15);
+      box-shadow: 0 8px 32px rgba(255,255,255,.08);
+      position: relative;
+      animation: shFloat 12s ease-in-out infinite;
+    }
+    .elegant-shape::after {
+      content: ''; position: absolute; inset: 0; border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.18), transparent 70%);
+    }
+    @keyframes shFloat {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(15px); }
+    }
+
+    /* Top/bottom fades */
+    .hero-fade {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(3,3,3,.75) 0%, transparent 25%, transparent 75%, #030303 100%);
+    }
+
+    /* Badge style update */
+    .hero-tag {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 9999px; padding: 6px 16px;
+    }
+    .hero-tag::before { display: none; }
+    .hero-tag-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(244,63,94,.8); flex-shrink: 0;
+    }
+
+    /* Hero title gradient */
+    #hero .hero-h .ln:first-child {
+      background: linear-gradient(to bottom, #fff, rgba(255,255,255,.8));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    #hero .hero-h .ac {
+      background: linear-gradient(to right, #a5b4fc, rgba(255,255,255,.9), #fda4af);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     /* Hero text — белый поверх тёмного градиента */
@@ -972,12 +1011,34 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div id="hero-aurora"></div>
+  <!-- Background -->
+  <div class="hero-bg-grad"></div>
+
+  <!-- Floating shapes -->
+  <div class="hero-shapes">
+    <div class="sh-wrap" style="left:-5%;top:20%;--rf:-3deg;--rt:12deg;animation-delay:.3s">
+      <div class="elegant-shape" style="width:600px;height:140px;--sc:rgba(99,102,241,.15);animation-delay:0s"></div>
+    </div>
+    <div class="sh-wrap" style="right:0%;top:75%;--rf:-30deg;--rt:-15deg;animation-delay:.5s">
+      <div class="elegant-shape" style="width:500px;height:120px;--sc:rgba(244,63,94,.15);animation-delay:1.5s"></div>
+    </div>
+    <div class="sh-wrap" style="left:10%;bottom:10%;--rf:-23deg;--rt:-8deg;animation-delay:.4s">
+      <div class="elegant-shape" style="width:300px;height:80px;--sc:rgba(139,92,246,.15);animation-delay:3s"></div>
+    </div>
+    <div class="sh-wrap" style="right:20%;top:15%;--rf:5deg;--rt:20deg;animation-delay:.6s">
+      <div class="elegant-shape" style="width:200px;height:60px;--sc:rgba(245,158,11,.15);animation-delay:4.5s"></div>
+    </div>
+    <div class="sh-wrap" style="left:25%;top:10%;--rf:-40deg;--rt:-25deg;animation-delay:.7s">
+      <div class="elegant-shape" style="width:150px;height:40px;--sc:rgba(6,182,212,.15);animation-delay:6s"></div>
+    </div>
+  </div>
+
+  <div class="hero-fade"></div>
   <canvas id="hero-canvas"></canvas>
 
   <!-- LEFT: текст -->
   <div class="hero-content">
-    <div class="hero-tag" data-k="hero_tag">Creative Agency</div>
+    <div class="hero-tag" data-k="hero_tag" style="display:inline-flex;align-items:center;gap:8px"><span class="hero-tag-dot"></span>Creative Agency</div>
     <h1 class="hero-h">
       <span class="ln" data-k="hero_l1">We create</span>
       <span class="ln"><span class="ac" data-k="hero_ac">content</span> <span data-k="hero_mid">that</span></span>
@@ -1028,7 +1089,7 @@
 
         <div class="g-icon">
           <div class="g-icon-img" style="background:linear-gradient(135deg,#0d0d0d,#1a1a1a)">
-            <img src="https://cdn.simpleicons.org/chatgpt/ffffff" alt="ChatGPT">
+            <svg viewBox="0 0 24 24" fill="white" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.52 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zm-9.02 12.61a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.8.8 0 0 0 .39-.68V11.6l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.49 4.48zm-9.66-4.13a4.47 4.47 0 0 1-.53-3.01l.14.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06L9.74 19.95a4.5 4.5 0 0 1-6.14-1.65zM2.34 7.9a4.49 4.49 0 0 1 2.37-1.97v5.28a.77.77 0 0 0 .39.68l5.81 3.35-2.02 1.17a.08.08 0 0 1-.07 0L3.99 13.6A4.5 4.5 0 0 1 2.34 7.9zm16.6 3.86-5.84-3.37 2.02-1.17a.08.08 0 0 1 .07 0l4.83 2.79a4.49 4.49 0 0 1-.68 8.1v-5.68a.79.79 0 0 0-.4-.67zm2.01-3.02-.14-.09-4.77-2.78a.78.78 0 0 0-.79 0L9.41 9.23V6.9a.07.07 0 0 1 .03-.06l4.82-2.79a4.5 4.5 0 0 1 6.69 4.69zM8.31 12.86 6.29 11.7a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.14.08L8.7 5.46a.8.8 0 0 0-.39.68zm1.1-2.37 2.6-1.5 2.61 1.5v3l-2.6 1.5-2.6-1.5z"/></svg>
           </div>
           <span class="g-icon-lbl">ChatGPT</span>
         </div>
