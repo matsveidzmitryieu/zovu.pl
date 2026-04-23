@@ -669,14 +669,36 @@
       .pf { font-size: 11px; padding: 7px 14px; }
     }
 
-    /* ── HERO WAVES SVG ── */
-    #hero-waves {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 0;
+    /* ── AURORA BACKGROUND ── */
+    #hero-aurora {
+      position: absolute; inset: -10px; z-index: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(100deg, #000 0%, #000 7%, transparent 10%, transparent 12%, #000 16%),
+        repeating-linear-gradient(100deg, #3b82f6 10%, #a5b4fc 15%, #93c5fd 20%, #ddd6fe 25%, #60a5fa 30%);
+      background-size: 300%, 200%;
+      background-position: 50% 50%, 50% 50%;
+      filter: blur(10px);
+      opacity: 0.55;
+      will-change: background-position;
+      animation: aurora 60s linear infinite;
+      mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
     }
-    #hero-waves .a__line {
-      stroke: rgba(255,255,255,0.28);
-      stroke-width: 0.9;
+    #hero-aurora::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(100deg, #000 0%, #000 7%, transparent 10%, transparent 12%, #000 16%),
+        repeating-linear-gradient(100deg, #3b82f6 10%, #a5b4fc 15%, #93c5fd 20%, #ddd6fe 25%, #60a5fa 30%);
+      background-size: 200%, 100%;
+      background-attachment: fixed;
+      mix-blend-mode: difference;
+      animation: aurora 60s linear infinite;
+    }
+    @keyframes aurora {
+      from { background-position: 50% 50%, 50% 50%; }
+      to   { background-position: 350% 50%, 350% 50%; }
     }
 
     /* Hero text — белый поверх тёмного градиента */
@@ -950,7 +972,7 @@
 
 <!-- HERO -->
 <section id="hero">
-  <svg id="hero-waves" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="hero-aurora"></div>
   <canvas id="hero-canvas"></canvas>
 
   <!-- LEFT: текст -->
@@ -1891,112 +1913,6 @@ function updateCalc() {
   draw();
 })();
 
-// ── WAVES ANIMATION ───────────────────────────────────────────────────────────
-(function() {
-  function makeNoise2D() {
-    const perm = new Uint8Array(512);
-    for (let i = 0; i < 256; i++) perm[i] = i;
-    for (let i = 255; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = perm[i]; perm[i] = perm[j]; perm[j] = t; }
-    for (let i = 0; i < 256; i++) perm[256 + i] = perm[i];
-    const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const grad = (h, x, y) => { const u = h < 4 ? x : y; const v = h < 4 ? y : x; return ((h & 1) ? -u : u) + ((h & 2) ? -v : v); };
-    return (x, y) => {
-      const X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
-      x -= Math.floor(x); y -= Math.floor(y);
-      const u = fade(x), v = fade(y);
-      const a = perm[X] + Y, b = perm[X + 1] + Y;
-      return lerp(lerp(grad(perm[a] & 7, x, y), grad(perm[b] & 7, x - 1, y), u),
-                  lerp(grad(perm[a+1] & 7, x, y-1), grad(perm[b+1] & 7, x-1, y-1), u), v);
-    };
-  }
-
-  const hero = document.getElementById('hero');
-  const svg  = document.getElementById('hero-waves');
-  if (!hero || !svg) return;
-
-  const noise = makeNoise2D();
-  let bounding = null, lines = [], paths = [];
-  const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
-
-  function setSize() {
-    bounding = hero.getBoundingClientRect();
-    svg.setAttribute('width', bounding.width);
-    svg.setAttribute('height', bounding.height);
-    svg.setAttribute('viewBox', `0 0 ${bounding.width} ${bounding.height}`);
-  }
-
-  function setLines() {
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
-    paths = []; lines = [];
-    if (!bounding) return;
-    const { width, height } = bounding;
-    const xGap = 9, yGap = 9;
-    const totalLines  = Math.ceil((width  + 200) / xGap);
-    const totalPoints = Math.ceil((height +  30) / yGap);
-    const xStart = (width  - xGap * totalLines)  / 2;
-    const yStart = (height - yGap * totalPoints) / 2;
-    for (let i = 0; i < totalLines; i++) {
-      const pts = [];
-      for (let j = 0; j < totalPoints; j++) {
-        pts.push({ x: xStart + xGap * i, y: yStart + yGap * j, wx: 0, wy: 0, cx: 0, cy: 0, cvx: 0, cvy: 0 });
-      }
-      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      p.setAttribute('fill', 'none');
-      p.setAttribute('stroke', 'rgba(255,255,255,0.25)');
-      p.setAttribute('stroke-width', '0.85');
-      svg.appendChild(p); paths.push(p); lines.push(pts);
-    }
-  }
-
-  function movePoints(t) {
-    lines.forEach(pts => pts.forEach(p => {
-      const m = noise((p.x + t * 0.008) * 0.003, (p.y + t * 0.003) * 0.002) * 8;
-      p.wx = Math.cos(m) * 12; p.wy = Math.sin(m) * 6;
-      const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
-      const d = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
-      if (d < l) { const s = 1 - d / l, f = Math.cos(d * 0.001) * s; p.cvx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035; p.cvy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035; }
-      p.cvx += (0 - p.cx) * 0.01; p.cvy += (0 - p.cy) * 0.01;
-      p.cvx *= 0.95; p.cvy *= 0.95;
-      p.cx = Math.min(50, Math.max(-50, p.cx + p.cvx));
-      p.cy = Math.min(50, Math.max(-50, p.cy + p.cvy));
-    }));
-  }
-
-  function mv(p, cursor) { return { x: p.x + p.wx + (cursor ? p.cx : 0), y: p.y + p.wy + (cursor ? p.cy : 0) }; }
-
-  function drawLines() {
-    lines.forEach((pts, i) => {
-      if (pts.length < 2 || !paths[i]) return;
-      const f = mv(pts[0], false);
-      let d = `M${f.x} ${f.y}`;
-      for (let j = 1; j < pts.length; j++) { const c = mv(pts[j], true); d += ` L${c.x} ${c.y}`; }
-      paths[i].setAttribute('d', d);
-    });
-  }
-
-  function tick(t) {
-    mouse.sx += (mouse.x - mouse.sx) * 0.1;
-    mouse.sy += (mouse.y - mouse.sy) * 0.1;
-    const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
-    mouse.v = Math.hypot(dx, dy);
-    mouse.vs = Math.min(100, mouse.vs + (mouse.v - mouse.vs) * 0.1);
-    mouse.lx = mouse.x; mouse.ly = mouse.y;
-    mouse.a = Math.atan2(dy, dx);
-    movePoints(t); drawLines();
-    requestAnimationFrame(tick);
-  }
-
-  window.addEventListener('mousemove', e => {
-    if (!bounding) return;
-    mouse.x = e.pageX - bounding.left;
-    mouse.y = e.pageY - bounding.top + window.scrollY;
-    if (!mouse.set) { mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.lx = mouse.x; mouse.ly = mouse.y; mouse.set = true; }
-  });
-
-  window.addEventListener('resize', () => { setSize(); setLines(); }, { passive: true });
-  setSize(); setLines(); requestAnimationFrame(tick);
-})();
 
 // ── GLOW CARDS (TEAM) ─────────────────────────────────────────────────────────
 document.addEventListener('pointermove', e => {
