@@ -407,18 +407,21 @@
     .vc-card.vc-h { width: 480px; }
     .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
     .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; position: relative; }
-    .vc-card.vc-active::before {
-      content: '';
+    .vc-glow {
+      display: none;
       position: absolute;
-      inset: -10px;
+      top: -12px; left: -12px; right: -12px;
+      aspect-ratio: 9/16;
       z-index: -1;
       background: var(--vc-thumb) center/cover no-repeat;
       filter: blur(28px) saturate(1.4);
-      border-radius: 28px;
+      border-radius: 24px;
       pointer-events: none;
-      opacity: 0.75;
-      transform: scale(1.06);
+      opacity: 0.8;
+      transform: scale(1.05);
     }
+    .vc-card.vc-h .vc-glow { aspect-ratio: 16/9; }
+    .vc-card.vc-active .vc-glow { display: block; }
     .vc-vid-box {
       width: 100%; border-radius: 18px; overflow: hidden;
       background: var(--bg3); position: relative;
@@ -2237,8 +2240,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     img.src = src;
     img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
     img.alt = '';
-    img.onload = () => c.style.setProperty('--vc-thumb', `url(${img.src})`);
-    c.style.setProperty('--vc-thumb', `url(${src})`);
+    const setThumb = (u) => { c.style.setProperty('--vc-thumb', `url(${u})`); glow.style.backgroundImage = `url(${u})`; };
+    img.onload = () => setThumb(img.src);
+    setThumb(src);
+    const glow = document.createElement('div');
+    glow.className = 'vc-glow';
+    c.insertBefore(glow, c.querySelector('.vc-vid-box'));
     const box = c.querySelector('.vc-vid-box');
     box.prepend(img);
     const ov = document.createElement('div');
@@ -2276,7 +2283,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     let offset = 0;
     for (let i = 0; i < cur; i++) offset += cards[i].offsetWidth + 24;
     offset -= (vw - cards[cur].offsetWidth) / 2;
-    track.style.transform = 'translateX(' + (-Math.max(0, offset)) + 'px)';
+    track.style.transform = 'translateX(' + (-offset) + 'px)';
   }
 
   function setActive(idx) {
