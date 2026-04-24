@@ -455,6 +455,39 @@
     }
     .vc-dot.on { background: var(--accent); transform: scale(1.35); }
 
+    /* ── PORT SECTIONS ── */
+    .port-section { display: none; }
+    .port-section.active { display: block; }
+    /* Design / Web / Ads grid */
+    .port-pgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px; margin-top: 48px;
+    }
+    .port-pg {
+      aspect-ratio: 4/3; border-radius: 14px; overflow: hidden;
+      background: var(--bg3); position: relative; cursor: none;
+      border: 1.5px solid rgba(var(--acc-rgb),.1);
+      transition: border-color .3s, transform .3s;
+    }
+    .port-pg:hover { border-color: rgba(var(--acc-rgb),.5); transform: scale(1.02); }
+    .port-pg img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .port-pg-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,.85) 0%, transparent 55%);
+      display: flex; align-items: flex-end; padding: 20px;
+      opacity: 0; transition: opacity .3s;
+    }
+    .port-pg:hover .port-pg-ov { opacity: 1; }
+    .port-pg-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .port-pg-info p { font-size: 11px; color: rgba(255,255,255,.55); }
+    .port-soon {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px 20px; gap: 12px; margin-top: 48px; text-align: center;
+    }
+    .port-soon-icon { font-size: 36px; opacity: .3; }
+    .port-soon p { font-size: 14px; color: var(--muted); }
+
     /* Facebook Ads mock dashboard */
     .fb-mock {
       position: absolute; inset: 0; padding: 28px;
@@ -1547,7 +1580,8 @@
     <button class="pf" data-f="web" data-k="pf_w">Web Sites</button>
     <button class="pf" data-f="ads" data-k="pf_a">Ads</button>
   </div>
-  <!-- VIDEO CAROUSEL -->
+  <!-- VIDEO -->
+  <div class="port-section active" data-sec="video">
   <div class="vc-outer">
     <div class="vc-track">
 
@@ -1634,6 +1668,46 @@
     </div>
     <div class="vc-dots"></div>
   </div>
+  </div><!-- /port-section video -->
+
+  <!-- DESIGN -->
+  <div class="port-section" data-sec="design">
+    <div class="port-soon">
+      <div class="port-soon-icon">🎨</div>
+      <p data-k="ps_design">Design portfolio — coming soon</p>
+    </div>
+  </div>
+
+  <!-- WEB -->
+  <div class="port-section" data-sec="web">
+    <div class="port-pgrid">
+      <div class="port-pg">
+        <img src="site1.jpg" alt="Web project" loading="lazy">
+        <div class="port-pg-ov"><div class="port-pg-info"><h4>Web Site</h4><p>Landing page</p></div></div>
+      </div>
+      <div class="port-pg">
+        <img src="site2.jpg" alt="Web project" loading="lazy">
+        <div class="port-pg-ov"><div class="port-pg-info"><h4>Web Site</h4><p>Business site</p></div></div>
+      </div>
+      <div class="port-pg">
+        <img src="site3.jpg" alt="Web project" loading="lazy">
+        <div class="port-pg-ov"><div class="port-pg-info"><h4>Web Site</h4><p>E-commerce</p></div></div>
+      </div>
+      <div class="port-pg">
+        <img src="site4.jpg" alt="Web project" loading="lazy">
+        <div class="port-pg-ov"><div class="port-pg-info"><h4>Web Site</h4><p>Landing page</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADS -->
+  <div class="port-section" data-sec="ads">
+    <div class="port-soon">
+      <div class="port-soon-icon">📊</div>
+      <p data-k="ps_ads">Ads portfolio — coming soon</p>
+    </div>
+  </div>
+
 </section>
 
 <!-- STATS -->
@@ -2374,12 +2448,8 @@ document.querySelectorAll('.pf').forEach(btn => {
     document.querySelectorAll('.pf').forEach(b => b.classList.remove('on'));
     btn.classList.add('on');
     const f = btn.dataset.f;
-    document.querySelectorAll('.port-c').forEach(card => {
-      if (card.dataset.cat === f) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+    document.querySelectorAll('.port-section').forEach(sec => {
+      sec.classList.toggle('active', sec.dataset.sec === f);
     });
   });
 });
