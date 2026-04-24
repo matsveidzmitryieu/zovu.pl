@@ -2240,12 +2240,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     img.src = src;
     img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
     img.alt = '';
-    const setThumb = (u) => { c.style.setProperty('--vc-thumb', `url(${u})`); glow.style.backgroundImage = `url(${u})`; };
-    img.onload = () => setThumb(img.src);
-    setThumb(src);
     const glow = document.createElement('div');
     glow.className = 'vc-glow';
     c.insertBefore(glow, c.querySelector('.vc-vid-box'));
+    const setThumb = (u) => { c.style.setProperty('--vc-thumb', `url(${u})`); glow.style.backgroundImage = `url(${u})`; };
+    img.onload = () => setThumb(img.src);
+    setThumb(src);
     const box = c.querySelector('.vc-vid-box');
     box.prepend(img);
     const ov = document.createElement('div');
