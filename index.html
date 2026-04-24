@@ -227,21 +227,6 @@
     .btn-s .arr { transition: transform .3s; display: inline-block; }
     .btn-s:hover .arr { transform: translate(4px,-4px); }
 
-    /* ── TICKER ── */
-    .ticker {
-      display: flex; overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border); padding: 18px 0;
-    }
-    .ticker-t {
-      display: flex; animation: tick 24s linear infinite; white-space: nowrap;
-    }
-    .tick-i {
-      display: inline-flex; align-items: center; gap: 28px; padding: 0 28px;
-      font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
-    }
-    .tick-i .d { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
     /* ── SERVICES ── */
     #services { padding: 72px 52px; }
@@ -1431,8 +1416,6 @@
 
 </section>
 
-<!-- TICKER -->
-<div class="ticker"><div class="ticker-t" id="ttk"></div></div>
 
 <!-- SERVICES -->
 <section id="services">
@@ -1979,11 +1962,6 @@ function applyLang(l) {
 
 document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.l)));
 
-// ── TICKER SETUP ──────────────────────────────────────────────────────────────
-const tickItems = ['Video Editing','Social Media','AI Content','Facebook Ads','Web Design','YouTube','TikTok','Instagram','Podcast','Reels'];
-const ttk = document.getElementById('ttk');
-const tickHTML = tickItems.map(i => `<span class="tick-i"><span class="d"></span>${i}</span>`).join('');
-ttk.innerHTML = tickHTML + tickHTML; // duplicate for seamless loop
 
 // ── CURSOR ────────────────────────────────────────────────────────────────────
 const cur = document.getElementById('cur');
