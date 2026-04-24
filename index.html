@@ -290,15 +290,11 @@
       position: relative; cursor: none;
     }
     .stat:last-child { border-right: none; }
-    @keyframes stat-glow-pulse {
-      0%, 100% { box-shadow: 0 0 18px rgba(var(--acc-rgb),.35), inset 0 0 14px rgba(var(--acc-rgb),.07); }
-      50%       { box-shadow: 0 0 44px rgba(var(--acc-rgb),.6), 0 0 80px rgba(var(--acc-rgb),.2), inset 0 0 22px rgba(var(--acc-rgb),.12); }
-    }
     .stat::after {
       content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 2;
       border: 1.5px solid rgba(var(--acc-rgb), .85);
-      opacity: 0; transition: opacity .5s ease;
-      animation: stat-glow-pulse 1.9s ease-in-out infinite;
+      box-shadow: 0 0 9px rgba(var(--acc-rgb),.35), inset 0 0 7px rgba(var(--acc-rgb),.07);
+      opacity: 0; transition: opacity .2s ease;
     }
     .stat:hover::after { opacity: 1; }
     .stat-n {
