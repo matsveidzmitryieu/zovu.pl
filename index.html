@@ -787,10 +787,9 @@
     /* ── PORTFOLIO FILTER ── */
     .port-filters {
       display: flex; justify-content: center; align-items: center;
-      gap: 8px; margin: 40px 0 56px;
+      gap: 20px; margin: 40px 0 56px;
     }
-    .pf-group { display: flex; gap: 12px; }
-    .pf-divider { width: 1px; height: 36px; background: rgba(255,255,255,.12); margin: 0 24px; }
+    .pf-group { display: flex; gap: 20px; }
     .pf {
       font-size: 17px; font-weight: 700; letter-spacing: 0; text-transform: none;
       color: #fff; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25);
@@ -1580,15 +1579,10 @@
     </div>
   </div>
   <div class="port-filters rv">
-    <div class="pf-group">
-      <button class="pf on" data-f="video" data-k="pf_v">Wideo</button>
-      <button class="pf" data-f="design" data-k="pf_d">Grafika</button>
-    </div>
-    <div class="pf-divider"></div>
-    <div class="pf-group">
-      <button class="pf" data-f="web" data-k="pf_w">Strony</button>
-      <button class="pf" data-f="ads" data-k="pf_a">Reklama</button>
-    </div>
+    <button class="pf on" data-f="video" data-k="pf_v">Wideo</button>
+    <button class="pf" data-f="design" data-k="pf_d">Grafika</button>
+    <button class="pf" data-f="web" data-k="pf_w">Strony</button>
+    <button class="pf" data-f="ads" data-k="pf_a">Reklama</button>
   </div>
   <!-- VIDEO -->
   <div class="port-section active" data-sec="video">
