@@ -406,14 +406,22 @@
     .vc-card.vc-v { width: 420px; }
     .vc-card.vc-h { width: 660px; }
     .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
-    .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
-    .vc-card.vc-active .vc-thumb {
+    .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; position: relative; }
+    .vc-card.vc-active::before {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      z-index: -1;
+      background: var(--vc-thumb) center/cover no-repeat;
       filter: url(#vc-backlight);
-      opacity: 1 !important;
-      transform: scale(1.08);
-      transition: opacity .3s, transform .3s;
+      border-radius: 28px;
+      pointer-events: none;
+      animation: vcPulse 2.6s ease-in-out infinite alternate;
     }
-    .vc-card.vc-active .vc-vid-box iframe { z-index: 2; }
+    @keyframes vcPulse {
+      from { opacity: .7; transform: scale(.97); }
+      to   { opacity: 1;  transform: scale(1.04); }
+    }
     .vc-vid-box {
       width: 100%; border-radius: 18px; overflow: hidden;
       background: var(--bg3); position: relative;
@@ -2228,9 +2236,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     if (!id) return;
     const img = document.createElement('img');
     img.className = 'vc-thumb';
-    img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    const src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    img.src = src;
     img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
     img.alt = '';
+    img.onload = () => c.style.setProperty('--vc-thumb', `url(${img.src})`);
+    c.style.setProperty('--vc-thumb', `url(${src})`);
     const box = c.querySelector('.vc-vid-box');
     box.prepend(img);
     const ov = document.createElement('div');
@@ -2298,8 +2309,15 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   outer.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
   outer.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
 
-  setActive(0);
-  startTimer();
+  let started = false;
+  new IntersectionObserver((entries, obs) => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      setActive(0);
+      startTimer();
+      obs.disconnect();
+    }
+  }, { threshold: 0.3 }).observe(outer);
 })();
 
 // ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
