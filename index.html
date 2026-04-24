@@ -405,7 +405,7 @@
     }
     .vc-card.vc-v { width: 420px; }
     .vc-card.vc-h { width: 660px; }
-    .vc-card:not(.vc-active) { transform: scale(0.78); opacity: 0.35; filter: blur(1px); }
+    .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
     .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
     .vc-vid-box {
       width: 100%; border-radius: 18px; overflow: hidden;
@@ -420,16 +420,6 @@
     .vc-vid-box iframe { z-index: 2; }
     .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
     .vc-card.vc-active .vc-overlay { display: none; }
-    .vc-unmute {
-      position: absolute; bottom: 14px; right: 14px; z-index: 4;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.25);
-      color: #fff; font-size: 15px; cursor: none;
-      display: none; align-items: center; justify-content: center;
-      transition: background .2s;
-    }
-    .vc-unmute:hover { background: rgba(0,0,0,.85); }
-    .vc-card.vc-active .vc-unmute { display: flex; }
     .vc-info {
       padding: 18px 6px 0;
       opacity: 0; transform: translateY(10px);
@@ -2244,19 +2234,6 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     });
     box.appendChild(ov);
 
-    const unmute = document.createElement('button');
-    unmute.className = 'vc-unmute';
-    unmute.textContent = '🔇';
-    let muted = true;
-    unmute.addEventListener('click', () => {
-      const iframe = c.querySelector('iframe');
-      if (!iframe) return;
-      muted = !muted;
-      const fn = muted ? 'mute' : 'unMute';
-      iframe.contentWindow.postMessage(JSON.stringify({event:'command', func: fn, args: []}), '*');
-      unmute.textContent = muted ? '🔇' : '🔊';
-    });
-    box.appendChild(unmute);
   });
 
   // Build dots
@@ -2275,9 +2252,8 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
       const iframe = c.querySelector('iframe');
       if (iframe) {
         const id = c.dataset.yt;
-        iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
         iframe.src = active
-          ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&rel=0&playsinline=1&enablejsapi=1&origin=${location.origin}`
+          ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&rel=0&playsinline=1`
           : '';
       }
     });
