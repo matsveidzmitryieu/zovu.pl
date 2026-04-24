@@ -413,7 +413,11 @@
     }
     .vc-card.vc-v .vc-vid-box { aspect-ratio: 9/16; }
     .vc-card.vc-h .vc-vid-box { aspect-ratio: 16/9; }
-    .vc-vid-box video, .vc-vid-box iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
+    .vc-vid-box video, .vc-vid-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
+    .vc-vid-box { position: relative; }
+    .vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .3s; z-index: 1; }
+    .vc-card.vc-active .vc-thumb { opacity: 0; pointer-events: none; }
+    .vc-vid-box iframe { z-index: 2; }
     .vc-info {
       padding: 18px 6px 0;
       opacity: 0; transform: translateY(10px);
@@ -2208,6 +2212,17 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const dotsWrap = outer.querySelector('.vc-dots');
   const n = cards.length;
   let cur = 0, timer = null, paused = false;
+
+  // Inject thumbnails
+  cards.forEach(c => {
+    const id = c.dataset.yt;
+    if (!id) return;
+    const img = document.createElement('img');
+    img.className = 'vc-thumb';
+    img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    img.alt = '';
+    c.querySelector('.vc-vid-box').prepend(img);
+  });
 
   // Build dots
   cards.forEach((_, i) => {
