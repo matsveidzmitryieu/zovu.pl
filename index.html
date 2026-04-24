@@ -419,7 +419,16 @@
     .vc-card.vc-active .vc-thumb { opacity: 0; pointer-events: none; }
     .vc-vid-box iframe { z-index: 2; }
     .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
-    .vc-card.vc-active .vc-overlay { display: none; }
+    .vc-unmute {
+      position: absolute; bottom: 14px; right: 14px; z-index: 4;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.25);
+      color: #fff; font-size: 15px; cursor: none;
+      display: none; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .vc-unmute:hover { background: rgba(0,0,0,.85); }
+    .vc-card.vc-active .vc-unmute { display: flex; }
     .vc-info {
       padding: 18px 6px 0;
       opacity: 0; transform: translateY(10px);
@@ -2228,7 +2237,25 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     box.prepend(img);
     const ov = document.createElement('div');
     ov.className = 'vc-overlay';
+    ov.addEventListener('mousedown', () => {
+      ov.style.pointerEvents = 'none';
+      setTimeout(() => { ov.style.pointerEvents = ''; }, 80);
+    });
     box.appendChild(ov);
+
+    const unmute = document.createElement('button');
+    unmute.className = 'vc-unmute';
+    unmute.textContent = '🔇';
+    let muted = true;
+    unmute.addEventListener('click', () => {
+      const iframe = c.querySelector('iframe');
+      if (!iframe) return;
+      muted = !muted;
+      const fn = muted ? 'mute' : 'unMute';
+      iframe.contentWindow.postMessage(JSON.stringify({event:'command', func: fn, args: []}), '*');
+      unmute.textContent = muted ? '🔇' : '🔊';
+    });
+    box.appendChild(unmute);
   });
 
   // Build dots
