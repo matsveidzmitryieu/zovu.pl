@@ -1607,7 +1607,7 @@
     <div class="vc-track">
 
       <div class="vc-card vc-v" data-yt="GD9FzPFa56w">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">PickActive</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1616,7 +1616,7 @@
       </div>
 
       <div class="vc-card vc-v" data-yt="VbD5RKn9lGQ">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1625,7 +1625,7 @@
       </div>
 
       <div class="vc-card vc-v" data-yt="mYY6Ag4qTBs">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1634,7 +1634,7 @@
       </div>
 
       <div class="vc-card vc-v" data-yt="X5M7V2L-cQ8">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1643,7 +1643,7 @@
       </div>
 
       <div class="vc-card vc-v" data-yt="Rv7KbI3j3q4">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1652,7 +1652,7 @@
       </div>
 
       <div class="vc-card vc-v" data-yt="qE1axvAOy6w">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1661,7 +1661,7 @@
       </div>
 
       <div class="vc-card vc-h" data-yt="dxj8T0wUGLo">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1670,7 +1670,7 @@
       </div>
 
       <div class="vc-card vc-h" data-yt="vZJydBgjaEU">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -2309,15 +2309,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   outer.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
   outer.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
 
-  let started = false;
-  new IntersectionObserver((entries, obs) => {
-    if (entries[0].isIntersecting && !started) {
-      started = true;
-      setActive(0);
-      startTimer();
-      obs.disconnect();
-    }
-  }, { threshold: 0.3 }).observe(outer);
+  setTimeout(() => { setActive(0); startTimer(); }, 300);
 })();
 
 // ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
