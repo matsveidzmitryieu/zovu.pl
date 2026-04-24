@@ -2256,29 +2256,25 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
   // Build dots
   cards.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'vc-dot';
-    dotsWrap.appendChild(d);
+    const d = document.createElement('div'); d.className = 'vc-dot'; dotsWrap.appendChild(d);
   });
   const dots = Array.from(dotsWrap.querySelectorAll('.vc-dot'));
 
-  function setActive(idx) {
-    cur = ((idx % n) + n) % n;
-    cards.forEach((c, i) => {
-      const active = i === cur;
-      c.classList.toggle('vc-active', active);
-      const iframe = c.querySelector('iframe');
-      if (iframe) {
-        const id = c.dataset.yt;
-        iframe.src = active
-          ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&rel=0&playsinline=1`
-          : '';
-      }
-    });
-    dots.forEach((d, i) => d.classList.toggle('on', i === cur));
-    if (typeof bindVideoHover === 'function') bindVideoHover();
+  // Pre-set iframe srcs for YT API
+  const players = {};
+  cards.forEach((c, i) => {
+    const id = c.dataset.yt;
+    const iframe = c.querySelector('iframe');
+    iframe.id = 'vc-yt-' + i;
+    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+  });
 
-    // Center active card in viewport
+  const curDot = document.getElementById('cur');
+  const curRing = document.getElementById('cur-ring');
+  function hideCur() { curDot.style.opacity='0'; curRing.style.opacity='0'; }
+  function showCur() { curDot.style.opacity=''; curRing.style.opacity=''; }
+
+  function centerTrack() {
     const vw = outer.offsetWidth;
     let offset = 0;
     for (let i = 0; i < cur; i++) offset += cards[i].offsetWidth + 24;
@@ -2286,30 +2282,49 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     track.style.transform = 'translateX(' + (-Math.max(0, offset)) + 'px)';
   }
 
+  function setActive(idx) {
+    cur = ((idx % n) + n) % n;
+    cards.forEach((c, i) => c.classList.toggle('vc-active', i === cur));
+    dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+    centerTrack();
+    // cursor hide on active vid-box
+    document.querySelectorAll('.vc-vid-box').forEach(b => { b.onmouseenter = null; b.onmouseleave = null; });
+    const ab = cards[cur].querySelector('.vc-vid-box');
+    if (ab) { ab.onmouseenter = hideCur; ab.onmouseleave = showCur; }
+    // play/pause via API
+    Object.entries(players).forEach(([i, p]) => {
+      try { parseInt(i) === cur ? p.playVideo() : p.pauseVideo(); } catch(e) {}
+    });
+  }
+
   function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => { if (!paused) setActive(cur + 1); }, 6000);
   }
 
-  const curDot = document.getElementById('cur');
-  const curRing = document.getElementById('cur-ring');
-  function hideCur() { curDot.style.opacity='0'; curRing.style.opacity='0'; }
-  function showCur() { curDot.style.opacity=''; curRing.style.opacity=''; }
+  // Load YouTube IFrame API
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
 
-  function bindVideoHover() {
-    document.querySelectorAll('.vc-vid-box').forEach(b => {
-      b.onmouseenter = null; b.onmouseleave = null;
+  window.onYouTubeIframeAPIReady = function() {
+    cards.forEach((c, i) => {
+      players[i] = new YT.Player('vc-yt-' + i, {
+        events: {
+          onReady: function(e) {
+            e.target.mute();
+            if (i === 0) { e.target.playVideo(); startTimer(); }
+          }
+        }
+      });
     });
-    const activeBox = cards[cur].querySelector('.vc-vid-box');
-    if (activeBox) { activeBox.onmouseenter = hideCur; activeBox.onmouseleave = showCur; }
-  }
+    setActive(0);
+  };
 
   outer.addEventListener('mouseenter', () => paused = true);
   outer.addEventListener('mouseleave', () => { paused = false; showCur(); });
   outer.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
   outer.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
-
-  setTimeout(() => { setActive(0); startTimer(); }, 300);
 })();
 
 // ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
