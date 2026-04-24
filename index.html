@@ -2258,6 +2258,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
       }
     });
     dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+    if (typeof bindVideoHover === 'function') bindVideoHover();
 
     // Center active card in viewport
     const vw = outer.offsetWidth;
@@ -2272,8 +2273,21 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     timer = setInterval(() => { if (!paused) setActive(cur + 1); }, 6000);
   }
 
+  const curDot = document.getElementById('cur');
+  const curRing = document.getElementById('cur-ring');
+  function hideCur() { curDot.style.opacity='0'; curRing.style.opacity='0'; }
+  function showCur() { curDot.style.opacity=''; curRing.style.opacity=''; }
+
+  function bindVideoHover() {
+    document.querySelectorAll('.vc-vid-box').forEach(b => {
+      b.onmouseenter = null; b.onmouseleave = null;
+    });
+    const activeBox = cards[cur].querySelector('.vc-vid-box');
+    if (activeBox) { activeBox.onmouseenter = hideCur; activeBox.onmouseleave = showCur; }
+  }
+
   outer.addEventListener('mouseenter', () => paused = true);
-  outer.addEventListener('mouseleave', () => paused = false);
+  outer.addEventListener('mouseleave', () => { paused = false; showCur(); });
   outer.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
   outer.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
 
