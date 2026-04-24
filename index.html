@@ -1121,7 +1121,6 @@
 <nav id="nav">
   <a href="#" class="logo">ZOVU<em>.</em></a>
   <div class="nav-links">
-    <a href="#services" class="nav-link" data-k="ft_s">Services</a>
     <a href="#portfolio" class="nav-link" data-k="ft_w">Work</a>
     <a href="#team" class="nav-link" data-k="nav_tm">Team</a>
     <a href="#pricing" class="nav-link" data-k="ft_p">Pricing</a>
@@ -1417,51 +1416,46 @@
 </section>
 
 
-<!-- SERVICES -->
-<section id="services">
+<!-- PORTFOLIO -->
+<section id="portfolio">
   <div class="sec-hd rv">
     <div>
-      <div class="sec-label" data-k="s_lbl">What we do</div>
-      <h2 class="sec-title" data-k="s_ttl">Our services</h2>
+      <div class="sec-label" data-k="p_lbl">Selected work</div>
+      <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
     </div>
   </div>
-  <div class="srv-grid">
-    <div class="srv rv d1">
-      <div class="srv-n">01</div>
-      <div class="srv-ico">🎬</div>
-      <h3 class="srv-t" data-k="s1t">Video Production</h3>
-      <p class="srv-d" data-k="s1d">Short-form, long-form, vertical or horizontal — from YouTube to TikTok. Trending cuts, AI video, podcasts, branded content and more.</p>
-      <div class="srv-tags">
-        <span class="srv-tag">YouTube</span><span class="srv-tag">TikTok</span><span class="srv-tag">Reels</span><span class="srv-tag">AI Video</span><span class="srv-tag">Podcast</span>
-      </div>
+  <div class="port-filters rv">
+    <button class="pf on" data-f="video" data-k="pf_v">Videos</button>
+    <button class="pf" data-f="design" data-k="pf_d">Design</button>
+    <button class="pf" data-f="web" data-k="pf_w">Web Sites</button>
+    <button class="pf" data-f="ads" data-k="pf_a">Ads</button>
+  </div>
+  <div class="port-grid">
+
+    <!-- Video 1 -->
+    <div class="port-c rv" data-cat="video" data-preview="video" data-preview-src="work1_preview.mp4">
+      <video class="port-vid" src="work1_preview.mp4" autoplay muted loop playsinline preload="none" style="object-fit:cover;object-position:center;"></video>
+      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
     </div>
-    <div class="srv rv d2">
-      <div class="srv-n">02</div>
-      <div class="srv-ico">📱</div>
-      <h3 class="srv-t" data-k="s2t">Social Media</h3>
-      <p class="srv-d" data-k="s2d">Daily posts, stories, reels — complete profile management across every major platform. We grow audiences that actually buy.</p>
-      <div class="srv-tags">
-        <span class="srv-tag">Instagram</span><span class="srv-tag">Facebook</span><span class="srv-tag">TikTok</span><span class="srv-tag">Daily content</span>
-      </div>
+
+    <!-- Video 2 -->
+    <div class="port-c rv d1" data-cat="video" data-preview="video" data-preview-src="preview1.mp4">
+      <video class="port-vid" src="preview1.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
     </div>
-    <div class="srv rv d3">
-      <div class="srv-n">03</div>
-      <div class="srv-ico">🎯</div>
-      <h3 class="srv-t" data-k="s3t">Paid Advertising</h3>
-      <p class="srv-d" data-k="s3d">Facebook & Instagram campaigns optimised for ROI. We've managed large-budget accounts and know how to turn spend into leads.</p>
-      <div class="srv-tags">
-        <span class="srv-tag">Facebook Ads</span><span class="srv-tag">Instagram Ads</span><span class="srv-tag">Lead gen</span><span class="srv-tag">Retargeting</span>
-      </div>
+
+    <!-- Video 3 -->
+    <div class="port-c rv d2" data-cat="video" data-preview="video" data-preview-src="preview2.mp4">
+      <video class="port-vid" src="preview2.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
     </div>
-    <div class="srv rv d4">
-      <div class="srv-n">04</div>
-      <div class="srv-ico">🌐</div>
-      <h3 class="srv-t" data-k="s4t">Web Development</h3>
-      <p class="srv-d" data-k="s4d">Modern, functional sites for businesses and individuals — with monthly support or full handover. Built with vibe coding at speed.</p>
-      <div class="srv-tags">
-        <span class="srv-tag">Landing pages</span><span class="srv-tag">Business sites</span><span class="srv-tag">Maintenance</span><span class="srv-tag">Vibe coding</span>
-      </div>
+
+    <!-- Video 4 -->
+    <div class="port-c rv d3" data-cat="video" data-preview="video" data-preview-src="preview3_small.mp4">
+      <video class="port-vid" src="preview3_small.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
     </div>
+
   </div>
 </section>
 
@@ -1472,6 +1466,36 @@
   <div class="stat rv d2"><div class="stat-n">$<span class="cnt" data-t="70">0</span><em>K+</em></div><div class="stat-l" data-k="st3">Budgets managed</div></div>
   <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="8">0</span><em>+</em></div><div class="stat-l" data-k="st4">Years of experience</div></div>
 </div>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="sec-hd rv">
+    <div>
+      <div class="sec-label" data-k="tm_lbl">Who we are</div>
+      <h2 class="sec-title" data-k="tm_ttl">The team</h2>
+    </div>
+  </div>
+  <div class="team-grid">
+    <div class="tm rv d1">
+      <img class="tm-av" src="Митя.jpg" alt="Mitya" loading="lazy" decoding="async">
+      <div class="tm-role" data-k="m1r">Senior Creative Director</div>
+      <div class="tm-name">Mat</div>
+      <p class="tm-bio" data-k="m1b">The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.</p>
+    </div>
+    <div class="tm rv d2">
+      <img class="tm-av" src="саша.jpg" alt="Sasha" loading="lazy" decoding="async">
+      <div class="tm-role" data-k="m2r">Video Producer & Marketer</div>
+      <div class="tm-name">Alex</div>
+      <p class="tm-bio" data-k="m2b">Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing across every platform.</p>
+    </div>
+    <div class="tm rv d3">
+      <img class="tm-av" src="захар.jpg" alt="Zakhar" loading="lazy" decoding="async">
+      <div class="tm-role" data-k="m3r">Web Developer & Creator</div>
+      <div class="tm-name">Zah</div>
+      <p class="tm-bio" data-k="m3b">The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.</p>
+    </div>
+  </div>
+</section>
 
 <!-- PRICING -->
 <section id="pricing">
@@ -1538,79 +1562,6 @@
       <a href="#contact" class="plan-btn sec" data-k="pl_cta_s2">Get started</a>
     </div>
 
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <div class="sec-hd rv">
-    <div>
-      <div class="sec-label" data-k="p_lbl">Selected work</div>
-      <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
-    </div>
-  </div>
-  <div class="port-filters rv">
-    <button class="pf on" data-f="video" data-k="pf_v">Videos</button>
-    <button class="pf" data-f="design" data-k="pf_d">Design</button>
-    <button class="pf" data-f="web" data-k="pf_w">Web Sites</button>
-    <button class="pf" data-f="ads" data-k="pf_a">Ads</button>
-  </div>
-  <div class="port-grid">
-
-    <!-- Video 1 -->
-    <div class="port-c rv" data-cat="video" data-preview="video" data-preview-src="work1_preview.mp4">
-      <video class="port-vid" src="work1_preview.mp4" autoplay muted loop playsinline preload="none" style="object-fit:cover;object-position:center;"></video>
-      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
-    </div>
-
-    <!-- Video 2 -->
-    <div class="port-c rv d1" data-cat="video" data-preview="video" data-preview-src="preview1.mp4">
-      <video class="port-vid" src="preview1.mp4" autoplay muted loop playsinline preload="auto"></video>
-      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
-    </div>
-
-    <!-- Video 3 -->
-    <div class="port-c rv d2" data-cat="video" data-preview="video" data-preview-src="preview2.mp4">
-      <video class="port-vid" src="preview2.mp4" autoplay muted loop playsinline preload="auto"></video>
-      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
-    </div>
-
-    <!-- Video 4 -->
-    <div class="port-c rv d3" data-cat="video" data-preview="video" data-preview-src="preview3_small.mp4">
-      <video class="port-vid" src="preview3_small.mp4" autoplay muted loop playsinline preload="auto"></video>
-      <div class="port-ov"><div class="port-inf"><h4>Video</h4><p>Video Production</p></div></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- TEAM -->
-<section id="team">
-  <div class="sec-hd rv">
-    <div>
-      <div class="sec-label" data-k="tm_lbl">Who we are</div>
-      <h2 class="sec-title" data-k="tm_ttl">The team</h2>
-    </div>
-  </div>
-  <div class="team-grid">
-    <div class="tm rv d1">
-      <img class="tm-av" src="Митя.jpg" alt="Mitya" loading="lazy" decoding="async">
-      <div class="tm-role" data-k="m1r">Senior Creative Director</div>
-      <div class="tm-name">Mat</div>
-      <p class="tm-bio" data-k="m1b">The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.</p>
-    </div>
-    <div class="tm rv d2">
-      <img class="tm-av" src="саша.jpg" alt="Sasha" loading="lazy" decoding="async">
-      <div class="tm-role" data-k="m2r">Video Producer & Marketer</div>
-      <div class="tm-name">Alex</div>
-      <p class="tm-bio" data-k="m2b">Video editor, ad specialist and vibe coder. Bridges creative production with performance marketing across every platform.</p>
-    </div>
-    <div class="tm rv d3">
-      <img class="tm-av" src="захар.jpg" alt="Zakhar" loading="lazy" decoding="async">
-      <div class="tm-role" data-k="m3r">Web Developer & Creator</div>
-      <div class="tm-name">Zakh</div>
-      <p class="tm-bio" data-k="m3b">The builder of the group. Specialises in vibe coding — turning ideas into fast, beautiful websites that actually convert.</p>
-    </div>
   </div>
 </section>
 
@@ -1763,7 +1714,6 @@
   <div class="f-copy">© 2025 ZOVU. <span data-k="ft_r">All rights reserved.</span> &nbsp;·&nbsp; <a href="privacy-policy.html" style="color:var(--muted);text-decoration:none;transition:color .2s;cursor:none" onmouseenter="this.style.color='var(--accent)'" onmouseleave="this.style.color='var(--muted)'">Privacy Policy</a></div>
   <a href="tel:+48571795097" style="font-size:13px;color:var(--sec);text-decoration:none;letter-spacing:.5px;transition:color .2s;cursor:none;" onmouseenter="this.style.color='var(--accent)'" onmouseleave="this.style.color='var(--sec)'">+48 571 795 097</a>
   <div class="f-links">
-    <a href="#services" data-k="ft_s">Services</a>
     <a href="#portfolio" data-k="ft_w">Work</a>
     <a href="#pricing" data-k="ft_p">Pricing</a>
     <a href="#contact" data-k="ft_c">Contact</a>
@@ -1776,7 +1726,7 @@ const T = {
   en: {
     nav_cta:"Let's talk",
     hero_tag:"Creative Agency", hero_l1:"We create", hero_ac:"content", hero_mid:"that", hero_l3:"sells.",
-    hero_d:"Video production, social media, advertising & web — all in one team. Three brothers, one mission.",
+    hero_d:"Video production, social media, advertising & web — all in one team.",
     hero_cta:"Calculate price", hero_p:"View work",
     s_lbl:"What we do", s_ttl:"Our services",
     s1t:"Video Production", s1d:"Short-form, long-form, vertical or horizontal — from YouTube to TikTok. Trending cuts, AI video, podcasts, branded content and more.",
@@ -1828,7 +1778,7 @@ const T = {
   ru: {
     nav_cta:"Связаться",
     hero_tag:"Креативное агентство", hero_l1:"Мы создаём", hero_ac:"контент", hero_mid:"который", hero_l3:"продаёт.",
-    hero_d:"Видеопродакшн, SMM, реклама и сайты — всё в одном месте. Катовице · 8+ лет опыта.",
+    hero_d:"Видеопродакшн, SMM, реклама и сайты — всё в одном месте.",
     hero_cta:"Рассчитать стоимость", hero_p:"Наши работы",
     s_lbl:"Что мы делаем", s_ttl:"Наши услуги",
     s1t:"Видеопродакшн", s1d:"Короткие и длинные, вертикальные и горизонтальные — от YouTube до TikTok. Трендовый монтаж, AI-видео, подкасты, брендовый контент и многое другое.",
@@ -1880,7 +1830,7 @@ const T = {
   pl: {
     nav_cta:"Porozmawiajmy",
     hero_tag:"Agencja Kreatywna", hero_l1:"Tworzymy", hero_ac:"treści", hero_mid:"które", hero_l3:"sprzedają.",
-    hero_d:"Produkcja wideo, social media, reklama i strony WWW — wszystko w jednym miejscu. Katowice · 8+ lat doświadczenia.",
+    hero_d:"Produkcja wideo, social media, reklama i strony WWW — wszystko w jednym miejscu.",
     hero_cta:"Oblicz cenę", hero_p:"Nasze prace",
     s_lbl:"Co robimy", s_ttl:"Nasze usługi",
     s1t:"Produkcja wideo", s1d:"Krótkie i długie, pionowe i poziome — od YouTube do TikToka. Trendy edycje, wideo AI, podcasty i treści brandowe.",
