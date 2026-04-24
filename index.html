@@ -2428,8 +2428,10 @@ applyLang('pl');
 // ── COOKIE BANNER ─────────────────────────────────────────────────────────────
 (function(){
   if (localStorage.getItem('ck')) return;
-  const b = document.getElementById('cookie-banner');
-  setTimeout(() => b.classList.add('show'), 1400);
+  setTimeout(() => {
+    const b = document.getElementById('cookie-banner');
+    if (b) b.classList.add('show');
+  }, 1400);
 })();
 function ckAccept() { localStorage.setItem('ck','accepted'); document.getElementById('cookie-banner').classList.remove('show'); }
 function ckDecline() { localStorage.setItem('ck','declined'); document.getElementById('cookie-banner').classList.remove('show'); }
