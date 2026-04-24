@@ -392,7 +392,7 @@
     .port-c:hover .site-frame img { filter: saturate(1) brightness(1); }
 
     /* ── VIDEO CAROUSEL ── */
-    .vc-outer { position: relative; margin-top: 64px; overflow: hidden; }
+    .vc-outer { position: relative; margin-top: 64px; overflow-x: hidden; }
     .vc-track {
       display: flex; align-items: flex-start; gap: 24px;
       transition: transform .65s cubic-bezier(.16,1,.3,1);
@@ -406,24 +406,9 @@
     .vc-card.vc-v { width: 300px; }
     .vc-card.vc-h { width: 480px; }
     .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
-    .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; position: relative; }
-    .vc-glow {
-      display: none;
-      position: absolute;
-      top: -12px; left: -12px; right: -12px;
-      aspect-ratio: 9/16;
-      z-index: -1;
-      background: var(--vc-thumb) center/cover no-repeat;
-      filter: blur(20px) saturate(1.6);
-      border-radius: 24px;
-      pointer-events: none;
-      opacity: 0.85;
-      transform: scale(1.05);
-      -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 55%, black 30%, transparent 75%);
-      mask-image: radial-gradient(ellipse 85% 75% at 50% 55%, black 30%, transparent 75%);
-    }
-    .vc-card.vc-h .vc-glow { aspect-ratio: 16/9; }
-    .vc-card.vc-active .vc-glow { display: block; }
+    .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
+    .vc-vid-wrapper { position: relative; }
+    .vc-card.vc-active .vc-vid-wrapper { filter: url(#vc-backlight); }
     .vc-vid-box {
       width: 100%; border-radius: 18px; overflow: hidden;
       background: var(--bg3); position: relative;
@@ -2232,32 +2217,31 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const n = cards.length;
   let cur = 0, timer = null, paused = false;
 
-  // Inject thumbnails
+  // Inject thumbnails + wrapper for backlight
   cards.forEach(c => {
     const id = c.dataset.yt;
     if (!id) return;
+    // Wrap vid-box in a wrapper (filter applied here for MagicUI-style backlight)
+    const vidBox = c.querySelector('.vc-vid-box');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'vc-vid-wrapper';
+    vidBox.parentNode.insertBefore(wrapper, vidBox);
+    wrapper.appendChild(vidBox);
+    // Thumbnail
     const img = document.createElement('img');
     img.className = 'vc-thumb';
-    const src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-    img.src = src;
+    img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
     img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
     img.alt = '';
-    const glow = document.createElement('div');
-    glow.className = 'vc-glow';
-    c.insertBefore(glow, c.querySelector('.vc-vid-box'));
-    const setThumb = (u) => { c.style.setProperty('--vc-thumb', `url(${u})`); glow.style.backgroundImage = `url(${u})`; };
-    img.onload = () => setThumb(img.src);
-    setThumb(src);
-    const box = c.querySelector('.vc-vid-box');
-    box.prepend(img);
+    vidBox.prepend(img);
+    // Overlay for cursor passthrough on inactive cards
     const ov = document.createElement('div');
     ov.className = 'vc-overlay';
     ov.addEventListener('mousedown', () => {
       ov.style.pointerEvents = 'none';
       setTimeout(() => { ov.style.pointerEvents = ''; }, 80);
     });
-    box.appendChild(ov);
-
+    vidBox.appendChild(ov);
   });
 
   // Build dots
@@ -2805,6 +2789,16 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     <a href="privacy-policy.html" data-k="ck_pp">Privacy Policy</a>
   </div>
 </div>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <filter id="vc-backlight" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="40" result="blurred"/>
+      <feColorMatrix type="saturate" in="blurred" values="4" result="saturated"/>
+      <feComposite in="SourceGraphic" in2="saturated" operator="over"/>
+    </filter>
+  </defs>
+</svg>
 
 </body>
 </html>
