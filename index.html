@@ -422,13 +422,7 @@
     .vc-vid-box iframe { z-index: 2; }
     .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
     .vc-card.vc-active .vc-overlay { display: none; }
-    .vc-info {
-      padding: 18px 6px 0;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity .4s .1s, transform .4s .1s;
-      pointer-events: none;
-    }
-    .vc-card.vc-active .vc-info { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .vc-info { display: none; }
     .vc-client { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
     .vc-name { font-size: 15px; font-weight: 700; color: #fff; }
     .vc-type { font-size: 11px; color: var(--muted); }
