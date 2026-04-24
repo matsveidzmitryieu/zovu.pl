@@ -418,6 +418,8 @@
     .vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .3s; z-index: 1; }
     .vc-card.vc-active .vc-thumb { opacity: 0; pointer-events: none; }
     .vc-vid-box iframe { z-index: 2; }
+    .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
+    .vc-card.vc-active .vc-overlay { display: none; }
     .vc-info {
       padding: 18px 6px 0;
       opacity: 0; transform: translateY(10px);
@@ -2222,7 +2224,11 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
     img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
     img.alt = '';
-    c.querySelector('.vc-vid-box').prepend(img);
+    const box = c.querySelector('.vc-vid-box');
+    box.prepend(img);
+    const ov = document.createElement('div');
+    ov.className = 'vc-overlay';
+    box.appendChild(ov);
   });
 
   // Build dots
@@ -2243,7 +2249,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
         const id = c.dataset.yt;
         iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
         iframe.src = active
-          ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&rel=0&playsinline=1&enablejsapi=1&origin=${location.origin}`
+          ? `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&rel=0&playsinline=1&enablejsapi=1&origin=${location.origin}`
           : '';
       }
     });
