@@ -414,11 +414,13 @@
       aspect-ratio: 9/16;
       z-index: -1;
       background: var(--vc-thumb) center/cover no-repeat;
-      filter: blur(28px) saturate(1.4);
+      filter: blur(20px) saturate(1.6);
       border-radius: 24px;
       pointer-events: none;
-      opacity: 0.8;
+      opacity: 0.85;
       transform: scale(1.05);
+      -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 55%, black 30%, transparent 75%);
+      mask-image: radial-gradient(ellipse 85% 75% at 50% 55%, black 30%, transparent 75%);
     }
     .vc-card.vc-h .vc-glow { aspect-ratio: 16/9; }
     .vc-card.vc-active .vc-glow { display: block; }
