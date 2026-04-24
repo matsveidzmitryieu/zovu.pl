@@ -410,12 +410,14 @@
     .vc-card.vc-active::before {
       content: '';
       position: absolute;
-      inset: -16px;
+      inset: -10px;
       z-index: -1;
       background: var(--vc-thumb) center/cover no-repeat;
-      filter: url(#vc-backlight);
+      filter: blur(28px) saturate(1.4);
       border-radius: 28px;
       pointer-events: none;
+      opacity: 0.75;
+      transform: scale(1.06);
     }
     .vc-vid-box {
       width: 100%; border-radius: 18px; overflow: hidden;
@@ -2795,14 +2797,5 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   </div>
 </div>
 
-<svg width="0" height="0" aria-hidden="true" style="position:absolute">
-  <defs>
-    <filter id="vc-backlight" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blurred"/>
-      <feColorMatrix type="saturate" in="blurred" values="3" result="saturated"/>
-      <feComposite in="SourceGraphic" in2="saturated" operator="over"/>
-    </filter>
-  </defs>
-</svg>
 </body>
 </html>
