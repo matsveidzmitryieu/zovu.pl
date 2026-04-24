@@ -307,7 +307,8 @@
     .stat-l { font-size: 13px; color: var(--muted); }
 
     /* ── PORTFOLIO ── */
-    #portfolio { padding: 130px 52px; }
+    #portfolio { padding: 130px 52px; overflow: visible; }
+    #portfolio .port-section { overflow: visible; }
     .port-grid {
       display: flex; flex-direction: row;
       overflow-x: auto; overflow-y: hidden;
@@ -400,7 +401,7 @@
     .vc-track {
       display: flex; align-items: flex-start; gap: 24px;
       transition: transform .65s cubic-bezier(.16,1,.3,1);
-      will-change: transform; padding: 60px 0 40px;
+      will-change: transform; padding: 120px 0 60px;
     }
     .vc-card {
       flex: 0 0 auto;
@@ -797,7 +798,7 @@
       transition: background .2s, color .2s;
     }
     .pf.on { background: #7c3aed; color: #fff; }
-    .pf:hover { }
+    .pf:hover:not(.on) { background: #7c3aed; color: #fff; }
     .port-c.hidden { display: none; }
 
     /* ── PRICING ── */
@@ -1571,9 +1572,9 @@
 
 <!-- PORTFOLIO -->
 <section id="portfolio">
-  <div class="sec-hd rv">
+  <div class="sec-hd rv" style="justify-content:center;text-align:center;">
     <div>
-      <div class="sec-label" data-k="p_lbl">Selected work</div>
+      <div class="sec-label" style="justify-content:center;" data-k="p_lbl">Selected work</div>
       <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
     </div>
   </div>
