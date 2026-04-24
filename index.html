@@ -706,6 +706,17 @@
       font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
       color: var(--accent); margin-bottom: 16px;
     }
+    .plan-discount {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+      color: #fff; background: #e53935;
+      padding: 3px 10px; border-radius: 100px; margin-bottom: 10px;
+    }
+    .plan-old-price {
+      font-family: 'Manrope', sans-serif; font-size: 20px; font-weight: 600;
+      color: #e53935; text-decoration: line-through;
+      letter-spacing: -.5px; line-height: 1; margin-bottom: 4px; opacity: .75;
+    }
+    .plan-old-price span { font-size: 13px; font-weight: 500; vertical-align: super; }
     .plan-price {
       font-family: 'Manrope', sans-serif;
       font-size: clamp(40px, 4vw, 58px);
@@ -1533,6 +1544,8 @@
     <!-- STARTER -->
     <div class="plan rv d1">
       <div class="plan-name" data-k="pl1n">Starter</div>
+      <div class="plan-discount">−20%</div>
+      <div class="plan-old-price"><span class="plan-curr">zł</span><span data-k="pl1op">1 800</span></div>
       <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl1p">1 500</span></div>
       <div class="plan-period" data-k="pl1per">/mies</div>
       <div class="plan-desc" data-k="pl1d">Perfect for small businesses getting started with content marketing.</div>
@@ -1551,6 +1564,8 @@
     <div class="plan featured rv d2">
       <div class="plan-badge" data-k="pl_pop">Most popular</div>
       <div class="plan-name" data-k="pl2n">Growth</div>
+      <div class="plan-discount">−20%</div>
+      <div class="plan-old-price"><span class="plan-curr">zł</span><span data-k="pl2op">4 400</span></div>
       <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl2p">3 500</span></div>
       <div class="plan-period" data-k="pl2per">/mies</div>
       <div class="plan-desc" data-k="pl2d">For businesses ready to scale with full content & advertising coverage.</div>
@@ -1568,6 +1583,8 @@
     <!-- PRO -->
     <div class="plan rv d3">
       <div class="plan-name" data-k="pl3n">Pro</div>
+      <div class="plan-discount">−20%</div>
+      <div class="plan-old-price"><span class="plan-curr">zł</span><span data-k="pl3op">8 800</span></div>
       <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl3p">7 000</span></div>
       <div class="plan-period" data-k="pl3per">/mies</div>
       <div class="plan-desc" data-k="pl3d">Full-service agency package — content, ads, web & ongoing support.</div>
@@ -1784,11 +1801,11 @@ const T = {
     ph_sub:"Call us to schedule a meeting or video call",
     pf_v:"Videos", pf_d:"Design", pf_w:"Web Sites", pf_a:"Ads",
     pr_lbl:"Simple pricing", pr_ttl:"Choose your plan", pr_d:"Flexible monthly packages. Cancel anytime.",
-    pl1n:"Starter", pl1p:"400", pl1per:"/month", pl1d:"Perfect for small businesses getting started with content marketing.",
+    pl1n:"Starter", pl1op:"500", pl1p:"400", pl1per:"/month", pl1d:"Perfect for small businesses getting started with content marketing.",
     pl1f1:"8 short videos / month", pl1f2:"Social media management (1 platform)", pl1f3:"Basic monthly report", pl1f4:"Email support", pl1f5:"Paid advertising", pl1f6:"Website development",
-    pl2n:"Growth", pl2p:"900", pl2per:"/month", pl2d:"For businesses ready to scale with full content & advertising coverage.",
+    pl2n:"Growth", pl2op:"1 100", pl2p:"900", pl2per:"/month", pl2d:"For businesses ready to scale with full content & advertising coverage.",
     pl2f1:"20 videos / month (short + medium)", pl2f2:"Social media management (2 platforms)", pl2f3:"Facebook & Instagram Ads management", pl2f4:"Monthly performance report", pl2f5:"Priority support", pl2f6:"Website development",
-    pl_pop:"Most popular", pl3n:"Scale", pl3p:"1 800", pl3per:"/month", pl3d:"Full-service agency package — content, ads, web & ongoing support.",
+    pl_pop:"Most popular", pl3n:"Scale", pl3op:"2 200", pl3p:"1 800", pl3per:"/month", pl3d:"Full-service agency package — content, ads, web & ongoing support.",
     pl3f1:"Unlimited short videos", pl3f2:"Full social media management (all platforms)", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page per quarter", pl3f5:"Weekly reports & strategy calls", pl3f6:"Dedicated account manager",
     pl_cta_s:"Get started", pl_cta_p:"Get started", pl_cta_s2:"Let's talk",
     ft_r:"All rights reserved.", ft_s:"Services", ft_w:"Work", ft_p:"Pricing", ft_c:"Contact",
@@ -1836,11 +1853,11 @@ const T = {
     ph_sub:"Позвоните нам, чтобы назначить встречу или видеозвонок",
     pf_v:"Видео", pf_d:"Дизайн", pf_w:"Сайты", pf_a:"Реклама",
     pr_lbl:"Прозрачные цены", pr_ttl:"Выберите тариф", pr_d:"Гибкие ежемесячные пакеты. Отмена в любой момент.",
-    pl1n:"Стартовый", pl1p:"1 500", pl1per:"/мес", pl1d:"Идеально для малого бизнеса, делающего первые шаги в контент-маркетинге.",
+    pl1n:"Стартовый", pl1op:"1 800", pl1p:"1 500", pl1per:"/мес", pl1d:"Идеально для малого бизнеса, делающего первые шаги в контент-маркетинге.",
     pl1f1:"8 коротких видео / мес", pl1f2:"Ведение соцсетей (1 платформа)", pl1f3:"Базовый ежемесячный отчёт", pl1f4:"Поддержка по email", pl1f5:"Платная реклама", pl1f6:"Разработка сайта",
-    pl2n:"Рост", pl2p:"3 500", pl2per:"/мес", pl2d:"Для бизнеса, готового масштабироваться с полным покрытием контента и рекламы.",
+    pl2n:"Рост", pl2op:"4 400", pl2p:"3 500", pl2per:"/мес", pl2d:"Для бизнеса, готового масштабироваться с полным покрытием контента и рекламы.",
     pl2f1:"20 видео / мес (короткие + средние)", pl2f2:"Ведение соцсетей (2 платформы)", pl2f3:"Управление рекламой Facebook & Instagram", pl2f4:"Ежемесячный отчёт о результатах", pl2f5:"Приоритетная поддержка", pl2f6:"Разработка сайта",
-    pl_pop:"Самый популярный", pl3n:"Scale", pl3p:"7 000", pl3per:"/мес", pl3d:"Полный пакет агентства — контент, реклама, сайт и постоянная поддержка.",
+    pl_pop:"Самый популярный", pl3n:"Scale", pl3op:"8 800", pl3p:"7 000", pl3per:"/мес", pl3d:"Полный пакет агентства — контент, реклама, сайт и постоянная поддержка.",
     pl3f1:"Неограниченные короткие видео", pl3f2:"Полное ведение всех соцсетей", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 лендинг в квартал", pl3f5:"Еженедельные отчёты и стратегические звонки", pl3f6:"Персональный менеджер",
     pl_cta_s:"Начать", pl_cta_p:"Начать", pl_cta_s2:"Поговорим",
     ft_r:"Все права защищены.", ft_s:"Услуги", ft_w:"Работы", ft_p:"Цены", ft_c:"Контакт",
@@ -1888,11 +1905,11 @@ const T = {
     ph_sub:"Zadzwoń, aby umówić spotkanie lub wideorozmowę",
     pf_v:"Wideo", pf_d:"Design", pf_w:"Strony WWW", pf_a:"Reklama",
     pr_lbl:"Przejrzyste ceny", pr_ttl:"Wybierz pakiet", pr_d:"Elastyczne pakiety miesięczne. Rezygnacja w dowolnym momencie.",
-    pl1n:"Starter", pl1p:"1 500", pl1per:"/mies", pl1d:"Idealny dla małych firm stawiających pierwsze kroki w content marketingu.",
+    pl1n:"Starter", pl1op:"1 800", pl1p:"1 500", pl1per:"/mies", pl1d:"Idealny dla małych firm stawiających pierwsze kroki w content marketingu.",
     pl1f1:"8 krótkich wideo / mies", pl1f2:"Zarządzanie social mediami (1 platforma)", pl1f3:"Podstawowy raport miesięczny", pl1f4:"Wsparcie email", pl1f5:"Reklama płatna", pl1f6:"Tworzenie strony WWW",
-    pl2n:"Growth", pl2p:"3 500", pl2per:"/mies", pl2d:"Dla firm gotowych na skalowanie z pełnym pokryciem treści i reklamy.",
+    pl2n:"Growth", pl2op:"4 400", pl2p:"3 500", pl2per:"/mies", pl2d:"Dla firm gotowych na skalowanie z pełnym pokryciem treści i reklamy.",
     pl2f1:"20 wideo / mies (krótkie + średnie)", pl2f2:"Zarządzanie social mediami (2 platformy)", pl2f3:"Zarządzanie reklamą Facebook & Instagram", pl2f4:"Miesięczny raport wyników", pl2f5:"Wsparcie priorytetowe", pl2f6:"Tworzenie strony WWW",
-    pl_pop:"Najpopularniejszy", pl3n:"Scale", pl3p:"7 000", pl3per:"/mies", pl3d:"Pełny pakiet agencyjny — treści, reklama, strona i stałe wsparcie.",
+    pl_pop:"Najpopularniejszy", pl3n:"Scale", pl3op:"8 800", pl3p:"7 000", pl3per:"/mies", pl3d:"Pełny pakiet agencyjny — treści, reklama, strona i stałe wsparcie.",
     pl3f1:"Nieograniczone krótkie wideo", pl3f2:"Pełne zarządzanie wszystkimi platformami", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page na kwartał", pl3f5:"Tygodniowe raporty i rozmowy strategiczne", pl3f6:"Dedykowany opiekun konta",
     pl_cta_s:"Zacznij", pl_cta_p:"Zacznij teraz", pl_cta_s2:"Porozmawiajmy",
     ft_r:"Wszelkie prawa zastrzeżone.", ft_s:"Usługi", ft_w:"Prace", ft_p:"Cennik", ft_c:"Kontakt",
