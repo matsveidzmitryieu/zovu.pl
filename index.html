@@ -31,6 +31,7 @@
       cursor: none;
       overflow-x: hidden;
     }
+    a, button, input, textarea, select, label { cursor: none; }
 
     /* ── CURSOR ── */
     #cur {
@@ -488,6 +489,13 @@
     .tm-name {
       font-family: 'Manrope', sans-serif; font-size: 24px; font-weight: 800;
       letter-spacing: -.5px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .tm-ceo {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--accent); background: rgba(var(--acc-rgb),.1);
+      border: 1px solid rgba(var(--acc-rgb),.3);
+      padding: 3px 9px; border-radius: 100px;
     }
     .tm-bio { font-size: 14px; line-height: 1.75; color: var(--sec); }
 
@@ -1491,7 +1499,7 @@
     <div class="tm rv d1">
       <img class="tm-av" src="Митя.jpg" alt="Mitya" loading="lazy" decoding="async">
       <div class="tm-role" data-k="m1r">Senior Creative Director</div>
-      <div class="tm-name">Mat</div>
+      <div class="tm-name">Mat <span class="tm-ceo">CEO</span></div>
       <p class="tm-bio" data-k="m1b">The experience anchor. Manages large-budget ad campaigns, crafts viral content and knows how to convert attention into revenue.</p>
     </div>
     <div class="tm rv d2">
@@ -1930,10 +1938,15 @@ const cur = document.getElementById('cur');
 const ring = document.getElementById('cur-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
+const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone';
+
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
   cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+  document.body.classList.toggle('cursor-hover', !!e.target.closest(HOVER_SEL));
 });
+
+document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
 
 (function animRing() {
   rx += (mx - rx) * .11;
@@ -1941,12 +1954,6 @@ document.addEventListener('mousemove', e => {
   ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
   requestAnimationFrame(animRing);
 })();
-
-const hoverEls = 'a, button, .srv, .port-c, .tm, .grp-hd, .chk, .qb';
-document.querySelectorAll(hoverEls).forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-});
 
 // ── NAVBAR SCROLL ─────────────────────────────────────────────────────────────
 const nav = document.getElementById('nav');
