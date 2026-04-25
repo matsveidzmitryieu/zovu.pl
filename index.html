@@ -528,6 +528,22 @@
     }
     .port-soon-icon { font-size: 36px; opacity: .3; }
     .port-soon p { font-size: 14px; color: var(--muted); }
+    /* Trailing Image */
+    .trail-wrap {
+      position: relative; width: 100%; min-height: 520px;
+      overflow: hidden; cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 48px;
+    }
+    .trail-hint { font-size: 16px; color: var(--sec); position: relative; z-index: 2; pointer-events: none; }
+    .trail-img-item {
+      position: absolute; width: 220px; height: 154px;
+      pointer-events: none; opacity: 0; z-index: 1;
+      transform: translate(-50%, -50%) scale(0.1);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    }
+    .trail-img-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Facebook Ads mock dashboard */
     .fb-mock {
@@ -1705,9 +1721,17 @@
 
   <!-- DESIGN -->
   <div class="port-section" data-sec="design">
-    <div class="port-soon">
-      <div class="port-soon-icon">🎨</div>
-      <p data-k="ps_design">Design portfolio — coming soon</p>
+    <div class="trail-wrap" id="trail-wrap">
+      <div class="trail-hint" data-k="trail_hint">Przesuń kursor żeby zobaczyć nasze realizacje</div>
+      <div class="trail-img-item" data-src="d1.jpg"></div>
+      <div class="trail-img-item" data-src="d2.jpg"></div>
+      <div class="trail-img-item" data-src="d3.jpg"></div>
+      <div class="trail-img-item" data-src="d4.jpg"></div>
+      <div class="trail-img-item" data-src="d5.jpg"></div>
+      <div class="trail-img-item" data-src="d6.jpg"></div>
+      <div class="trail-img-item" data-src="d7.jpg"></div>
+      <div class="trail-img-item" data-src="d8.jpg"></div>
+      <div class="trail-img-item" data-src="d9.jpg"></div>
     </div>
   </div>
 
@@ -2345,6 +2369,57 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const wrap = outer.closest('.vc-wrap') || outer;
   wrap.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
   wrap.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
+})();
+
+// ── TRAILING IMAGE ────────────────────────────────────────────────────────────
+(function() {
+  const wrap = document.getElementById('trail-wrap');
+  if (!wrap) return;
+
+  // Build image pool from data items
+  const items = Array.from(wrap.querySelectorAll('.trail-img-item'));
+  items.forEach(item => {
+    const img = document.createElement('img');
+    img.src = item.dataset.src; img.alt = '';
+    item.appendChild(img);
+  });
+
+  const N = items.length;
+  let idx = 0, zBase = 1;
+  let lastX = 0, lastY = 0, cachedX = 0, cachedY = 0;
+  const THRESHOLD = 60;
+
+  wrap.addEventListener('mousemove', e => {
+    const rect = wrap.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    cachedX += (x - cachedX) * 0.12;
+    cachedY += (y - cachedY) * 0.12;
+
+    const dist = Math.hypot(x - lastX, y - lastY);
+    if (dist < THRESHOLD) return;
+    lastX = x; lastY = y;
+
+    const el = items[idx % N]; idx++; zBase++;
+    el.style.transition = 'none';
+    el.style.left = cachedX + 'px';
+    el.style.top  = cachedY + 'px';
+    el.style.transform = 'translate(-50%,-50%) scale(1)';
+    el.style.opacity = '0.92';
+    el.style.zIndex = zBase;
+
+    requestAnimationFrame(() => {
+      el.style.transition = 'left .9s cubic-bezier(.16,1,.3,1), top .9s cubic-bezier(.16,1,.3,1)';
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+      setTimeout(() => {
+        el.style.transition = 'transform 1s ease-in-out, opacity 1.1s ease-out';
+        el.style.transform = 'translate(-50%,-50%) scale(0.05)';
+        el.style.opacity = '0';
+      }, 900);
+    });
+  });
 })();
 
 // ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
