@@ -393,10 +393,11 @@
     .port-c:hover .site-frame img { filter: saturate(1) brightness(1); }
 
     /* ── VIDEO CAROUSEL ── */
+    .vc-wrap { position: relative; margin-top: 64px; }
     .vc-outer {
-      position: relative; margin-top: 64px; overflow-x: clip; overflow-y: visible;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+      overflow-x: clip; overflow-y: visible;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
     }
     .vc-track {
       display: flex; align-items: flex-start; gap: 24px;
@@ -408,8 +409,8 @@
       transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .5s, filter .5s;
       transform-origin: top center; cursor: none;
     }
-    .vc-card.vc-v { width: 300px; }
-    .vc-card.vc-h { width: 480px; }
+    .vc-card.vc-v { width: 360px; }
+    .vc-card.vc-h { width: 560px; }
     .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
     .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
     .vc-vid-wrapper { position: relative; }
@@ -441,20 +442,20 @@
       padding: 3px 0 3px 14px; position: relative; line-height: 1.5;
     }
     .vc-results li::before { content: '•'; position: absolute; left: 0; color: var(--accent); }
-    .vc-arrows { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
+    .vc-arrows { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 20; }
     .vc-arrow {
-      position: absolute; top: 34%; transform: translateY(-50%);
+      position: absolute; top: 36%; transform: translateY(-50%);
       width: 56px; height: 56px; border-radius: 50%;
       background: var(--accent); border: none; cursor: none;
       display: flex; align-items: center; justify-content: center;
-      z-index: 10; pointer-events: auto;
+      pointer-events: auto;
       transition: background .2s, transform .2s, box-shadow .2s;
       color: #000; font-size: 20px; font-weight: 700;
-      box-shadow: 0 4px 20px rgba(200,241,53,.25);
+      box-shadow: 0 4px 24px rgba(200,241,53,.35);
     }
-    .vc-arrow:hover { background: #d6f94e; transform: translateY(-50%) scale(1.1); box-shadow: 0 6px 28px rgba(200,241,53,.4); }
-    .vc-prev { left: 16px; }
-    .vc-next { right: 16px; }
+    .vc-arrow:hover { background: #d6f94e; transform: translateY(-50%) scale(1.1); box-shadow: 0 6px 32px rgba(200,241,53,.55); }
+    .vc-prev { left: 9%; }
+    .vc-next { right: 9%; }
     .vc-dots { display: none; }
 
     /* ── PORT SECTIONS ── */
@@ -1573,10 +1574,7 @@
 <!-- PORTFOLIO -->
 <section id="portfolio">
   <div class="sec-hd rv" style="justify-content:center;text-align:center;">
-    <div>
-      <div class="sec-label" style="justify-content:center;" data-k="p_lbl">Selected work</div>
-      <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
-    </div>
+    <h2 class="sec-title" style="font-size:clamp(52px,7vw,96px);font-weight:800;" data-k="p_ttl">Recent projects</h2>
   </div>
   <div class="port-filters rv">
     <button class="pf on" data-f="video" data-k="pf_v">Wideo</button>
@@ -1586,6 +1584,7 @@
   </div>
   <!-- VIDEO -->
   <div class="port-section active" data-sec="video">
+  <div class="vc-wrap">
   <div class="vc-outer">
     <div class="vc-track">
 
@@ -1662,12 +1661,13 @@
       </div>
 
     </div>
-    <div class="vc-arrows">
-      <button class="vc-arrow vc-prev">&#8592;</button>
-      <button class="vc-arrow vc-next">&#8594;</button>
-    </div>
     <div class="vc-dots"></div>
   </div>
+  <div class="vc-arrows">
+    <button class="vc-arrow vc-prev">&#8592;</button>
+    <button class="vc-arrow vc-next">&#8594;</button>
+  </div>
+  </div><!-- /vc-wrap -->
   </div><!-- /port-section video -->
 
   <!-- DESIGN -->
