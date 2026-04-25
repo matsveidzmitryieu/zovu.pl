@@ -240,6 +240,7 @@
       display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
     }
     .sec-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    #portfolio .sec-label::before { display: none; }
     .sec-title {
       font-family: 'Manrope', sans-serif;
       font-size: clamp(34px, 4vw, 62px);
@@ -1574,7 +1575,10 @@
 <!-- PORTFOLIO -->
 <section id="portfolio">
   <div class="sec-hd rv" style="justify-content:center;text-align:center;">
-    <h2 class="sec-title" style="font-size:clamp(52px,7vw,96px);font-weight:800;" data-k="p_ttl">Recent projects</h2>
+    <div>
+      <div class="sec-label" style="justify-content:center;" data-k="p_lbl">Selected work</div>
+      <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
+    </div>
   </div>
   <div class="port-filters rv">
     <button class="pf on" data-f="video" data-k="pf_v">Wideo</button>
@@ -2309,8 +2313,9 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
   outer.addEventListener('mouseenter', () => paused = true);
   outer.addEventListener('mouseleave', () => { paused = false; showCur(); });
-  outer.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
-  outer.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
+  const wrap = outer.closest('.vc-wrap') || outer;
+  wrap.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
+  wrap.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
 })();
 
 // ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
