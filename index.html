@@ -686,21 +686,15 @@
       padding: 12px 32px; border-radius: 9px;
       font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 14px;
       color: #111; text-decoration: none; cursor: none;
-      background: #fff;
-      border: none;
-      box-shadow: 0 2px 12px rgba(0,0,0,.12);
-      isolation: isolate;
-    }
-    .rainbow-btn::before {
-      content: '';
-      position: absolute; bottom: -40%; left: 50%;
-      transform: translateX(-50%);
-      width: 65%; height: 28%;
-      background: linear-gradient(90deg, #ff0080, #ff8c00, #ffef00, #40e0d0, #8a2be2, #ff0080);
-      background-size: 200%;
-      filter: blur(10px);
+      border: 1.5px solid transparent;
+      background-image: linear-gradient(#fff, #fff),
+                        linear-gradient(90deg, #ff0080, #ff8c00, #ffef00, #40e0d0, #8a2be2, #ff0080);
+      background-size: 100%, 200%;
+      background-origin: padding-box, border-box;
+      background-clip: padding-box, border-box;
+      background-repeat: no-repeat;
       animation: rb-flow 3s linear infinite;
-      border-radius: 50%; z-index: -1; opacity: .85;
+      box-shadow: 0 2px 10px rgba(0,0,0,.1);
     }
     /* Clickable trail items */
     .trail-img-item.clickable, .trail-col-img.clickable { cursor: none; }
@@ -2665,25 +2659,28 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     return item;
   }
 
-  // Left col: 3, Right col: 3 + folder
+  // Left col: 3 + folder, Right col: 3 + folder
   sites.slice(0, 3).forEach(s => colL.appendChild(makeColItem(s)));
   sites.slice(3, 6).forEach(s => colR.appendChild(makeColItem(s)));
 
-  // Folder card
-  const folder = document.createElement('div');
-  folder.className = 'trail-folder-item';
-  [sites[6], sites[7], sites[8]].forEach(s => {
-    const img = document.createElement('img');
-    img.className = 'trail-folder-img';
-    img.src = s.img; img.alt = '';
-    folder.appendChild(img);
-  });
-  const ov = document.createElement('div');
-  ov.className = 'trail-folder-ov';
-  ov.innerHTML = '<div class="trail-folder-icon">⊞</div><div class="trail-folder-txt">Wszystkie<br>realizacje</div>';
-  folder.appendChild(ov);
-  folder.addEventListener('click', () => window.openAllSites());
-  colR.appendChild(folder);
+  function makeFolderCard() {
+    const folder = document.createElement('div');
+    folder.className = 'trail-folder-item';
+    [sites[6], sites[7], sites[8]].forEach(s => {
+      const img = document.createElement('img');
+      img.className = 'trail-folder-img';
+      img.src = s.img; img.alt = '';
+      folder.appendChild(img);
+    });
+    const fov = document.createElement('div');
+    fov.className = 'trail-folder-ov';
+    fov.innerHTML = '<div class="trail-folder-icon">⊞</div><div class="trail-folder-txt">Wszystkie<br>realizacje</div>';
+    folder.appendChild(fov);
+    folder.addEventListener('click', () => window.openAllSites());
+    return folder;
+  }
+  colL.appendChild(makeFolderCard());
+  colR.appendChild(makeFolderCard());
 
   // All-sites modal logic
   const allOv  = document.getElementById('all-sites-ov');
@@ -2696,11 +2693,15 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     sites.forEach((s, i) => {
       const card = document.createElement('div');
       card.className = 'all-sites-card';
-      card.innerHTML = `<img src="${s.img}" alt="${names[i]}">
-        <div class="all-sites-card-ov">
-          <div class="all-sites-card-name">${names[i]}</div>
-          <a class="all-sites-card-link" href="${s.url}" target="_blank" rel="noopener">Przejdź do strony →</a>
-        </div>`;
+      const img = document.createElement('img');
+      img.src = s.img; img.alt = names[i];
+      const cardOv = document.createElement('div');
+      cardOv.className = 'all-sites-card-ov';
+      cardOv.innerHTML = `<div class="all-sites-card-name">${names[i]}</div>
+        <a class="all-sites-card-link" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Przejdź do strony →</a>`;
+      card.appendChild(img);
+      card.appendChild(cardOv);
+      card.addEventListener('click', () => window.openSiteModal(s.img, s.url));
       allGrid.appendChild(card);
     });
   }
