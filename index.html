@@ -549,19 +549,27 @@
     }
     .trail-col-img {
       position: relative; z-index: 1;
-      width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden;
+      width: 100%; border-radius: 10px; overflow: hidden;
       opacity: 0; transform: translateY(16px);
       transition: opacity .5s ease, transform .5s ease;
     }
     .trail-col-img.show { opacity: 1; transform: translateY(0); }
-    .trail-col-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .trail-col-img img { width: 100%; height: auto; display: block; }
     /* Folder card */
-    .trail-folder-item {
-      position: relative; width: 100%; aspect-ratio: 4/3;
-      border-radius: 12px; overflow: hidden; cursor: none;
-      transition: transform .35s cubic-bezier(.16,1,.3,1);
+    .gfx-all-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; margin-top: 32px;
+      padding: 22px 0; border-radius: 14px; cursor: none;
+      background: var(--bg2); border: 1px solid rgba(var(--acc-rgb),.18);
+      font-size: 15px; font-weight: 700; letter-spacing: .5px; color: var(--text);
+      transition: border-color .3s, box-shadow .3s, background .3s;
     }
-    .trail-folder-item:hover { transform: translateY(-8px); }
+    .gfx-all-btn:hover {
+      border-color: rgba(var(--acc-rgb),.55);
+      box-shadow: 0 0 40px rgba(var(--acc-rgb),.14);
+      background: var(--bg3);
+    }
+    .gfx-all-btn-icon { font-size: 20px; }
     .trail-folder-img {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover;
@@ -618,7 +626,7 @@
       position: relative; transition: transform .3s cubic-bezier(.16,1,.3,1);
     }
     .all-sites-card:hover { transform: scale(1.03); }
-    .all-sites-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .all-sites-card img { width: 100%; height: auto; display: block; }
     .all-sites-card-ov {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 55%);
@@ -1903,6 +1911,10 @@
       </div>
       <div class="trail-col" id="gfx-col-right"></div>
     </div>
+    <div class="gfx-all-btn" id="gfx-all-btn" onclick="window.openAllGfx && window.openAllGfx()">
+      <span class="gfx-all-btn-icon">⊞</span>
+      <span data-k="gfx_all_btn">Wszystkie projekty graficzne</span>
+    </div>
   </div>
 
   <!-- WEB / STRONY -->
@@ -2469,13 +2481,14 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   });
   const dots = Array.from(dotsWrap.querySelectorAll('.vc-dot'));
 
-  // Pre-set iframe srcs for YT API
+  // Assign iframe IDs only — src is set lazily when card becomes active
   const players = {};
   cards.forEach((c, i) => {
-    const id = c.dataset.yt;
     const iframe = c.querySelector('iframe');
     iframe.id = 'vc-yt-' + i;
-    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&rel=0&playsinline=1&mute=1&vq=hd720`;
+    if (i === 0) {
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+    }
   });
 
   const curDot = document.getElementById('cur');
@@ -2491,11 +2504,26 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     track.style.transform = 'translateX(' + (-offset) + 'px)';
   }
 
+  function loadPlayer(i) {
+    const c = cards[i];
+    const iframe = c.querySelector('iframe');
+    if (!iframe.src) {
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+    }
+    if (!players[i] && window.YT && window.YT.Player) {
+      players[i] = new YT.Player('vc-yt-' + i, {
+        events: { onReady: e => { e.target.mute(); e.target.playVideo(); } }
+      });
+    }
+  }
+
   function setActive(idx) {
     cur = ((idx % n) + n) % n;
     cards.forEach((c, i) => c.classList.toggle('vc-active', i === cur));
     dots.forEach((d, i) => d.classList.toggle('on', i === cur));
     centerTrack();
+    // Lazy-load iframe + player for newly active card
+    loadPlayer(cur);
     // cursor hide on active vid-box
     document.querySelectorAll('.vc-vid-box').forEach(b => { b.onmouseenter = null; b.onmouseleave = null; });
     const ab = cards[cur].querySelector('.vc-vid-box');
@@ -2517,15 +2545,10 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   document.head.appendChild(tag);
 
   window.onYouTubeIframeAPIReady = function() {
-    cards.forEach((c, i) => {
-      players[i] = new YT.Player('vc-yt-' + i, {
-        events: {
-          onReady: function(e) {
-            e.target.mute();
-            if (i === 0) { e.target.playVideo(); startTimer(); }
-          }
-        }
-      });
+    players[0] = new YT.Player('vc-yt-0', {
+      events: {
+        onReady: function(e) { e.target.mute(); e.target.playVideo(); startTimer(); }
+      }
     });
     setActive(0);
   };
@@ -2551,35 +2574,13 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const colL = document.getElementById('gfx-col-left');
   const colR = document.getElementById('gfx-col-right');
 
-  // Folder cards (always at bottom)
-  function makeFolderCard() {
-    const folder = document.createElement('div');
-    folder.className = 'trail-folder-item';
-    [posts[5], posts[6], posts[7]].forEach(src => {
-      const img = document.createElement('img');
-      img.className = 'trail-folder-img'; img.src = src; img.alt = '';
-      folder.appendChild(img);
-    });
-    const fov = document.createElement('div');
-    fov.className = 'trail-folder-ov';
-    fov.innerHTML = '<div class="trail-folder-icon">⊞</div><div class="trail-folder-txt">Wszystkie<br>projekty</div>';
-    folder.appendChild(fov);
-    folder.addEventListener('click', () => window.openAllGfx());
-    return folder;
-  }
-  const folderL = makeFolderCard();
-  const folderR = makeFolderCard();
-  colL.appendChild(folderL);
-  colR.appendChild(folderR);
-
-  // Add photo to column before folder (max 3 per side)
+  // Add photo to column (max 3 per side)
   let colCountL = 0, colCountR = 0, colSide = 0;
   function addToColumn(src) {
     const isLeft = colSide % 2 === 0;
     const count  = isLeft ? colCountL : colCountR;
     if (count >= 3) { colSide++; return; }
     const col = isLeft ? colL : colR;
-    const folderRef = isLeft ? folderL : folderR;
     if (isLeft) colCountL++; else colCountR++;
     colSide++;
     const item = document.createElement('div');
@@ -2596,7 +2597,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     item.appendChild(glow);
     item.appendChild(div);
     item.addEventListener('click', () => window.openSiteModal(src, '', false));
-    col.insertBefore(item, folderRef);
+    col.appendChild(item);
     setTimeout(() => div.classList.add('show'), 50);
   }
 
@@ -2869,7 +2870,7 @@ const cur = document.getElementById('cur');
 const ring = document.getElementById('cur-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
-const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone';
+const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone, .gfx-all-btn';
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
