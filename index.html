@@ -2566,14 +2566,14 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     glow.className = 'trail-col-glow';
     glow.style.backgroundImage = `url(${site.img})`;
     const div = document.createElement('div');
-    div.className = 'trail-col-img';
+    div.className = 'trail-col-img show';
     const img = document.createElement('img');
     img.src = site.img; img.alt = '';
     div.appendChild(img);
     item.appendChild(glow);
     item.appendChild(div);
+    item.style.cursor = 'none';
     item.addEventListener('click', () => window.openSiteModal(site.img, site.url));
-    requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add('show')));
     return item;
   }
 
