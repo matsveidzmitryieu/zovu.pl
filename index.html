@@ -1876,23 +1876,14 @@
   </div><!-- /vc-wrap -->
   </div><!-- /port-section video -->
 
-  <!-- DESIGN -->
+  <!-- DESIGN / GRAFIKA -->
   <div class="port-section" data-sec="design">
     <div class="trail-outer">
-      <div class="trail-col" id="trail-col-left"></div>
-      <div class="trail-wrap" id="trail-wrap">
+      <div class="trail-col" id="gfx-col-left"></div>
+      <div class="trail-wrap" id="gfx-trail-wrap">
         <div class="trail-hint" data-k="trail_hint">Przesuń kursor żeby zobaczyć nasze realizacje</div>
-        <div class="trail-img-item" data-src="d1.jpg"></div>
-        <div class="trail-img-item" data-src="d2.jpg"></div>
-        <div class="trail-img-item" data-src="d3.jpg"></div>
-        <div class="trail-img-item" data-src="d4.jpg"></div>
-        <div class="trail-img-item" data-src="d5.jpg"></div>
-        <div class="trail-img-item" data-src="d6.jpg"></div>
-        <div class="trail-img-item" data-src="d7.jpg"></div>
-        <div class="trail-img-item" data-src="d8.jpg"></div>
-        <div class="trail-img-item" data-src="d9.jpg"></div>
       </div>
-      <div class="trail-col" id="trail-col-right"></div>
+      <div class="trail-col" id="gfx-col-right"></div>
     </div>
   </div>
 
@@ -2213,6 +2204,14 @@
   <div class="all-sites-grid" id="all-sites-grid"></div>
 </div>
 
+<!-- ALL GRAFIKA MODAL -->
+<div class="all-sites-ov" id="all-gfx-ov"></div>
+<div class="all-sites-modal" id="all-gfx-modal">
+  <button class="all-sites-close" id="all-gfx-close">✕</button>
+  <p class="all-sites-title">Wszystkie projekty graficzne</p>
+  <div class="all-sites-grid" id="all-gfx-grid"></div>
+</div>
+
 <script>
 // ── TRANSLATIONS ──────────────────────────────────────────────────────────────
 const T = {
@@ -2517,74 +2516,129 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   wrap.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
 })();
 
-// ── TRAILING IMAGE ────────────────────────────────────────────────────────────
+// ── GRAFIKA TRAIL ─────────────────────────────────────────────────────────────
 (function() {
-  const wrap = document.getElementById('trail-wrap');
+  const wrap = document.getElementById('gfx-trail-wrap');
   if (!wrap) return;
 
-  const colL = document.getElementById('trail-col-left');
-  const colR = document.getElementById('trail-col-right');
+  // To add more graphics: just add more entries here
+  const posts = [
+    'g1.jpg','g2.jpg','g3.jpg','g4.jpg',
+    'g5.jpg','g6.jpg','g7.jpg','g8.jpg'
+  ];
 
-  const items = Array.from(wrap.querySelectorAll('.trail-img-item'));
-  const srcs = items.map(i => i.dataset.src);
-  items.forEach(item => {
-    const img = document.createElement('img');
-    img.src = item.dataset.src; img.alt = '';
-    item.appendChild(img);
-  });
+  const colL = document.getElementById('gfx-col-left');
+  const colR = document.getElementById('gfx-col-right');
 
-  const N = items.length;
-  let idx = 0, zBase = 1;
-  let lastX = 0, lastY = 0, cachedX = 0, cachedY = 0;
-  const THRESHOLD = 160;
-  let colCount = 0;
+  // Folder cards (always at bottom)
+  function makeFolderCard() {
+    const folder = document.createElement('div');
+    folder.className = 'trail-folder-item';
+    [posts[5], posts[6], posts[7]].forEach(src => {
+      const img = document.createElement('img');
+      img.className = 'trail-folder-img'; img.src = src; img.alt = '';
+      folder.appendChild(img);
+    });
+    const fov = document.createElement('div');
+    fov.className = 'trail-folder-ov';
+    fov.innerHTML = '<div class="trail-folder-icon">⊞</div><div class="trail-folder-txt">Wszystkie<br>projekty</div>';
+    folder.appendChild(fov);
+    folder.addEventListener('click', () => window.openAllGfx());
+    return folder;
+  }
+  const folderL = makeFolderCard();
+  const folderR = makeFolderCard();
+  colL.appendChild(folderL);
+  colR.appendChild(folderR);
 
+  // Add photo to column before folder (max 3 per side)
+  let colCountL = 0, colCountR = 0, colSide = 0;
   function addToColumn(src) {
-    const col = colCount % 2 === 0 ? colL : colR;
-    colCount++;
-
+    const isLeft = colSide % 2 === 0;
+    const count  = isLeft ? colCountL : colCountR;
+    if (count >= 3) { colSide++; return; }
+    const col = isLeft ? colL : colR;
+    const folderRef = isLeft ? folderL : folderR;
+    if (isLeft) colCountL++; else colCountR++;
+    colSide++;
     const item = document.createElement('div');
     item.className = 'trail-col-item';
-
+    item.style.cursor = 'none';
     const glow = document.createElement('div');
     glow.className = 'trail-col-glow';
     glow.style.backgroundImage = `url(${src})`;
-
     const div = document.createElement('div');
     div.className = 'trail-col-img';
     const img = document.createElement('img');
     img.src = src; img.alt = '';
     div.appendChild(img);
-
     item.appendChild(glow);
     item.appendChild(div);
-    col.appendChild(item);
-    requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add('show')));
+    item.addEventListener('click', () => window.openSiteModal(src, '', false));
+    col.insertBefore(item, folderRef);
+    setTimeout(() => div.classList.add('show'), 50);
   }
+
+  // All-grafika modal
+  const allOv   = document.getElementById('all-gfx-ov');
+  const allMod  = document.getElementById('all-gfx-modal');
+  const allGrid = document.getElementById('all-gfx-grid');
+  const allClose = document.getElementById('all-gfx-close');
+
+  if (allGrid && !allGrid.childElementCount) {
+    posts.forEach(src => {
+      const card = document.createElement('div');
+      card.className = 'all-sites-card';
+      const img = document.createElement('img');
+      img.src = src; img.alt = '';
+      card.appendChild(img);
+      card.addEventListener('click', () => window.openSiteModal(src, '', false));
+      allGrid.appendChild(card);
+    });
+  }
+
+  function openAllGfx() { allOv.classList.add('open'); allMod.classList.add('open'); }
+  function closeAllGfx() { allOv.classList.remove('open'); allMod.classList.remove('open'); }
+  if (allClose) allClose.addEventListener('click', closeAllGfx);
+  if (allOv) allOv.addEventListener('click', e => { if (e.target === allOv) closeAllGfx(); });
+  window.openAllGfx = openAllGfx;
+
+  // Trail items
+  const items = posts.map(src => {
+    const el = document.createElement('div');
+    el.className = 'trail-img-item';
+    const img = document.createElement('img');
+    img.src = src; img.alt = '';
+    el.appendChild(img);
+    el.addEventListener('click', () => window.openSiteModal(src, '', false));
+    wrap.appendChild(el);
+    return el;
+  });
+
+  const N = posts.length;
+  let idx = 0, zBase = 1;
+  let lastX = 0, lastY = 0, cachedX = 0, cachedY = 0;
+  const THRESHOLD = 160;
 
   wrap.addEventListener('mousemove', e => {
     const rect = wrap.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-
     cachedX += (x - cachedX) * 0.12;
     cachedY += (y - cachedY) * 0.12;
-
     const dist = Math.hypot(x - lastX, y - lastY);
     if (dist < THRESHOLD) return;
     lastX = x; lastY = y;
-
     const el = items[idx % N];
-    const src = srcs[idx % N];
+    const src = posts[idx % N];
     idx++; zBase++;
-
     el.style.transition = 'none';
     el.style.left = cachedX + 'px';
     el.style.top  = cachedY + 'px';
     el.style.transform = 'translate(-50%,-50%) scale(1)';
     el.style.opacity = '0.92';
     el.style.zIndex = zBase;
-
+    el.classList.add('visible');
     requestAnimationFrame(() => {
       el.style.transition = 'left .9s cubic-bezier(.16,1,.3,1), top .9s cubic-bezier(.16,1,.3,1)';
       el.style.left = x + 'px';
@@ -2593,6 +2647,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
         el.style.transition = 'transform 1s ease-in-out, opacity 1.1s ease-out';
         el.style.transform = 'translate(-50%,-50%) scale(0.05)';
         el.style.opacity = '0';
+        el.classList.remove('visible');
         addToColumn(src);
       }, 900);
     });
@@ -2607,9 +2662,10 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const lnk = document.getElementById('site-modal-link');
   const cls = document.getElementById('site-modal-close');
 
-  function openModal(src, url) {
+  function openModal(src, url, showBtn) {
     img.src = src;
-    lnk.href = url;
+    lnk.href = url || '';
+    lnk.style.display = (showBtn === false) ? 'none' : '';
     ov.classList.add('open');
     mod.classList.add('open');
   }
