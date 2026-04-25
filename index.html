@@ -267,11 +267,15 @@
       animation: neonSpin 3s linear infinite;
       pointer-events: none;
     }
-    .pf.on { background: linear-gradient(#f3f0ff,#f3f0ff) padding-box,
-                         conic-gradient(from var(--neon-angle), #7c3aed 0%, #c8ff47 50%, #7c3aed 100%) border-box; }
-    .pf.on span { background: linear-gradient(135deg, #7c3aed, #c8ff47); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .pf.on::after { background: conic-gradient(from var(--neon-angle), #7c3aed 0%, #c8ff47 50%, #7c3aed 100%); }
-    .pf:hover:not(.on) { opacity: .85; }
+    .pf.on {
+      background: linear-gradient(#111,#111) padding-box,
+                  conic-gradient(from var(--neon-angle), #ff2975 0%, #00FFF1 50%, #ff2975 100%) border-box;
+      transform: scale(1.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,.15);
+    }
+    .pf.on span { background: linear-gradient(135deg, #ff2975 35%, #00FFF1); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .pf.on::after { opacity: .85; }
+    .pf:hover:not(.on) { opacity: .8; }
     .sec-title {
       font-family: 'Manrope', sans-serif;
       font-size: clamp(34px, 4vw, 62px);
