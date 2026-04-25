@@ -255,7 +255,13 @@
       padding: 13px 32px; border-radius: 14px; cursor: none;
       transition: opacity .2s;
     }
-    .pf span { color: var(--sec); }
+    .pf span {
+      color: var(--sec);
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      -webkit-text-fill-color: var(--sec);
+    }
     .pf::after {
       content: ''; position: absolute; inset: -4px; border-radius: 18px; z-index: -1;
       background: conic-gradient(from var(--neon-angle), #ff2975 0%, #00FFF1 50%, #ff2975 100%);
@@ -269,7 +275,7 @@
       transform: scale(1.1);
       box-shadow: 0 8px 32px rgba(0,0,0,.15);
     }
-    .pf.on span { color: var(--sec); -webkit-text-fill-color: var(--sec); }
+    .pf.on span { color: var(--sec); background: none; -webkit-background-clip: unset; background-clip: unset; -webkit-text-fill-color: var(--sec); }
     .pf.on::after { opacity: .85; }
     .pf:hover:not(.on) { opacity: .8; }
     .sec-title {
