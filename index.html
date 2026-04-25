@@ -676,7 +676,19 @@
       display: flex; align-items: center; justify-content: center;
     }
     .site-modal-close:hover { background: rgba(255,255,255,.15); color: #fff; }
-    .site-modal > img {
+    .site-modal-img-wrap {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .site-modal-glow {
+      position: absolute; inset: -24px;
+      border-radius: 28px;
+      background: center/cover no-repeat;
+      filter: blur(36px) saturate(4);
+      opacity: 0.7; z-index: 0; pointer-events: none;
+    }
+    .site-modal > .site-modal-img-wrap > img {
+      position: relative; z-index: 1;
       max-width: min(780px, 90vw);
       max-height: 82vh;
       width: auto; height: auto;
@@ -2198,7 +2210,10 @@
 <div class="site-modal-ov" id="site-modal-ov"></div>
 <div class="site-modal" id="site-modal">
   <button class="site-modal-close" id="site-modal-close">✕</button>
-  <img id="site-modal-img" src="" alt="">
+  <div class="site-modal-img-wrap">
+    <div class="site-modal-glow" id="site-modal-glow"></div>
+    <img id="site-modal-img" src="" alt="">
+  </div>
   <a class="rainbow-btn" id="site-modal-link" href="" target="_blank" rel="noopener">Przejdź do strony →</a>
 </div>
 
@@ -2662,14 +2677,16 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
 // ── SITE MODAL ────────────────────────────────────────────────────────────────
 (function() {
-  const ov  = document.getElementById('site-modal-ov');
-  const mod = document.getElementById('site-modal');
-  const img = document.getElementById('site-modal-img');
-  const lnk = document.getElementById('site-modal-link');
-  const cls = document.getElementById('site-modal-close');
+  const ov   = document.getElementById('site-modal-ov');
+  const mod  = document.getElementById('site-modal');
+  const img  = document.getElementById('site-modal-img');
+  const glow = document.getElementById('site-modal-glow');
+  const lnk  = document.getElementById('site-modal-link');
+  const cls  = document.getElementById('site-modal-close');
 
   function openModal(src, url, showBtn) {
     img.src = src;
+    glow.style.backgroundImage = `url(${src})`;
     lnk.href = url || '';
     lnk.style.display = (showBtn === false) ? 'none' : '';
     ov.classList.add('open');
