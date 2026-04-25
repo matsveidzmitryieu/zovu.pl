@@ -527,16 +527,15 @@
     /* ── WEB TILTED GRID ── */
     .web-tilt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 40px; }
     .wtc { position: relative; cursor: none; isolation: isolate; }
-    .wtc-glow {
-      position: absolute; inset: -14px; border-radius: 20px; z-index: 0;
-      background: center/cover no-repeat;
-      filter: blur(18px) saturate(4); opacity: 0.6; pointer-events: none;
-    }
+    .wtc-glow { display: none; }
     .wtc-inner {
       display: block; position: relative; z-index: 1;
       border-radius: 14px; overflow: hidden; text-decoration: none;
+      box-shadow: 0 0 36px rgba(var(--acc-rgb), .22), 0 4px 20px rgba(0,0,0,.35);
+      transition: box-shadow .4s;
     }
-    .wtc-bg img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    .wtc:hover .wtc-inner { box-shadow: 0 0 56px rgba(var(--acc-rgb), .38), 0 8px 32px rgba(0,0,0,.45); }
+    .wtc-bg img { width: 100%; height: auto; display: block; }
     .wtc-cover {
       position: absolute; inset: 0; border-radius: 14px;
       background: var(--bg2); border: 5px solid var(--bg3);
@@ -2580,15 +2579,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   });
   const dots = Array.from(dotsWrap.querySelectorAll('.vc-dot'));
 
-  // Assign iframe IDs only — src is set lazily when card becomes active
+  // Assign iframe IDs only — src loaded lazily on scroll/switch
   const players = {};
-  cards.forEach((c, i) => {
-    const iframe = c.querySelector('iframe');
-    iframe.id = 'vc-yt-' + i;
-    if (i === 0) {
-      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
-    }
-  });
+  cards.forEach((c, i) => { c.querySelector('iframe').id = 'vc-yt-' + i; });
+
+  // Visual centering immediately (no video load yet)
+  setActive(Math.floor(n / 2));
 
   const curDot = document.getElementById('cur');
   const curRing = document.getElementById('cur-ring');
@@ -2612,7 +2608,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
         events: {
-          onReady: e => { e.target.mute(); e.target.playVideo(); },
+          onReady: e => { e.target.mute(); e.target.playVideo(); if (!timer) startTimer(); },
           onStateChange: e => {
             if (e.data === YT.PlayerState.PLAYING) cards[i].classList.add('vc-playing');
             else cards[i].classList.remove('vc-playing');
@@ -2647,23 +2643,24 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     timer = setInterval(() => { if (!paused) setActive(cur + 1); }, 6000);
   }
 
-  // Load YouTube IFrame API
-  const tag = document.createElement('script');
-  tag.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(tag);
-
+  // Load YouTube API only when portfolio section scrolls into view
   window.onYouTubeIframeAPIReady = function() {
-    players[0] = new YT.Player('vc-yt-0', {
-      events: {
-        onReady: function(e) { e.target.mute(); e.target.playVideo(); startTimer(); },
-        onStateChange: function(e) {
-          if (e.data === YT.PlayerState.PLAYING) cards[0].classList.add('vc-playing');
-          else cards[0].classList.remove('vc-playing');
-        }
-      }
-    });
-    setActive(Math.floor(n / 2));
+    loadPlayer(cur);
+    startTimer();
   };
+  (function() {
+    const sect = document.getElementById('portfolio');
+    if (!sect) return;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+        obs.disconnect();
+      }
+    }, { threshold: 0.2 });
+    obs.observe(sect);
+  })();
 
   outer.addEventListener('mouseenter', () => paused = true);
   outer.addEventListener('mouseleave', () => { paused = false; showCur(); });
