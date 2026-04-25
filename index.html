@@ -2662,12 +2662,16 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   colL.appendChild(folderL);
   colR.appendChild(folderR);
 
-  // Add photo to column before folder card
-  let colCount = 0;
+  // Add photo to column before folder card — max 3 per column
+  let colCountL = 0, colCountR = 0, colSide = 0;
   function addToColumn(site) {
-    const col = colCount % 2 === 0 ? colL : colR;
-    const folderRef = colCount % 2 === 0 ? folderL : folderR;
-    colCount++;
+    const isLeft = colSide % 2 === 0;
+    const count  = isLeft ? colCountL : colCountR;
+    if (count >= 3) { colSide++; return; }
+    const col = isLeft ? colL : colR;
+    const folderRef = isLeft ? folderL : folderR;
+    if (isLeft) colCountL++; else colCountR++;
+    colSide++;
     const item = document.createElement('div');
     item.className = 'trail-col-item';
     item.style.cursor = 'none';
