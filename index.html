@@ -536,11 +536,18 @@
       display: flex; flex-direction: column; gap: 12px;
       width: 160px; flex-shrink: 0;
     }
+    .trail-col-item { position: relative; }
+    .trail-col-glow {
+      position: absolute; inset: -14px; border-radius: 18px;
+      background: center/cover no-repeat;
+      filter: blur(20px) saturate(4);
+      z-index: 0; pointer-events: none; opacity: 0.75;
+    }
     .trail-col-img {
+      position: relative; z-index: 1;
       width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden;
       opacity: 0; transform: translateY(16px);
       transition: opacity .5s ease, transform .5s ease;
-      box-shadow: 0 4px 16px rgba(0,0,0,.22);
     }
     .trail-col-img.show { opacity: 1; transform: translateY(0); }
     .trail-col-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -2414,12 +2421,23 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   function addToColumn(src) {
     const col = colCount % 2 === 0 ? colL : colR;
     colCount++;
+
+    const item = document.createElement('div');
+    item.className = 'trail-col-item';
+
+    const glow = document.createElement('div');
+    glow.className = 'trail-col-glow';
+    glow.style.backgroundImage = `url(${src})`;
+
     const div = document.createElement('div');
     div.className = 'trail-col-img';
     const img = document.createElement('img');
     img.src = src; img.alt = '';
     div.appendChild(img);
-    col.appendChild(div);
+
+    item.appendChild(glow);
+    item.appendChild(div);
+    col.appendChild(item);
     requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add('show')));
   }
 
