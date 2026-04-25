@@ -439,16 +439,18 @@
     }
     .vc-track {
       display: flex; align-items: flex-start; gap: 24px;
-      transition: transform .65s cubic-bezier(.16,1,.3,1);
+      transition: transform .75s cubic-bezier(.16,1,.3,1);
       will-change: transform; padding: 120px 0 60px;
     }
     .vc-card {
       flex: 0 0 auto;
-      transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .5s, filter .5s;
+      transition: transform .75s cubic-bezier(.16,1,.3,1), opacity .75s, filter .75s;
       transform-origin: top center; cursor: none;
     }
     .vc-card.vc-v { width: 260px; }
     .vc-card.vc-h { width: 520px; }
+    .vc-nero .vc-vid-box { border-radius: 12px; overflow: hidden; }
+    .vc-nero .vc-vid-box iframe { transform: scale(1.07); }
     .vc-card:not(.vc-active) { transform: scale(0.85); opacity: 0.7; filter: blur(2.5px) brightness(0.8); }
     .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
     .vc-vid-wrapper { position: relative; }
@@ -523,35 +525,34 @@
     .port-pg-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .port-pg-info p { font-size: 11px; color: rgba(255,255,255,.55); }
     /* ── WEB TILTED GRID ── */
-    .web-tilt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
-    .wtc { position: relative; height: 190px; cursor: none; }
-    .wtc-bg {
-      position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
-      transform: perspective(400px) rotateY(calc(var(--d,1) * -20deg)) scale(0.85) translateX(calc(var(--d,1) * -20%));
-      transition: transform .5s cubic-bezier(.16,1,.3,1), filter .5s;
-      filter: brightness(.7);
+    .web-tilt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 48px; }
+    .wtc { position: relative; cursor: none; }
+    .wtc-glow {
+      position: absolute; inset: -18px; border-radius: 22px; z-index: 0;
+      background: center/cover no-repeat;
+      filter: blur(22px) saturate(4); opacity: 0.7; pointer-events: none;
     }
-    .wtc-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .wtc:hover .wtc-bg { transform: none; filter: brightness(1); }
+    .wtc-inner {
+      position: relative; z-index: 1;
+      border-radius: 14px; overflow: hidden;
+    }
+    .wtc-bg img { width: 100%; height: auto; display: block; }
     .wtc-cover {
       position: absolute; inset: 0; border-radius: 14px;
       background: var(--bg2); border: 5px solid var(--bg3);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-      transform: perspective(400px) rotateY(calc(var(--d,1) * -20deg));
-      transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .35s;
-      overflow: hidden; padding: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      transform: perspective(500px) rotateY(calc(var(--d,1) * -15deg));
+      transform-origin: calc(50% - var(--d,1) * 50%) 50%;
+      transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .4s;
+      padding: 20px;
     }
-    .wtc:hover .wtc-cover { transform: perspective(400px) rotateY(calc(var(--d,1) * -90deg)); opacity: 0; }
+    .wtc:hover .wtc-cover { transform: perspective(500px) rotateY(calc(var(--d,1) * -95deg)); opacity: 0; }
     .wtc-emoji { font-size: 26px; line-height: 1; }
     .wtc-name { font-size: 15px; font-weight: 800; color: var(--text); text-align: center; }
     .wtc-type { font-size: 11px; color: var(--sec); letter-spacing: .5px; text-transform: uppercase; }
     .wtc-url { font-size: 11px; color: var(--accent); font-weight: 600; }
-    @media(max-width:900px){
-      .web-tilt-grid { grid-template-columns: repeat(2,1fr); }
-    }
-    @media(max-width:580px){
-      .web-tilt-grid { grid-template-columns: 1fr; }
-    }
+    @media(max-width:900px){ .web-tilt-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:580px){ .web-tilt-grid { grid-template-columns: 1fr; } }
     .port-soon {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 80px 20px; gap: 12px; margin-top: 48px; text-align: center;
@@ -581,7 +582,7 @@
       position: relative; z-index: 1;
       width: 100%; border-radius: 10px; overflow: hidden;
       opacity: 0; transform: translateY(16px);
-      transition: opacity .5s ease, transform .5s ease;
+      transition: opacity .25s ease, transform .25s ease;
     }
     .trail-col-img.show { opacity: 1; transform: translateY(0); }
     .trail-col-img img { width: 100%; height: auto; display: block; }
@@ -1904,8 +1905,8 @@
         </div>
       </div>
 
-      <div class="vc-card vc-h" data-yt="dxj8T0wUGLo">
-        <div class="vc-vid-box" style="aspect-ratio:21/9;"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="vc-card vc-h vc-nero" data-yt="dxj8T0wUGLo">
+        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1952,93 +1953,75 @@
     <div class="web-tilt-grid">
 
       <div class="wtc" style="--d:1">
-        <div class="wtc-bg"><img src="web_gucio.jpg" alt="Gucio Bar" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">🍺</div>
-          <div class="wtc-name">Gucio Bar</div>
-          <div class="wtc-type">Bar &amp; Restaurant</div>
-          <div class="wtc-url">gucio.bar</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_gucio.jpg)"></div>
+        <a class="wtc-inner" href="https://inca1122.github.io/gucio_bar/index.html" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_gucio.jpg" alt="Gucio Bar" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">🍺</div><div class="wtc-name">Gucio Bar</div><div class="wtc-type">Bar &amp; Restaurant</div><div class="wtc-url">gucio.bar</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:-1">
-        <div class="wtc-bg"><img src="web_shaurma.jpg" alt="Mag Shaurma" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">🌯</div>
-          <div class="wtc-name">Mag Shaurma</div>
-          <div class="wtc-type">Food &amp; Delivery</div>
-          <div class="wtc-url">magshaurma.pl</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_shaurma.jpg)"></div>
+        <a class="wtc-inner" href="https://dzmzah.github.io/magshaurma/" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_shaurma.jpg" alt="Mag Shaurma" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">🌯</div><div class="wtc-name">Mag Shaurma</div><div class="wtc-type">Food &amp; Delivery</div><div class="wtc-url">magshaurma.pl</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:1">
-        <div class="wtc-bg"><img src="web_jewelry.jpg" alt="Jewelry Katowice" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">💎</div>
-          <div class="wtc-name">Jewelry Katowice</div>
-          <div class="wtc-type">Jewelry Store</div>
-          <div class="wtc-url">jewelry-katowice</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_jewelry.jpg)"></div>
+        <a class="wtc-inner" href="https://inca1122.github.io/jewelry-katowice/" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_jewelry.jpg" alt="Jewelry Katowice" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">💎</div><div class="wtc-name">Jewelry Katowice</div><div class="wtc-type">Jewelry Store</div><div class="wtc-url">jewelry-katowice</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:-1">
-        <div class="wtc-bg"><img src="web_maya.jpg" alt="Maya Gold" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">✨</div>
-          <div class="wtc-name">Maya Gold</div>
-          <div class="wtc-type">Gold &amp; Jewelry</div>
-          <div class="wtc-url">maya-gold</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_maya.jpg)"></div>
+        <a class="wtc-inner" href="https://dzmzah.github.io/maya-gold" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_maya.jpg" alt="Maya Gold" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">✨</div><div class="wtc-name">Maya Gold</div><div class="wtc-type">Gold &amp; Jewelry</div><div class="wtc-url">maya-gold</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:1">
-        <div class="wtc-bg"><img src="web_marketing.jpg" alt="Marketing AI" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">🤖</div>
-          <div class="wtc-name">Marketing AI</div>
-          <div class="wtc-type">AI Marketing Platform</div>
-          <div class="wtc-url">energiabiznesu.pl</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_marketing.jpg)"></div>
+        <a class="wtc-inner" href="https://marketingai.energiabiznesu.pl" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_marketing.jpg" alt="Marketing AI" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">🤖</div><div class="wtc-name">Marketing AI</div><div class="wtc-type">AI Marketing Platform</div><div class="wtc-url">energiabiznesu.pl</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:-1">
-        <div class="wtc-bg"><img src="web_bee.jpg" alt="Bee Gelato" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">🍦</div>
-          <div class="wtc-name">Bee Gelato</div>
-          <div class="wtc-type">Artisan Ice Cream</div>
-          <div class="wtc-url">beegelato.sk</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_bee.jpg)"></div>
+        <a class="wtc-inner" href="https://beegelato.sk" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_bee.jpg" alt="Bee Gelato" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">🍦</div><div class="wtc-name">Bee Gelato</div><div class="wtc-type">Artisan Ice Cream</div><div class="wtc-url">beegelato.sk</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:1">
-        <div class="wtc-bg"><img src="web_potolki.jpg" alt="Adekwat Potolki" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">🏗️</div>
-          <div class="wtc-name">Adekwat Potolki</div>
-          <div class="wtc-type">Ceiling Installation</div>
-          <div class="wtc-url">adekvatpotolki</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_potolki.jpg)"></div>
+        <a class="wtc-inner" href="https://adekvatpotolki.netlify.app" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_potolki.jpg" alt="Adekwat Potolki" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">🏗️</div><div class="wtc-name">Adekwat Potolki</div><div class="wtc-type">Ceiling Installation</div><div class="wtc-url">adekvatpotolki</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:-1">
-        <div class="wtc-bg"><img src="web_pick.jpg" alt="PickActive" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">🏋️</div>
-          <div class="wtc-name">PickActive</div>
-          <div class="wtc-type">Sports Club</div>
-          <div class="wtc-url">pickactive.pl</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_pick.jpg)"></div>
+        <a class="wtc-inner" href="https://pickactive.pl/" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_pick.jpg" alt="PickActive" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">🏋️</div><div class="wtc-name">PickActive</div><div class="wtc-type">Sports Club</div><div class="wtc-url">pickactive.pl</div></div>
+        </a>
       </div>
 
       <div class="wtc" style="--d:1">
-        <div class="wtc-bg"><img src="web_energia.jpg" alt="Energia Biznesu" loading="lazy"></div>
-        <div class="wtc-cover">
-          <div class="wtc-emoji">⚡</div>
-          <div class="wtc-name">Energia Biznesu</div>
-          <div class="wtc-type">Business &amp; Marketing</div>
-          <div class="wtc-url">energiabiznesu.pl</div>
-        </div>
+        <div class="wtc-glow" style="background-image:url(web_energia.jpg)"></div>
+        <a class="wtc-inner" href="https://energiabiznesu.pl/" target="_blank" rel="noopener">
+          <div class="wtc-bg"><img src="web_energia.jpg" alt="Energia Biznesu" loading="lazy"></div>
+          <div class="wtc-cover"><div class="wtc-emoji">⚡</div><div class="wtc-name">Energia Biznesu</div><div class="wtc-type">Business &amp; Marketing</div><div class="wtc-url">energiabiznesu.pl</div></div>
+        </a>
       </div>
 
     </div>
