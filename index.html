@@ -679,7 +679,10 @@
       display: block;
     }
     /* Rainbow Button */
-    @keyframes rb-flow { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+    @keyframes rb-flow {
+      0%   { background-position: 0 0, 0% 50%; }
+      100% { background-position: 0 0, 100% 50%; }
+    }
     .rainbow-btn {
       position: relative;
       display: inline-flex; align-items: center; gap: 8px;
@@ -688,12 +691,12 @@
       color: #111; text-decoration: none; cursor: none;
       border: 1.5px solid transparent;
       background-image: linear-gradient(#fff, #fff),
-                        linear-gradient(90deg, #ff0080, #ff8c00, #ffef00, #40e0d0, #8a2be2, #c77dff, #ff0080, #ff8c00, #ffef00, #40e0d0, #8a2be2, #c77dff, #ff0080);
-      background-size: 100%, 400%;
+                        linear-gradient(90deg, #ff0080, #ff8c00, #ffef00, #40e0d0, #8a2be2, #c77dff, #ff0080);
+      background-size: 100%, 200%;
       background-origin: padding-box, border-box;
       background-clip: padding-box, border-box;
-      background-repeat: no-repeat;
-      animation: rb-flow 4s linear infinite;
+      background-repeat: no-repeat, repeat;
+      animation: rb-flow 8s linear infinite;
       box-shadow: 0 2px 10px rgba(0,0,0,.1);
     }
     /* Clickable trail items */
