@@ -522,6 +522,36 @@
     .port-pg:hover .port-pg-ov { opacity: 1; }
     .port-pg-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .port-pg-info p { font-size: 11px; color: rgba(255,255,255,.55); }
+    /* ── WEB TILTED GRID ── */
+    .web-tilt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+    .wtc { position: relative; height: 190px; cursor: none; }
+    .wtc-bg {
+      position: absolute; inset: 0; border-radius: 14px; overflow: hidden;
+      transform: perspective(400px) rotateY(calc(var(--d,1) * -20deg)) scale(0.85) translateX(calc(var(--d,1) * -20%));
+      transition: transform .5s cubic-bezier(.16,1,.3,1), filter .5s;
+      filter: brightness(.7);
+    }
+    .wtc-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .wtc:hover .wtc-bg { transform: none; filter: brightness(1); }
+    .wtc-cover {
+      position: absolute; inset: 0; border-radius: 14px;
+      background: var(--bg2); border: 5px solid var(--bg3);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      transform: perspective(400px) rotateY(calc(var(--d,1) * -20deg));
+      transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .35s;
+      overflow: hidden; padding: 16px;
+    }
+    .wtc:hover .wtc-cover { transform: perspective(400px) rotateY(calc(var(--d,1) * -90deg)); opacity: 0; }
+    .wtc-emoji { font-size: 26px; line-height: 1; }
+    .wtc-name { font-size: 15px; font-weight: 800; color: var(--text); text-align: center; }
+    .wtc-type { font-size: 11px; color: var(--sec); letter-spacing: .5px; text-transform: uppercase; }
+    .wtc-url { font-size: 11px; color: var(--accent); font-weight: 600; }
+    @media(max-width:900px){
+      .web-tilt-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media(max-width:580px){
+      .web-tilt-grid { grid-template-columns: 1fr; }
+    }
     .port-soon {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 80px 20px; gap: 12px; margin-top: 48px; text-align: center;
@@ -1875,7 +1905,7 @@
       </div>
 
       <div class="vc-card vc-h" data-yt="dxj8T0wUGLo">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="vc-vid-box" style="aspect-ratio:21/9;"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
           <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
@@ -1919,12 +1949,98 @@
 
   <!-- WEB / STRONY -->
   <div class="port-section" data-sec="web">
-    <div class="trail-outer">
-      <div class="trail-col" id="web-col-left"></div>
-      <div class="trail-wrap" id="web-trail-wrap">
-        <div class="trail-hint">Przesuń kursor żeby zobaczyć nasze realizacje</div>
+    <div class="web-tilt-grid">
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-bg"><img src="web_gucio.jpg" alt="Gucio Bar" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">🍺</div>
+          <div class="wtc-name">Gucio Bar</div>
+          <div class="wtc-type">Bar &amp; Restaurant</div>
+          <div class="wtc-url">gucio.bar</div>
+        </div>
       </div>
-      <div class="trail-col" id="web-col-right"></div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-bg"><img src="web_shaurma.jpg" alt="Mag Shaurma" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">🌯</div>
+          <div class="wtc-name">Mag Shaurma</div>
+          <div class="wtc-type">Food &amp; Delivery</div>
+          <div class="wtc-url">magshaurma.pl</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-bg"><img src="web_jewelry.jpg" alt="Jewelry Katowice" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">💎</div>
+          <div class="wtc-name">Jewelry Katowice</div>
+          <div class="wtc-type">Jewelry Store</div>
+          <div class="wtc-url">jewelry-katowice</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-bg"><img src="web_maya.jpg" alt="Maya Gold" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">✨</div>
+          <div class="wtc-name">Maya Gold</div>
+          <div class="wtc-type">Gold &amp; Jewelry</div>
+          <div class="wtc-url">maya-gold</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-bg"><img src="web_marketing.jpg" alt="Marketing AI" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">🤖</div>
+          <div class="wtc-name">Marketing AI</div>
+          <div class="wtc-type">AI Marketing Platform</div>
+          <div class="wtc-url">energiabiznesu.pl</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-bg"><img src="web_bee.jpg" alt="Bee Gelato" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">🍦</div>
+          <div class="wtc-name">Bee Gelato</div>
+          <div class="wtc-type">Artisan Ice Cream</div>
+          <div class="wtc-url">beegelato.sk</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-bg"><img src="web_potolki.jpg" alt="Adekwat Potolki" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">🏗️</div>
+          <div class="wtc-name">Adekwat Potolki</div>
+          <div class="wtc-type">Ceiling Installation</div>
+          <div class="wtc-url">adekvatpotolki</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-bg"><img src="web_pick.jpg" alt="PickActive" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">🏋️</div>
+          <div class="wtc-name">PickActive</div>
+          <div class="wtc-type">Sports Club</div>
+          <div class="wtc-url">pickactive.pl</div>
+        </div>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-bg"><img src="web_energia.jpg" alt="Energia Biznesu" loading="lazy"></div>
+        <div class="wtc-cover">
+          <div class="wtc-emoji">⚡</div>
+          <div class="wtc-name">Energia Biznesu</div>
+          <div class="wtc-type">Business &amp; Marketing</div>
+          <div class="wtc-url">energiabiznesu.pl</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -2534,9 +2650,10 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     document.querySelectorAll('.vc-vid-box').forEach(b => { b.onmouseenter = null; b.onmouseleave = null; });
     const ab = cards[cur].querySelector('.vc-vid-box');
     if (ab) { ab.onmouseenter = hideCur; ab.onmouseleave = showCur; }
-    // play/pause via API
+    // Stop inactive cards (clears thumbnail hide + stops buffering)
+    cards.forEach((c, i) => { if (i !== cur) c.classList.remove('vc-playing'); });
     Object.entries(players).forEach(([i, p]) => {
-      try { parseInt(i) === cur ? p.playVideo() : p.pauseVideo(); } catch(e) {}
+      try { parseInt(i) === cur ? p.playVideo() : p.stopVideo(); } catch(e) {}
     });
   }
 
@@ -2880,7 +2997,7 @@ const cur = document.getElementById('cur');
 const ring = document.getElementById('cur-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
-const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone, .gfx-all-btn';
+const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone, .gfx-all-btn, .wtc';
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
