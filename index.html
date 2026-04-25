@@ -447,9 +447,9 @@
       transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .5s, filter .5s;
       transform-origin: top center; cursor: none;
     }
-    .vc-card.vc-v { width: 360px; }
-    .vc-card.vc-h { width: 720px; }
-    .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
+    .vc-card.vc-v { width: 260px; }
+    .vc-card.vc-h { width: 520px; }
+    .vc-card:not(.vc-active) { transform: scale(0.85); opacity: 0.7; filter: blur(2.5px) brightness(0.8); }
     .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
     .vc-vid-wrapper { position: relative; }
     .vc-card.vc-active .vc-vid-wrapper { filter: url(#vc-backlight); }
@@ -462,7 +462,7 @@
     .vc-vid-box video, .vc-vid-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
     .vc-vid-box { position: relative; }
     .vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .3s; z-index: 1; }
-    .vc-card.vc-active .vc-thumb { opacity: 0; pointer-events: none; }
+    .vc-card.vc-playing .vc-thumb { opacity: 0; pointer-events: none; }
     .vc-vid-box iframe { z-index: 2; }
     .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
     .vc-card.vc-active .vc-overlay { display: none; }
@@ -648,14 +648,14 @@
     }
     .trail-hint { font-size: 16px; color: var(--sec); position: relative; z-index: 2; pointer-events: none; text-align: center; }
     .trail-img-item {
-      position: absolute; width: 300px; height: 210px;
+      position: absolute; width: 260px;
       pointer-events: none; opacity: 0; z-index: 1;
       transform: translate(-50%, -50%) scale(0.1);
       border-radius: 12px; overflow: hidden;
       box-shadow: 0 12px 40px rgba(0,0,0,.28);
     }
     .trail-img-item.visible { pointer-events: auto; }
-    .trail-img-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .trail-img-item img { width: 100%; height: auto; display: block; }
 
     /* ── SITE MODAL ── */
     .site-modal-ov {
@@ -2512,7 +2512,13 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     }
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
-        events: { onReady: e => { e.target.mute(); e.target.playVideo(); } }
+        events: {
+          onReady: e => { e.target.mute(); e.target.playVideo(); },
+          onStateChange: e => {
+            if (e.data === YT.PlayerState.PLAYING) cards[i].classList.add('vc-playing');
+            else cards[i].classList.remove('vc-playing');
+          }
+        }
       });
     }
   }
@@ -2547,7 +2553,11 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   window.onYouTubeIframeAPIReady = function() {
     players[0] = new YT.Player('vc-yt-0', {
       events: {
-        onReady: function(e) { e.target.mute(); e.target.playVideo(); startTimer(); }
+        onReady: function(e) { e.target.mute(); e.target.playVideo(); startTimer(); },
+        onStateChange: function(e) {
+          if (e.data === YT.PlayerState.PLAYING) cards[0].classList.add('vc-playing');
+          else cards[0].classList.remove('vc-playing');
+        }
       }
     });
     setActive(0);
