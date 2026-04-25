@@ -533,8 +533,8 @@
       display: flex; gap: 20px; margin-top: 48px; align-items: flex-start; min-height: 560px;
     }
     .trail-col {
-      display: flex; flex-direction: column; gap: 12px;
-      width: 160px; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 14px;
+      width: 220px; flex-shrink: 0;
     }
     .trail-col-item {
       position: relative;
@@ -555,6 +555,84 @@
     }
     .trail-col-img.show { opacity: 1; transform: translateY(0); }
     .trail-col-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Folder card */
+    .trail-folder-item {
+      position: relative; width: 100%; aspect-ratio: 4/3;
+      border-radius: 12px; overflow: hidden; cursor: none;
+      transition: transform .35s cubic-bezier(.16,1,.3,1);
+    }
+    .trail-folder-item:hover { transform: translateY(-8px); }
+    .trail-folder-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .trail-folder-img:nth-child(1) { transform: rotate(-4deg) scale(1.08); filter: blur(2px) brightness(.6); }
+    .trail-folder-img:nth-child(2) { transform: rotate(2deg) scale(1.05); filter: blur(1.5px) brightness(.65); }
+    .trail-folder-img:nth-child(3) { transform: rotate(0deg) scale(1.02); filter: blur(1px) brightness(.7); }
+    .trail-folder-ov {
+      position: absolute; inset: 0;
+      background: rgba(8,8,8,.52);
+      backdrop-filter: blur(3px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+    }
+    .trail-folder-icon { font-size: 26px; line-height: 1; }
+    .trail-folder-txt { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.8); letter-spacing: .5px; text-align: center; }
+    /* All-sites modal */
+    .all-sites-ov {
+      position: fixed; inset: 0; z-index: 910;
+      background: rgba(0,0,0,.88); backdrop-filter: blur(12px);
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .all-sites-ov.open { opacity: 1; pointer-events: all; }
+    .all-sites-modal {
+      position: fixed; z-index: 911;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(.94);
+      opacity: 0; pointer-events: none;
+      transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .3s;
+      width: min(900px, 92vw);
+      max-height: 85vh; overflow-y: auto;
+      padding: 48px 0 32px;
+    }
+    .all-sites-modal.open { opacity: 1; pointer-events: all; transform: translate(-50%,-50%) scale(1); }
+    .all-sites-close {
+      position: fixed; top: 28px; right: 36px; z-index: 912;
+      background: none; border: none;
+      color: rgba(255,255,255,.5); font-size: 22px;
+      cursor: none; padding: 6px; transition: color .2s;
+    }
+    .all-sites-close:hover { color: #fff; }
+    .all-sites-title {
+      font-size: 13px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+      text-align: center; margin-bottom: 32px;
+    }
+    .all-sites-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .all-sites-card {
+      border-radius: 12px; overflow: hidden; cursor: none;
+      position: relative; transition: transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .all-sites-card:hover { transform: scale(1.03); }
+    .all-sites-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .all-sites-card-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 55%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end; align-items: flex-start;
+      padding: 14px; gap: 8px;
+      opacity: 0; transition: opacity .25s;
+    }
+    .all-sites-card:hover .all-sites-card-ov { opacity: 1; }
+    .all-sites-card-name { font-size: 13px; font-weight: 700; color: #fff; }
+    .all-sites-card-link {
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      text-decoration: none;
+    }
     .trail-wrap {
       position: relative; flex: 1; min-height: 520px;
       overflow: hidden; cursor: none;
@@ -605,25 +683,24 @@
     .rainbow-btn {
       position: relative;
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 34px; border-radius: 12px;
+      padding: 12px 32px; border-radius: 9px;
       font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 14px;
-      color: #fff; text-decoration: none; cursor: none; border: 2px solid transparent;
-      background-image: linear-gradient(#0d0d0d, #0d0d0d),
-                        linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
-      background-size: calc(100% - 4px) calc(100% - 4px), 200%;
-      background-origin: padding-box, border-box;
-      background-repeat: no-repeat;
-      animation: rb-flow 3s linear infinite;
+      color: #111; text-decoration: none; cursor: none;
+      background: #fff;
+      border: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,.12);
+      isolation: isolate;
     }
-    .rainbow-btn::after {
+    .rainbow-btn::before {
       content: '';
-      position: absolute; bottom: -30%; left: 50%;
+      position: absolute; bottom: -40%; left: 50%;
       transform: translateX(-50%);
-      width: 55%; height: 22%;
-      background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0, #8a2be2, #ff0080);
+      width: 65%; height: 28%;
+      background: linear-gradient(90deg, #ff0080, #ff8c00, #ffef00, #40e0d0, #8a2be2, #ff0080);
       background-size: 200%;
-      filter: blur(10px); animation: rb-flow 3s linear infinite;
-      border-radius: 50%; z-index: -1; opacity: .7;
+      filter: blur(10px);
+      animation: rb-flow 3s linear infinite;
+      border-radius: 50%; z-index: -1; opacity: .85;
     }
     /* Clickable trail items */
     .trail-img-item.clickable, .trail-col-img.clickable { cursor: none; }
@@ -2128,9 +2205,15 @@
 <div class="site-modal" id="site-modal">
   <button class="site-modal-close" id="site-modal-close">✕</button>
   <img id="site-modal-img" src="" alt="">
-  <a class="rainbow-btn" id="site-modal-link" href="" target="_blank" rel="noopener">
-    <span>Przejdź do strony →</span>
-  </a>
+  <a class="rainbow-btn" id="site-modal-link" href="" target="_blank" rel="noopener">Przejdź do strony →</a>
+</div>
+
+<!-- ALL SITES MODAL -->
+<div class="all-sites-ov" id="all-sites-ov"></div>
+<div class="all-sites-modal" id="all-sites-modal">
+  <button class="all-sites-close" id="all-sites-close">✕</button>
+  <p class="all-sites-title">Wszystkie realizacje</p>
+  <div class="all-sites-grid" id="all-sites-grid"></div>
 </div>
 
 <script>
@@ -2582,9 +2665,58 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     return item;
   }
 
-  // Left col: 5, Right col: 4
-  sites.slice(0, 5).forEach(s => colL.appendChild(makeColItem(s)));
-  sites.slice(5).forEach(s => colR.appendChild(makeColItem(s)));
+  // Left col: 3, Right col: 3 + folder
+  sites.slice(0, 3).forEach(s => colL.appendChild(makeColItem(s)));
+  sites.slice(3, 6).forEach(s => colR.appendChild(makeColItem(s)));
+
+  // Folder card
+  const folder = document.createElement('div');
+  folder.className = 'trail-folder-item';
+  [sites[6], sites[7], sites[8]].forEach(s => {
+    const img = document.createElement('img');
+    img.className = 'trail-folder-img';
+    img.src = s.img; img.alt = '';
+    folder.appendChild(img);
+  });
+  const ov = document.createElement('div');
+  ov.className = 'trail-folder-ov';
+  ov.innerHTML = '<div class="trail-folder-icon">⊞</div><div class="trail-folder-txt">Wszystkie<br>realizacje</div>';
+  folder.appendChild(ov);
+  folder.addEventListener('click', () => window.openAllSites());
+  colR.appendChild(folder);
+
+  // All-sites modal logic
+  const allOv  = document.getElementById('all-sites-ov');
+  const allMod = document.getElementById('all-sites-modal');
+  const allGrid = document.getElementById('all-sites-grid');
+  const allClose = document.getElementById('all-sites-close');
+
+  if (allGrid && !allGrid.childElementCount) {
+    const names = ['Bar Gucio','Mag Shaurma','Jewelry Katowice','Maya Gold','Marketing z AI','Bee Gelato','Adekvatpotolki','PickActive','Energia dla Biznesu'];
+    sites.forEach((s, i) => {
+      const card = document.createElement('div');
+      card.className = 'all-sites-card';
+      card.innerHTML = `<img src="${s.img}" alt="${names[i]}">
+        <div class="all-sites-card-ov">
+          <div class="all-sites-card-name">${names[i]}</div>
+          <a class="all-sites-card-link" href="${s.url}" target="_blank" rel="noopener">Przejdź do strony →</a>
+        </div>`;
+      allGrid.appendChild(card);
+    });
+  }
+
+  function openAllSites() {
+    allOv.classList.add('open');
+    allMod.classList.add('open');
+  }
+  function closeAllSites() {
+    allOv.classList.remove('open');
+    allMod.classList.remove('open');
+  }
+  if (allClose) allClose.addEventListener('click', closeAllSites);
+  if (allOv)   allOv.addEventListener('click', closeAllSites);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllSites(); });
+  window.openAllSites = openAllSites;
 
   // Build trail items
   const items = sites.map((s, i) => {
