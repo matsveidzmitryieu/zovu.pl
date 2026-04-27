@@ -756,6 +756,20 @@
       border-radius: 20px;
     }
     .trail-hint { font-size: 19px; font-weight: 700; color: var(--sec); position: relative; z-index: 2; pointer-events: none; text-align: center; }
+    #gfx-phantom {
+      position: absolute; width: 22px; height: 22px;
+      border-radius: 50%; pointer-events: none; z-index: 200;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 0 0 3px rgba(255,255,255,.35), 0 0 18px 6px rgba(255,255,255,.55);
+      opacity: 0; transition: opacity .4s, left 1.3s cubic-bezier(.4,0,.2,1), top 1.3s cubic-bezier(.4,0,.2,1);
+      animation: phantom-pulse 1.2s ease-in-out infinite;
+    }
+    #gfx-phantom.ph-visible { opacity: 1; }
+    @keyframes phantom-pulse {
+      0%,100% { box-shadow: 0 0 0 3px rgba(255,255,255,.35), 0 0 18px 6px rgba(255,255,255,.55); }
+      50%      { box-shadow: 0 0 0 5px rgba(255,255,255,.2),  0 0 28px 10px rgba(255,255,255,.35); }
+    }
     .trail-img-item {
       position: absolute; width: 260px;
       pointer-events: none; opacity: 0; z-index: 1;
@@ -3387,6 +3401,7 @@ document.querySelectorAll('.pf').forEach(btn => {
     });
     if (f !== 'video') { window.vcControl && window.vcControl.pause(); }
     else { window.vcControl && window.vcControl.resume(); }
+    if (f === 'design') { setTimeout(() => window.startGfxPhantom && window.startGfxPhantom(), 150); }
   });
 });
 
@@ -3762,6 +3777,77 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
         window.openSiteModal(card.dataset.img, card.dataset.url);
     });
   });
+})();
+
+// ── GRAFIKA PHANTOM CURSOR HINT ───────────────────────────────────────────────
+(function() {
+  const wrap = document.getElementById('gfx-trail-wrap');
+  if (!wrap) return;
+
+  const phantom = document.createElement('div');
+  phantom.id = 'gfx-phantom';
+  wrap.appendChild(phantom);
+
+  // Waypoints as fractions of wrap size; spaced >160px to trigger trail threshold
+  const WPS = [
+    { fx: 0.12, fy: 0.42 },
+    { fx: 0.35, fy: 0.62 },
+    { fx: 0.55, fy: 0.30 },
+    { fx: 0.75, fy: 0.58 },
+    { fx: 0.88, fy: 0.35 },
+  ];
+
+  let running = false, timer = null;
+
+  function stop() {
+    running = false;
+    phantom.classList.remove('ph-visible');
+    if (timer) { clearTimeout(timer); timer = null; }
+  }
+
+  function fireMove(px, py) {
+    const rect = wrap.getBoundingClientRect();
+    wrap.dispatchEvent(new MouseEvent('mousemove', {
+      bubbles: true, clientX: rect.left + px, clientY: rect.top + py
+    }));
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+
+    // Place phantom off-screen first, then show at waypoint[0]
+    const rect = wrap.getBoundingClientRect();
+    const x0 = rect.width * WPS[0].fx;
+    const y0 = rect.height * WPS[0].fy;
+    phantom.style.transition = 'none';
+    phantom.style.left = x0 + 'px';
+    phantom.style.top  = y0 + 'px';
+
+    timer = setTimeout(() => {
+      if (!running) return;
+      phantom.classList.add('ph-visible');
+      phantom.style.transition = 'opacity .4s, left 1.3s cubic-bezier(.4,0,.2,1), top 1.3s cubic-bezier(.4,0,.2,1)';
+
+      let step = 0;
+      function next() {
+        if (!running || step >= WPS.length) { stop(); return; }
+        const r = wrap.getBoundingClientRect();
+        const px = r.width  * WPS[step].fx;
+        const py = r.height * WPS[step].fy;
+        phantom.style.left = px + 'px';
+        phantom.style.top  = py + 'px';
+        // spawn image near midpoint of travel, after cursor starts moving
+        timer = setTimeout(() => { if (running) fireMove(px, py); }, 500);
+        step++;
+        timer = setTimeout(next, 1500);
+      }
+      next();
+    }, 400);
+  }
+
+  wrap.addEventListener('mouseenter', stop);
+  window.startGfxPhantom = start;
 })();
 
 // ── ALL VIDEO MODAL ───────────────────────────────────────────────────────────
