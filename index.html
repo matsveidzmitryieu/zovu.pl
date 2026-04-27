@@ -760,16 +760,17 @@
       position: absolute; width: 22px; height: 22px;
       border-radius: 50%; pointer-events: none; z-index: 200;
       transform: translate(-50%, -50%);
-      background: rgba(14,14,14,.92);
-      box-shadow: 0 0 0 2px var(--accent), 0 0 14px 5px rgba(200,241,53,.45);
+      background: rgba(10,10,10,.88);
+      box-shadow: 0 0 12px 4px rgba(0,0,0,.55);
+      filter: blur(1px);
       opacity: 0; transition: opacity .4s;
       animation: phantom-pulse 1.4s ease-in-out infinite;
     }
     #gfx-phantom.ph-visible { opacity: 1; }
-    #gfx-trail-wrap.ph-running .trail-img-item { opacity: 0.32 !important; filter: brightness(.7) saturate(.8); }
+    #gfx-trail-wrap.ph-running .trail-img-item.visible { opacity: 0.32 !important; filter: brightness(.7) saturate(.8); }
     @keyframes phantom-pulse {
-      0%,100% { box-shadow: 0 0 0 2px var(--accent), 0 0 14px 5px rgba(200,241,53,.45); }
-      50%      { box-shadow: 0 0 0 3px var(--accent), 0 0 22px 8px rgba(200,241,53,.3); }
+      0%,100% { box-shadow: 0 0 12px 4px rgba(0,0,0,.55); }
+      50%      { box-shadow: 0 0 20px 7px rgba(0,0,0,.38); }
     }
     .trail-img-item {
       position: absolute; width: 260px;
