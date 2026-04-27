@@ -4247,109 +4247,95 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     updateSidebar();
   }
 
-  /* ── STEP 1 ── */
-  document.querySelectorAll('.wiz-card[data-svc]').forEach(function(card) {
-    card.addEventListener('click', function() {
+  /* ── EVENT DELEGATION on #calc ── */
+  var calcEl = document.getElementById('calc');
+  if (calcEl) calcEl.addEventListener('click', function(e) {
+    var t = e.target;
+
+    /* wiz-card (service select) */
+    var card = t.closest('.wiz-card[data-svc]');
+    if (card) {
       var svc = card.dataset.svc;
       if (state.services.has(svc)) { state.services.delete(svc); card.classList.remove('selected'); }
       else { state.services.add(svc); card.classList.add('selected'); }
-      var n1 = document.getElementById('wiz-n1');
-      if (n1) n1.disabled = state.services.size === 0;
-      updateSidebar();
-    });
-  });
-  var n1 = document.getElementById('wiz-n1');
-  if (n1) n1.addEventListener('click', function() { goTo(2, 'next'); });
+      var nb = document.getElementById('wiz-n1');
+      if (nb) nb.disabled = state.services.size === 0;
+      updateSidebar(); return;
+    }
 
-  /* ── STEP 2 ── */
-  document.querySelectorAll('.wiz-qty-btn[data-vq]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.wiz-qty-btn[data-vq]').forEach(function(b) { b.classList.remove('sel'); });
-      btn.classList.add('sel');
-      state.vidQty = parseInt(btn.dataset.vq);
-      updateSidebar();
-    });
-  });
-  document.querySelectorAll('.wiz-qty-btn[data-sq]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.wiz-qty-btn[data-sq]').forEach(function(b) { b.classList.remove('sel'); });
-      btn.classList.add('sel');
-      state.smmQty = parseInt(btn.dataset.sq);
-      updateSidebar();
-    });
-  });
-  document.querySelectorAll('.wiz-opt[data-opt]').forEach(function(opt) {
-    opt.addEventListener('click', function() {
+    /* nav buttons */
+    if (t.id === 'wiz-n1') { goTo(2, 'next'); return; }
+    if (t.id === 'wiz-b2') { goTo(1, 'back'); return; }
+    if (t.id === 'wiz-n2') { goTo(3, 'next'); return; }
+    if (t.id === 'wiz-b3') { goTo(2, 'back'); return; }
+    if (t.id === 'wiz-n3') { goTo(4, 'next'); return; }
+
+    /* qty buttons */
+    var vqBtn = t.closest('.wiz-qty-btn[data-vq]');
+    if (vqBtn) {
+      document.querySelectorAll('.wiz-qty-btn[data-vq]').forEach(function(b){b.classList.remove('sel');});
+      vqBtn.classList.add('sel'); state.vidQty = parseInt(vqBtn.dataset.vq);
+      updateSidebar(); return;
+    }
+    var sqBtn = t.closest('.wiz-qty-btn[data-sq]');
+    if (sqBtn) {
+      document.querySelectorAll('.wiz-qty-btn[data-sq]').forEach(function(b){b.classList.remove('sel');});
+      sqBtn.classList.add('sel'); state.smmQty = parseInt(sqBtn.dataset.sq);
+      updateSidebar(); return;
+    }
+
+    /* checkbox opts */
+    var opt = t.closest('.wiz-opt[data-opt]');
+    if (opt) {
       var key = opt.dataset.opt;
       var chk = opt.querySelector('.wiz-opt-chk');
-      if (state.opts.has(key)) {
-        state.opts.delete(key); opt.classList.remove('sel');
-        if (chk) chk.textContent = '';
-      } else {
-        state.opts.add(key); opt.classList.add('sel');
-        if (chk) chk.textContent = '✓';
-      }
-      updateSidebar();
-    });
-  });
-  document.querySelectorAll('.wiz-radio[data-rg]').forEach(function(radio) {
-    radio.addEventListener('click', function() {
-      var rg = radio.dataset.rg;
-      document.querySelectorAll('.wiz-radio[data-rg="' + rg + '"]').forEach(function(r) { r.classList.remove('sel'); });
-      radio.classList.add('sel');
-      state.webType = radio.dataset.opt;
-      updateSidebar();
-    });
-  });
-  var b2 = document.getElementById('wiz-b2');
-  var n2 = document.getElementById('wiz-n2');
-  if (b2) b2.addEventListener('click', function() { goTo(1, 'back'); });
-  if (n2) n2.addEventListener('click', function() { goTo(3, 'next'); });
+      if (state.opts.has(key)) { state.opts.delete(key); opt.classList.remove('sel'); if (chk) chk.textContent = ''; }
+      else { state.opts.add(key); opt.classList.add('sel'); if (chk) chk.textContent = '✓'; }
+      updateSidebar(); return;
+    }
 
-  /* ── STEP 3 ── */
-  document.querySelectorAll('.wiz-biz-card[data-biz]').forEach(function(card) {
-    card.addEventListener('click', function() {
-      document.querySelectorAll('.wiz-biz-card[data-biz]').forEach(function(c) { c.classList.remove('sel'); });
-      card.classList.add('sel');
-      state.biz = card.dataset.biz;
+    /* radio */
+    var radio = t.closest('.wiz-radio[data-rg]');
+    if (radio) {
+      document.querySelectorAll('.wiz-radio[data-rg="' + radio.dataset.rg + '"]').forEach(function(r){r.classList.remove('sel');});
+      radio.classList.add('sel'); state.webType = radio.dataset.opt;
+      updateSidebar(); return;
+    }
+
+    /* biz cards */
+    var biz = t.closest('.wiz-biz-card[data-biz]');
+    if (biz) {
+      document.querySelectorAll('.wiz-biz-card[data-biz]').forEach(function(c){c.classList.remove('sel');});
+      biz.classList.add('sel'); state.biz = biz.dataset.biz;
       var bw = document.getElementById('wiz-budget-wrap');
       if (bw) bw.style.display = state.services.has('ads') ? '' : 'none';
-      updateSidebar();
-    });
-  });
-  document.querySelectorAll('.wiz-biz-card[data-budget]').forEach(function(card) {
-    card.addEventListener('click', function() {
-      document.querySelectorAll('.wiz-biz-card[data-budget]').forEach(function(c) { c.classList.remove('sel'); });
-      card.classList.add('sel');
-      state.budget = card.dataset.budget;
-      updateSidebar();
-    });
-  });
-  document.querySelectorAll('.wiz-biz-card[data-start]').forEach(function(card) {
-    card.addEventListener('click', function() {
-      document.querySelectorAll('.wiz-biz-card[data-start]').forEach(function(c) { c.classList.remove('sel'); });
-      card.classList.add('sel');
-      state.start = card.dataset.start;
-      updateSidebar();
-    });
-  });
-  var b3 = document.getElementById('wiz-b3');
-  var n3 = document.getElementById('wiz-n3');
-  if (b3) b3.addEventListener('click', function() { goTo(2, 'back'); });
-  if (n3) n3.addEventListener('click', function() { goTo(4, 'next'); });
+      updateSidebar(); return;
+    }
+    var budget = t.closest('.wiz-biz-card[data-budget]');
+    if (budget) {
+      document.querySelectorAll('.wiz-biz-card[data-budget]').forEach(function(c){c.classList.remove('sel');});
+      budget.classList.add('sel'); state.budget = budget.dataset.budget;
+      updateSidebar(); return;
+    }
+    var startEl = t.closest('.wiz-biz-card[data-start]');
+    if (startEl) {
+      document.querySelectorAll('.wiz-biz-card[data-start]').forEach(function(c){c.classList.remove('sel');});
+      startEl.classList.add('sel'); state.start = startEl.dataset.start;
+      updateSidebar(); return;
+    }
 
-  /* ── RECALCULATE ── */
-  var recalc = document.getElementById('wiz-recalc');
-  if (recalc) recalc.addEventListener('click', function() {
-    state.services.clear(); state.opts.clear();
-    state.vidQty = 0; state.smmQty = 0;
-    state.webType = null; state.biz = null; state.budget = null; state.start = null;
-    document.querySelectorAll('.wiz-card.selected').forEach(function(el) { el.classList.remove('selected'); });
-    document.querySelectorAll('.wiz-opt.sel, .wiz-radio.sel, .wiz-qty-btn.sel, .wiz-biz-card.sel').forEach(function(el) { el.classList.remove('sel'); });
-    document.querySelectorAll('.wiz-opt-chk').forEach(function(el) { el.textContent = ''; });
-    var n1r = document.getElementById('wiz-n1');
-    if (n1r) n1r.disabled = true;
-    goTo(1, 'back');
+    /* recalculate */
+    if (t.id === 'wiz-recalc' || t.closest('#wiz-recalc')) {
+      state.services = new Set(); state.opts = new Set();
+      state.vidQty = 0; state.smmQty = 0;
+      state.webType = null; state.biz = null; state.budget = null; state.start = null;
+      document.querySelectorAll('.wiz-card.selected,.wiz-opt.sel,.wiz-radio.sel,.wiz-qty-btn.sel,.wiz-biz-card.sel').forEach(function(el){
+        el.classList.remove('selected','sel');
+      });
+      document.querySelectorAll('.wiz-opt-chk').forEach(function(el){el.textContent='';});
+      var nr = document.getElementById('wiz-n1'); if (nr) nr.disabled = true;
+      goTo(1, 'back');
+    }
   });
 
   updateProgress();
