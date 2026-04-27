@@ -656,6 +656,17 @@
     .all-sites-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
+    /* Grafika grid — masonry via CSS columns so horizontal/vertical photos keep proportions */
+    #all-gfx-grid {
+      display: block;
+      columns: 3;
+      column-gap: 14px;
+    }
+    #all-gfx-grid .all-sites-card {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      display: block;
+    }
     .all-sites-card {
       border-radius: 12px; overflow: hidden; cursor: none;
       position: relative; transition: transform .3s cubic-bezier(.16,1,.3,1);
