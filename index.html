@@ -3598,20 +3598,25 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
 
 // ── ICON GLOW ─────────────────────────────────────────────────────────────────
 (function() {
-  function sampleColor(img, fallback, cb) {
+  function dominantColor(img, fallback, cb) {
     const apply = () => {
       try {
         const c = document.createElement('canvas');
-        c.width = c.height = 20;
+        c.width = c.height = 32;
         const ctx = c.getContext('2d');
-        ctx.drawImage(img, 0, 0, 20, 20);
-        const d = ctx.getImageData(0, 0, 20, 20).data;
+        ctx.drawImage(img, 0, 0, 32, 32);
+        const d = ctx.getImageData(0, 0, 32, 32).data;
         let r=0, g=0, b=0, n=0;
         for (let i = 0; i < d.length; i += 4) {
-          const br = (d[i] + d[i+1] + d[i+2]) / 3;
-          if (br > 55 && d[i+3] > 80) { r+=d[i]; g+=d[i+1]; b+=d[i+2]; n++; }
+          if (d[i+3] < 80) continue;
+          const max = Math.max(d[i], d[i+1], d[i+2]);
+          const min = Math.min(d[i], d[i+1], d[i+2]);
+          const sat = max === 0 ? 0 : (max - min) / max;
+          const bri = max / 255;
+          // keep saturated colourful pixels only (skip near-black and near-grey)
+          if (sat > 0.3 && bri > 0.2) { r+=d[i]; g+=d[i+1]; b+=d[i+2]; n++; }
         }
-        cb(n > 4 ? `rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})` : fallback);
+        cb(n > 6 ? `rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})` : fallback);
       } catch(e) { cb(fallback); }
     };
     if (img.complete && img.naturalWidth) apply();
@@ -3624,7 +3629,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     if (!box) return;
     const bg = (box.style.background || '').trim() || '#888';
     if (img) {
-      sampleColor(img, bg, color => icon.style.setProperty('--glow', color));
+      dominantColor(img, bg, color => icon.style.setProperty('--glow', color));
     } else {
       icon.style.setProperty('--glow', bg);
     }
