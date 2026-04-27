@@ -2566,17 +2566,6 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
       setTimeout(() => { ov.style.pointerEvents = ''; }, 80);
     });
     vidBox.appendChild(ov);
-    // Unmute button
-    const unmuteBtn = document.createElement('button');
-    unmuteBtn.className = 'vc-unmute';
-    unmuteBtn.innerHTML = '🔇 Включить звук';
-    unmuteBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      const p = players[cards.indexOf(c)];
-      if (p) { p.unMute(); p.setVolume(100); }
-      unmuteBtn.classList.add('hidden');
-    });
-    vidBox.appendChild(unmuteBtn);
     // Click anywhere on inactive card to switch
     c.addEventListener('click', () => {
       const idx = cards.indexOf(c);
@@ -2616,7 +2605,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     const c = cards[i];
     const iframe = c.querySelector('iframe');
     if (!iframe.src) {
-      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1`;
     }
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
