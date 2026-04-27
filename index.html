@@ -527,14 +527,22 @@
     /* ── WEB SITES GRID ── */
     .web-sites-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 40px; }
     .site-card {
-      border-radius: 14px; overflow: hidden; cursor: none;
+      border-radius: 14px; overflow: visible; cursor: none; position: relative;
       transition: box-shadow .3s; transform-style: preserve-3d; will-change: transform;
       box-shadow: 0 8px 32px rgba(0,0,0,.4);
     }
     .site-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,.6); }
     .site-card-browser { border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(255,255,255,.15); background: #1c1c1c; }
     .site-card-browser .site-bar { background: #222; padding: 7px 12px; }
-    .site-card-browser img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; display: block; }
+    .site-card-browser img { width: 100%; height: auto; display: block; }
+    .site-card-glow {
+      position: absolute; inset: -14px; border-radius: 22px;
+      background: center/cover no-repeat;
+      filter: blur(24px) saturate(4);
+      z-index: -1; pointer-events: none; opacity: 0.6;
+      transition: opacity .3s;
+    }
+    .site-card:hover .site-card-glow { opacity: 0.85; }
     /* All-video modal grid */
     .all-video-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
     .all-video-thumb {
@@ -3013,9 +3021,6 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
 // ── WEB TRAIL (STRONY) ────────────────────────────────────────────────────────
 (function() {
-  const wrap = document.getElementById('web-trail-wrap');
-  if (!wrap) return;
-
   const sites = [
     { img: 'web_gucio.jpg',     url: 'https://inca1122.github.io/gucio_bar/index.html' },
     { img: 'web_shaurma.jpg',   url: 'https://dzmzah.github.io/magshaurma/' },
@@ -3027,6 +3032,37 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     { img: 'web_pick.jpg',      url: 'https://pickactive.pl/' },
     { img: 'web_energia.jpg',   url: 'https://energiabiznesu.pl/' },
   ];
+
+  // All-sites modal — init always, regardless of trail presence
+  const allOv    = document.getElementById('all-sites-ov');
+  const allMod   = document.getElementById('all-sites-modal');
+  const allGrid  = document.getElementById('all-sites-grid');
+  const allClose = document.getElementById('all-sites-close');
+  const names = ['Bar Gucio','Mag Shaurma','Jewelry Katowice','Maya Gold','Marketing z AI','Bee Gelato','Adekvatpotolki','PickActive','Energia dla Biznesu'];
+  if (allGrid && !allGrid.childElementCount) {
+    sites.forEach((s, i) => {
+      const card = document.createElement('div');
+      card.className = 'all-sites-card';
+      const img = document.createElement('img');
+      img.src = s.img; img.alt = names[i];
+      const cardOv = document.createElement('div');
+      cardOv.className = 'all-sites-card-ov';
+      cardOv.innerHTML = `<div class="all-sites-card-name">${names[i]}</div>`;
+      card.appendChild(img);
+      card.appendChild(cardOv);
+      card.addEventListener('click', () => window.openSiteModal(s.img, s.url));
+      allGrid.appendChild(card);
+    });
+  }
+  function openAllSites() { allOv.classList.add('open'); allMod.classList.add('open'); }
+  function closeAllSites() { allOv.classList.remove('open'); allMod.classList.remove('open'); }
+  if (allClose) allClose.addEventListener('click', closeAllSites);
+  if (allOv) allOv.addEventListener('click', e => { if (e.target === allOv) closeAllSites(); });
+  window.openAllSites = openAllSites;
+
+  // Trail — only when #web-trail-wrap exists
+  const wrap = document.getElementById('web-trail-wrap');
+  if (!wrap) return;
 
   const colL = document.getElementById('web-col-left');
   const colR = document.getElementById('web-col-right');
@@ -3079,35 +3115,6 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     col.insertBefore(item, folderRef);
     setTimeout(() => div.classList.add('show'), 50);
   }
-
-  // All-sites modal
-  const allOv    = document.getElementById('all-sites-ov');
-  const allMod   = document.getElementById('all-sites-modal');
-  const allGrid  = document.getElementById('all-sites-grid');
-  const allClose = document.getElementById('all-sites-close');
-
-  const names = ['Bar Gucio','Mag Shaurma','Jewelry Katowice','Maya Gold','Marketing z AI','Bee Gelato','Adekvatpotolki','PickActive','Energia dla Biznesu'];
-  if (allGrid && !allGrid.childElementCount) {
-    sites.forEach((s, i) => {
-      const card = document.createElement('div');
-      card.className = 'all-sites-card';
-      const img = document.createElement('img');
-      img.src = s.img; img.alt = names[i];
-      const cardOv = document.createElement('div');
-      cardOv.className = 'all-sites-card-ov';
-      cardOv.innerHTML = `<div class="all-sites-card-name">${names[i]}</div>`;
-      card.appendChild(img);
-      card.appendChild(cardOv);
-      card.addEventListener('click', () => window.openSiteModal(s.img, s.url));
-      allGrid.appendChild(card);
-    });
-  }
-
-  function openAllSites() { allOv.classList.add('open'); allMod.classList.add('open'); }
-  function closeAllSites() { allOv.classList.remove('open'); allMod.classList.remove('open'); }
-  if (allClose) allClose.addEventListener('click', closeAllSites);
-  if (allOv) allOv.addEventListener('click', e => { if (e.target === allOv) closeAllSites(); });
-  window.openAllSites = openAllSites;
 
   // Trail items (only appear on mousemove)
   const items = sites.map(s => {
@@ -3729,9 +3736,16 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   });
 })();
 
-// ── SITE CARD TILT ────────────────────────────────────────────────────────────
+// ── SITE CARD TILT + GLOW ─────────────────────────────────────────────────────
 (function() {
   document.querySelectorAll('.site-card').forEach(card => {
+    // glow behind card using screenshot image
+    const glow = document.createElement('div');
+    glow.className = 'site-card-glow';
+    const img = card.querySelector('img');
+    if (img) glow.style.backgroundImage = `url(${img.src})`;
+    card.insertBefore(glow, card.firstChild);
+
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -7;
