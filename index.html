@@ -468,6 +468,16 @@
     .vc-vid-box iframe { z-index: 2; }
     .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
     .vc-card.vc-active .vc-overlay { display: none; }
+    .vc-unmute {
+      position: absolute; bottom: 14px; right: 14px; z-index: 5;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+      border: none; border-radius: 20px;
+      color: #fff; font-size: 13px; font-weight: 600;
+      padding: 7px 14px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+      transition: background .2s, opacity .3s;
+    }
+    .vc-unmute:hover { background: rgba(0,0,0,0.8); }
+    .vc-unmute.hidden { opacity: 0; pointer-events: none; }
     .vc-info { display: none; }
     .vc-client { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
     .vc-name { font-size: 15px; font-weight: 700; color: #fff; }
@@ -2556,6 +2566,17 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
       setTimeout(() => { ov.style.pointerEvents = ''; }, 80);
     });
     vidBox.appendChild(ov);
+    // Unmute button
+    const unmuteBtn = document.createElement('button');
+    unmuteBtn.className = 'vc-unmute';
+    unmuteBtn.innerHTML = '🔇 Включить звук';
+    unmuteBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const p = players[cards.indexOf(c)];
+      if (p) { p.unMute(); p.setVolume(100); }
+      unmuteBtn.classList.add('hidden');
+    });
+    vidBox.appendChild(unmuteBtn);
     // Click anywhere on inactive card to switch
     c.addEventListener('click', () => {
       const idx = cards.indexOf(c);
@@ -2571,6 +2592,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
   // Assign iframe IDs only — src loaded lazily on scroll/switch
   const players = {};
+  let apiReady = false;
   cards.forEach((c, i) => { c.querySelector('iframe').id = 'vc-yt-' + i; });
 
   // Visual centering immediately (no video load yet)
@@ -2590,10 +2612,11 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   }
 
   function loadPlayer(i) {
+    if (!apiReady) return;
     const c = cards[i];
     const iframe = c.querySelector('iframe');
     if (!iframe.src) {
-      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1`;
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
     }
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
@@ -2613,8 +2636,8 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     cards.forEach((c, i) => c.classList.toggle('vc-active', i === cur));
     dots.forEach((d, i) => d.classList.toggle('on', i === cur));
     centerTrack();
-    // Lazy-load iframe + player for newly active card
-    loadPlayer(cur);
+    // Lazy-load iframe + player for newly active card (only if API ready)
+    if (apiReady) loadPlayer(cur);
     // cursor hide on active vid-box
     document.querySelectorAll('.vc-vid-box').forEach(b => { b.onmouseenter = null; b.onmouseleave = null; });
     const ab = cards[cur].querySelector('.vc-vid-box');
@@ -2635,6 +2658,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
   // Load YouTube API only when portfolio section scrolls into view
   window.onYouTubeIframeAPIReady = function() {
+    apiReady = true;
     loadPlayer(cur);
     startTimer();
   };
