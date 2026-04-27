@@ -675,7 +675,6 @@
     .gfx-col .all-sites-card img {
       width: 100%;
       height: auto;
-      max-height: calc(90vh - 185px);
       display: block;
     }
     /* Page 2 — single centered photo */
@@ -2886,6 +2885,27 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     document.querySelectorAll('.gfx-dot').forEach((d, i) => d.classList.toggle('active', i === page));
     btnPrev.disabled = page === 0;
     btnNext.disabled = page === gfxPages.length - 1;
+
+    // Zoom grid to fit — runs after images settle in layout
+    allGrid.style.zoom = '';
+    function applyZoom() {
+      const wrap = allGrid.closest('.gfx-grid-wrap');
+      if (!wrap) return;
+      const availH = wrap.offsetHeight;
+      const availW = wrap.offsetWidth;
+      if (!availH || !availW) return;
+      const gridH = allGrid.offsetHeight;
+      const gridW = allGrid.offsetWidth;
+      const scale = Math.min(availH / gridH, availW / gridW, 1);
+      if (scale < 0.99) allGrid.style.zoom = scale.toFixed(4);
+    }
+    const gfxImgs = Array.from(allGrid.querySelectorAll('img'));
+    Promise.all(gfxImgs.map(img =>
+      (img.complete && img.naturalWidth > 0)
+        ? Promise.resolve()
+        : new Promise(r => { img.onload = r; img.onerror = r; })
+    )).then(() => requestAnimationFrame(() => requestAnimationFrame(applyZoom)));
+    setTimeout(applyZoom, 350);
 
   }
 
