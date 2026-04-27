@@ -656,16 +656,15 @@
     .all-sites-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
-    /* Grafika grid — masonry via CSS columns so horizontal/vertical photos keep proportions */
+    /* Grafika grid — 3-column CSS grid, tall items span 2 rows */
     #all-gfx-grid {
-      display: block;
-      columns: 3;
-      column-gap: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: auto;
+      gap: 14px;
     }
-    #all-gfx-grid .all-sites-card {
-      break-inside: avoid;
-      margin-bottom: 14px;
-      display: block;
+    #all-gfx-grid .all-sites-card.gfx-tall {
+      grid-row: span 2;
     }
     .all-sites-card {
       border-radius: 12px; overflow: hidden; cursor: none;
@@ -2710,7 +2709,9 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
 
   // To add more graphics: just add more entries here
   const posts = [
-    'g1.jpg','g3.jpg','g8.jpg'
+    'g1.jpg','g3.jpg','g8.jpg',
+    'g2.jpg','g4.jpg',
+    'g5.jpg','g6.jpg'
   ];
 
   const colL = document.getElementById('gfx-col-left');
@@ -2752,7 +2753,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   if (allGrid && !allGrid.childElementCount) {
     posts.forEach(src => {
       const card = document.createElement('div');
-      card.className = 'all-sites-card';
+      card.className = 'all-sites-card' + (src === 'g8.jpg' ? ' gfx-tall' : '');
       const img = document.createElement('img');
       img.src = src; img.alt = '';
       card.appendChild(img);
