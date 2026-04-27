@@ -1352,20 +1352,21 @@
     .g-icon::before {
       content: '';
       position: absolute;
-      top: -4px; left: 50%;
+      bottom: 22px; left: 50%;
       transform: translateX(-50%);
-      width: 90px; height: 90px;
-      background: radial-gradient(ellipse at 50% 40%, var(--glow, transparent) 0%, transparent 72%);
-      filter: blur(8px);
-      opacity: 0.75;
-      z-index: 0;
+      width: 68px; height: 68px;
+      background: var(--glow, transparent);
+      border-radius: 50%;
+      filter: blur(16px);
+      opacity: 0.8;
+      z-index: 2;
       pointer-events: none;
       transition: opacity .35s;
     }
     .g-icon:hover::before { opacity: 1; }
     .g-icon-img {
       width: 68px; height: 68px; border-radius: 18px;
-      position: relative; z-index: 1;
+      position: relative; z-index: 3;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       box-shadow:
