@@ -671,14 +671,13 @@
     }
     .gfx-col .all-sites-card {
       flex: none;
-      display: flex;
-      justify-content: center;
+      height: calc((90vh - 205px) / var(--items, 1));
+      overflow: hidden;
     }
     .gfx-col .all-sites-card img {
-      width: auto;
-      max-width: 100%;
-      height: auto;
-      max-height: calc((90vh - 205px) / var(--items, 1));
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: block;
     }
     /* Page 2 — single centered photo */
