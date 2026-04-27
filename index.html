@@ -2516,18 +2516,42 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   tag.src = 'https://www.youtube.com/iframe_api';
   document.head.appendChild(tag);
 
+  let vcVisible = false;
+
   window.onYouTubeIframeAPIReady = function() {
     cards.forEach((c, i) => {
       players[i] = new YT.Player('vc-yt-' + i, {
         events: {
           onReady: function(e) {
-            e.target.mute();
-            if (i === 0) { e.target.playVideo(); startTimer(); }
+            // no mute — sound enabled
+            if (i === 0) startTimer();
           }
         }
       });
     });
     setActive(0);
+  };
+
+  // Auto-play when scrolled into view, pause when scrolled away
+  const vcSection = outer.closest('.port-section') || outer.closest('.vc-wrap');
+  if (vcSection) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        vcVisible = entry.isIntersecting;
+        if (vcVisible) {
+          try { players[cur] && players[cur].playVideo(); } catch(e) {}
+        } else {
+          Object.values(players).forEach(p => { try { p.pauseVideo(); } catch(e) {} });
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(vcSection);
+  }
+
+  // Expose control for tab switching
+  window.vcControl = {
+    pause:  () => Object.values(players).forEach(p => { try { p.pauseVideo(); } catch(e) {} }),
+    resume: () => { if (vcVisible) try { players[cur] && players[cur].playVideo(); } catch(e) {} }
   };
 
   outer.addEventListener('mouseenter', () => paused = true);
@@ -3070,6 +3094,8 @@ document.querySelectorAll('.pf').forEach(btn => {
     document.querySelectorAll('.port-section').forEach(sec => {
       sec.classList.toggle('active', sec.dataset.sec === f);
     });
+    if (f !== 'video') { window.vcControl && window.vcControl.pause(); }
+    else { window.vcControl && window.vcControl.resume(); }
   });
 });
 
