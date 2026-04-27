@@ -762,7 +762,7 @@
       transform: translate(-50%, -50%);
       background: rgba(255,255,255,.95);
       box-shadow: 0 0 0 3px rgba(255,255,255,.35), 0 0 18px 6px rgba(255,255,255,.55);
-      opacity: 0; transition: opacity .4s, left 1.3s cubic-bezier(.4,0,.2,1), top 1.3s cubic-bezier(.4,0,.2,1);
+      opacity: 0; transition: opacity .4s;
       animation: phantom-pulse 1.2s ease-in-out infinite;
     }
     #gfx-phantom.ph-visible { opacity: 1; }
@@ -3788,66 +3788,77 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   phantom.id = 'gfx-phantom';
   wrap.appendChild(phantom);
 
-  // Waypoints as fractions of wrap size; spaced >160px to trigger trail threshold
   const WPS = [
     { fx: 0.12, fy: 0.42 },
-    { fx: 0.35, fy: 0.62 },
-    { fx: 0.55, fy: 0.30 },
-    { fx: 0.75, fy: 0.58 },
-    { fx: 0.88, fy: 0.35 },
+    { fx: 0.36, fy: 0.60 },
+    { fx: 0.55, fy: 0.28 },
+    { fx: 0.74, fy: 0.58 },
+    { fx: 0.88, fy: 0.33 },
   ];
 
-  let running = false, timer = null;
+  let running = false, rafId = null, loopTimer = null, userStopped = false;
+  let cx = 0, cy = 0, wpIdx = 0, lastFireX = 0, lastFireY = 0;
+  const LERP = 0.07, ARRIVE = 6, FIRE_DIST = 168;
+
+  function fireMove(px, py) {
+    const r = wrap.getBoundingClientRect();
+    // bubbles:false — не угоняет кастомный курсор
+    wrap.dispatchEvent(new MouseEvent('mousemove', {
+      bubbles: false, clientX: r.left + px, clientY: r.top + py
+    }));
+    lastFireX = px; lastFireY = py;
+  }
 
   function stop() {
     running = false;
     phantom.classList.remove('ph-visible');
-    if (timer) { clearTimeout(timer); timer = null; }
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
   }
 
-  function fireMove(px, py) {
-    const rect = wrap.getBoundingClientRect();
-    wrap.dispatchEvent(new MouseEvent('mousemove', {
-      bubbles: true, clientX: rect.left + px, clientY: rect.top + py
-    }));
+  function tick() {
+    if (!running) return;
+    const r = wrap.getBoundingClientRect();
+    const tx = r.width  * WPS[wpIdx].fx;
+    const ty = r.height * WPS[wpIdx].fy;
+
+    cx += (tx - cx) * LERP;
+    cy += (ty - cy) * LERP;
+
+    phantom.style.left = cx + 'px';
+    phantom.style.top  = cy + 'px';
+
+    if (Math.hypot(cx - lastFireX, cy - lastFireY) >= FIRE_DIST) fireMove(cx, cy);
+
+    if (Math.hypot(cx - tx, cy - ty) < ARRIVE) {
+      wpIdx++;
+      if (wpIdx >= WPS.length) {
+        stop();
+        if (!userStopped) loopTimer = setTimeout(start, 2200);
+        return;
+      }
+    }
+    rafId = requestAnimationFrame(tick);
   }
 
   function start() {
-    if (running) return;
-    running = true;
-
-    // Place phantom off-screen first, then show at waypoint[0]
-    const rect = wrap.getBoundingClientRect();
-    const x0 = rect.width * WPS[0].fx;
-    const y0 = rect.height * WPS[0].fy;
-    phantom.style.transition = 'none';
-    phantom.style.left = x0 + 'px';
-    phantom.style.top  = y0 + 'px';
-
-    timer = setTimeout(() => {
+    if (running || userStopped) return;
+    running = true; wpIdx = 1;
+    const r = wrap.getBoundingClientRect();
+    cx = r.width * WPS[0].fx;
+    cy = r.height * WPS[0].fy;
+    lastFireX = cx; lastFireY = cy;
+    phantom.style.left = cx + 'px';
+    phantom.style.top  = cy + 'px';
+    setTimeout(() => {
       if (!running) return;
       phantom.classList.add('ph-visible');
-      phantom.style.transition = 'opacity .4s, left 1.3s cubic-bezier(.4,0,.2,1), top 1.3s cubic-bezier(.4,0,.2,1)';
-
-      let step = 0;
-      function next() {
-        if (!running || step >= WPS.length) { stop(); return; }
-        const r = wrap.getBoundingClientRect();
-        const px = r.width  * WPS[step].fx;
-        const py = r.height * WPS[step].fy;
-        phantom.style.left = px + 'px';
-        phantom.style.top  = py + 'px';
-        // spawn image near midpoint of travel, after cursor starts moving
-        timer = setTimeout(() => { if (running) fireMove(px, py); }, 500);
-        step++;
-        timer = setTimeout(next, 1500);
-      }
-      next();
-    }, 400);
+      rafId = requestAnimationFrame(tick);
+    }, 250);
   }
 
-  wrap.addEventListener('mouseenter', stop);
-  window.startGfxPhantom = start;
+  wrap.addEventListener('mouseenter', () => { userStopped = true; stop(); });
+  window.startGfxPhantom = function() { userStopped = false; start(); };
 })();
 
 // ── ALL VIDEO MODAL ───────────────────────────────────────────────────────────
