@@ -2574,7 +2574,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   cards.forEach((c, i) => { c.querySelector('iframe').id = 'vc-yt-' + i; });
 
   // Visual centering immediately (no video load yet)
-  setActive(Math.floor(n / 2));
+  setActive(0);
 
   const curDot = document.getElementById('cur');
   const curRing = document.getElementById('cur-ring');
