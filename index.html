@@ -2652,22 +2652,30 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     document.head.appendChild(tag);
   })();
 
-  // Start playback when video section scrolls into view
+  // Auto-play when scrolled into view, pause when scrolled away
   (function() {
     const sect = outer.closest('.port-section') || outer.closest('.vc-wrap') || outer;
     let started = false;
     const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && !started) {
-        started = true;
-        // Wait for API if not ready yet
-        const tryStart = () => {
-          if (apiReady) { loadPlayer(cur); startTimer(); }
-          else { setTimeout(tryStart, 100); }
-        };
-        tryStart();
-        obs.disconnect();
+      if (entries[0].isIntersecting) {
+        if (!started) {
+          started = true;
+          const tryStart = () => {
+            if (apiReady) { loadPlayer(cur); startTimer(); }
+            else { setTimeout(tryStart, 100); }
+          };
+          tryStart();
+        } else {
+          // Returned into view — resume
+          try { players[cur] && players[cur].playVideo(); } catch(_) {}
+          if (!userSwitched) startTimer();
+        }
+      } else {
+        // Left viewport — pause all
+        Object.values(players).forEach(p => { try { p.pauseVideo(); } catch(_) {} });
+        clearInterval(timer);
       }
-    }, { threshold: 0.3 });
+    }, { threshold: 0.2 });
     obs.observe(sect);
   })();
 
