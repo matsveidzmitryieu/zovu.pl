@@ -652,7 +652,7 @@
     .gfx-grid-wrap {
       flex: 1;
       min-height: 0;
-      overflow: hidden;
+      overflow-y: auto;
       display: flex;
       padding: 0 0 8px;
     }
@@ -660,7 +660,7 @@
       flex: 1;
       display: flex;
       gap: 10px;
-      align-items: stretch;
+      align-items: flex-start;
       min-height: 0;
     }
     .gfx-col {
@@ -671,13 +671,11 @@
       min-height: 0;
     }
     .gfx-col .all-sites-card {
-      flex: 1;
-      min-height: 0;
+      flex: none;
     }
     .gfx-col .all-sites-card img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      background: transparent;
+      width: 100%; height: auto;
+      display: block;
     }
     /* Page 2 — single centered photo */
     #all-gfx-grid.gfx-single {
