@@ -3630,6 +3630,21 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     return hslToRgb(h, Math.min(s * 1.2, 1), boostedL);
   }
 
+  // Hardcoded colors for SVG icons and white-logo-on-black icons
+  const glowMap = {
+    'grok':          '#aaaaaa',
+    'midjourney':    '#dddddd',
+    'github':        '#aaaaaa',
+    'tiktok ads':    '#69c9d0',
+    'google ai':     '#ffffff',
+    'capcut':        '#ffffff',
+    'eleven labs':   '#a855f7',
+    'cursor':        '#6366f1',
+    'sora':          '#aaaaaa',
+    'excel':         '#217346',
+    'heygen':        '#4ecdc4',
+  };
+
   function canvasSample(img, cb) {
     const apply = () => {
       try {
@@ -3638,14 +3653,23 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
         const ctx = c.getContext('2d');
         ctx.drawImage(img, 0, 0, 32, 32);
         const d = ctx.getImageData(0, 0, 32, 32).data;
+        // Pass 1: saturated pixels
         let r=0,g=0,b=0,n=0;
         for (let i=0;i<d.length;i+=4) {
           if (d[i+3]<80) continue;
-          const max=Math.max(d[i],d[i+1],d[i+2]), min=Math.min(d[i],d[i+1],d[i+2]);
-          const sat=max===0?0:(max-min)/max, bri=max/255;
-          if (sat>0.35 && bri>0.25) { r+=d[i];g+=d[i+1];b+=d[i+2];n++; }
+          const max=Math.max(d[i],d[i+1],d[i+2]),min=Math.min(d[i],d[i+1],d[i+2]);
+          const sat=max===0?0:(max-min)/max,bri=max/255;
+          if (sat>0.25 && bri>0.2) { r+=d[i];g+=d[i+1];b+=d[i+2];n++; }
         }
-        if (n>6) cb(`rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`);
+        if (n>4) { cb(`rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`); return; }
+        // Pass 2: any bright pixels (catches white logos)
+        r=g=b=n=0;
+        for (let i=0;i<d.length;i+=4) {
+          if (d[i+3]<80) continue;
+          const bri=(d[i]+d[i+1]+d[i+2])/3;
+          if (bri>140) { r+=d[i];g+=d[i+1];b+=d[i+2];n++; }
+        }
+        if (n>4) cb(`rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`);
       } catch(e) {}
     };
     if (img.complete && img.naturalWidth) apply();
@@ -3656,15 +3680,19 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     const box = icon.querySelector('.g-icon-img');
     const img = icon.querySelector('img.g-ci');
     if (!box) return;
-    const hex = (box.style.background || '').trim();
+
+    // Level 1: hardcoded map by label text
+    const lbl = (icon.querySelector('.g-icon-lbl')||{}).textContent||'';
+    const mapped = glowMap[lbl.toLowerCase().trim()];
+    if (mapped) { icon.style.setProperty('--glow', mapped); return; }
+
+    // Level 2: brand background color
+    const hex = (box.style.background||'').trim();
     const glow = brandGlow(hex);
-    if (glow) {
-      // colorful background — use brand color directly
-      icon.style.setProperty('--glow', glow);
-    } else if (img) {
-      // dark/grey background — sample the logo color from the image
-      canvasSample(img, color => icon.style.setProperty('--glow', color));
-    }
+    if (glow) { icon.style.setProperty('--glow', glow); return; }
+
+    // Level 3: canvas sample the image
+    if (img) canvasSample(img, color => icon.style.setProperty('--glow', color));
   });
 })();
 </script>
