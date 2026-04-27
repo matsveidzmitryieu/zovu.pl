@@ -652,7 +652,7 @@
     .gfx-grid-wrap {
       flex: 1;
       min-height: 0;
-      overflow-y: auto;
+      overflow: hidden;
       display: flex;
       padding: 0 0 8px;
     }
@@ -2885,20 +2885,20 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     btnPrev.disabled = page === 0;
     btnNext.disabled = page === gfxPages.length - 1;
 
-    // Scale grid to fit without scrolling
+    // Wait for all images to load, then zoom to fit
     allGrid.style.zoom = '';
-    requestAnimationFrame(() => {
+    const imgs = Array.from(allGrid.querySelectorAll('img'));
+    Promise.all(imgs.map(img =>
+      img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })
+    )).then(() => {
       const wrap = allGrid.closest('.gfx-grid-wrap');
       if (!wrap) return;
-      // Wait for images to affect layout
-      setTimeout(() => {
-        const availH = wrap.clientHeight;
-        const availW = wrap.clientWidth;
-        const gridH  = allGrid.scrollHeight;
-        const gridW  = allGrid.scrollWidth;
-        const scale  = Math.min(availH / gridH, availW / gridW, 1);
-        if (scale < 1) allGrid.style.zoom = scale.toFixed(4);
-      }, 80);
+      const availH = wrap.clientHeight;
+      const availW = wrap.clientWidth;
+      const gridH  = allGrid.scrollHeight;
+      const gridW  = allGrid.scrollWidth;
+      const scale  = Math.min(availH / gridH, availW / gridW, 1);
+      if (scale < 1) allGrid.style.zoom = scale.toFixed(4);
     });
   }
 
