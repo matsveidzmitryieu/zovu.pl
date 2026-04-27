@@ -658,27 +658,28 @@
     }
     #all-gfx-grid {
       flex: 1;
+      min-height: 0;
       display: flex;
       gap: 8px;
-      align-items: flex-start;
-      min-height: 0;
+      align-items: stretch;
     }
     .gfx-col {
       flex: 1;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      min-height: 0;
     }
     .gfx-col .all-sites-card {
-      flex: none;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
     }
     .gfx-col .all-sites-card img {
       width: 100%;
-      max-height: calc((90vh - 180px - calc(var(--items,1) - 1) * 8px) / var(--items,1));
-      height: auto;
-      display: block;
+      height: 100%;
       object-fit: contain;
+      display: block;
     }
     /* Page 2 — single centered photo */
     #all-gfx-grid.gfx-single {
