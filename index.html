@@ -3811,10 +3811,10 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     lastFireX = px; lastFireY = py;
   }
 
-  function stop() {
+  function stop(clearDim) {
     running = false;
     phantom.classList.remove('ph-visible');
-    wrap.classList.remove('ph-running');
+    if (clearDim) wrap.classList.remove('ph-running');
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
   }
@@ -3836,7 +3836,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     if (Math.hypot(cx - tx, cy - ty) < ARRIVE) {
       wpIdx++;
       if (wpIdx >= WPS.length) {
-        stop();
+        stop(false); // keep ph-running so last image stays dim until it fades
         if (!userStopped) loopTimer = setTimeout(start, 2200);
         return;
       }
@@ -3861,7 +3861,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     }, 250);
   }
 
-  wrap.addEventListener('mouseenter', () => { userStopped = true; stop(); });
+  wrap.addEventListener('mouseenter', () => { userStopped = true; stop(true); });
   window.startGfxPhantom = function() { userStopped = false; start(); };
 })();
 
