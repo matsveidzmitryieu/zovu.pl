@@ -2884,6 +2884,22 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     document.querySelectorAll('.gfx-dot').forEach((d, i) => d.classList.toggle('active', i === page));
     btnPrev.disabled = page === 0;
     btnNext.disabled = page === gfxPages.length - 1;
+
+    // Scale grid to fit without scrolling
+    allGrid.style.zoom = '';
+    requestAnimationFrame(() => {
+      const wrap = allGrid.closest('.gfx-grid-wrap');
+      if (!wrap) return;
+      // Wait for images to affect layout
+      setTimeout(() => {
+        const availH = wrap.clientHeight;
+        const availW = wrap.clientWidth;
+        const gridH  = allGrid.scrollHeight;
+        const gridW  = allGrid.scrollWidth;
+        const scale  = Math.min(availH / gridH, availW / gridW, 1);
+        if (scale < 1) allGrid.style.zoom = scale.toFixed(4);
+      }, 80);
+    });
   }
 
   btnPrev.addEventListener('click', () => { if (gfxCurPage > 0) renderGfxPage(gfxCurPage - 1); });
