@@ -2595,7 +2595,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     const c = cards[i];
     const iframe = c.querySelector('iframe');
     if (!iframe.src) {
-      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1&autoplay=1`;
     }
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
@@ -2604,8 +2604,10 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
           onStateChange: e => {
             if (e.data === YT.PlayerState.PLAYING) {
               cards[i].classList.add('vc-playing');
-              // Try to unmute after playback started — user has scrolled = interaction
-              try { e.target.unMute(); e.target.setVolume(100); } catch(_) {}
+              // Delay unmute so browser has time to register user interaction
+              setTimeout(() => {
+                try { e.target.unMute(); e.target.setVolume(100); } catch(_) {}
+              }, 300);
             } else {
               cards[i].classList.remove('vc-playing');
             }
@@ -2640,23 +2642,32 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     timer = setInterval(() => { if (!paused) setActive(cur + 1); }, 6000);
   }
 
-  // Load YouTube API only when portfolio section scrolls into view
+  // Load YouTube API immediately so it's ready by the time user scrolls to section
   window.onYouTubeIframeAPIReady = function() {
     apiReady = true;
-    loadPlayer(cur);
-    startTimer();
   };
   (function() {
-    const sect = document.getElementById('portfolio');
-    if (!sect) return;
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  })();
+
+  // Start playback when video section scrolls into view
+  (function() {
+    const sect = outer.closest('.port-section') || outer.closest('.vc-wrap') || outer;
+    let started = false;
     const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        document.head.appendChild(tag);
+      if (entries[0].isIntersecting && !started) {
+        started = true;
+        // Wait for API if not ready yet
+        const tryStart = () => {
+          if (apiReady) { loadPlayer(cur); startTimer(); }
+          else { setTimeout(tryStart, 100); }
+        };
+        tryStart();
         obs.disconnect();
       }
-    }, { threshold: 0.2 });
+    }, { threshold: 0.3 });
     obs.observe(sect);
   })();
 
