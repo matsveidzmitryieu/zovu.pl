@@ -1349,38 +1349,20 @@
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       cursor: default; position: relative;
     }
-    /* inner tight glow */
     .g-icon::before {
       content: '';
       position: absolute;
-      top: 8px; left: 50%;
+      top: -4px; left: 50%;
       transform: translateX(-50%);
-      width: 58px; height: 58px;
-      background: var(--glow, transparent);
-      border-radius: 18px;
-      filter: blur(12px);
-      opacity: 0.65;
+      width: 90px; height: 90px;
+      background: radial-gradient(ellipse at 50% 40%, var(--glow, transparent) 0%, transparent 72%);
+      filter: blur(8px);
+      opacity: 0.75;
       z-index: 0;
       pointer-events: none;
-      transition: opacity .4s;
+      transition: opacity .35s;
     }
-    /* outer wide layer — gradual soft fade */
-    .g-icon::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 84px; height: 84px;
-      background: var(--glow, transparent);
-      border-radius: 22px;
-      filter: blur(34px);
-      opacity: 0.28;
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity .4s;
-    }
-    .g-icon:hover::before { opacity: 0.88; }
-    .g-icon:hover::after  { opacity: 0.5; }
+    .g-icon:hover::before { opacity: 1; }
     .g-icon-img {
       width: 68px; height: 68px; border-radius: 18px;
       position: relative; z-index: 1;
