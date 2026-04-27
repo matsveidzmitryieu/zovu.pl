@@ -3696,17 +3696,12 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     const img = icon.querySelector('img.g-ci');
     if (!box) return;
 
-    // Level 1: hardcoded map by label text
-    const lbl = (icon.querySelector('.g-icon-lbl')||{}).textContent||'';
-    const mapped = glowMap[lbl.toLowerCase().trim()];
-    if (mapped) { icon.style.setProperty('--glow', mapped); return; }
-
-    // Level 2: brand background color
+    // Level 1: background color of the icon tile
     const hex = (box.style.background||'').trim();
     const glow = brandGlow(hex);
     if (glow) { icon.style.setProperty('--glow', glow); return; }
 
-    // Level 3: canvas sample the image
+    // Level 2: canvas sample the image (fallback for dark/neutral backgrounds)
     if (img) canvasSample(img, color => icon.style.setProperty('--glow', color));
   });
 })();
