@@ -760,15 +760,16 @@
       position: absolute; width: 22px; height: 22px;
       border-radius: 50%; pointer-events: none; z-index: 200;
       transform: translate(-50%, -50%);
-      background: rgba(255,255,255,.95);
-      box-shadow: 0 0 0 3px rgba(255,255,255,.35), 0 0 18px 6px rgba(255,255,255,.55);
+      background: rgba(14,14,14,.92);
+      box-shadow: 0 0 0 2px var(--accent), 0 0 14px 5px rgba(200,241,53,.45);
       opacity: 0; transition: opacity .4s;
-      animation: phantom-pulse 1.2s ease-in-out infinite;
+      animation: phantom-pulse 1.4s ease-in-out infinite;
     }
     #gfx-phantom.ph-visible { opacity: 1; }
+    #gfx-trail-wrap.ph-running .trail-img-item { opacity: 0.32 !important; filter: brightness(.7) saturate(.8); }
     @keyframes phantom-pulse {
-      0%,100% { box-shadow: 0 0 0 3px rgba(255,255,255,.35), 0 0 18px 6px rgba(255,255,255,.55); }
-      50%      { box-shadow: 0 0 0 5px rgba(255,255,255,.2),  0 0 28px 10px rgba(255,255,255,.35); }
+      0%,100% { box-shadow: 0 0 0 2px var(--accent), 0 0 14px 5px rgba(200,241,53,.45); }
+      50%      { box-shadow: 0 0 0 3px var(--accent), 0 0 22px 8px rgba(200,241,53,.3); }
     }
     .trail-img-item {
       position: absolute; width: 260px;
@@ -3798,7 +3799,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
 
   let running = false, rafId = null, loopTimer = null, userStopped = false;
   let cx = 0, cy = 0, wpIdx = 0, lastFireX = 0, lastFireY = 0;
-  const LERP = 0.07, ARRIVE = 6, FIRE_DIST = 168;
+  const LERP = 0.04, ARRIVE = 6, FIRE_DIST = 168;
 
   function fireMove(px, py) {
     const r = wrap.getBoundingClientRect();
@@ -3812,6 +3813,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   function stop() {
     running = false;
     phantom.classList.remove('ph-visible');
+    wrap.classList.remove('ph-running');
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     if (loopTimer) { clearTimeout(loopTimer); loopTimer = null; }
   }
@@ -3853,6 +3855,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     setTimeout(() => {
       if (!running) return;
       phantom.classList.add('ph-visible');
+      wrap.classList.add('ph-running');
       rafId = requestAnimationFrame(tick);
     }, 250);
   }
