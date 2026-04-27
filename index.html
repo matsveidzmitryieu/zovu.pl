@@ -1349,24 +1349,38 @@
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       cursor: default; position: relative;
     }
+    /* inner tight glow */
     .g-icon::before {
       content: '';
       position: absolute;
-      top: 4px; left: 50%;
+      top: 8px; left: 50%;
       transform: translateX(-50%);
-      width: 72px; height: 72px;
+      width: 58px; height: 58px;
       background: var(--glow, transparent);
       border-radius: 18px;
-      filter: blur(18px);
-      opacity: 0.45;
+      filter: blur(12px);
+      opacity: 0.65;
       z-index: 0;
       pointer-events: none;
-      transition: opacity .4s, filter .4s;
+      transition: opacity .4s;
     }
-    .g-icon:hover::before {
-      opacity: 0.7;
-      filter: blur(24px);
+    /* outer wide layer — gradual soft fade */
+    .g-icon::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 84px; height: 84px;
+      background: var(--glow, transparent);
+      border-radius: 22px;
+      filter: blur(34px);
+      opacity: 0.28;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity .4s;
     }
+    .g-icon:hover::before { opacity: 0.88; }
+    .g-icon:hover::after  { opacity: 0.5; }
     .g-icon-img {
       width: 68px; height: 68px; border-radius: 18px;
       position: relative; z-index: 1;
@@ -3633,12 +3647,41 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     return hslToRgb(h, Math.min(s * 1.2, 1), boostedL);
   }
 
+  function canvasSample(img, cb) {
+    const apply = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = c.height = 32;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, 32, 32);
+        const d = ctx.getImageData(0, 0, 32, 32).data;
+        let r=0,g=0,b=0,n=0;
+        for (let i=0;i<d.length;i+=4) {
+          if (d[i+3]<80) continue;
+          const max=Math.max(d[i],d[i+1],d[i+2]), min=Math.min(d[i],d[i+1],d[i+2]);
+          const sat=max===0?0:(max-min)/max, bri=max/255;
+          if (sat>0.35 && bri>0.25) { r+=d[i];g+=d[i+1];b+=d[i+2];n++; }
+        }
+        if (n>6) cb(`rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})`);
+      } catch(e) {}
+    };
+    if (img.complete && img.naturalWidth) apply();
+    else img.addEventListener('load', apply, {once:true});
+  }
+
   document.querySelectorAll('.g-icon').forEach(icon => {
     const box = icon.querySelector('.g-icon-img');
+    const img = icon.querySelector('img.g-ci');
     if (!box) return;
     const hex = (box.style.background || '').trim();
     const glow = brandGlow(hex);
-    if (glow) icon.style.setProperty('--glow', glow);
+    if (glow) {
+      // colorful background — use brand color directly
+      icon.style.setProperty('--glow', glow);
+    } else if (img) {
+      // dark/grey background — sample the logo color from the image
+      canvasSample(img, color => icon.style.setProperty('--glow', color));
+    }
   });
 })();
 </script>
