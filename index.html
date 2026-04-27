@@ -439,17 +439,19 @@
     }
     .vc-track {
       display: flex; align-items: flex-start; gap: 24px;
-      transition: transform .65s cubic-bezier(.16,1,.3,1);
+      transition: transform .75s cubic-bezier(.16,1,.3,1);
       will-change: transform; padding: 120px 0 60px;
     }
     .vc-card {
       flex: 0 0 auto;
-      transition: transform .5s cubic-bezier(.16,1,.3,1), opacity .5s, filter .5s;
+      transition: transform .75s cubic-bezier(.16,1,.3,1), opacity .75s, filter .75s;
       transform-origin: top center; cursor: none;
     }
-    .vc-card.vc-v { width: 360px; }
-    .vc-card.vc-h { width: 720px; }
-    .vc-card:not(.vc-active) { transform: scale(0.80); opacity: 0.55; filter: blur(5px) brightness(0.6); }
+    .vc-card.vc-v { width: 260px; }
+    .vc-card.vc-h { width: 520px; }
+    .vc-nero .vc-vid-box { border-radius: 12px; overflow: hidden; }
+    .vc-nero .vc-vid-box iframe { transform: scale(1.07); }
+    .vc-card:not(.vc-active) { transform: scale(0.85); opacity: 0.7; filter: blur(2.5px) brightness(0.8); }
     .vc-card.vc-active { transform: scale(1); opacity: 1; filter: none; }
     .vc-vid-wrapper { position: relative; }
     .vc-card.vc-active .vc-vid-wrapper { filter: url(#vc-backlight); }
@@ -462,7 +464,7 @@
     .vc-vid-box video, .vc-vid-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border: none; }
     .vc-vid-box { position: relative; }
     .vc-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .3s; z-index: 1; }
-    .vc-card.vc-active .vc-thumb { opacity: 0; pointer-events: none; }
+    .vc-card.vc-playing .vc-thumb { opacity: 0; pointer-events: none; }
     .vc-vid-box iframe { z-index: 2; }
     .vc-overlay { position: absolute; inset: 0; z-index: 3; cursor: none; }
     .vc-card.vc-active .vc-overlay { display: none; }
@@ -522,6 +524,39 @@
     .port-pg:hover .port-pg-ov { opacity: 1; }
     .port-pg-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .port-pg-info p { font-size: 11px; color: rgba(255,255,255,.55); }
+    /* ── WEB TILTED GRID ── */
+    .web-tilt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; max-width: 860px; margin-left: auto; margin-right: auto; }
+    .wtc {
+      position: relative; cursor: none; isolation: isolate;
+      border-radius: 14px;
+      box-shadow: 0 0 36px rgba(var(--acc-rgb), .22), 0 4px 20px rgba(0,0,0,.35);
+      transition: box-shadow .4s;
+      perspective: 900px;
+    }
+    .wtc:hover { box-shadow: 0 0 56px rgba(var(--acc-rgb), .38), 0 8px 32px rgba(0,0,0,.45); }
+    .wtc-glow { display: none; }
+    .wtc-inner {
+      display: block; border-radius: 14px; overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .wtc-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .wtc-cover {
+      position: absolute; inset: 0; border-radius: 14px;
+      background: var(--bg2); border: 5px solid var(--bg3);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      transform: rotateY(0deg);
+      transform-origin: calc(50% - var(--d,1) * 50%) 50%;
+      transition: transform .55s cubic-bezier(.16,1,.3,1), opacity .4s;
+      padding: 20px; text-decoration: none; cursor: none;
+      backface-visibility: hidden; will-change: transform;
+    }
+    .wtc:hover .wtc-cover { transform: rotateY(calc(var(--d,1) * -90deg)); opacity: 0; }
+    .wtc-emoji { font-size: 26px; line-height: 1; }
+    .wtc-name { font-size: 15px; font-weight: 800; color: var(--text); text-align: center; }
+    .wtc-type { font-size: 11px; color: var(--sec); letter-spacing: .5px; text-transform: uppercase; }
+    .wtc-url { font-size: 11px; color: var(--accent); font-weight: 600; }
+    @media(max-width:900px){ .web-tilt-grid { grid-template-columns: repeat(2,1fr); max-width: 580px; } }
+    @media(max-width:580px){ .web-tilt-grid { grid-template-columns: 1fr; max-width: 320px; } }
     .port-soon {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 80px 20px; gap: 12px; margin-top: 48px; text-align: center;
@@ -549,19 +584,27 @@
     }
     .trail-col-img {
       position: relative; z-index: 1;
-      width: 100%; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden;
+      width: 100%; border-radius: 10px; overflow: hidden;
       opacity: 0; transform: translateY(16px);
       transition: opacity .5s ease, transform .5s ease;
     }
     .trail-col-img.show { opacity: 1; transform: translateY(0); }
-    .trail-col-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .trail-col-img img { width: 100%; height: auto; display: block; }
     /* Folder card */
-    .trail-folder-item {
-      position: relative; width: 100%; aspect-ratio: 4/3;
-      border-radius: 12px; overflow: hidden; cursor: none;
-      transition: transform .35s cubic-bezier(.16,1,.3,1);
+    .gfx-all-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; margin-top: 32px;
+      padding: 22px 0; border-radius: 14px; cursor: none;
+      background: var(--bg2); border: 1px solid rgba(var(--acc-rgb),.18);
+      font-size: 15px; font-weight: 700; letter-spacing: .5px; color: var(--text);
+      transition: border-color .3s, box-shadow .3s, background .3s;
     }
-    .trail-folder-item:hover { transform: translateY(-8px); }
+    .gfx-all-btn:hover {
+      border-color: rgba(var(--acc-rgb),.55);
+      box-shadow: 0 0 40px rgba(var(--acc-rgb),.14);
+      background: var(--bg3);
+    }
+    .gfx-all-btn-icon { font-size: 20px; }
     .trail-folder-img {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover;
@@ -618,7 +661,7 @@
       position: relative; transition: transform .3s cubic-bezier(.16,1,.3,1);
     }
     .all-sites-card:hover { transform: scale(1.03); }
-    .all-sites-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .all-sites-card img { width: 100%; height: auto; display: block; }
     .all-sites-card-ov {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 55%);
@@ -637,17 +680,19 @@
       position: relative; flex: 1; min-height: 520px;
       overflow: hidden; cursor: none;
       display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(var(--acc-rgb), .35);
+      border-radius: 20px;
     }
-    .trail-hint { font-size: 16px; color: var(--sec); position: relative; z-index: 2; pointer-events: none; text-align: center; }
+    .trail-hint { font-size: 19px; font-weight: 700; color: var(--sec); position: relative; z-index: 2; pointer-events: none; text-align: center; }
     .trail-img-item {
-      position: absolute; width: 300px; height: 210px;
+      position: absolute; width: 260px;
       pointer-events: none; opacity: 0; z-index: 1;
       transform: translate(-50%, -50%) scale(0.1);
       border-radius: 12px; overflow: hidden;
       box-shadow: 0 12px 40px rgba(0,0,0,.28);
     }
     .trail-img-item.visible { pointer-events: auto; }
-    .trail-img-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .trail-img-item img { width: 100%; height: auto; display: block; }
 
     /* ── SITE MODAL ── */
     .site-modal-ov {
@@ -1866,7 +1911,7 @@
         </div>
       </div>
 
-      <div class="vc-card vc-h" data-yt="dxj8T0wUGLo">
+      <div class="vc-card vc-h vc-nero" data-yt="dxj8T0wUGLo">
         <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
         <div class="vc-info">
           <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
@@ -1903,16 +1948,61 @@
       </div>
       <div class="trail-col" id="gfx-col-right"></div>
     </div>
+    <div class="gfx-all-btn" id="gfx-all-btn" onclick="window.openAllGfx && window.openAllGfx()">
+      <span class="gfx-all-btn-icon">⊞</span>
+      <span data-k="gfx_all_btn">Wszystkie projekty graficzne</span>
+    </div>
   </div>
 
   <!-- WEB / STRONY -->
   <div class="port-section" data-sec="web">
-    <div class="trail-outer">
-      <div class="trail-col" id="web-col-left"></div>
-      <div class="trail-wrap" id="web-trail-wrap">
-        <div class="trail-hint">Przesuń kursor żeby zobaczyć nasze realizacje</div>
+    <div class="web-tilt-grid">
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws1.png" alt="Gucio Bar" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://inca1122.github.io/gucio_bar/index.html" target="_blank" rel="noopener"><div class="wtc-emoji">🍺</div><div class="wtc-name">Gucio Bar</div><div class="wtc-type">Bar &amp; Restaurant</div><div class="wtc-url">gucio.bar</div></a>
       </div>
-      <div class="trail-col" id="web-col-right"></div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws2.png" alt="Mag Shaurma" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://dzmzah.github.io/magshaurma/" target="_blank" rel="noopener"><div class="wtc-emoji">🌯</div><div class="wtc-name">Mag Shaurma</div><div class="wtc-type">Food &amp; Delivery</div><div class="wtc-url">magshaurma.pl</div></a>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws3.png" alt="Jewelry Katowice" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://inca1122.github.io/jewelry-katowice/" target="_blank" rel="noopener"><div class="wtc-emoji">💎</div><div class="wtc-name">Jewelry Katowice</div><div class="wtc-type">Jewelry Store</div><div class="wtc-url">jewelry-katowice</div></a>
+      </div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws4.png" alt="Maya Gold" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://dzmzah.github.io/maya-gold" target="_blank" rel="noopener"><div class="wtc-emoji">✨</div><div class="wtc-name">Maya Gold</div><div class="wtc-type">Gold &amp; Jewelry</div><div class="wtc-url">maya-gold</div></a>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws5.png" alt="Marketing AI" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://marketingai.energiabiznesu.pl" target="_blank" rel="noopener"><div class="wtc-emoji">🤖</div><div class="wtc-name">Marketing AI</div><div class="wtc-type">AI Marketing Platform</div><div class="wtc-url">energiabiznesu.pl</div></a>
+      </div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws6.png" alt="Bee Gelato" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://beegelato.sk" target="_blank" rel="noopener"><div class="wtc-emoji">🍦</div><div class="wtc-name">Bee Gelato</div><div class="wtc-type">Artisan Ice Cream</div><div class="wtc-url">beegelato.sk</div></a>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws7.png" alt="Adekwat Potolki" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://adekvatpotolki.netlify.app" target="_blank" rel="noopener"><div class="wtc-emoji">🏗️</div><div class="wtc-name">Adekwat Potolki</div><div class="wtc-type">Ceiling Installation</div><div class="wtc-url">adekvatpotolki</div></a>
+      </div>
+
+      <div class="wtc" style="--d:-1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws8.png" alt="PickActive" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://pickactive.pl/" target="_blank" rel="noopener"><div class="wtc-emoji">🏋️</div><div class="wtc-name">PickActive</div><div class="wtc-type">Sports Club</div><div class="wtc-url">pickactive.pl</div></a>
+      </div>
+
+      <div class="wtc" style="--d:1">
+        <div class="wtc-inner"><div class="wtc-bg"><img src="ws9.png" alt="Energia Biznesu" loading="lazy"></div></div>
+        <a class="wtc-cover" href="https://energiabiznesu.pl/" target="_blank" rel="noopener"><div class="wtc-emoji">⚡</div><div class="wtc-name">Energia Biznesu</div><div class="wtc-type">Business &amp; Marketing</div><div class="wtc-url">energiabiznesu.pl</div></a>
+      </div>
+
     </div>
   </div>
 
@@ -2456,11 +2546,21 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     // Overlay for cursor passthrough on inactive cards
     const ov = document.createElement('div');
     ov.className = 'vc-overlay';
+    ov.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = cards.indexOf(c);
+      if (idx !== cur) { userSwitched = true; clearInterval(timer); setActive(idx); }
+    });
     ov.addEventListener('mousedown', () => {
       ov.style.pointerEvents = 'none';
       setTimeout(() => { ov.style.pointerEvents = ''; }, 80);
     });
     vidBox.appendChild(ov);
+    // Click anywhere on inactive card to switch
+    c.addEventListener('click', () => {
+      const idx = cards.indexOf(c);
+      if (idx !== cur) { userSwitched = true; clearInterval(timer); setActive(idx); }
+    });
   });
 
   // Build dots
@@ -2469,14 +2569,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   });
   const dots = Array.from(dotsWrap.querySelectorAll('.vc-dot'));
 
-  // Pre-set iframe srcs for YT API
+  // Assign iframe IDs only — src loaded lazily on scroll/switch
   const players = {};
-  cards.forEach((c, i) => {
-    const id = c.dataset.yt;
-    const iframe = c.querySelector('iframe');
-    iframe.id = 'vc-yt-' + i;
-    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&rel=0&playsinline=1&mute=1&vq=hd720`;
-  });
+  cards.forEach((c, i) => { c.querySelector('iframe').id = 'vc-yt-' + i; });
+
+  // Visual centering immediately (no video load yet)
+  setActive(Math.floor(n / 2));
 
   const curDot = document.getElementById('cur');
   const curRing = document.getElementById('cur-ring');
@@ -2491,74 +2589,74 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     track.style.transform = 'translateX(' + (-offset) + 'px)';
   }
 
+  function loadPlayer(i) {
+    const c = cards[i];
+    const iframe = c.querySelector('iframe');
+    if (!iframe.src) {
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+    }
+    if (!players[i] && window.YT && window.YT.Player) {
+      players[i] = new YT.Player('vc-yt-' + i, {
+        events: {
+          onReady: e => { e.target.mute(); e.target.playVideo(); if (!timer) startTimer(); },
+          onStateChange: e => {
+            if (e.data === YT.PlayerState.PLAYING) cards[i].classList.add('vc-playing');
+            else cards[i].classList.remove('vc-playing');
+          }
+        }
+      });
+    }
+  }
+
   function setActive(idx) {
     cur = ((idx % n) + n) % n;
     cards.forEach((c, i) => c.classList.toggle('vc-active', i === cur));
     dots.forEach((d, i) => d.classList.toggle('on', i === cur));
     centerTrack();
+    // Lazy-load iframe + player for newly active card
+    loadPlayer(cur);
     // cursor hide on active vid-box
     document.querySelectorAll('.vc-vid-box').forEach(b => { b.onmouseenter = null; b.onmouseleave = null; });
     const ab = cards[cur].querySelector('.vc-vid-box');
     if (ab) { ab.onmouseenter = hideCur; ab.onmouseleave = showCur; }
-    // play/pause via API
+    // Stop inactive cards (clears thumbnail hide + stops buffering)
+    cards.forEach((c, i) => { if (i !== cur) c.classList.remove('vc-playing'); });
     Object.entries(players).forEach(([i, p]) => {
-      try { parseInt(i) === cur ? p.playVideo() : p.pauseVideo(); } catch(e) {}
+      try { parseInt(i) === cur ? p.playVideo() : p.stopVideo(); } catch(e) {}
     });
   }
 
+  let userSwitched = false;
   function startTimer() {
+    if (userSwitched) return;
     clearInterval(timer);
     timer = setInterval(() => { if (!paused) setActive(cur + 1); }, 6000);
   }
 
-  // Load YouTube IFrame API
-  const tag = document.createElement('script');
-  tag.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(tag);
-
-  let vcVisible = false;
-
+  // Load YouTube API only when portfolio section scrolls into view
   window.onYouTubeIframeAPIReady = function() {
-    cards.forEach((c, i) => {
-      players[i] = new YT.Player('vc-yt-' + i, {
-        events: {
-          onReady: function(e) {
-            // no mute — sound enabled
-            if (i === 0) startTimer();
-          }
-        }
-      });
-    });
-    setActive(0);
+    loadPlayer(cur);
+    startTimer();
   };
-
-  // Auto-play when scrolled into view, pause when scrolled away
-  const vcSection = outer.closest('.port-section') || outer.closest('.vc-wrap');
-  if (vcSection) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        vcVisible = entry.isIntersecting;
-        if (vcVisible) {
-          try { players[cur] && players[cur].playVideo(); } catch(e) {}
-        } else {
-          Object.values(players).forEach(p => { try { p.pauseVideo(); } catch(e) {} });
-        }
-      });
-    }, { threshold: 0.35 });
-    io.observe(vcSection);
-  }
-
-  // Expose control for tab switching
-  window.vcControl = {
-    pause:  () => Object.values(players).forEach(p => { try { p.pauseVideo(); } catch(e) {} }),
-    resume: () => { if (vcVisible) try { players[cur] && players[cur].playVideo(); } catch(e) {} }
-  };
+  (function() {
+    const sect = document.getElementById('portfolio');
+    if (!sect) return;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+        obs.disconnect();
+      }
+    }, { threshold: 0.2 });
+    obs.observe(sect);
+  })();
 
   outer.addEventListener('mouseenter', () => paused = true);
   outer.addEventListener('mouseleave', () => { paused = false; showCur(); });
   const wrap = outer.closest('.vc-wrap') || outer;
-  wrap.querySelector('.vc-prev').addEventListener('click', () => { setActive(cur - 1); startTimer(); });
-  wrap.querySelector('.vc-next').addEventListener('click', () => { setActive(cur + 1); startTimer(); });
+  wrap.querySelector('.vc-prev').addEventListener('click', () => { userSwitched = true; clearInterval(timer); setActive(cur - 1); });
+  wrap.querySelector('.vc-next').addEventListener('click', () => { userSwitched = true; clearInterval(timer); setActive(cur + 1); });
 })();
 
 // ── GRAFIKA TRAIL ─────────────────────────────────────────────────────────────
@@ -2575,35 +2673,13 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const colL = document.getElementById('gfx-col-left');
   const colR = document.getElementById('gfx-col-right');
 
-  // Folder cards (always at bottom)
-  function makeFolderCard() {
-    const folder = document.createElement('div');
-    folder.className = 'trail-folder-item';
-    [posts[5], posts[6], posts[7]].forEach(src => {
-      const img = document.createElement('img');
-      img.className = 'trail-folder-img'; img.src = src; img.alt = '';
-      folder.appendChild(img);
-    });
-    const fov = document.createElement('div');
-    fov.className = 'trail-folder-ov';
-    fov.innerHTML = '<div class="trail-folder-icon">⊞</div><div class="trail-folder-txt">Wszystkie<br>projekty</div>';
-    folder.appendChild(fov);
-    folder.addEventListener('click', () => window.openAllGfx());
-    return folder;
-  }
-  const folderL = makeFolderCard();
-  const folderR = makeFolderCard();
-  colL.appendChild(folderL);
-  colR.appendChild(folderR);
-
-  // Add photo to column before folder (max 3 per side)
+  // Add photo to column (max 3 per side)
   let colCountL = 0, colCountR = 0, colSide = 0;
   function addToColumn(src) {
     const isLeft = colSide % 2 === 0;
     const count  = isLeft ? colCountL : colCountR;
     if (count >= 3) { colSide++; return; }
     const col = isLeft ? colL : colR;
-    const folderRef = isLeft ? folderL : folderR;
     if (isLeft) colCountL++; else colCountR++;
     colSide++;
     const item = document.createElement('div');
@@ -2620,7 +2696,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     item.appendChild(glow);
     item.appendChild(div);
     item.addEventListener('click', () => window.openSiteModal(src, '', false));
-    col.insertBefore(item, folderRef);
+    col.appendChild(item);
     setTimeout(() => div.classList.add('show'), 50);
   }
 
@@ -2893,7 +2969,7 @@ const cur = document.getElementById('cur');
 const ring = document.getElementById('cur-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
-const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone';
+const HOVER_SEL = 'a, button, input, textarea, select, .srv, .port-c, .tm, .grp-hd, .chk, .qb, .stat, .pf, .plan, .ci, .nav-link, .lang, .calc-btn, .cl, .contact-phone, .gfx-all-btn, .wtc';
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
@@ -3094,8 +3170,6 @@ document.querySelectorAll('.pf').forEach(btn => {
     document.querySelectorAll('.port-section').forEach(sec => {
       sec.classList.toggle('active', sec.dataset.sec === f);
     });
-    if (f !== 'video') { window.vcControl && window.vcControl.pause(); }
-    else { window.vcControl && window.vcControl.resume(); }
   });
 });
 
