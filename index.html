@@ -2593,12 +2593,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     const c = cards[i];
     const iframe = c.querySelector('iframe');
     if (!iframe.src) {
-      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1`;
     }
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
         events: {
-          onReady: e => { e.target.mute(); e.target.playVideo(); if (!timer) startTimer(); },
+          onReady: e => { e.target.playVideo(); if (!timer) startTimer(); },
           onStateChange: e => {
             if (e.data === YT.PlayerState.PLAYING) cards[i].classList.add('vc-playing');
             else cards[i].classList.remove('vc-playing');
@@ -2657,6 +2657,12 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const wrap = outer.closest('.vc-wrap') || outer;
   wrap.querySelector('.vc-prev').addEventListener('click', () => { userSwitched = true; clearInterval(timer); setActive(cur - 1); });
   wrap.querySelector('.vc-next').addEventListener('click', () => { userSwitched = true; clearInterval(timer); setActive(cur + 1); });
+
+  // Expose pause/resume for tab switching
+  window.vcControl = {
+    pause:  () => { Object.values(players).forEach(p => { try { p.stopVideo(); } catch(e) {} }); clearInterval(timer); },
+    resume: () => { loadPlayer(cur); }
+  };
 })();
 
 // ── GRAFIKA TRAIL ─────────────────────────────────────────────────────────────
@@ -3170,6 +3176,8 @@ document.querySelectorAll('.pf').forEach(btn => {
     document.querySelectorAll('.port-section').forEach(sec => {
       sec.classList.toggle('active', sec.dataset.sec === f);
     });
+    if (f !== 'video') { window.vcControl && window.vcControl.pause(); }
+    else { window.vcControl && window.vcControl.resume(); }
   });
 });
 
