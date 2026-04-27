@@ -3779,7 +3779,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     const item = document.createElement('div');
     item.className = 'all-video-thumb';
     const img = document.createElement('img');
-    img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    img.onerror = () => { img.onerror = null; img.src = `https://img.youtube.com/vi/${id}/sddefault.jpg`; };
     img.alt = '';
     item.appendChild(img);
     item.addEventListener('click', () => window.open(`https://www.youtube.com/watch?v=${id}`, '_blank'));
