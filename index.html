@@ -1352,20 +1352,20 @@
     .g-icon::before {
       content: '';
       position: absolute;
-      top: 6px; left: 50%;
+      top: 4px; left: 50%;
       transform: translateX(-50%);
-      width: 60px; height: 60px;
+      width: 72px; height: 72px;
       background: var(--glow, transparent);
-      border-radius: 16px;
-      filter: blur(18px);
-      opacity: 0.55;
+      border-radius: 18px;
+      filter: blur(22px);
+      opacity: 0.88;
       z-index: 0;
       pointer-events: none;
       transition: opacity .4s, filter .4s;
     }
     .g-icon:hover::before {
-      opacity: 0.85;
-      filter: blur(26px);
+      opacity: 1;
+      filter: blur(32px);
     }
     .g-icon-img {
       width: 68px; height: 68px; border-radius: 18px;
@@ -3598,11 +3598,36 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
 
 // ── ICON GLOW ─────────────────────────────────────────────────────────────────
 (function() {
+  function sampleColor(img, fallback, cb) {
+    const apply = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = c.height = 20;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, 20, 20);
+        const d = ctx.getImageData(0, 0, 20, 20).data;
+        let r=0, g=0, b=0, n=0;
+        for (let i = 0; i < d.length; i += 4) {
+          const br = (d[i] + d[i+1] + d[i+2]) / 3;
+          if (br > 55 && d[i+3] > 80) { r+=d[i]; g+=d[i+1]; b+=d[i+2]; n++; }
+        }
+        cb(n > 4 ? `rgb(${Math.round(r/n)},${Math.round(g/n)},${Math.round(b/n)})` : fallback);
+      } catch(e) { cb(fallback); }
+    };
+    if (img.complete && img.naturalWidth) apply();
+    else img.addEventListener('load', apply, { once: true });
+  }
+
   document.querySelectorAll('.g-icon').forEach(icon => {
-    const img = icon.querySelector('.g-icon-img');
-    if (!img) return;
-    const bg = (img.style.background || img.style.backgroundColor || '').trim();
-    if (bg) icon.style.setProperty('--glow', bg);
+    const box = icon.querySelector('.g-icon-img');
+    const img = icon.querySelector('img.g-ci');
+    if (!box) return;
+    const bg = (box.style.background || '').trim() || '#888';
+    if (img) {
+      sampleColor(img, bg, color => icon.style.setProperty('--glow', color));
+    } else {
+      icon.style.setProperty('--glow', bg);
+    }
   });
 })();
 </script>
