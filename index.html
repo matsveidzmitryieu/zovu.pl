@@ -656,15 +656,17 @@
     .all-sites-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
-    /* Grafika grid — 3-column CSS grid, tall items span 2 rows */
+    /* Grafika grid — 3 flex columns, no empty space */
     #all-gfx-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: auto;
-      gap: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
     }
-    #all-gfx-grid .all-sites-card.gfx-tall {
-      grid-row: span 2;
+    .gfx-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .all-sites-card {
       border-radius: 12px; overflow: hidden; cursor: none;
@@ -2751,14 +2753,24 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
   const allClose = document.getElementById('all-gfx-close');
 
   if (allGrid && !allGrid.childElementCount) {
-    posts.forEach(src => {
-      const card = document.createElement('div');
-      card.className = 'all-sites-card' + (src === 'g8.jpg' ? ' gfx-tall' : '');
-      const img = document.createElement('img');
-      img.src = src; img.alt = '';
-      card.appendChild(img);
-      card.addEventListener('click', () => window.openSiteModal(src, '', false));
-      allGrid.appendChild(card);
+    const cols = [
+      ['g1.jpg','g2.jpg','g5.jpg'],
+      ['g3.jpg','g4.jpg','g6.jpg'],
+      ['g8.jpg','g7.jpg']
+    ];
+    cols.forEach(colSrcs => {
+      const col = document.createElement('div');
+      col.className = 'gfx-col';
+      colSrcs.forEach(src => {
+        const card = document.createElement('div');
+        card.className = 'all-sites-card';
+        const img = document.createElement('img');
+        img.src = src; img.alt = '';
+        card.appendChild(img);
+        card.addEventListener('click', () => window.openSiteModal(src, '', false));
+        col.appendChild(card);
+      });
+      allGrid.appendChild(col);
     });
   }
 
