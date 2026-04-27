@@ -658,27 +658,24 @@
     }
     #all-gfx-grid {
       flex: 1;
-      min-height: 0;
       display: flex;
       gap: 8px;
-      align-items: stretch;
+      align-items: flex-start;
+      min-height: 0;
     }
     .gfx-col {
       flex: 1;
-      min-height: 0;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
     .gfx-col .all-sites-card {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
+      flex: none;
     }
     .gfx-col .all-sites-card img {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      height: auto;
+      max-height: calc(90vh - 185px);
       display: block;
     }
     /* Page 2 — single centered photo */
