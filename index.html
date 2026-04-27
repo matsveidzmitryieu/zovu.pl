@@ -524,39 +524,28 @@
     .port-pg:hover .port-pg-ov { opacity: 1; }
     .port-pg-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .port-pg-info p { font-size: 11px; color: rgba(255,255,255,.55); }
-    /* ── WEB TILTED GRID ── */
-    .web-tilt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 40px; max-width: 860px; margin-left: auto; margin-right: auto; }
-    .wtc {
-      position: relative; cursor: none; isolation: isolate;
-      border-radius: 14px;
-      box-shadow: 0 0 36px rgba(var(--acc-rgb), .22), 0 4px 20px rgba(0,0,0,.35);
-      transition: box-shadow .4s;
-      perspective: 900px;
+    /* ── WEB SITES GRID ── */
+    .web-sites-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 40px; }
+    .site-card {
+      border-radius: 14px; overflow: hidden; cursor: none;
+      transition: box-shadow .3s; transform-style: preserve-3d; will-change: transform;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
     }
-    .wtc:hover { box-shadow: 0 0 56px rgba(var(--acc-rgb), .38), 0 8px 32px rgba(0,0,0,.45); }
-    .wtc-glow { display: none; }
-    .wtc-inner {
-      display: block; border-radius: 14px; overflow: hidden;
-      aspect-ratio: 4/3;
+    .site-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,.6); }
+    .site-card-browser { border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(255,255,255,.15); background: #1c1c1c; }
+    .site-card-browser .site-bar { background: #222; padding: 7px 12px; }
+    .site-card-browser img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; display: block; }
+    /* All-video modal grid */
+    .all-video-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+    .all-video-thumb {
+      border-radius: 12px; overflow: hidden; cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,.1);
+      transition: border-color .3s, transform .3s; aspect-ratio: 9/16; position: relative;
     }
-    .wtc-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .wtc-cover {
-      position: absolute; inset: 0; border-radius: 14px;
-      background: var(--bg2); border: 5px solid var(--bg3);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-      transform: rotateY(0deg);
-      transform-origin: calc(50% - var(--d,1) * 50%) 50%;
-      transition: transform .55s cubic-bezier(.16,1,.3,1), opacity .4s;
-      padding: 20px; text-decoration: none; cursor: none;
-      backface-visibility: hidden; will-change: transform;
-    }
-    .wtc:hover .wtc-cover { transform: rotateY(calc(var(--d,1) * -90deg)); opacity: 0; }
-    .wtc-emoji { font-size: 26px; line-height: 1; }
-    .wtc-name { font-size: 15px; font-weight: 800; color: var(--text); text-align: center; }
-    .wtc-type { font-size: 11px; color: var(--sec); letter-spacing: .5px; text-transform: uppercase; }
-    .wtc-url { font-size: 11px; color: var(--accent); font-weight: 600; }
-    @media(max-width:900px){ .web-tilt-grid { grid-template-columns: repeat(2,1fr); max-width: 580px; } }
-    @media(max-width:580px){ .web-tilt-grid { grid-template-columns: 1fr; max-width: 320px; } }
+    .all-video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .all-video-thumb:hover { border-color: rgba(var(--acc-rgb),.5); transform: scale(1.02); }
+    @media(max-width:900px){ .web-sites-grid { grid-template-columns: repeat(2,1fr); } .all-video-grid { grid-template-columns: repeat(3,1fr); } }
+    @media(max-width:580px){ .web-sites-grid { grid-template-columns: 1fr; } .all-video-grid { grid-template-columns: repeat(2,1fr); } }
     .port-soon {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 80px 20px; gap: 12px; margin-top: 48px; text-align: center;
@@ -2028,6 +2017,10 @@
     <button class="vc-arrow vc-next">&#8594;</button>
   </div>
   </div><!-- /vc-wrap -->
+  <div class="gfx-all-btn" onclick="window.openAllVideo && window.openAllVideo()">
+    <span class="gfx-all-btn-icon">&#9654;</span>
+    <span>Wszystkie wideo</span>
+  </div>
   </div><!-- /port-section video -->
 
   <!-- DESIGN / GRAFIKA -->
@@ -2047,53 +2040,75 @@
 
   <!-- WEB / STRONY -->
   <div class="port-section" data-sec="web">
-    <div class="web-tilt-grid">
+    <div class="web-sites-grid">
 
-      <div class="wtc" style="--d:1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws1.png" alt="Gucio Bar" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://inca1122.github.io/gucio_bar/index.html" target="_blank" rel="noopener"><div class="wtc-emoji">🍺</div><div class="wtc-name">Gucio Bar</div><div class="wtc-type">Bar &amp; Restaurant</div><div class="wtc-url">gucio.bar</div></a>
+      <div class="site-card" data-url="https://inca1122.github.io/gucio_bar/index.html" data-img="web_gucio.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">gucio.bar</span></div>
+          <img src="ws1.png" alt="Gucio Bar" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:-1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws2.png" alt="Mag Shaurma" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://dzmzah.github.io/magshaurma/" target="_blank" rel="noopener"><div class="wtc-emoji">🌯</div><div class="wtc-name">Mag Shaurma</div><div class="wtc-type">Food &amp; Delivery</div><div class="wtc-url">magshaurma.pl</div></a>
+      <div class="site-card" data-url="https://dzmzah.github.io/magshaurma/" data-img="web_shaurma.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">magshaurma.pl</span></div>
+          <img src="ws2.png" alt="Mag Shaurma" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws3.png" alt="Jewelry Katowice" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://inca1122.github.io/jewelry-katowice/" target="_blank" rel="noopener"><div class="wtc-emoji">💎</div><div class="wtc-name">Jewelry Katowice</div><div class="wtc-type">Jewelry Store</div><div class="wtc-url">jewelry-katowice</div></a>
+      <div class="site-card" data-url="https://inca1122.github.io/jewelry-katowice/" data-img="web_jewelry.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">jewelry-katowice.pl</span></div>
+          <img src="ws3.png" alt="Jewelry Katowice" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:-1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws4.png" alt="Maya Gold" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://dzmzah.github.io/maya-gold" target="_blank" rel="noopener"><div class="wtc-emoji">✨</div><div class="wtc-name">Maya Gold</div><div class="wtc-type">Gold &amp; Jewelry</div><div class="wtc-url">maya-gold</div></a>
+      <div class="site-card" data-url="https://dzmzah.github.io/maya-gold" data-img="web_maya.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">maya-gold.pl</span></div>
+          <img src="ws4.png" alt="Maya Gold" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws5.png" alt="Marketing AI" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://marketingai.energiabiznesu.pl" target="_blank" rel="noopener"><div class="wtc-emoji">🤖</div><div class="wtc-name">Marketing AI</div><div class="wtc-type">AI Marketing Platform</div><div class="wtc-url">energiabiznesu.pl</div></a>
+      <div class="site-card" data-url="https://marketingai.energiabiznesu.pl" data-img="web_marketing.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">energiabiznesu.pl</span></div>
+          <img src="ws5.png" alt="Marketing AI" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:-1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws6.png" alt="Bee Gelato" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://beegelato.sk" target="_blank" rel="noopener"><div class="wtc-emoji">🍦</div><div class="wtc-name">Bee Gelato</div><div class="wtc-type">Artisan Ice Cream</div><div class="wtc-url">beegelato.sk</div></a>
+      <div class="site-card" data-url="https://beegelato.sk" data-img="web_bee.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">beegelato.sk</span></div>
+          <img src="ws6.png" alt="Bee Gelato" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws7.png" alt="Adekwat Potolki" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://adekvatpotolki.netlify.app" target="_blank" rel="noopener"><div class="wtc-emoji">🏗️</div><div class="wtc-name">Adekwat Potolki</div><div class="wtc-type">Ceiling Installation</div><div class="wtc-url">adekvatpotolki</div></a>
+      <div class="site-card" data-url="https://adekvatpotolki.netlify.app" data-img="web_potolki.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">adekvatpotolki.pl</span></div>
+          <img src="ws7.png" alt="Adekwat Potolki" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:-1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws8.png" alt="PickActive" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://pickactive.pl/" target="_blank" rel="noopener"><div class="wtc-emoji">🏋️</div><div class="wtc-name">PickActive</div><div class="wtc-type">Sports Club</div><div class="wtc-url">pickactive.pl</div></a>
+      <div class="site-card" data-url="https://pickactive.pl/" data-img="web_pick.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">pickactive.pl</span></div>
+          <img src="ws8.png" alt="PickActive" loading="lazy">
+        </div>
       </div>
 
-      <div class="wtc" style="--d:1">
-        <div class="wtc-inner"><div class="wtc-bg"><img src="ws9.png" alt="Energia Biznesu" loading="lazy"></div></div>
-        <a class="wtc-cover" href="https://energiabiznesu.pl/" target="_blank" rel="noopener"><div class="wtc-emoji">⚡</div><div class="wtc-name">Energia Biznesu</div><div class="wtc-type">Business &amp; Marketing</div><div class="wtc-url">energiabiznesu.pl</div></a>
+      <div class="site-card" data-url="https://energiabiznesu.pl/" data-img="web_energia.jpg">
+        <div class="site-card-browser">
+          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">energiabiznesu.pl</span></div>
+          <img src="ws9.png" alt="Energia Biznesu" loading="lazy">
+        </div>
       </div>
 
+    </div>
+    <div class="gfx-all-btn" onclick="window.openAllSites && window.openAllSites()">
+      <span class="gfx-all-btn-icon">⊞</span>
+      <span>Wszystkie strony</span>
     </div>
   </div>
 
@@ -2404,6 +2419,14 @@
   <button class="all-sites-close" id="all-sites-close">✕</button>
   <p class="all-sites-title">Wszystkie realizacje</p>
   <div class="all-sites-grid" id="all-sites-grid"></div>
+</div>
+
+<!-- ALL VIDEO MODAL -->
+<div class="all-sites-ov" id="all-video-ov"></div>
+<div class="all-sites-modal" id="all-video-modal">
+  <button class="all-sites-close" id="all-video-close">✕</button>
+  <p class="all-sites-title">Wszystkie wideo</p>
+  <div class="all-video-grid" id="all-video-grid"></div>
 </div>
 
 <!-- ALL GRAFIKA MODAL -->
@@ -3704,6 +3727,55 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     // Level 2: canvas sample the image (fallback for dark/neutral backgrounds)
     if (img) canvasSample(img, color => icon.style.setProperty('--glow', color));
   });
+})();
+
+// ── SITE CARD TILT ────────────────────────────────────────────────────────────
+(function() {
+  document.querySelectorAll('.site-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -7;
+      const ry = ((e.clientX - r.left - r.width/2)  / (r.width/2))  *  7;
+      card.style.transition = 'box-shadow .3s';
+      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.03)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1), box-shadow .3s';
+      card.style.transform = '';
+    });
+    card.addEventListener('click', () => {
+      if (card.dataset.img && card.dataset.url && window.openSiteModal)
+        window.openSiteModal(card.dataset.img, card.dataset.url);
+    });
+  });
+})();
+
+// ── ALL VIDEO MODAL ───────────────────────────────────────────────────────────
+(function() {
+  const videos = [
+    'GD9FzPFa56w','VbD5RKn9lGQ','mYY6Ag4qTBs','X5M7V2L-cQ8',
+    'Rv7KbI3j3q4','qE1axvAOy6w','dxj8T0wUGLo','vZJydBgjaEU'
+  ];
+  const ov = document.getElementById('all-video-ov');
+  const mod = document.getElementById('all-video-modal');
+  const grid = document.getElementById('all-video-grid');
+  const cls = document.getElementById('all-video-close');
+  if (!ov || !mod || !grid) return;
+  videos.forEach(id => {
+    const item = document.createElement('div');
+    item.className = 'all-video-thumb';
+    const img = document.createElement('img');
+    img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    img.alt = '';
+    item.appendChild(img);
+    item.addEventListener('click', () => window.open(`https://www.youtube.com/watch?v=${id}`, '_blank'));
+    grid.appendChild(item);
+  });
+  function openV() { ov.classList.add('open'); mod.classList.add('open'); }
+  function closeV() { ov.classList.remove('open'); mod.classList.remove('open'); }
+  if (cls) cls.addEventListener('click', closeV);
+  ov.addEventListener('click', e => { if (e.target === ov) closeV(); });
+  window.openAllVideo = openV;
 })();
 </script>
 
