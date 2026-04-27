@@ -2595,15 +2595,20 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     const c = cards[i];
     const iframe = c.querySelector('iframe');
     if (!iframe.src) {
-      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1`;
+      iframe.src = `https://www.youtube.com/embed/${c.dataset.yt}?enablejsapi=1&rel=0&playsinline=1&mute=1`;
     }
     if (!players[i] && window.YT && window.YT.Player) {
       players[i] = new YT.Player('vc-yt-' + i, {
         events: {
           onReady: e => { e.target.playVideo(); if (!timer) startTimer(); },
           onStateChange: e => {
-            if (e.data === YT.PlayerState.PLAYING) cards[i].classList.add('vc-playing');
-            else cards[i].classList.remove('vc-playing');
+            if (e.data === YT.PlayerState.PLAYING) {
+              cards[i].classList.add('vc-playing');
+              // Try to unmute after playback started — user has scrolled = interaction
+              try { e.target.unMute(); e.target.setVolume(100); } catch(_) {}
+            } else {
+              cards[i].classList.remove('vc-playing');
+            }
           }
         }
       });
