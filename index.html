@@ -2588,19 +2588,11 @@
           <!-- Video -->
           <div class="wiz-block" id="wiz-blk-video" style="display:none">
             <div class="wiz-block-title" data-k="wiz_blk_video">🎬 Video Production</div>
-            <div class="wiz-block-label" data-k="wiz_lbl_vpm">Krótkie wideo / mies. (Reels · TikTok)</div>
-            <div style="font-size:13px;color:var(--muted);margin:-10px 0 10px;"><span class="wiz-pval" data-pln="200 zł / szt" data-usd="$55 / szt">200 zł / szt</span></div>
-            <div class="wiz-qty-btns">
-              <button class="wiz-qty-btn" data-vq="800" data-vq-usd="220">4 / mo — <span class="wiz-pval" data-pln="800 zł" data-usd="$220">800 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="1600" data-vq-usd="445">8 / mo — <span class="wiz-pval" data-pln="1 600 zł" data-usd="$445">1 600 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="2400" data-vq-usd="665">12 / mo — <span class="wiz-pval" data-pln="2 400 zł" data-usd="$665">2 400 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="4000" data-vq-usd="1100">20 / mo — <span class="wiz-pval" data-pln="4 000 zł" data-usd="$1 100">4 000 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="5000" data-vq-usd="1390"><span data-k="wiz_v_unlimited">Bez limitu</span> — <span class="wiz-pval" data-pln="5 000 zł" data-usd="$1 390">5 000 zł</span></button>
-            </div>
-            <div class="wiz-block-label" style="margin-top:18px;" data-k="wiz_lbl_vaddon">Dodatki (za sztukę)</div>
+            <div class="wiz-block-label" data-k="wiz_lbl_vaddon">Wybierz typ (cena za sztukę)</div>
             <div class="wiz-opts">
-              <div class="wiz-opt" data-opt="vid-long" data-price="350" data-price-usd="100" data-mo="1"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vlong_n">Długie wideo (3+ min)</div><div class="wiz-opt-hint" data-k="wiz_vlong_h">YouTube · treści brandowe · podcasty</div></div><div class="wiz-opt-price" data-pln="+350 zł/szt" data-usd="+$100/pc">+350 zł/szt</div></div>
-              <div class="wiz-opt" data-opt="vid-post" data-price="50" data-price-usd="15" data-mo="1"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vpost_n">Post (grafika / zdjęcie)</div><div class="wiz-opt-hint" data-k="wiz_vpost_h">Statyczny post w social media</div></div><div class="wiz-opt-price" data-pln="+50 zł/szt" data-usd="+$15/pc">+50 zł/szt</div></div>
+              <div class="wiz-opt" data-opt="vid-short" data-price="200" data-price-usd="55" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vshort_n">Krótkie wideo (do 3 min)</div><div class="wiz-opt-hint" data-k="wiz_vshort_h">Reels · TikTok · Shorts</div></div><div class="wiz-opt-price" data-pln="200 zł/szt" data-usd="$55/szt">200 zł/szt</div></div>
+              <div class="wiz-opt" data-opt="vid-long" data-price="350" data-price-usd="100" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vlong_n">Długie wideo (3+ min)</div><div class="wiz-opt-hint" data-k="wiz_vlong_h">YouTube · treści brandowe · podcasty</div></div><div class="wiz-opt-price" data-pln="od 350 zł/szt" data-usd="from $100/szt">od 350 zł/szt</div></div>
+              <div class="wiz-opt" data-opt="vid-post" data-price="50" data-price-usd="15" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vpost_n">Post (grafika / zdjęcie)</div><div class="wiz-opt-hint" data-k="wiz_vpost_h">Statyczny post w social media</div></div><div class="wiz-opt-price" data-pln="50 zł/szt" data-usd="$15/szt">50 zł/szt</div></div>
             </div>
           </div>
 
@@ -2877,6 +2869,7 @@ const T = {
     wiz_blk_video:"🎬 Video Production", wiz_blk_smm:"📱 Social Media", wiz_blk_ads:"🎯 Paid Advertising", wiz_blk_web:"🌐 Website",
     wiz_lbl_vpm:"Short videos / month (Reels · TikTok)", wiz_lbl_vaddon:"Add-ons (per piece)", wiz_lbl_plat:"Number of platforms", wiz_lbl_addons:"Add-ons", wiz_lbl_ads_plat:"Platforms (management fee / mo)", wiz_lbl_site_type:"Type of site",
     wiz_v_unlimited:"Unlimited", wiz_plat1:"1 platform", wiz_plat2:"2 platforms", wiz_plat3:"3+ platforms",
+    wiz_vshort_n:"Short video (up to 3 min)", wiz_vshort_h:"Reels · TikTok · Shorts",
     wiz_vlong_n:"Long video (3+ min)", wiz_vlong_h:"YouTube · branded content · podcasts",
     wiz_vpost_n:"Post (graphic / photo)", wiz_vpost_h:"Static post for social media",
     wiz_smm_stories_n:"Daily Stories", wiz_smm_report_n:"Monthly report",
@@ -2961,6 +2954,7 @@ const T = {
     wiz_blk_video:"🎬 Видеопродакшн", wiz_blk_smm:"📱 Социальные сети", wiz_blk_ads:"🎯 Платная реклама", wiz_blk_web:"🌐 Сайт",
     wiz_lbl_vpm:"Короткие видео / мес. (Reels · TikTok)", wiz_lbl_vaddon:"Дополнения (за штуку)", wiz_lbl_plat:"Количество платформ", wiz_lbl_addons:"Дополнения", wiz_lbl_ads_plat:"Платформы (плата в месяц)", wiz_lbl_site_type:"Тип сайта",
     wiz_v_unlimited:"Без лимита", wiz_plat1:"1 платформа", wiz_plat2:"2 платформы", wiz_plat3:"3+ платформы",
+    wiz_vshort_n:"Короткое видео (до 3 мин)", wiz_vshort_h:"Reels · TikTok · Shorts",
     wiz_vlong_n:"Длинное видео (3+ мин)", wiz_vlong_h:"YouTube · брендированный контент · подкасты",
     wiz_vpost_n:"Пост (графика / фото)", wiz_vpost_h:"Статический пост для соцсетей",
     wiz_smm_stories_n:"Ежедневные Stories", wiz_smm_report_n:"Ежемесячный отчёт",
@@ -3045,6 +3039,7 @@ const T = {
     wiz_blk_video:"🎬 Produkcja wideo", wiz_blk_smm:"📱 Social Media", wiz_blk_ads:"🎯 Reklama płatna", wiz_blk_web:"🌐 Strona WWW",
     wiz_lbl_vpm:"Krótkie wideo / mies. (Reels · TikTok)", wiz_lbl_vaddon:"Dodatki (za sztukę)", wiz_lbl_plat:"Liczba platform", wiz_lbl_addons:"Dodatki", wiz_lbl_ads_plat:"Platformy (opłata miesięczna)", wiz_lbl_site_type:"Rodzaj strony",
     wiz_v_unlimited:"Bez limitu", wiz_plat1:"1 platforma", wiz_plat2:"2 platformy", wiz_plat3:"3+ platformy",
+    wiz_vshort_n:"Krótkie wideo (do 3 min)", wiz_vshort_h:"Reels · TikTok · Shorts",
     wiz_vlong_n:"Długie wideo (3+ min)", wiz_vlong_h:"YouTube · treści brandowe · podcasty",
     wiz_vpost_n:"Post (grafika / zdjęcie)", wiz_vpost_h:"Statyczny post w social media",
     wiz_smm_stories_n:"Codzienne Stories", wiz_smm_report_n:"Miesięczny raport",
