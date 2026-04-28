@@ -2633,20 +2633,21 @@
                   <button class="wiz-qty-btn" data-vql="2400" data-vql-usd="680">8 — <span class="wiz-pval" data-pln="2 400 zł" data-usd="$680">2 400 zł</span></button>
                   <button class="wiz-qty-btn" data-vql="4200" data-vql-usd="1190">14 — <span class="wiz-pval" data-pln="4 200 zł" data-usd="$1 190">4 200 zł</span></button>
                   <button class="wiz-qty-btn" data-vql="6000" data-vql-usd="1700">20 — <span class="wiz-pval" data-pln="6 000 zł" data-usd="$1 700">6 000 zł</span></button>
+                  <button class="wiz-qty-btn" data-vql="8000" data-vql-usd="2200">∞ — <span class="wiz-pval" data-pln="8 000 zł" data-usd="$2 200">8 000 zł</span></button>
                 </div></div></div>
               </div>
               <div class="vid-tile" data-vtile="vp">
                 <div class="vid-tile-hdr">
                   <div class="vid-tile-info"><div class="vid-tile-name" data-k="wiz_vpost_n">Post (grafika / zdjęcie)</div><div class="vid-tile-hint" data-k="wiz_vpost_h">Statyczny post w social media</div></div>
-                  <div class="vid-tile-unitprice"><span class="wiz-pval" data-pln="50 zł/szt" data-usd="$14/szt">50 zł/szt</span></div>
+                  <div class="vid-tile-unitprice"><span class="wiz-pval" data-pln="od 50 zł/szt" data-usd="from $14/szt">od 50 zł/szt</span></div>
                   <div class="vid-tile-arrow">▾</div>
                 </div>
                 <div class="vid-tile-body"><div class="vid-tile-body-inner"><div class="wiz-qty-btns">
-                  <button class="wiz-qty-btn" data-vqp="250" data-vqp-usd="70">5 — <span class="wiz-pval" data-pln="250 zł" data-usd="$70">250 zł</span></button>
-                  <button class="wiz-qty-btn" data-vqp="500" data-vqp-usd="140">10 — <span class="wiz-pval" data-pln="500 zł" data-usd="$140">500 zł</span></button>
-                  <button class="wiz-qty-btn" data-vqp="800" data-vqp-usd="220">20 — <span class="wiz-pval" data-pln="800 zł" data-usd="$220">800 zł</span></button>
-                  <button class="wiz-qty-btn" data-vqp="1200" data-vqp-usd="330">30 — <span class="wiz-pval" data-pln="1 200 zł" data-usd="$330">1 200 zł</span></button>
-                  <button class="wiz-qty-btn" data-vqp="2400" data-vqp-usd="660">60 — <span class="wiz-pval" data-pln="2 400 zł" data-usd="$660">2 400 zł</span></button>
+                  <button class="wiz-qty-btn" data-vqp="50" data-vqp-usd="14">1-5 — <span class="wiz-pval" data-pln="od 50 zł" data-usd="from $14">od 50 zł</span></button>
+                  <button class="wiz-qty-btn" data-vqp="250" data-vqp-usd="70">5-10 — <span class="wiz-pval" data-pln="od 250 zł" data-usd="from $70">od 250 zł</span></button>
+                  <button class="wiz-qty-btn" data-vqp="500" data-vqp-usd="140">10-20 — <span class="wiz-pval" data-pln="od 500 zł" data-usd="from $140">od 500 zł</span></button>
+                  <button class="wiz-qty-btn" data-vqp="800" data-vqp-usd="220">20-30 — <span class="wiz-pval" data-pln="od 800 zł" data-usd="from $220">od 800 zł</span></button>
+                  <button class="wiz-qty-btn" data-vqp="1200" data-vqp-usd="330">30-60 — <span class="wiz-pval" data-pln="od 1 200 zł" data-usd="from $330">od 1 200 zł</span></button>
                 </div></div></div>
               </div>
               <div class="vid-tile" data-vtile="va">
@@ -4616,38 +4617,38 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     /* video qty buttons */
     var vqsBtn = t.closest('[data-vqs]');
     if (vqsBtn) {
+      var wasSel = vqsBtn.classList.contains('sel');
       document.querySelectorAll('[data-vqs]').forEach(function(b){b.classList.remove('sel');});
-      vqsBtn.classList.add('sel');
-      state.vidShortQty = parseInt(vqsBtn.dataset.vqs);
-      state.vidShortQtyUsd = parseInt(vqsBtn.dataset.vqsUsd || 0);
-      vqsBtn.closest('.vid-tile').classList.add('has-qty');
+      if (!wasSel) { vqsBtn.classList.add('sel'); state.vidShortQty = parseInt(vqsBtn.dataset.vqs); state.vidShortQtyUsd = parseInt(vqsBtn.dataset.vqsUsd || 0); }
+      else { state.vidShortQty = 0; state.vidShortQtyUsd = 0; }
+      vqsBtn.closest('.vid-tile').classList.toggle('has-qty', !!state.vidShortQty);
       validateStep2(); updateSidebar(); return;
     }
     var vqlBtn = t.closest('[data-vql]');
     if (vqlBtn) {
+      var wasSel = vqlBtn.classList.contains('sel');
       document.querySelectorAll('[data-vql]').forEach(function(b){b.classList.remove('sel');});
-      vqlBtn.classList.add('sel');
-      state.vidLongQty = parseInt(vqlBtn.dataset.vql);
-      state.vidLongQtyUsd = parseInt(vqlBtn.dataset.vqlUsd || 0);
-      vqlBtn.closest('.vid-tile').classList.add('has-qty');
+      if (!wasSel) { vqlBtn.classList.add('sel'); state.vidLongQty = parseInt(vqlBtn.dataset.vql); state.vidLongQtyUsd = parseInt(vqlBtn.dataset.vqlUsd || 0); }
+      else { state.vidLongQty = 0; state.vidLongQtyUsd = 0; }
+      vqlBtn.closest('.vid-tile').classList.toggle('has-qty', !!state.vidLongQty);
       validateStep2(); updateSidebar(); return;
     }
     var vqpBtn = t.closest('[data-vqp]');
     if (vqpBtn) {
+      var wasSel = vqpBtn.classList.contains('sel');
       document.querySelectorAll('[data-vqp]').forEach(function(b){b.classList.remove('sel');});
-      vqpBtn.classList.add('sel');
-      state.vidPostQty = parseInt(vqpBtn.dataset.vqp);
-      state.vidPostQtyUsd = parseInt(vqpBtn.dataset.vqpUsd || 0);
-      vqpBtn.closest('.vid-tile').classList.add('has-qty');
+      if (!wasSel) { vqpBtn.classList.add('sel'); state.vidPostQty = parseInt(vqpBtn.dataset.vqp); state.vidPostQtyUsd = parseInt(vqpBtn.dataset.vqpUsd || 0); }
+      else { state.vidPostQty = 0; state.vidPostQtyUsd = 0; }
+      vqpBtn.closest('.vid-tile').classList.toggle('has-qty', !!state.vidPostQty);
       validateStep2(); updateSidebar(); return;
     }
     var vqaBtn = t.closest('[data-vqa]');
     if (vqaBtn) {
+      var wasSel = vqaBtn.classList.contains('sel');
       document.querySelectorAll('[data-vqa]').forEach(function(b){b.classList.remove('sel');});
-      vqaBtn.classList.add('sel');
-      state.vidAiQty = parseInt(vqaBtn.dataset.vqa);
-      state.vidAiQtyUsd = parseInt(vqaBtn.dataset.vqaUsd || 0);
-      vqaBtn.closest('.vid-tile').classList.add('has-qty');
+      if (!wasSel) { vqaBtn.classList.add('sel'); state.vidAiQty = parseInt(vqaBtn.dataset.vqa); state.vidAiQtyUsd = parseInt(vqaBtn.dataset.vqaUsd || 0); }
+      else { state.vidAiQty = 0; state.vidAiQtyUsd = 0; }
+      vqaBtn.closest('.vid-tile').classList.toggle('has-qty', !!state.vidAiQty);
       validateStep2(); updateSidebar(); return;
     }
     var sqBtn = t.closest('.wiz-qty-btn[data-sq]');
