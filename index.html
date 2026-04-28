@@ -1135,6 +1135,11 @@
     .vid-tile.open { border-color: rgba(var(--acc-rgb),.4); }
     .vid-tile.has-qty { border-color: var(--accent); background: rgba(200,241,53,.05); }
     .vid-tile.has-qty .vid-tile-name { color: var(--accent); }
+    .vid-tile-clear { display: none; background: none; border: none; color: var(--muted); font-size: 14px; padding: 2px 6px; border-radius: 6px; transition: color .2s; }
+    .vid-tile.has-qty .vid-tile-clear { display: block; }
+    .vid-tile-clear:hover { color: #e55; }
+    .wiz-clear-all-btn { display: flex; align-items: center; gap: 6px; background: none; border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-size: 12px; font-weight: 600; padding: 7px 14px; margin-top: 14px; transition: border-color .2s, color .2s; }
+    .wiz-clear-all-btn:hover { border-color: #e55; color: #e55; }
     .wiz-opts { display: flex; flex-direction: column; gap: 8px; }
     .wiz-opt { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--bg2); border: 1.5px solid var(--border); border-radius: 11px; cursor: none; transition: border-color .2s, background .2s; }
     .wiz-opt:hover { border-color: rgba(255,255,255,.25); }
@@ -2608,6 +2613,7 @@
                 <div class="vid-tile-hdr">
                   <div class="vid-tile-info"><div class="vid-tile-name" data-k="wiz_vshort_n">Krótkie wideo (do 3 min)</div><div class="vid-tile-hint" data-k="wiz_vshort_h">Reels · TikTok · Shorts</div></div>
                   <div class="vid-tile-unitprice"><span class="wiz-pval" data-pln="200 zł/szt" data-usd="$55/szt">200 zł/szt</span></div>
+                  <button class="vid-tile-clear" title="Usuń wybór">🗑</button>
                   <div class="vid-tile-arrow">▾</div>
                 </div>
                 <div class="vid-tile-body"><div class="vid-tile-body-inner"><div class="wiz-qty-btns">
@@ -2617,13 +2623,14 @@
                   <button class="wiz-qty-btn" data-vqs="1200" data-vqs-usd="330">8 — <span class="wiz-pval" data-pln="1 200 zł" data-usd="$330">1 200 zł</span></button>
                   <button class="wiz-qty-btn" data-vqs="2100" data-vqs-usd="580">14 — <span class="wiz-pval" data-pln="2 100 zł" data-usd="$580">2 100 zł</span></button>
                   <button class="wiz-qty-btn" data-vqs="3000" data-vqs-usd="830">20 — <span class="wiz-pval" data-pln="3 000 zł" data-usd="$830">3 000 zł</span></button>
-                  <button class="wiz-qty-btn" data-vqs="5000" data-vqs-usd="1390">∞ — <span class="wiz-pval" data-pln="5 000 zł" data-usd="$1 390">5 000 zł</span></button>
+                  <button class="wiz-qty-btn" data-vqs="7500" data-vqs-usd="2100">∞ — <span class="wiz-pval" data-pln="7 500 zł" data-usd="$2 100">7 500 zł</span></button>
                 </div></div></div>
               </div>
               <div class="vid-tile" data-vtile="vl">
                 <div class="vid-tile-hdr">
                   <div class="vid-tile-info"><div class="vid-tile-name" data-k="wiz_vlong_n">Długie wideo (3+ min)</div><div class="vid-tile-hint" data-k="wiz_vlong_h">YouTube · treści brandowe · podcasty</div></div>
                   <div class="vid-tile-unitprice"><span class="wiz-pval" data-pln="300 zł/szt" data-usd="$85/szt">300 zł/szt</span></div>
+                  <button class="vid-tile-clear" title="Usuń wybór">🗑</button>
                   <div class="vid-tile-arrow">▾</div>
                 </div>
                 <div class="vid-tile-body"><div class="vid-tile-body-inner"><div class="wiz-qty-btns">
@@ -2633,13 +2640,14 @@
                   <button class="wiz-qty-btn" data-vql="2400" data-vql-usd="680">8 — <span class="wiz-pval" data-pln="2 400 zł" data-usd="$680">2 400 zł</span></button>
                   <button class="wiz-qty-btn" data-vql="4200" data-vql-usd="1190">14 — <span class="wiz-pval" data-pln="4 200 zł" data-usd="$1 190">4 200 zł</span></button>
                   <button class="wiz-qty-btn" data-vql="6000" data-vql-usd="1700">20 — <span class="wiz-pval" data-pln="6 000 zł" data-usd="$1 700">6 000 zł</span></button>
-                  <button class="wiz-qty-btn" data-vql="8000" data-vql-usd="2200">∞ — <span class="wiz-pval" data-pln="8 000 zł" data-usd="$2 200">8 000 zł</span></button>
+                  <button class="wiz-qty-btn" data-vql="10000" data-vql-usd="2800">∞ — <span class="wiz-pval" data-pln="10 000 zł" data-usd="$2 800">10 000 zł</span></button>
                 </div></div></div>
               </div>
               <div class="vid-tile" data-vtile="vp">
                 <div class="vid-tile-hdr">
                   <div class="vid-tile-info"><div class="vid-tile-name" data-k="wiz_vpost_n">Post (grafika / zdjęcie)</div><div class="vid-tile-hint" data-k="wiz_vpost_h">Statyczny post w social media</div></div>
                   <div class="vid-tile-unitprice"><span class="wiz-pval" data-pln="od 50 zł/szt" data-usd="from $14/szt">od 50 zł/szt</span></div>
+                  <button class="vid-tile-clear" title="Usuń wybór">🗑</button>
                   <div class="vid-tile-arrow">▾</div>
                 </div>
                 <div class="vid-tile-body"><div class="vid-tile-body-inner"><div class="wiz-qty-btns">
@@ -2654,6 +2662,7 @@
                 <div class="vid-tile-hdr">
                   <div class="vid-tile-info"><div class="vid-tile-name" data-k="wiz_vai_n">Wideo z AI avatarem</div><div class="vid-tile-hint" data-k="wiz_vai_h">AI-prezenter czyta Twój skrypt</div></div>
                   <div class="vid-tile-unitprice"><span class="wiz-pval" data-pln="250 zł/szt" data-usd="$70/szt">250 zł/szt</span></div>
+                  <button class="vid-tile-clear" title="Usuń wybór">🗑</button>
                   <div class="vid-tile-arrow">▾</div>
                 </div>
                 <div class="vid-tile-body"><div class="vid-tile-body-inner"><div class="wiz-qty-btns">
@@ -2666,6 +2675,7 @@
                 </div></div></div>
               </div>
             </div>
+            <button class="wiz-clear-all-btn" id="wiz-vid-clear">🗑 <span data-k="wiz_clear_all">Wyczyść wszystko</span></button>
           </div>
 
           <!-- SMM -->
@@ -2941,6 +2951,7 @@ const T = {
     wiz_blk_video:"🎬 Video Production", wiz_blk_smm:"📱 Social Media", wiz_blk_ads:"🎯 Paid Advertising", wiz_blk_web:"🌐 Website",
     wiz_lbl_vpm:"Short videos / month (Reels · TikTok)", wiz_lbl_vaddon:"Add-ons (per piece)", wiz_lbl_plat:"Number of platforms", wiz_lbl_addons:"Add-ons", wiz_lbl_ads_plat:"Platforms (management fee / mo)", wiz_lbl_site_type:"Type of site",
     wiz_v_unlimited:"Unlimited", wiz_plat1:"1 platform", wiz_plat2:"2 platforms", wiz_plat3:"3+ platforms",
+    wiz_clear_all:"Clear all",
     wiz_vshort_n:"Short video (up to 3 min)", wiz_vshort_h:"Reels · TikTok · Shorts",
     wiz_vlong_n:"Long video (3+ min)", wiz_vlong_h:"YouTube · branded content · podcasts",
     wiz_vai_n:"Video with AI avatar", wiz_vai_h:"AI presenter reads your script",
@@ -3027,6 +3038,7 @@ const T = {
     wiz_blk_video:"🎬 Видеопродакшн", wiz_blk_smm:"📱 Социальные сети", wiz_blk_ads:"🎯 Платная реклама", wiz_blk_web:"🌐 Сайт",
     wiz_lbl_vpm:"Короткие видео / мес. (Reels · TikTok)", wiz_lbl_vaddon:"Дополнения (за штуку)", wiz_lbl_plat:"Количество платформ", wiz_lbl_addons:"Дополнения", wiz_lbl_ads_plat:"Платформы (плата в месяц)", wiz_lbl_site_type:"Тип сайта",
     wiz_v_unlimited:"Без лимита", wiz_plat1:"1 платформа", wiz_plat2:"2 платформы", wiz_plat3:"3+ платформы",
+    wiz_clear_all:"Очистить всё",
     wiz_vshort_n:"Короткое видео (до 3 мин)", wiz_vshort_h:"Reels · TikTok · Shorts",
     wiz_vlong_n:"Длинное видео (3+ мин)", wiz_vlong_h:"YouTube · брендированный контент · подкасты",
     wiz_vai_n:"Видео с AI-аватаром", wiz_vai_h:"AI-ведущий озвучивает ваш скрипт",
@@ -3113,6 +3125,7 @@ const T = {
     wiz_blk_video:"🎬 Produkcja wideo", wiz_blk_smm:"📱 Social Media", wiz_blk_ads:"🎯 Reklama płatna", wiz_blk_web:"🌐 Strona WWW",
     wiz_lbl_vpm:"Krótkie wideo / mies. (Reels · TikTok)", wiz_lbl_vaddon:"Dodatki (za sztukę)", wiz_lbl_plat:"Liczba platform", wiz_lbl_addons:"Dodatki", wiz_lbl_ads_plat:"Platformy (opłata miesięczna)", wiz_lbl_site_type:"Rodzaj strony",
     wiz_v_unlimited:"Bez limitu", wiz_plat1:"1 platforma", wiz_plat2:"2 platformy", wiz_plat3:"3+ platformy",
+    wiz_clear_all:"Wyczyść wszystko",
     wiz_vshort_n:"Krótkie wideo (do 3 min)", wiz_vshort_h:"Reels · TikTok · Shorts",
     wiz_vlong_n:"Długie wideo (3+ min)", wiz_vlong_h:"YouTube · treści brandowe · podcasty",
     wiz_vai_n:"Wideo z AI avatarem", wiz_vai_h:"AI-prezenter czyta Twój skrypt",
@@ -4590,7 +4603,18 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     var card = t.closest('.wiz-card[data-svc]');
     if (card) {
       var svc = card.dataset.svc;
-      if (state.services.has(svc)) { state.services.delete(svc); card.classList.remove('selected'); }
+      if (state.services.has(svc)) {
+        state.services.delete(svc); card.classList.remove('selected');
+        if (svc === 'video') {
+          state.vidShortQty = state.vidShortQtyUsd = state.vidLongQty = state.vidLongQtyUsd = 0;
+          state.vidPostQty = state.vidPostQtyUsd = state.vidAiQty = state.vidAiQtyUsd = 0;
+          document.querySelectorAll('[data-vqs],[data-vql],[data-vqp],[data-vqa]').forEach(function(b){b.classList.remove('sel');});
+          document.querySelectorAll('.vid-tile').forEach(function(x){x.classList.remove('has-qty','open');});
+        }
+        if (svc === 'smm') { state.smmQty = state.smmQtyUsd = 0; document.querySelectorAll('[data-sq]').forEach(function(b){b.classList.remove('sel');}); }
+        if (svc === 'ads') { ['ads-meta','ads-google','ads-tiktok'].forEach(function(k){state.opts.delete(k);}); document.querySelectorAll('[data-opt^="ads-"]').forEach(function(el){el.classList.remove('sel');var c=el.querySelector('.wiz-opt-chk');if(c)c.textContent='';}); }
+        if (svc === 'web') { state.webType=null; ['web-site','web-ecom'].forEach(function(k){state.opts.delete(k);}); document.querySelectorAll('[data-rg="web-type"],[data-opt^="web-"]').forEach(function(el){el.classList.remove('sel');var c=el.querySelector('.wiz-opt-chk');if(c)c.textContent='';}); }
+      }
       else { state.services.add(svc); card.classList.add('selected'); }
       var nb = document.getElementById('wiz-n1');
       if (nb) nb.disabled = state.services.size === 0;
@@ -4603,6 +4627,29 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     if (t.id === 'wiz-n2') { goTo(3, 'next'); return; }
     if (t.id === 'wiz-b3') { goTo(2, 'back'); return; }
     if (t.id === 'wiz-n3') { goTo(4, 'next'); return; }
+
+    /* global video clear */
+    if (t.closest('#wiz-vid-clear')) {
+      state.vidShortQty = state.vidShortQtyUsd = state.vidLongQty = state.vidLongQtyUsd = 0;
+      state.vidPostQty = state.vidPostQtyUsd = state.vidAiQty = state.vidAiQtyUsd = 0;
+      document.querySelectorAll('[data-vqs],[data-vql],[data-vqp],[data-vqa]').forEach(function(b){b.classList.remove('sel');});
+      document.querySelectorAll('.vid-tile').forEach(function(x){x.classList.remove('has-qty','open');});
+      validateStep2(); updateSidebar(); return;
+    }
+
+    /* tile clear (individual) */
+    var tileClr = t.closest('.vid-tile-clear');
+    if (tileClr) {
+      e.stopPropagation();
+      var tile = tileClr.closest('.vid-tile');
+      var vt = tile ? tile.dataset.vtile : null;
+      if (vt==='vs'){state.vidShortQty=state.vidShortQtyUsd=0;document.querySelectorAll('[data-vqs]').forEach(function(b){b.classList.remove('sel');});}
+      if (vt==='vl'){state.vidLongQty=state.vidLongQtyUsd=0;document.querySelectorAll('[data-vql]').forEach(function(b){b.classList.remove('sel');});}
+      if (vt==='vp'){state.vidPostQty=state.vidPostQtyUsd=0;document.querySelectorAll('[data-vqp]').forEach(function(b){b.classList.remove('sel');});}
+      if (vt==='va'){state.vidAiQty=state.vidAiQtyUsd=0;document.querySelectorAll('[data-vqa]').forEach(function(b){b.classList.remove('sel');});}
+      if (tile) tile.classList.remove('has-qty');
+      validateStep2(); updateSidebar(); return;
+    }
 
     /* vid-tile accordion */
     var tileHdr = t.closest('.vid-tile-hdr');
