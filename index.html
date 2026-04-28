@@ -1755,24 +1755,53 @@
       .port-filters { gap: 8px; flex-wrap: wrap; justify-content: center; }
       .pf { font-size: 13px; padding: 8px 16px; }
 
-      /* Mobile grids */
+      /* Mobile grids (shared) */
       .mob-port { display: grid; gap: 10px; margin-top: 20px; }
-      .mob-vid-grid { grid-template-columns: repeat(2, 1fr); }
-      .mob-gfx-grid { grid-template-columns: repeat(2, 1fr); }
 
-      /* Video thumbnails */
-      .mob-yt { display: block; border-radius: 12px; overflow: hidden; position: relative; background: #111; }
-      .mob-yt img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
-      .mob-yt-play {
+      /* ── VIDEO layout ── */
+      .mob-vid-layout { display: flex; flex-direction: column; gap: 10px; }
+      .mob-vid-row { display: flex; gap: 10px; }
+      .mob-vid-solo { justify-content: center; }
+      .mob-vid-solo .mob-yt { width: calc(50% - 5px); flex: none; }
+      .mob-yt {
+        flex: 1; border-radius: 14px; overflow: hidden; position: relative;
+        background: #0a0a0a;
+        border: 1px solid rgba(var(--acc-rgb), .2);
+        box-shadow: 0 0 28px rgba(var(--acc-rgb), .22), 0 6px 20px rgba(0,0,0,.5);
+      }
+      .mob-yt-v { aspect-ratio: 9/16; }
+      .mob-yt-h { aspect-ratio: 16/9; }
+      .mob-yt > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mob-yt > iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+      .mob-yt-overlay {
         position: absolute; inset: 0;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(0,0,0,.28); font-size: 28px; color: #fff;
-        opacity: 0; transition: opacity .2s;
+        background: rgba(0,0,0,.22); transition: background .2s;
       }
-      .mob-yt:active .mob-yt-play { opacity: 1; }
+      .mob-yt:active .mob-yt-overlay { background: rgba(0,0,0,.06); }
+      .mob-yt-play-btn {
+        width: 52px; height: 52px;
+        background: rgba(255,255,255,.92); border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 18px; color: #111; padding-left: 3px;
+        box-shadow: 0 2px 16px rgba(0,0,0,.5);
+        pointer-events: none;
+      }
 
-      /* Grafika thumbnails */
-      .mob-gfx-img { display: block; width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 4/5; }
+      /* ── GRAFIKA grid ── */
+      .mob-gfx-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .mob-gfx-wrap {
+        border-radius: 14px; overflow: hidden;
+        border: 1px solid rgba(var(--acc-rgb), .18);
+        box-shadow: 0 0 22px rgba(var(--acc-rgb), .2), 0 4px 16px rgba(0,0,0,.35);
+      }
+      .mob-gfx-img { display: block; width: 100%; height: auto; }
+
+      /* ── SITES glow ── */
+      .web-sites-grid .site-card {
+        border: 1px solid rgba(var(--acc-rgb), .18) !important;
+        box-shadow: 0 0 26px rgba(var(--acc-rgb), .16), 0 4px 20px rgba(0,0,0,.3) !important;
+      }
 
       /* Web section — 1 column on small screens */
       .web-sites-grid { grid-template-columns: 1fr !important; }
@@ -1783,7 +1812,7 @@
     }
 
     @media (max-width: 400px) {
-      .mob-vid-grid, .mob-gfx-grid { grid-template-columns: 1fr; }
+      .mob-gfx-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -2229,17 +2258,38 @@
     <span class="gfx-all-btn-icon">&#9654;</span>
     <span data-k="vid_all_btn">Wszystkie wideo</span>
   </div>
-  <div class="mob-port mob-vid-grid">
-    <a class="mob-yt" href="https://youtube.com/shorts/dB8pCqjlLSE" target="_blank"><img src="https://img.youtube.com/vi/dB8pCqjlLSE/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://youtube.com/shorts/9_9k6gJKaf8" target="_blank"><img src="https://img.youtube.com/vi/9_9k6gJKaf8/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=X5M7V2L-cQ8" target="_blank"><img src="https://img.youtube.com/vi/X5M7V2L-cQ8/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=vZJydBgjaEU" target="_blank"><img src="https://img.youtube.com/vi/vZJydBgjaEU/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=qE1axvAOy6w" target="_blank"><img src="https://img.youtube.com/vi/qE1axvAOy6w/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=VbD5RKn9lGQ" target="_blank"><img src="https://img.youtube.com/vi/VbD5RKn9lGQ/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=GD9FzPFa56w" target="_blank"><img src="https://img.youtube.com/vi/GD9FzPFa56w/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=jJrqbuUJtq0" target="_blank"><img src="https://img.youtube.com/vi/jJrqbuUJtq0/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=Rv7KbI3j3q4" target="_blank"><img src="https://img.youtube.com/vi/Rv7KbI3j3q4/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
-    <a class="mob-yt" href="https://www.youtube.com/watch?v=dxj8T0wUGLo" target="_blank"><img src="https://img.youtube.com/vi/dxj8T0wUGLo/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+  <div class="mob-port mob-vid-layout">
+    <!-- Pair 1: verticals -->
+    <div class="mob-vid-row">
+      <div class="mob-yt mob-yt-v" data-ytid="dB8pCqjlLSE"><img src="https://img.youtube.com/vi/dB8pCqjlLSE/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+      <div class="mob-yt mob-yt-v" data-ytid="9_9k6gJKaf8"><img src="https://img.youtube.com/vi/9_9k6gJKaf8/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
+    <!-- Horizontal 1 -->
+    <div class="mob-vid-row">
+      <div class="mob-yt mob-yt-h" data-ytid="vZJydBgjaEU"><img src="https://img.youtube.com/vi/vZJydBgjaEU/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
+    <!-- Pair 2: verticals -->
+    <div class="mob-vid-row">
+      <div class="mob-yt mob-yt-v" data-ytid="X5M7V2L-cQ8"><img src="https://img.youtube.com/vi/X5M7V2L-cQ8/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+      <div class="mob-yt mob-yt-v" data-ytid="qE1axvAOy6w"><img src="https://img.youtube.com/vi/qE1axvAOy6w/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
+    <!-- Horizontal 2 -->
+    <div class="mob-vid-row">
+      <div class="mob-yt mob-yt-h" data-ytid="jJrqbuUJtq0"><img src="https://img.youtube.com/vi/jJrqbuUJtq0/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
+    <!-- Pair 3: verticals -->
+    <div class="mob-vid-row">
+      <div class="mob-yt mob-yt-v" data-ytid="VbD5RKn9lGQ"><img src="https://img.youtube.com/vi/VbD5RKn9lGQ/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+      <div class="mob-yt mob-yt-v" data-ytid="GD9FzPFa56w"><img src="https://img.youtube.com/vi/GD9FzPFa56w/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
+    <!-- Horizontal 3 -->
+    <div class="mob-vid-row">
+      <div class="mob-yt mob-yt-h" data-ytid="dxj8T0wUGLo"><img src="https://img.youtube.com/vi/dxj8T0wUGLo/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
+    <!-- Solo vertical (centered) -->
+    <div class="mob-vid-row mob-vid-solo">
+      <div class="mob-yt mob-yt-v" data-ytid="Rv7KbI3j3q4"><img src="https://img.youtube.com/vi/Rv7KbI3j3q4/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
+    </div>
   </div>
   </div><!-- /port-section video -->
 
@@ -2257,14 +2307,14 @@
       <span data-k="gfx_all_btn">Wszystkie projekty graficzne</span>
     </div>
     <div class="mob-port mob-gfx-grid">
-      <img class="mob-gfx-img" src="g1.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g7.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g3.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g2.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g4.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g5.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g6.jpg" alt="" loading="lazy">
-      <img class="mob-gfx-img" src="g8.jpg" alt="" loading="lazy">
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g1.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g7.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g3.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g2.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g4.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g5.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g6.jpg" alt="" loading="lazy"></div>
+      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g8.jpg" alt="" loading="lazy"></div>
     </div>
   </div>
 
@@ -4503,6 +4553,22 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
 
   updateProgress();
   updateSidebar();
+})();
+
+// ── MOBILE VIDEO CLICK-TO-PLAY ────────────────────────────────────────────────
+(function(){
+  document.addEventListener('click', function(e) {
+    var yt = e.target.closest('.mob-yt[data-ytid]');
+    if (!yt || yt.querySelector('iframe')) return;
+    var id = yt.dataset.ytid;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen = true;
+    yt.appendChild(iframe);
+    var overlay = yt.querySelector('.mob-yt-overlay');
+    if (overlay) overlay.style.display = 'none';
+  });
 })();
 
 </script>
