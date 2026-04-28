@@ -3526,8 +3526,8 @@ function updateCalc() {
     html += `<div class="ci-row"><span class="ci-row-l">${name}${qty > 1 ? ' × ' + qty : ''}</span><span class="ci-row-v">$${line}</span></div>`;
   });
 
-  container.innerHTML = html || `<div class="calc-empty">${t.c_emp}</div>`;
-  animateTotal(total);
+  if (container) container.innerHTML = html || `<div class="calc-empty">${t.c_emp}</div>`;
+  if (container) animateTotal(total);
 }
 
 // ── HERO CANVAS ANIMATION ─────────────────────────────────────────────────────
