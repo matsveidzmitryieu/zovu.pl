@@ -2588,16 +2588,19 @@
           <!-- Video -->
           <div class="wiz-block" id="wiz-blk-video" style="display:none">
             <div class="wiz-block-title" data-k="wiz_blk_video">🎬 Video Production</div>
-            <div class="wiz-block-label" data-k="wiz_lbl_vpm">Krótkie wideo / mies. (Reels · TikTok) — <span class="wiz-pval" data-pln="200 zł/szt" data-usd="$55/szt">200 zł/szt</span></div>
-            <div class="wiz-qty-btns">
+            <div class="wiz-block-label" data-k="wiz_lbl_vpm">Krótkie wideo / mies. <span style="color:#e55;font-size:12px;">*</span></div>
+            <div class="wiz-qty-btns" id="vq-btns">
+              <button class="wiz-qty-btn" data-vq="200" data-vq-usd="55">1 / mo — <span class="wiz-pval" data-pln="200 zł" data-usd="$55">200 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="400" data-vq-usd="110">2 / mo — <span class="wiz-pval" data-pln="400 zł" data-usd="$110">400 zł</span></button>
               <button class="wiz-qty-btn" data-vq="800" data-vq-usd="220">4 / mo — <span class="wiz-pval" data-pln="800 zł" data-usd="$220">800 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="1600" data-vq-usd="445">8 / mo — <span class="wiz-pval" data-pln="1 600 zł" data-usd="$445">1 600 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="2400" data-vq-usd="665">12 / mo — <span class="wiz-pval" data-pln="2 400 zł" data-usd="$665">2 400 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="4000" data-vq-usd="1100">20 / mo — <span class="wiz-pval" data-pln="4 000 zł" data-usd="$1 100">4 000 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="1600" data-vq-usd="440">8 / mo — <span class="wiz-pval" data-pln="1 600 zł" data-usd="$440">1 600 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="3200" data-vq-usd="880">16 / mo — <span class="wiz-pval" data-pln="3 200 zł" data-usd="$880">3 200 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="6000" data-vq-usd="1650">30 / mo — <span class="wiz-pval" data-pln="6 000 zł" data-usd="$1 650">6 000 zł</span></button>
               <button class="wiz-qty-btn" data-vq="5000" data-vq-usd="1390"><span data-k="wiz_v_unlimited">Bez limitu</span> — <span class="wiz-pval" data-pln="5 000 zł" data-usd="$1 390">5 000 zł</span></button>
             </div>
             <div class="wiz-block-label" style="margin-top:18px;" data-k="wiz_lbl_vaddon">Dodatki (za sztukę)</div>
             <div class="wiz-opts">
+              <div class="wiz-opt" data-opt="vid-short" data-price="200" data-price-usd="55" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vshort_n">Krótkie wideo (do 3 min)</div><div class="wiz-opt-hint" data-k="wiz_vshort_h">Reels · TikTok · Shorts</div></div><div class="wiz-opt-price" data-pln="200 zł/szt" data-usd="$55/szt">200 zł/szt</div></div>
               <div class="wiz-opt" data-opt="vid-long" data-price="350" data-price-usd="100" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vlong_n">Długie wideo (3+ min)</div><div class="wiz-opt-hint" data-k="wiz_vlong_h">YouTube · treści brandowe · podcasty</div></div><div class="wiz-opt-price" data-pln="od 350 zł/szt" data-usd="from $100/szt">od 350 zł/szt</div></div>
               <div class="wiz-opt" data-opt="vid-post" data-price="50" data-price-usd="15" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vpost_n">Post (grafika / zdjęcie)</div><div class="wiz-opt-hint" data-k="wiz_vpost_h">Statyczny post w social media</div></div><div class="wiz-opt-price" data-pln="50 zł/szt" data-usd="$15/szt">50 zł/szt</div></div>
               <div class="wiz-opt" data-opt="vid-ai" data-price="150" data-price-usd="40" data-mo="0"><div class="wiz-opt-chk"></div><div class="wiz-opt-info"><div class="wiz-opt-name" data-k="wiz_vai_n">Wideo z AI avatarem</div><div class="wiz-opt-hint" data-k="wiz_vai_h">AI-prezenter czyta Twój skrypt</div></div><div class="wiz-opt-price" data-pln="+150 zł/szt" data-usd="+$40/szt">+150 zł/szt</div></div>
@@ -4383,6 +4386,14 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     document.getElementById('wiz-blk-smm').style.display   = state.services.has('smm')   ? '' : 'none';
     document.getElementById('wiz-blk-ads').style.display   = state.services.has('ads')   ? '' : 'none';
     document.getElementById('wiz-blk-web').style.display   = state.services.has('web')   ? '' : 'none';
+    validateStep2();
+  }
+
+  function validateStep2() {
+    var needsQty = state.services.has('video');
+    var hasQty = !!state.vidQty;
+    var btn = document.getElementById('wiz-n2');
+    if (btn) btn.disabled = needsQty && !hasQty;
   }
 
   function calcTotal() {
@@ -4519,6 +4530,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       vqBtn.classList.add('sel');
       state.vidQty = parseInt(vqBtn.dataset.vq);
       state.vidQtyUsd = parseInt(vqBtn.dataset.vqUsd || 0);
+      validateStep2();
       updateSidebar(); return;
     }
     var sqBtn = t.closest('.wiz-qty-btn[data-sq]');
