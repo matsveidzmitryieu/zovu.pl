@@ -1741,6 +1741,50 @@
       .contact-links { gap: 8px; }
       .cl { padding: 10px 14px; font-size: 12px; }
     }
+
+    /* ── MOBILE PORTFOLIO ── */
+    .mob-port { display: none; }
+
+    @media (max-width: 768px) {
+      /* Hide desktop-only widgets */
+      .vc-wrap, .vc-arrows { display: none !important; }
+      .trail-outer { display: none !important; }
+      .gfx-all-btn { display: none !important; }
+
+      /* Port filters — smaller */
+      .port-filters { gap: 8px; flex-wrap: wrap; justify-content: center; }
+      .pf { font-size: 13px; padding: 8px 16px; }
+
+      /* Mobile grids */
+      .mob-port { display: grid; gap: 10px; margin-top: 20px; }
+      .mob-vid-grid { grid-template-columns: repeat(2, 1fr); }
+      .mob-gfx-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Video thumbnails */
+      .mob-yt { display: block; border-radius: 12px; overflow: hidden; position: relative; background: #111; }
+      .mob-yt img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+      .mob-yt-play {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,.28); font-size: 28px; color: #fff;
+        opacity: 0; transition: opacity .2s;
+      }
+      .mob-yt:active .mob-yt-play { opacity: 1; }
+
+      /* Grafika thumbnails */
+      .mob-gfx-img { display: block; width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 4/5; }
+
+      /* Web section — 1 column on small screens */
+      .web-sites-grid { grid-template-columns: 1fr !important; }
+      .site-card { margin-bottom: 0; }
+
+      /* Ads placeholder */
+      .port-soon { padding: 40px 20px; }
+    }
+
+    @media (max-width: 400px) {
+      .mob-vid-grid, .mob-gfx-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -2183,7 +2227,19 @@
   </div><!-- /vc-wrap -->
   <div class="gfx-all-btn" onclick="window.openAllVideo && window.openAllVideo()">
     <span class="gfx-all-btn-icon">&#9654;</span>
-    <span>Wszystkie wideo</span>
+    <span data-k="vid_all_btn">Wszystkie wideo</span>
+  </div>
+  <div class="mob-port mob-vid-grid">
+    <a class="mob-yt" href="https://youtube.com/shorts/dB8pCqjlLSE" target="_blank"><img src="https://img.youtube.com/vi/dB8pCqjlLSE/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://youtube.com/shorts/9_9k6gJKaf8" target="_blank"><img src="https://img.youtube.com/vi/9_9k6gJKaf8/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=X5M7V2L-cQ8" target="_blank"><img src="https://img.youtube.com/vi/X5M7V2L-cQ8/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=vZJydBgjaEU" target="_blank"><img src="https://img.youtube.com/vi/vZJydBgjaEU/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=qE1axvAOy6w" target="_blank"><img src="https://img.youtube.com/vi/qE1axvAOy6w/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=VbD5RKn9lGQ" target="_blank"><img src="https://img.youtube.com/vi/VbD5RKn9lGQ/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=GD9FzPFa56w" target="_blank"><img src="https://img.youtube.com/vi/GD9FzPFa56w/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=jJrqbuUJtq0" target="_blank"><img src="https://img.youtube.com/vi/jJrqbuUJtq0/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=Rv7KbI3j3q4" target="_blank"><img src="https://img.youtube.com/vi/Rv7KbI3j3q4/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
+    <a class="mob-yt" href="https://www.youtube.com/watch?v=dxj8T0wUGLo" target="_blank"><img src="https://img.youtube.com/vi/dxj8T0wUGLo/mqdefault.jpg" alt=""><div class="mob-yt-play">▶</div></a>
   </div>
   </div><!-- /port-section video -->
 
@@ -2199,6 +2255,16 @@
     <div class="gfx-all-btn" id="gfx-all-btn" onclick="window.openAllGfx && window.openAllGfx()">
       <span class="gfx-all-btn-icon">⊞</span>
       <span data-k="gfx_all_btn">Wszystkie projekty graficzne</span>
+    </div>
+    <div class="mob-port mob-gfx-grid">
+      <img class="mob-gfx-img" src="g1.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g7.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g3.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g2.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g4.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g5.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g6.jpg" alt="" loading="lazy">
+      <img class="mob-gfx-img" src="g8.jpg" alt="" loading="lazy">
     </div>
   </div>
 
@@ -2272,7 +2338,7 @@
     </div>
     <div class="gfx-all-btn" onclick="window.openAllSites && window.openAllSites()">
       <span class="gfx-all-btn-icon">⊞</span>
-      <span>Wszystkie strony</span>
+      <span data-k="sites_all_btn">Wszystkie strony</span>
     </div>
   </div>
 
@@ -2280,7 +2346,7 @@
   <div class="port-section" data-sec="ads">
     <div class="port-soon">
       <div class="port-soon-icon">📊</div>
-      <p data-k="ps_ads">Ads portfolio — coming soon</p>
+      <p data-k="ps_ads">Portfolio reklam — wkrótce</p>
     </div>
   </div>
 
@@ -2419,13 +2485,13 @@
 
       <!-- PROGRESS BAR -->
       <div class="wiz-progress">
-        <div class="wiz-step"><div class="wiz-dot active" data-wdot="1">1</div><div class="wiz-step-label">Services</div></div>
+        <div class="wiz-step"><div class="wiz-dot active" data-wdot="1">1</div><div class="wiz-step-label" data-k="wiz_step1">Services</div></div>
         <div class="wiz-line" data-wline="1"></div>
-        <div class="wiz-step"><div class="wiz-dot" data-wdot="2">2</div><div class="wiz-step-label">Details</div></div>
+        <div class="wiz-step"><div class="wiz-dot" data-wdot="2">2</div><div class="wiz-step-label" data-k="wiz_step2">Details</div></div>
         <div class="wiz-line" data-wline="2"></div>
-        <div class="wiz-step"><div class="wiz-dot" data-wdot="3">3</div><div class="wiz-step-label">About you</div></div>
+        <div class="wiz-step"><div class="wiz-dot" data-wdot="3">3</div><div class="wiz-step-label" data-k="wiz_step3">About you</div></div>
         <div class="wiz-line" data-wline="3"></div>
-        <div class="wiz-step"><div class="wiz-dot" data-wdot="4">4</div><div class="wiz-step-label">Estimate</div></div>
+        <div class="wiz-step"><div class="wiz-dot" data-wdot="4">4</div><div class="wiz-step-label" data-k="wiz_step4">Estimate</div></div>
       </div>
 
       <!-- SLIDES -->
@@ -2433,39 +2499,39 @@
 
         <!-- STEP 1 -->
         <div class="wiz-slide active" data-ws="1">
-          <div class="wiz-title">What services do you need?</div>
-          <div class="wiz-sub">Select all that apply</div>
+          <div class="wiz-title" data-k="wiz_t1">What services do you need?</div>
+          <div class="wiz-sub" data-k="wiz_s1">Select all that apply</div>
           <div class="wiz-cards">
             <div class="wiz-card" data-svc="video">
               <div class="wiz-card-top"><span class="wiz-card-icon">🎬</span><div class="wiz-card-check"></div></div>
-              <div class="wiz-card-title">Video Production</div>
-              <div class="wiz-card-desc">Reels, TikTok, YouTube, AI video</div>
+              <div class="wiz-card-title" data-k="wiz_svc_video">Video Production</div>
+              <div class="wiz-card-desc" data-k="wiz_svc_video_d">Reels, TikTok, YouTube, AI video</div>
             </div>
             <div class="wiz-card" data-svc="smm">
               <div class="wiz-card-top"><span class="wiz-card-icon">📱</span><div class="wiz-card-check"></div></div>
-              <div class="wiz-card-title">Social Media</div>
-              <div class="wiz-card-desc">Content &amp; profile management</div>
+              <div class="wiz-card-title" data-k="wiz_svc_smm">Social Media</div>
+              <div class="wiz-card-desc" data-k="wiz_svc_smm_d">Content &amp; profile management</div>
             </div>
             <div class="wiz-card" data-svc="ads">
               <div class="wiz-card-top"><span class="wiz-card-icon">🎯</span><div class="wiz-card-check"></div></div>
-              <div class="wiz-card-title">Paid Advertising</div>
-              <div class="wiz-card-desc">Meta, Google, TikTok Ads</div>
+              <div class="wiz-card-title" data-k="wiz_svc_ads">Paid Advertising</div>
+              <div class="wiz-card-desc" data-k="wiz_svc_ads_d">Meta, Google, TikTok Ads</div>
             </div>
             <div class="wiz-card" data-svc="web">
               <div class="wiz-card-top"><span class="wiz-card-icon">🌐</span><div class="wiz-card-check"></div></div>
-              <div class="wiz-card-title">Website</div>
-              <div class="wiz-card-desc">Landing page or full site</div>
+              <div class="wiz-card-title" data-k="wiz_svc_web">Website</div>
+              <div class="wiz-card-desc" data-k="wiz_svc_web_d">Landing page or full site</div>
             </div>
           </div>
           <div class="wiz-nav">
-            <button class="wiz-btn wiz-btn-next" id="wiz-n1" disabled>Next →</button>
+            <button class="wiz-btn wiz-btn-next" id="wiz-n1" disabled data-k="wiz_next">Next →</button>
           </div>
         </div>
 
         <!-- STEP 2 -->
         <div class="wiz-slide" data-ws="2">
-          <div class="wiz-title">Customize your services</div>
-          <div class="wiz-sub">Tell us more about what you need</div>
+          <div class="wiz-title" data-k="wiz_t2">Customize your services</div>
+          <div class="wiz-sub" data-k="wiz_s2">Tell us more about what you need</div>
 
           <!-- Video -->
           <div class="wiz-block" id="wiz-blk-video" style="display:none">
@@ -2538,17 +2604,17 @@
           </div>
 
           <div class="wiz-nav">
-            <button class="wiz-btn wiz-btn-back" id="wiz-b2">← Back</button>
-            <button class="wiz-btn wiz-btn-next" id="wiz-n2">Next →</button>
+            <button class="wiz-btn wiz-btn-back" id="wiz-b2" data-k="wiz_back">← Back</button>
+            <button class="wiz-btn wiz-btn-next" id="wiz-n2" data-k="wiz_next">Next →</button>
           </div>
         </div>
 
         <!-- STEP 3 -->
         <div class="wiz-slide" data-ws="3">
-          <div class="wiz-title">Tell us a bit more</div>
-          <div class="wiz-sub">Help us personalise your estimate</div>
+          <div class="wiz-title" data-k="wiz_t3">Tell us a bit more</div>
+          <div class="wiz-sub" data-k="wiz_s3">Help us personalise your estimate</div>
 
-          <div class="wiz-block-label">What's your business?</div>
+          <div class="wiz-block-label" data-k="wiz_biz_lbl">What's your business?</div>
           <div class="wiz-biz-grid">
             <div class="wiz-biz-card" data-biz="restaurant"><span class="wiz-biz-icon">🍽️</span>Restaurant / café</div>
             <div class="wiz-biz-card" data-biz="ecom"><span class="wiz-biz-icon">🛍️</span>Shop / e-com</div>
@@ -2571,7 +2637,7 @@
             </div>
           </div>
 
-          <div class="wiz-block-label">When do you want to start?</div>
+          <div class="wiz-block-label" data-k="wiz_start_lbl">When do you want to start?</div>
           <div class="wiz-biz-grid" style="grid-template-columns:repeat(2,1fr)">
             <div class="wiz-biz-card" data-start="asap"><span class="wiz-biz-icon">⚡</span>As soon as possible</div>
             <div class="wiz-biz-card" data-start="month"><span class="wiz-biz-icon">📅</span>Within a month</div>
@@ -2580,24 +2646,24 @@
           </div>
 
           <div class="wiz-nav">
-            <button class="wiz-btn wiz-btn-back" id="wiz-b3">← Back</button>
-            <button class="wiz-btn wiz-btn-next" id="wiz-n3">See my estimate →</button>
+            <button class="wiz-btn wiz-btn-back" id="wiz-b3" data-k="wiz_back">← Back</button>
+            <button class="wiz-btn wiz-btn-next" id="wiz-n3" data-k="wiz_see">See my estimate →</button>
           </div>
         </div>
 
         <!-- STEP 4 -->
         <div class="wiz-slide" data-ws="4">
-          <div class="wiz-title">Your custom estimate</div>
-          <div class="wiz-sub">Based on your selections</div>
+          <div class="wiz-title" data-k="wiz_t4">Your custom estimate</div>
+          <div class="wiz-sub" data-k="wiz_s4">Based on your selections</div>
           <div class="wiz-final">
             <div class="wiz-receipt-wrap" id="wiz-receipt"></div>
             <div class="wiz-cta-box">
-              <div class="wiz-cta-label">Monthly from</div>
+              <div class="wiz-cta-label" data-k="wiz_cta_label">Monthly from</div>
               <div class="wiz-cta-price" id="wiz-cta-mo">0 <small>zł/mo</small></div>
-              <div class="wiz-cta-note">Final price depends on project details. Free consultation included.</div>
-              <a href="#contact" class="wiz-cta-primary">📩 Get free consultation</a>
-              <button class="wiz-cta-secondary" id="wiz-recalc">← Recalculate</button>
-              <div class="wiz-badge">⚡ Start today — first month at −20%</div>
+              <div class="wiz-cta-note" data-k="wiz_cta_note">Final price depends on project details. Free consultation included.</div>
+              <a href="#contact" class="wiz-cta-primary" data-k="wiz_cta_btn">📩 Get free consultation</a>
+              <button class="wiz-cta-secondary" id="wiz-recalc" data-k="wiz_recalc">← Recalculate</button>
+              <div class="wiz-badge" data-k="wiz_badge">⚡ Start today — first month at −20%</div>
             </div>
           </div>
         </div>
@@ -2607,9 +2673,9 @@
 
     <!-- SIDEBAR -->
     <div class="wiz-sidebar" id="wiz-sidebar">
-      <div class="wiz-sb-head">Your selection</div>
-      <div id="wiz-sb-list"><div class="wiz-sb-empty">Nothing selected yet</div></div>
-      <div class="wiz-sb-total"><span>Total from</span><span id="wiz-sb-val">0 zł</span></div>
+      <div class="wiz-sb-head" data-k="wiz_sb_head">Your selection</div>
+      <div id="wiz-sb-list"><div class="wiz-sb-empty" data-k="wiz_sb_empty">Nothing selected yet</div></div>
+      <div class="wiz-sb-total"><span data-k="wiz_sb_total">Total from</span><span id="wiz-sb-val">0 zł</span></div>
       <div class="wiz-sb-step" id="wiz-sb-step">Step 1 of 4</div>
     </div>
 
@@ -2662,7 +2728,7 @@
     <div class="site-modal-glow" id="site-modal-glow"></div>
     <img id="site-modal-img" src="" alt="">
   </div>
-  <a class="rainbow-btn" id="site-modal-link" href="" target="_blank" rel="noopener">Przejdź do strony →</a>
+  <a class="rainbow-btn" id="site-modal-link" href="" target="_blank" rel="noopener" data-k="site_visit">Przejdź do strony →</a>
 </div>
 
 <!-- ALL SITES MODAL -->
@@ -2749,7 +2815,25 @@ const T = {
     pl_cta_s:"Get started", pl_cta_p:"Get started", pl_cta_s2:"Let's talk",
     ft_r:"All rights reserved.", ft_s:"Services", ft_w:"Work", ft_p:"Pricing", ft_c:"Contact",
     nav_tm:"Team",
-    ck_t:"Cookies", ck_d:"We use cookies to improve your browsing experience and analyse site traffic.", ck_ok:"Accept", ck_no:"Decline"
+    ck_t:"Cookies", ck_d:"We use cookies to improve your browsing experience and analyse site traffic.", ck_ok:"Accept", ck_no:"Decline",
+    ck_pp:"Privacy Policy", site_visit:"Visit website →",
+    vc_what:"What we did", trail_hint:"Move cursor to discover our work",
+    gfx_all_btn:"All graphic projects", vid_all_btn:"All videos", sites_all_btn:"All sites",
+    ps_ads:"Ads portfolio — coming soon",
+    wiz_step1:"Services", wiz_step2:"Details", wiz_step3:"About you", wiz_step4:"Estimate",
+    wiz_t1:"What services do you need?", wiz_s1:"Select all that apply",
+    wiz_svc_video:"Video Production", wiz_svc_video_d:"Reels, TikTok, YouTube, AI video",
+    wiz_svc_smm:"Social Media", wiz_svc_smm_d:"Content & profile management",
+    wiz_svc_ads:"Paid Advertising", wiz_svc_ads_d:"Meta, Google, TikTok Ads",
+    wiz_svc_web:"Website", wiz_svc_web_d:"Landing page or full site",
+    wiz_next:"Next →", wiz_back:"← Back", wiz_see:"See my estimate →", wiz_recalc:"← Recalculate",
+    wiz_t2:"Customize your services", wiz_s2:"Tell us more about what you need",
+    wiz_t3:"Tell us a bit more", wiz_s3:"Help us personalise your estimate",
+    wiz_biz_lbl:"What's your business?", wiz_start_lbl:"When do you want to start?",
+    wiz_t4:"Your custom estimate", wiz_s4:"Based on your selections",
+    wiz_cta_label:"Monthly from", wiz_cta_note:"Final price depends on project details. Free consultation included.",
+    wiz_cta_btn:"📩 Get free consultation", wiz_badge:"⚡ Start today — first month at −20%",
+    wiz_sb_head:"Your selection", wiz_sb_empty:"Nothing selected yet", wiz_sb_total:"Total from"
   },
   ru: {
     nav_cta:"Связаться",
@@ -2801,7 +2885,25 @@ const T = {
     pl_cta_s:"Начать", pl_cta_p:"Начать", pl_cta_s2:"Поговорим",
     ft_r:"Все права защищены.", ft_s:"Услуги", ft_w:"Работы", ft_p:"Цены", ft_c:"Контакт",
     nav_tm:"Команда",
-    ck_t:"Cookies", ck_d:"Мы используем файлы cookie для улучшения вашего опыта и анализа трафика.", ck_ok:"Принять", ck_no:"Отклонить"
+    ck_t:"Cookies", ck_d:"Мы используем файлы cookie для улучшения вашего опыта и анализа трафика.", ck_ok:"Принять", ck_no:"Отклонить",
+    ck_pp:"Политика конфиденциальности", site_visit:"Перейти на сайт →",
+    vc_what:"Что мы сделали", trail_hint:"Двигайте курсором чтобы увидеть наши работы",
+    gfx_all_btn:"Все проекты", vid_all_btn:"Все видео", sites_all_btn:"Все сайты",
+    ps_ads:"Рекламное портфолио — скоро",
+    wiz_step1:"Услуги", wiz_step2:"Детали", wiz_step3:"О вас", wiz_step4:"Оценка",
+    wiz_t1:"Какие услуги нужны?", wiz_s1:"Выберите все подходящие",
+    wiz_svc_video:"Видеопродакшн", wiz_svc_video_d:"Reels, TikTok, YouTube, AI видео",
+    wiz_svc_smm:"Социальные сети", wiz_svc_smm_d:"Контент и ведение профиля",
+    wiz_svc_ads:"Платная реклама", wiz_svc_ads_d:"Meta, Google, TikTok Ads",
+    wiz_svc_web:"Сайт", wiz_svc_web_d:"Лендинг или полноценный сайт",
+    wiz_next:"Далее →", wiz_back:"← Назад", wiz_see:"Показать оценку →", wiz_recalc:"← Пересчитать",
+    wiz_t2:"Настройте услуги", wiz_s2:"Расскажите подробнее",
+    wiz_t3:"Немного о вас", wiz_s3:"Поможет персонализировать оценку",
+    wiz_biz_lbl:"Чем занимается ваш бизнес?", wiz_start_lbl:"Когда хотите начать?",
+    wiz_t4:"Ваша индивидуальная оценка", wiz_s4:"На основе ваших ответов",
+    wiz_cta_label:"В месяц от", wiz_cta_note:"Финальная цена зависит от деталей. Консультация бесплатно.",
+    wiz_cta_btn:"📩 Бесплатная консультация", wiz_badge:"⚡ Начни сегодня — первый месяц −20%",
+    wiz_sb_head:"Ваш выбор", wiz_sb_empty:"Ничего не выбрано", wiz_sb_total:"Итого от"
   },
   pl: {
     nav_cta:"Porozmawiajmy",
@@ -2853,7 +2955,25 @@ const T = {
     pl_cta_s:"Zacznij", pl_cta_p:"Zacznij teraz", pl_cta_s2:"Porozmawiajmy",
     ft_r:"Wszelkie prawa zastrzeżone.", ft_s:"Usługi", ft_w:"Prace", ft_p:"Cennik", ft_c:"Kontakt",
     nav_tm:"Zespół",
-    ck_t:"Pliki cookie", ck_d:"Używamy plików cookie, aby poprawić Twoje doświadczenie i analizować ruch na stronie.", ck_ok:"Akceptuj", ck_no:"Odrzuć"
+    ck_t:"Pliki cookie", ck_d:"Używamy plików cookie, aby poprawić Twoje doświadczenie i analizować ruch na stronie.", ck_ok:"Akceptuj", ck_no:"Odrzuć",
+    ck_pp:"Polityka prywatności", site_visit:"Przejdź do strony →",
+    vc_what:"Co zrobiliśmy?", trail_hint:"Przesuń kursor żeby zobaczyć nasze realizacje",
+    gfx_all_btn:"Wszystkie projekty graficzne", vid_all_btn:"Wszystkie wideo", sites_all_btn:"Wszystkie strony",
+    ps_ads:"Portfolio reklam — wkrótce",
+    wiz_step1:"Usługi", wiz_step2:"Szczegóły", wiz_step3:"O Tobie", wiz_step4:"Wycena",
+    wiz_t1:"Jakich usług potrzebujesz?", wiz_s1:"Wybierz wszystkie pasujące",
+    wiz_svc_video:"Produkcja wideo", wiz_svc_video_d:"Reels, TikTok, YouTube, AI wideo",
+    wiz_svc_smm:"Social Media", wiz_svc_smm_d:"Zarządzanie treścią i profilem",
+    wiz_svc_ads:"Reklama płatna", wiz_svc_ads_d:"Meta, Google, TikTok Ads",
+    wiz_svc_web:"Strona WWW", wiz_svc_web_d:"Landing page lub pełna strona",
+    wiz_next:"Dalej →", wiz_back:"← Wróć", wiz_see:"Zobacz wycenę →", wiz_recalc:"← Przelicz ponownie",
+    wiz_t2:"Dostosuj usługi", wiz_s2:"Powiedz nam więcej o swoich potrzebach",
+    wiz_t3:"Trochę więcej o Tobie", wiz_s3:"Pomoże nam spersonalizować ofertę",
+    wiz_biz_lbl:"Czym się zajmujesz?", wiz_start_lbl:"Kiedy chcesz zacząć?",
+    wiz_t4:"Twoja indywidualna wycena", wiz_s4:"Na podstawie Twoich wyborów",
+    wiz_cta_label:"Miesięcznie od", wiz_cta_note:"Ostateczna cena zależy od szczegółów. Konsultacja gratis.",
+    wiz_cta_btn:"📩 Bezpłatna konsultacja", wiz_badge:"⚡ Zacznij dziś — pierwszy miesiąc −20%",
+    wiz_sb_head:"Twój wybór", wiz_sb_empty:"Nic nie wybrano", wiz_sb_total:"Razem od"
   }
 };
 
@@ -4377,7 +4497,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     <button class="ck-dec" onclick="ckDecline()" data-k="ck_no">Decline</button>
   </div>
   <div class="ck-links">
-    <a href="privacy-policy.html" data-k="ck_pp">Privacy Policy</a>
+    <a href="privacy-policy.html" data-k="ck_pp">Polityka prywatności</a>
   </div>
 </div>
 
