@@ -1116,8 +1116,8 @@
     .wiz-block:last-of-type { border-bottom: none; }
     .wiz-block-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
     .wiz-block-label { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 10px; }
-    .wiz-qty-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
-    .wiz-qty-btn { padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg2); font-size: 12px; font-weight: 600; color: var(--text); cursor: none; transition: border-color .2s, background .2s; }
+    .wiz-qty-btns { display: flex; gap: 6px; flex-wrap: nowrap; margin-bottom: 4px; overflow-x: auto; }
+    .wiz-qty-btn { padding: 7px 10px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg2); font-size: 11px; font-weight: 600; color: var(--text); cursor: none; transition: border-color .2s, background .2s; white-space: nowrap; flex-shrink: 0; }
     .wiz-qty-btn:hover { border-color: rgba(255,255,255,.3); }
     .wiz-qty-btn.sel { border-color: var(--accent); background: rgba(200,241,53,.07); color: var(--accent); }
     .wiz-opts { display: flex; flex-direction: column; gap: 8px; }
@@ -2588,15 +2588,14 @@
           <!-- Video -->
           <div class="wiz-block" id="wiz-blk-video" style="display:none">
             <div class="wiz-block-title" data-k="wiz_blk_video">🎬 Video Production</div>
-            <div class="wiz-block-label" data-k="wiz_lbl_vpm">Krótkie wideo / mies. <span style="color:#e55;font-size:12px;">*</span></div>
             <div class="wiz-qty-btns" id="vq-btns">
-              <button class="wiz-qty-btn" data-vq="200" data-vq-usd="55">1 / mo — <span class="wiz-pval" data-pln="200 zł" data-usd="$55">200 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="400" data-vq-usd="110">2 / mo — <span class="wiz-pval" data-pln="400 zł" data-usd="$110">400 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="800" data-vq-usd="220">4 / mo — <span class="wiz-pval" data-pln="800 zł" data-usd="$220">800 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="1600" data-vq-usd="440">8 / mo — <span class="wiz-pval" data-pln="1 600 zł" data-usd="$440">1 600 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="3200" data-vq-usd="880">16 / mo — <span class="wiz-pval" data-pln="3 200 zł" data-usd="$880">3 200 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="6000" data-vq-usd="1650">30 / mo — <span class="wiz-pval" data-pln="6 000 zł" data-usd="$1 650">6 000 zł</span></button>
-              <button class="wiz-qty-btn" data-vq="5000" data-vq-usd="1390"><span data-k="wiz_v_unlimited">Bez limitu</span> — <span class="wiz-pval" data-pln="5 000 zł" data-usd="$1 390">5 000 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="200" data-vq-usd="55">1 — <span class="wiz-pval" data-pln="200 zł" data-usd="$55">200 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="400" data-vq-usd="110">2 — <span class="wiz-pval" data-pln="400 zł" data-usd="$110">400 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="800" data-vq-usd="220">4 — <span class="wiz-pval" data-pln="800 zł" data-usd="$220">800 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="1200" data-vq-usd="330">8 — <span class="wiz-pval" data-pln="1 200 zł" data-usd="$330">1 200 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="2400" data-vq-usd="665">16 — <span class="wiz-pval" data-pln="2 400 zł" data-usd="$665">2 400 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="4500" data-vq-usd="1250">30 — <span class="wiz-pval" data-pln="4 500 zł" data-usd="$1 250">4 500 zł</span></button>
+              <button class="wiz-qty-btn" data-vq="5000" data-vq-usd="1390">∞ — <span class="wiz-pval" data-pln="5 000 zł" data-usd="$1 390">5 000 zł</span></button>
             </div>
             <div class="wiz-block-label" style="margin-top:18px;" data-k="wiz_lbl_vaddon">Dodatki (za sztukę)</div>
             <div class="wiz-opts">
