@@ -2690,12 +2690,10 @@
           <div class="wiz-block" id="wiz-blk-smm" style="display:none">
             <div class="wiz-block-title" data-k="wiz_blk_smm">📱 Social Media</div>
             <div class="wiz-block-label" data-k="wiz_lbl_plat">Liczba platform</div>
-            <div class="wiz-counter" data-cnt="smm" style="margin-bottom:4px;">
-              <button class="wiz-cnt-btn wiz-cnt-dec">−</button>
-              <input class="wiz-cnt-input" type="number" min="0" value="0">
-              <button class="wiz-cnt-btn wiz-cnt-inc">+</button>
-              <div class="wiz-cnt-info"><span class="wiz-cnt-unit"></span><span class="wiz-cnt-total"></span></div>
-            </div>
+            <div class="wiz-qty-btns">
+              <button class="wiz-qty-btn" data-sq="890" data-sq-usd="250"><span data-k="wiz_plat1">1 platforma</span> — <span class="wiz-pval" data-pln="890 zł/mo" data-usd="$250/mo">890 zł/mo</span></button>
+              <button class="wiz-qty-btn" data-sq="1490" data-sq-usd="415"><span data-k="wiz_plat2">2 platformy</span> — <span class="wiz-pval" data-pln="1 490 zł/mo" data-usd="$415/mo">1 490 zł/mo</span></button>
+              <button class="wiz-qty-btn" data-sq="1990" data-sq-usd="555"><span data-k="wiz_plat3">3+ platformy</span> — <span class="wiz-pval" data-pln="1 990 zł/mo" data-usd="$555/mo">1 990 zł/mo</span></button>
             </div>
             <div class="wiz-block-label" style="margin-top:18px;" data-k="wiz_lbl_addons">Dodatki</div>
             <div class="wiz-opts">
@@ -3139,7 +3137,7 @@ const T = {
     wiz_step_label:"Krok", wiz_of:"z",
     wiz_blk_video:"🎬 Produkcja wideo", wiz_blk_smm:"📱 Social Media", wiz_blk_ads:"🎯 Reklama płatna", wiz_blk_web:"🌐 Strona WWW",
     wiz_lbl_vpm:"Krótkie wideo / mies. (Reels · TikTok)", wiz_lbl_vaddon:"Dodatki (za sztukę)", wiz_lbl_plat:"Liczba platform", wiz_lbl_addons:"Dodatki", wiz_lbl_ads_plat:"Platformy (opłata miesięczna)", wiz_lbl_site_type:"Rodzaj strony",
-    ads_budget_note:"Opłata za zarz��dzanie. Budżet reklamowy doliczany oddzielnie.",
+    ads_budget_note:"Opłata za zarządzanie. Budżet reklamowy doliczany oddzielnie.",
     wiz_v_unlimited:"Bez limitu", wiz_plat1:"1 platforma", wiz_plat2:"2 platformy", wiz_plat3:"3+ platformy",
     wiz_clear_all:"Wyczyść wszystko",
     wiz_vshort_n:"Krótkie wideo (do 3 min)", wiz_vshort_h:"Reels · TikTok · Shorts",
@@ -4436,7 +4434,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   var state = {
     services: new Set(),
     vsCount: 0, vlCount: 0, vpCount: 0, vaCount: 0,
-    smmCount: 0,
+    smmQty: 0, smmQtyUsd: 0,
     webType: null,
     opts: new Set(),
     biz: null, budget: null, start: null
@@ -4449,32 +4447,17 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       case 'vl':                  return { pln: n*300, usd: n*83  };
       case 'vp': return n >= 20 ? { pln: n*40,  usd: n*11  } : { pln: n*50,  usd: n*14  };
       case 'va': return n >= 14 ? { pln: n*200, usd: n*55  } : { pln: n*250, usd: n*70  };
-      case 'smm': return n >= 3 ? { pln: 1990, usd: 555 } : n === 2 ? { pln: 1490, usd: 415 } : { pln: 890, usd: 250 };
     }
     return { pln: 0, usd: 0 };
-  }
-
-  function cntUnitLabel(type, n) {
-    var u = isUSD();
-    switch (type) {
-      case 'vs': return n >= 8  ? (u ? '$41/szt'  : '150 zł/szt') : (u ? '$55/szt'  : '200 zł/szt');
-      case 'vl':                  return u ? '$83/szt'  : '300 zł/szt';
-      case 'vp': return n >= 20 ? (u ? '$11/szt'  : '40 zł/szt')  : (u ? '$14/szt'  : '50 zł/szt');
-      case 'va': return n >= 14 ? (u ? '$55/szt'  : '200 zł/szt') : (u ? '$70/szt'  : '250 zł/szt');
-      case 'smm': return n >= 3 ? T[lang].wiz_plat3 : n === 2 ? T[lang].wiz_plat2 : T[lang].wiz_plat1;
-    }
-    return '';
   }
 
   function refreshCounterUI(cnt) {
     var type = cnt.dataset.cnt;
     var inp  = cnt.querySelector('.wiz-cnt-input');
-    var unitEl  = cnt.querySelector('.wiz-cnt-unit');
     var totalEl = cnt.querySelector('.wiz-cnt-total');
     var n = parseInt(inp ? inp.value : 0) || 0;
     var pr = cntPrice(type, n);
     var u = isUSD();
-    if (unitEl)  unitEl.textContent  = n > 0 ? cntUnitLabel(type, n) : '';
     if (totalEl) totalEl.textContent = n > 0 ? (u ? '$' + fmtN(pr.usd) : fmtN(pr.pln) + ' zł') + '/mo' : '';
     var tile = cnt.closest('.vid-tile');
     if (tile) {
@@ -4545,8 +4528,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       var pr = cntPrice(t, state[t + 'Count']);
       mo += u ? pr.usd : pr.pln;
     });
-    var smmPr = cntPrice('smm', state.smmCount);
-    mo += u ? smmPr.usd : smmPr.pln;
+    mo += u ? state.smmQtyUsd : state.smmQty;
     state.opts.forEach(function(opt) {
       var el = document.querySelector('[data-opt="' + opt + '"]');
       if (!el) return;
@@ -4586,9 +4568,9 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       var pr = cntPrice(v.t, n);
       items.push(v.icon + v.lbl + ' × ' + n + ' — ' + (isUSD() ? '$' + fmtN(pr.usd) : fmtN(pr.pln) + ' zł') + '/mo');
     });
-    if (state.smmCount) {
-      var smmPr2 = cntPrice('smm', state.smmCount);
-      items.push('📱 SMM × ' + state.smmCount + ' — ' + (isUSD() ? '$' + fmtN(smmPr2.usd) : fmtN(smmPr2.pln) + ' zł') + '/mo');
+    if (state.smmQty) {
+      var sBtn2 = document.querySelector('[data-sq="' + state.smmQty + '"]');
+      if (sBtn2) items.push('📱 ' + sBtn2.textContent.split('—')[0].trim());
     }
     state.opts.forEach(function(opt) {
       var el = document.querySelector('[data-opt="' + opt + '"]');
@@ -4633,10 +4615,10 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       var pr = cntPrice(v.t, n);
       rows.push({ label: v.lbl + ' × ' + n, price: fmtCurr(pr.pln, pr.usd, true) });
     });
-    if (state.smmCount) {
-      var smmPr = cntPrice('smm', state.smmCount);
-      var smmLbl = cntUnitLabel('smm', state.smmCount);
-      rows.push({ label: '📱 SMM — ' + smmLbl, price: fmtCurr(smmPr.pln, smmPr.usd, true) });
+    if (state.smmQty) {
+      var sBtn = document.querySelector('[data-sq="' + state.smmQty + '"]');
+      var sLabel = sBtn ? sBtn.textContent.split('—')[0].trim() : '';
+      rows.push({ label: '📱 SMM — ' + sLabel, price: fmtCurr(state.smmQty, state.smmQtyUsd, true) });
     }
     state.opts.forEach(function(opt) {
       var el = document.querySelector('[data-opt="' + opt + '"]');
@@ -4697,9 +4679,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
           document.querySelectorAll('.vid-tile').forEach(function(x){x.classList.remove('has-qty','open');});
         }
         if (svc === 'smm') {
-          state.smmCount = 0;
-          var smmCnt = document.querySelector('.wiz-counter[data-cnt="smm"]');
-          if (smmCnt) { smmCnt.querySelector('.wiz-cnt-input').value = 0; refreshCounterUI(smmCnt); }
+          state.smmQty = state.smmQtyUsd = 0;
+          document.querySelectorAll('[data-sq]').forEach(function(b){b.classList.remove('sel');});
           ['smm-stories','smm-report','smm-comm'].forEach(function(k){state.opts.delete(k);});
           document.querySelectorAll('[data-opt^="smm-"]').forEach(function(el){el.classList.remove('sel');var c=el.querySelector('.wiz-opt-chk');if(c)c.textContent='';});
         }
@@ -4730,9 +4711,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       validateStep2(); updateSidebar(); return;
     }
     if (t.closest('#wiz-smm-clear')) {
-      state.smmCount = 0;
-      var smmCnt = document.querySelector('.wiz-counter[data-cnt="smm"]');
-      if (smmCnt) { smmCnt.querySelector('.wiz-cnt-input').value = 0; refreshCounterUI(smmCnt); }
+      state.smmQty = state.smmQtyUsd = 0;
+      document.querySelectorAll('[data-sq]').forEach(function(b){b.classList.remove('sel');});
       ['smm-stories','smm-report','smm-comm'].forEach(function(k){state.opts.delete(k);});
       document.querySelectorAll('[data-opt^="smm-"]').forEach(function(el){el.classList.remove('sel');var c=el.querySelector('.wiz-opt-chk');if(c)c.textContent='';});
       updateSidebar(); return;
@@ -4765,6 +4745,16 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       document.querySelectorAll('.vid-tile').forEach(function(x){ x.classList.remove('open'); });
       if (!wasOpen) tile.classList.add('open');
       return;
+    }
+
+    /* SMM platform buttons */
+    var sqBtn = t.closest('.wiz-qty-btn[data-sq]');
+    if (sqBtn) {
+      var wasSel = sqBtn.classList.contains('sel');
+      document.querySelectorAll('.wiz-qty-btn[data-sq]').forEach(function(b){b.classList.remove('sel');});
+      if (!wasSel) { sqBtn.classList.add('sel'); state.smmQty = parseInt(sqBtn.dataset.sq); state.smmQtyUsd = parseInt(sqBtn.dataset.sqUsd || 0); }
+      else { state.smmQty = 0; state.smmQtyUsd = 0; }
+      updateSidebar(); return;
     }
 
     /* counter +/- buttons */
