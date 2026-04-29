@@ -4816,14 +4816,6 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
 
     /* recalculate */
     if (t.id === 'wiz-recalc' || t.closest('#wiz-recalc')) {
-      state.services = new Set(); state.opts = new Set();
-      state.vidQty = 0; state.smmQty = 0;
-      state.webType = null; state.biz = null; state.budget = null; state.start = null;
-      document.querySelectorAll('.wiz-card.selected,.wiz-opt.sel,.wiz-radio.sel,.wiz-qty-btn.sel,.wiz-biz-card.sel').forEach(function(el){
-        el.classList.remove('selected','sel');
-      });
-      document.querySelectorAll('.wiz-opt-chk').forEach(function(el){el.textContent='';});
-      var nr = document.getElementById('wiz-n1'); if (nr) nr.disabled = true;
       goTo(1, 'back');
     }
   });
