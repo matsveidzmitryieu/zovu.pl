@@ -4547,6 +4547,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     updateSidebar();
     if (step === 2) showStep2Blocks();
     if (step === 4) renderReceipt();
+    var calcTop = document.getElementById('calc');
+    if (calcTop) calcTop.scrollIntoView({ behavior: 'instant', block: 'start' });
   }
 
   function updateProgress() {
