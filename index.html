@@ -1130,7 +1130,11 @@
     .vid-tile-arrow { font-size: 11px; color: var(--muted); transition: transform .25s; margin-left: 6px; }
     .vid-tile.open .vid-tile-arrow { transform: rotate(180deg); }
     .vid-tile-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-    .vid-tile.open .vid-tile-body { max-height: 120px; }
+    .vid-tile.open .vid-tile-body { max-height: 160px; }
+    .wiz-cnt-presets { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .wiz-cnt-preset { padding: 4px 12px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--bg2); font-size: 11px; font-weight: 600; color: var(--muted); cursor: none; transition: border-color .2s, color .2s; }
+    .wiz-cnt-preset:hover { border-color: rgba(255,255,255,.3); color: var(--text); }
+    .wiz-cnt-preset.active { border-color: var(--accent); color: var(--accent); }
     .vid-tile-body-inner { padding: 8px 14px 14px; }
     .wiz-counter { display: flex; align-items: center; gap: 10px; }
     .wiz-cnt-btn { width: 34px; height: 34px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg3,#1a1a1a); color: var(--text); font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: none; transition: border-color .2s, background .2s; flex-shrink: 0; line-height: 1; }
@@ -2632,6 +2636,11 @@
                     <button class="wiz-cnt-btn wiz-cnt-inc">+</button>
                     <div class="wiz-cnt-info"><span class="wiz-cnt-unit"></span><span class="wiz-cnt-total"></span></div>
                   </div>
+                  <div class="wiz-cnt-presets">
+                    <button class="wiz-cnt-preset" data-preset="8">8</button>
+                    <button class="wiz-cnt-preset" data-preset="14">14</button>
+                    <button class="wiz-cnt-preset" data-preset="20">20</button>
+                  </div>
                 </div></div>
               </div>
               <div class="vid-tile" data-vtile="vl">
@@ -2647,6 +2656,11 @@
                     <input class="wiz-cnt-input" type="number" min="0" value="0">
                     <button class="wiz-cnt-btn wiz-cnt-inc">+</button>
                     <div class="wiz-cnt-info"><span class="wiz-cnt-unit"></span><span class="wiz-cnt-total"></span></div>
+                  </div>
+                  <div class="wiz-cnt-presets">
+                    <button class="wiz-cnt-preset" data-preset="8">8</button>
+                    <button class="wiz-cnt-preset" data-preset="14">14</button>
+                    <button class="wiz-cnt-preset" data-preset="20">20</button>
                   </div>
                 </div></div>
               </div>
@@ -2664,6 +2678,11 @@
                     <button class="wiz-cnt-btn wiz-cnt-inc">+</button>
                     <div class="wiz-cnt-info"><span class="wiz-cnt-unit"></span><span class="wiz-cnt-total"></span></div>
                   </div>
+                  <div class="wiz-cnt-presets">
+                    <button class="wiz-cnt-preset" data-preset="10">10</button>
+                    <button class="wiz-cnt-preset" data-preset="20">20</button>
+                    <button class="wiz-cnt-preset" data-preset="30">30</button>
+                  </div>
                 </div></div>
               </div>
               <div class="vid-tile" data-vtile="va">
@@ -2679,6 +2698,11 @@
                     <input class="wiz-cnt-input" type="number" min="0" value="0">
                     <button class="wiz-cnt-btn wiz-cnt-inc">+</button>
                     <div class="wiz-cnt-info"><span class="wiz-cnt-unit"></span><span class="wiz-cnt-total"></span></div>
+                  </div>
+                  <div class="wiz-cnt-presets">
+                    <button class="wiz-cnt-preset" data-preset="4">4</button>
+                    <button class="wiz-cnt-preset" data-preset="8">8</button>
+                    <button class="wiz-cnt-preset" data-preset="14">14</button>
                   </div>
                 </div></div>
               </div>
@@ -4484,6 +4508,9 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       tile.classList.toggle('has-qty', n > 0);
       var clrBtn = tile.querySelector('.vid-tile-clear');
       if (clrBtn) clrBtn.style.display = n > 0 ? '' : 'none';
+      tile.querySelectorAll('.wiz-cnt-preset').forEach(function(b){
+        b.classList.toggle('active', parseInt(b.dataset.preset) === n);
+      });
     }
   }
 
@@ -4781,6 +4808,22 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       if (!wasSel) { sqBtn.classList.add('sel'); state.smmQty = parseInt(sqBtn.dataset.sq); state.smmQtyUsd = parseInt(sqBtn.dataset.sqUsd || 0); }
       else { state.smmQty = 0; state.smmQtyUsd = 0; }
       updateSidebar(); return;
+    }
+
+    /* preset buttons */
+    var preset = t.closest('.wiz-cnt-preset');
+    if (preset) {
+      var cnt = preset.closest('.vid-tile-body-inner').querySelector('.wiz-counter');
+      if (!cnt) return;
+      var inp = cnt.querySelector('.wiz-cnt-input');
+      var type = cnt.dataset.cnt;
+      var val = parseInt(preset.dataset.preset);
+      inp.value = val;
+      state[type+'Count'] = val;
+      preset.closest('.wiz-cnt-presets').querySelectorAll('.wiz-cnt-preset').forEach(function(b){b.classList.remove('active');});
+      preset.classList.add('active');
+      refreshCounterUI(cnt);
+      validateStep2(); updateSidebar(); return;
     }
 
     /* counter +/- buttons */
