@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZOVU — Creative Agency</title>
-  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="icon" type="image/png" href="logo-light.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://img.youtube.com">
@@ -79,7 +79,9 @@
       letter-spacing: -.5px; color: var(--text); text-decoration: none;
       display: flex; align-items: center; gap: 8px;
     }
-    .logo-img { width: 28px; height: 28px; object-fit: contain; }
+    .logo-img { width: 28px; height: 28px; object-fit: contain; transition: opacity .25s; }
+    nav:not(.pinned) .logo-img-light { display: none; }
+    nav.pinned .logo-img-dark { display: none; }
     .logo em { color: var(--accent); font-style: normal; }
     .nav-r { display: flex; align-items: center; gap: 28px; }
     .langs {
@@ -1877,7 +1879,7 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="logo"><img src="logo.png" alt="ZOVU" class="logo-img">ZOVU<em>.</em></a>
+  <a href="#" class="logo"><img src="logo-dark.png" alt="ZOVU" class="logo-img logo-img-dark"><img src="logo-light.png" alt="ZOVU" class="logo-img logo-img-light">ZOVU<em>.</em></a>
   <div class="nav-links">
     <a href="#portfolio" class="nav-link" data-k="ft_w">Work</a>
     <a href="#team" class="nav-link" data-k="nav_tm">Team</a>
