@@ -63,6 +63,13 @@
       border-color: #fff;
     }
 
+    /* custom cursor removed — restore native cursor */
+    #cur, #cur-ring { display: none !important; }
+    * { cursor: auto !important; }
+    a, button, label, .lang, .tools-tab, .pf, .g-icon, .nav-cta, [onclick], [role="button"], summary { cursor: pointer !important; }
+    input, textarea, select { cursor: text !important; }
+    input[type="checkbox"], input[type="radio"], input[type="range"], input[type="submit"], input[type="button"] { cursor: pointer !important; }
+
     /* ── NAV ── */
     nav {
       position: fixed; inset: 0 0 auto 0; z-index: 100;
@@ -1678,6 +1685,9 @@
     .tools-tab.t-active { background: rgba(255,255,255,.17); color: #fff; }
     .tools-tab:hover:not(.t-active) { color: rgba(255,255,255,.62); }
     .tools-slider-wrap { overflow: hidden; padding-top: 16px; margin-top: -16px; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+    /* drop expensive blur glows while dragging for smooth swipe */
+    .tools-slider.tools-dragging .g-icon::before { display: none; }
+    .tools-slider.tools-dragging .g-icon-img { box-shadow: none; }
     .tools-slider {
       display: flex;
       transition: transform .85s cubic-bezier(0.65,0,0.35,1);
@@ -4117,25 +4127,32 @@ document.querySelectorAll('.pf').forEach(btn => {
 
   // ── SWIPE (touch) + DRAG (hold LMB) to switch panels ──
   const wrap = slider.parentElement; // .tools-slider-wrap
-  let dragging = false, startX = 0, dx = 0, baseW = 0, moved = false;
+  let dragging = false, startX = 0, dx = 0, baseW = 0, moved = false, rafId = null;
   function pointX(e) { return e.touches ? e.touches[0].clientX : e.clientX; }
+  function applyDrag() {
+    rafId = null;
+    var resist = dx;
+    if ((cur === 0 && dx > 0) || (cur === TOTAL - 1 && dx < 0)) resist = dx * 0.35;
+    slider.style.transform = 'translateX(' + (-(cur * baseW) + resist) + 'px)';
+  }
   function onDown(e) {
     dragging = true; moved = false; dx = 0;
     startX = pointX(e); baseW = wrap.clientWidth;
     paused = true; clearTimeout(timer); clearTimeout(resumeTimer);
     slider.style.transition = 'none';
+    slider.classList.add('tools-dragging');
   }
   function onMove(e) {
     if (!dragging) return;
     dx = pointX(e) - startX;
     if (Math.abs(dx) > 5) moved = true;
-    var resist = dx;
-    if ((cur === 0 && dx > 0) || (cur === TOTAL - 1 && dx < 0)) resist = dx * 0.35;
-    slider.style.transform = 'translateX(' + (-(cur * baseW) + resist) + 'px)';
+    if (rafId === null) rafId = requestAnimationFrame(applyDrag);
   }
   function onUp() {
     if (!dragging) return;
     dragging = false;
+    if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    slider.classList.remove('tools-dragging');
     slider.style.transition = '';
     var threshold = Math.max(40, baseW * 0.18);
     var idx = cur;
