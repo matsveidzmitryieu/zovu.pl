@@ -173,20 +173,6 @@
       .nav-left, .nav-right { gap: 14px; }
       nav a.nav-link { display: none; }
     }
-    /* narrow phones: shrink everything proportionally so ALL fits (incl. email) — nothing hidden */
-    @media (max-width: 480px) {
-      nav { padding: 10px 12px 0; }
-      .nav-inner { gap: 8px; padding: 6px 12px; }
-      .nav-logo { gap: 8px; }
-      .nav-logo img { width: 36px; height: 36px; }
-      .nav-logo span { font-size: 21px; }
-      .nav-right { gap: 12px; }
-      .nav-lang { gap: 5px; }
-      .nav-lang .lang { font-size: 10px; }
-      .nav-socials { gap: 10px; }
-      .nav-soc svg { width: 17px; height: 17px; }
-      .nav-btn { padding: 7px 11px; font-size: 11px; }
-    }
 
     /* ── COOKIE BANNER ── */
     #cookie-banner {
@@ -386,19 +372,15 @@
       padding: 6px 14px; border-radius: 100px; transition: all .3s;
     }
 
-    /* ── STATS ── copied 1:1 from zah.zovu.pl (+ zoom 0.85 = zah's body-zoom compactness, scoped to this block) */
+    /* ── STATS ── zah style; on phone ~2x smaller (explicit, reliable on iOS) */
     .stats {
       background: #fff; color: #000;
       padding: 52px 32px;
       border-top: 4px solid var(--accent); border-bottom: 4px solid var(--accent);
-      zoom: 0.85;
     }
     .stats-inner {
       max-width: 1400px; margin: 0 auto;
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
-    }
-    @media (max-width: 800px) {
-      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 48px; }
     }
     .stat { border-left: 2px solid #000; padding-left: 24px; }
     .stat-value {
@@ -409,6 +391,13 @@
     .stat-label {
       font-family: var(--display); font-weight: 500; font-size: 13px;
       letter-spacing: 0.2em; text-transform: uppercase; margin-top: 12px; color: #555;
+    }
+    @media (max-width: 800px) {
+      .stats { padding: 44px 27px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 41px; }
+      .stats .stat { padding-left: 20px; }
+      .stats .stat-value { font-size: 32px; }
+      .stats .stat-label { font-size: 11px; margin-top: 10px; }
     }
 
     /* ── PORTFOLIO ── */
@@ -1838,14 +1827,6 @@
       /* SERVICES */
       .srv-grid { grid-template-columns: 1fr; }
       .srv { padding: 36px 28px; }
-
-      /* STATS */
-      .stats { grid-template-columns: 1fr 1fr; }
-      .stat { padding: 36px 24px; }
-      .stat:nth-child(2) { border-right: none; }
-      .stat:nth-child(3) { border-top: 1px solid var(--border); }
-      .stat:nth-child(4) { border-top: 1px solid var(--border); }
-      .stat-n { letter-spacing: -1px; }
 
       /* PORTFOLIO — на мобайле вертикальный стек */
       .port-grid {
