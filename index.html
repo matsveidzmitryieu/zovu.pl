@@ -65,7 +65,6 @@
       color: var(--text);
       cursor: none;
       overflow-x: hidden;
-      zoom: 0.85; /* match zah.zovu.pl compact scale */
     }
     a, button, input, textarea, select, label { cursor: none; }
 
@@ -173,13 +172,6 @@
       .nav-inner { grid-template-columns: auto 1fr auto; gap: 12px; }
       .nav-left, .nav-right { gap: 14px; }
       nav a.nav-link { display: none; }
-    }
-    /* narrow phones: slightly tighten so socials (email) fit with the ZOVU wordmark */
-    @media (max-width: 460px) {
-      .nav-inner { gap: 8px; padding: 6px 12px; }
-      .nav-left, .nav-right { gap: 12px; }
-      .nav-lang { gap: 6px; }
-      .nav-socials { gap: 11px; }
     }
 
     /* ── COOKIE BANNER ── */
@@ -381,26 +373,29 @@
     }
 
     /* ── STATS ── */
-    /* STATS BAR — zah.zovu.pl style (white band, purple borders) */
+    /* STATS BAR — copied 1:1 from zah.zovu.pl */
     .stats {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
       background: #fff; color: #000;
+      padding: 52px 32px;
       border-top: 4px solid var(--accent); border-bottom: 4px solid var(--accent);
-      padding: 52px max(32px, calc((100% - 1400px) / 2));
     }
-    .stat {
-      border-left: 2px solid #000; padding: 0 0 0 24px;
-      position: relative; cursor: none;
+    .stats-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
     }
-    .stat-n {
+    @media (max-width: 800px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 48px; }
+      .stats { zoom: 0.85; } /* compact like zah on phone (only this block) */
+    }
+    .stat { border-left: 2px solid #000; padding-left: 24px; }
+    .stat-value {
       font-family: var(--display); font-weight: 700;
       font-size: clamp(38px, 4.2vw, 72px);
-      letter-spacing: -.02em; line-height: .9; margin-bottom: 12px;
+      line-height: 0.9; letter-spacing: -0.02em;
     }
-    .stat-n em { color: #000; font-style: normal; }
-    .stat-l {
+    .stat-label {
       font-family: var(--display); font-weight: 500; font-size: 13px;
-      letter-spacing: .2em; text-transform: uppercase; color: #555;
+      letter-spacing: 0.2em; text-transform: uppercase; margin-top: 12px; color: #555;
     }
 
     /* ── PORTFOLIO ── */
@@ -2333,10 +2328,12 @@
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat rv"><div class="stat-n"><span class="cnt" data-t="25">0</span><em>M+</em></div><div class="stat-l" data-k="st1">Wyświetleń</div></div>
-  <div class="stat rv d1"><div class="stat-n"><span class="cnt" data-t="400">0</span><em>K+</em></div><div class="stat-l" data-k="st2">Obserwujących</div></div>
-  <div class="stat rv d2"><div class="stat-n"><span class="cnt" data-t="100">0</span><em>K$+</em></div><div class="stat-l" data-k="st3">Budżet reklam</div></div>
-  <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="7">0</span><em>+</em></div><div class="stat-l" data-k="st4">Lat na rynku</div></div>
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-value">25M+</div><div class="stat-label" data-k="st1">Wyświetleń</div></div>
+    <div class="stat"><div class="stat-value">400K+</div><div class="stat-label" data-k="st2">Obserwujących</div></div>
+    <div class="stat"><div class="stat-value">100K$+</div><div class="stat-label" data-k="st3">Budżet reklam</div></div>
+    <div class="stat"><div class="stat-value">7+</div><div class="stat-label" data-k="st4">Lat na rynku</div></div>
+  </div>
 </div>
 
 
