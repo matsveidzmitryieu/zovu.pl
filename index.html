@@ -173,6 +173,20 @@
       .nav-left, .nav-right { gap: 14px; }
       nav a.nav-link { display: none; }
     }
+    /* narrow phones: shrink everything proportionally so ALL fits (incl. email) — nothing hidden */
+    @media (max-width: 480px) {
+      nav { padding: 10px 12px 0; }
+      .nav-inner { gap: 8px; padding: 6px 12px; }
+      .nav-logo { gap: 8px; }
+      .nav-logo img { width: 36px; height: 36px; }
+      .nav-logo span { font-size: 21px; }
+      .nav-right { gap: 12px; }
+      .nav-lang { gap: 5px; }
+      .nav-lang .lang { font-size: 10px; }
+      .nav-socials { gap: 10px; }
+      .nav-soc svg { width: 17px; height: 17px; }
+      .nav-btn { padding: 7px 11px; font-size: 11px; }
+    }
 
     /* ── COOKIE BANNER ── */
     #cookie-banner {
@@ -383,10 +397,6 @@
       max-width: 1400px; margin: 0 auto;
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
     }
-    @media (max-width: 800px) {
-      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 48px; }
-      .stats { zoom: 0.85; } /* compact like zah on phone (only this block) */
-    }
     .stat { border-left: 2px solid #000; padding-left: 24px; }
     .stat-value {
       font-family: var(--display); font-weight: 700;
@@ -396,6 +406,13 @@
     .stat-label {
       font-family: var(--display); font-weight: 500; font-size: 13px;
       letter-spacing: 0.2em; text-transform: uppercase; margin-top: 12px; color: #555;
+    }
+    @media (max-width: 800px) {
+      .stats .stat { padding-left: 20px; }
+      .stats .stat-value { font-size: 32px; }
+      .stats .stat-label { font-size: 11px; margin-top: 10px; }
+      .stats { padding: 44px 27px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 41px; }
     }
 
     /* ── PORTFOLIO ── */
