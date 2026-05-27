@@ -1578,7 +1578,7 @@
       -webkit-backdrop-filter: blur(32px) saturate(180%);
       border: 1px solid rgba(255,255,255,.28);
       border-radius: 32px;
-      padding: 36px 32px;
+      padding: 24px 28px;
       box-shadow:
         0 32px 40px rgba(0,0,0,.4),
         0 6px 10px rgba(0,0,0,.25),
@@ -1643,7 +1643,7 @@
     }
     .glass-div {
       height: 1px; background: rgba(255,255,255,.15);
-      margin: 24px 0; border-radius: 1px;
+      margin: 14px 0; border-radius: 1px;
     }
     .glass-footer {
       display: flex; align-items: center; justify-content: center; gap: 7px;
@@ -1677,7 +1677,7 @@
     }
     .tools-tab.t-active { background: rgba(255,255,255,.17); color: #fff; }
     .tools-tab:hover:not(.t-active) { color: rgba(255,255,255,.62); }
-    .tools-slider-wrap { overflow: hidden; padding-top: 28px; margin-top: -28px; }
+    .tools-slider-wrap { overflow: hidden; padding-top: 16px; margin-top: -16px; }
     .tools-slider {
       display: flex;
       transition: transform .85s cubic-bezier(0.65,0,0.35,1);
@@ -1686,7 +1686,7 @@
     .tools-panel {
       flex: 0 0 100%;
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 14px 8px;
+      gap: 8px 8px;
     }
 
     /* Responsive glass widget */
@@ -4143,8 +4143,8 @@ function rebuildHeroTitle() {
   if (roles && t.hero_roles) {
     const items = t.hero_roles.split('·').map(s => s.trim()).filter(Boolean);
     const sep = '<span class="sep">·</span>';
-    const row1 = items.slice(0, 3).join(sep) + sep;
-    const row2 = items.slice(3).join(sep);
+    const row1 = items.slice(0, 4).join(sep);
+    const row2 = items.slice(4).join(sep);
     roles.innerHTML = `<span class="role-row">${row1}</span><span class="role-row">${row2}</span>`;
   }
 }
