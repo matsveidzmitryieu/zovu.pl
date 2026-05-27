@@ -1543,15 +1543,17 @@
     }
     #hero .hero-h .ln { column-gap: .38em; }
 
-    /* NEW: prominent services line */
+    /* NEW: prominent services line — 2 rows of 3 */
     .hero-roles {
-      font-family: var(--display); font-weight: 600; text-transform: uppercase;
-      font-size: clamp(16px, 1.7vw, 25px); letter-spacing: .1em; line-height: 1.4;
-      color: #fff; max-width: 600px; margin-bottom: 40px;
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(18px, 2.1vw, 30px); letter-spacing: .04em; line-height: 1.3;
+      color: #fff; margin-bottom: 40px;
       position: relative; z-index: 2;
       opacity: 0; animation: fadeup .7s .8s forwards;
+      text-shadow: 0 0 30px rgba(124,58,237,.35);
     }
-    .hero-roles .sep { color: var(--accent-2); margin: 0 6px; }
+    .hero-roles .role-row { display: block; white-space: nowrap; }
+    .hero-roles .sep { color: var(--accent-2); margin: 0 8px; }
 
     /* tools glass → dark neon-purple */
     .glass-inner {
@@ -1698,7 +1700,7 @@
       .glass-icons { gap: 10px; }
       .g-icon-img, .g-icon::before { width: 58px; height: 58px; }
       .g-icon-lbl { font-size: 9px; }
-      .hero-roles { font-size: 15px; }
+      .hero-roles { font-size: 16px; }
     }
 
     /* ── ANIMATIONS ── */
@@ -4139,9 +4141,11 @@ function rebuildHeroTitle() {
 
   const roles = document.getElementById('hero-roles');
   if (roles && t.hero_roles) {
-    roles.innerHTML = t.hero_roles.split('·')
-      .map(s => s.trim())
-      .join('<span class="sep">·</span>');
+    const items = t.hero_roles.split('·').map(s => s.trim()).filter(Boolean);
+    const sep = '<span class="sep">·</span>';
+    const row1 = items.slice(0, 3).join(sep) + sep;
+    const row2 = items.slice(3).join(sep);
+    roles.innerHTML = `<span class="role-row">${row1}</span><span class="role-row">${row2}</span>`;
   }
 }
 
