@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="loading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +32,32 @@
 
     ::selection { background: var(--accent); color: #fff; }
     ::-moz-selection { background: var(--accent); color: #fff; }
+
+    /* ── SPLASH PRELOADER (zah.zovu.pl style) ── */
+    html.loading, html.loading body { overflow: hidden !important; height: 100%; }
+    .splash {
+      position: fixed; inset: 0; background: #000; z-index: 100000;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .splash img {
+      width: 170px; height: 170px;
+      animation: splashPulse 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 60px rgba(124,58,237,0.6));
+    }
+    .splash-text {
+      font-family: var(--display); font-weight: 700; font-size: 42px;
+      letter-spacing: 0.12em; color: #fff; margin-top: 20px;
+      opacity: 0; animation: splashFade 1.2s ease 0.4s forwards;
+    }
+    .splash-sub {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.4em;
+      color: rgba(255,255,255,0.45); margin-top: 12px; text-transform: uppercase;
+      opacity: 0; animation: splashFade 1.2s ease 0.8s forwards;
+    }
+    @keyframes splashPulse { 0%,100% { transform: scale(1); opacity: .95; } 50% { transform: scale(1.05); opacity: 1; } }
+    @keyframes splashFade { to { opacity: 1; } }
 
     body {
       font-family: 'Manrope', sans-serif;
@@ -1966,6 +1992,13 @@
   </style>
 </head>
 <body>
+
+<!-- SPLASH PRELOADER -->
+<div class="splash" id="splash">
+  <img src="logo_icon.png" alt="ZOVU">
+  <div class="splash-text">ZOVU</div>
+  <div class="splash-sub">Created by ZOVU Agency</div>
+</div>
 
 <!-- FILM GRAIN -->
 <svg id="grain-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -3928,6 +3961,20 @@ const nav = document.getElementById('nav');
 const onNavScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
 window.addEventListener('scroll', onNavScroll, { passive: true });
 onNavScroll();
+
+// ── SPLASH PRELOADER: lock scroll until fully loaded ──
+(function () {
+  function hideSplash() {
+    var sp = document.getElementById('splash');
+    if (sp) sp.classList.add('hidden');
+    document.documentElement.classList.remove('loading');
+  }
+  if (document.readyState === 'complete') {
+    setTimeout(hideSplash, 1400);
+  } else {
+    window.addEventListener('load', function () { setTimeout(hideSplash, 1400); });
+  }
+})();
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
 const obs = new IntersectionObserver((entries) => {
