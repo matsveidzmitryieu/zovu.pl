@@ -1498,24 +1498,6 @@
     #hero .btn-s { color: rgba(255,255,255,.8); }
     #hero .btn-s:hover { color: #fff; }
 
-    /* Nav поверх тёмного hero (до скролла) */
-    nav:not(.pinned) .logo { color: #fff; }
-    nav:not(.pinned) .logo em { color: #c4b5fd; }
-    nav:not(.pinned) .lang { color: rgba(255,255,255,.55); }
-    nav:not(.pinned) .lang.on { background: rgba(255,255,255,.18); color: #fff; }
-    nav:not(.pinned) .langs { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.18); }
-    nav:not(.pinned) .nav-cta { background: rgba(255,255,255,.18); color: #fff; border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(8px); }
-    nav:not(.pinned) .nav-cta:hover { background: rgba(255,255,255,.32); }
-    nav:not(.pinned) .nav-links { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); }
-    nav:not(.pinned) [style*="color:var(--sec)"] { color: rgba(255,255,255,.6) !important; }
-
-    /* Nav pinned (светлый, после скролла) */
-    nav.pinned {
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(20px);
-      border-color: var(--border);
-    }
-
     /* ===== HERO → ZAH.ZOVU.PL STYLE (redesign 27.05.2026) ===== */
     #hero { background: linear-gradient(180deg, #050505 0%, #0a0418 100%); }
     .hero-bg-grad {
@@ -1715,7 +1697,7 @@
 
     /* Responsive glass widget */
     @media (max-width: 860px) {
-      #hero { flex-direction: column; padding-top: 110px; gap: 0; }
+      #hero { flex-direction: column; padding-top: 110px; gap: 0; min-height: auto; }
       .hero-content, .glass-widget { flex: none; max-width: 100%; width: 100%; }
       .glass-widget { display: flex; margin-top: 18px; }
       .hero-roles { margin-bottom: 16px; }
@@ -1768,7 +1750,7 @@
 
     @media (max-width: 860px) {
       /* SECTIONS padding */
-      #hero { padding: 100px 20px 60px; }
+      #hero { padding: 100px 20px 40px; min-height: auto; }
       #services, #portfolio, #team, #calc, #contact { padding: 72px 20px; }
       footer { padding: 28px 20px; }
 
@@ -1982,7 +1964,7 @@
       <a href="#team" class="nav-link" data-k="nav_tm">Team</a>
     </div>
     <a href="#" class="nav-logo">
-      <img src="logo-light.png" alt="ZOVU">
+      <img src="logo_icon.png" alt="ZOVU">
       <span>ZOVU</span>
     </a>
     <div class="nav-right">
