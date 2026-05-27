@@ -173,6 +173,16 @@
       .nav-left, .nav-right { gap: 14px; }
       nav a.nav-link { display: none; }
     }
+    /* narrow phones (iPhone 15 etc.): keep socials (email) visible */
+    @media (max-width: 480px) {
+      .nav-inner { gap: 8px; padding: 6px 12px; }
+      .nav-left, .nav-right { gap: 12px; }
+      .nav-logo span { display: none; }
+      .nav-lang { gap: 6px; }
+      .nav-socials { gap: 11px; }
+      .nav-soc svg { width: 18px; height: 18px; }
+      .nav-btn { padding: 7px 12px; font-size: 11px; }
+    }
 
     /* ── COOKIE BANNER ── */
     #cookie-banner {
@@ -378,7 +388,7 @@
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
       background: #fff; color: #000;
       border-top: 4px solid var(--accent); border-bottom: 4px solid var(--accent);
-      padding: 52px max(20px, calc((100% - 1400px) / 2));
+      padding: 52px max(32px, calc((100% - 1400px) / 2));
     }
     .stat {
       border-left: 2px solid #000; padding: 0 0 0 24px;
@@ -393,12 +403,6 @@
     .stat-l {
       font-family: var(--display); font-weight: 500; font-size: 13px;
       letter-spacing: .2em; text-transform: uppercase; color: #555;
-    }
-    @media (max-width: 600px) {
-      .stats { padding: 26px 18px; gap: 16px; }
-      .stat { padding-left: 12px; border-left-width: 2px; }
-      .stat-n { font-size: 20px; margin-bottom: 5px; }
-      .stat-l { font-size: 9px; letter-spacing: .12em; }
     }
 
     /* ── PORTFOLIO ── */
