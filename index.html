@@ -373,31 +373,27 @@
     }
 
     /* ── STATS ── */
+    /* STATS BAR — zah.zovu.pl style (white band, purple borders) */
     .stats {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      background: #fff; color: #000;
+      border-top: 4px solid var(--accent); border-bottom: 4px solid var(--accent);
+      padding: 52px max(20px, calc((100% - 1400px) / 2));
     }
     .stat {
-      padding: 52px 44px;
-      border-right: 1px solid var(--border);
+      border-left: 2px solid #000; padding: 0 0 0 24px;
       position: relative; cursor: none;
     }
-    .stat:last-child { border-right: none; }
-    .stat::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 2;
-      border: 1.5px solid rgba(var(--acc-rgb), .85);
-      box-shadow: 0 0 9px rgba(var(--acc-rgb),.35), inset 0 0 7px rgba(var(--acc-rgb),.07);
-      opacity: 0; transition: opacity .2s ease;
-    }
-    .stat:hover::after { opacity: 1; }
     .stat-n {
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(44px, 5vw, 76px);
-      font-weight: 800; letter-spacing: -1.5px; line-height: 1; margin-bottom: 8px;
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(38px, 4.2vw, 72px);
+      letter-spacing: -.02em; line-height: .9; margin-bottom: 12px;
     }
-    .stat-n em { color: var(--accent); font-style: normal; }
-    .stat-l { font-size: 13px; color: var(--muted); }
+    .stat-n em { color: #000; font-style: normal; }
+    .stat-l {
+      font-family: var(--display); font-weight: 500; font-size: 13px;
+      letter-spacing: .2em; text-transform: uppercase; color: #555;
+    }
 
     /* ── PORTFOLIO ── */
     #portfolio { padding: 130px 52px; overflow: visible; position: relative; }
@@ -2327,6 +2323,14 @@
 
 </section>
 
+<!-- STATS -->
+<div class="stats">
+  <div class="stat rv"><div class="stat-n"><span class="cnt" data-t="10">0</span><em>M+</em></div><div class="stat-l" data-k="st1">Wyświetleń</div></div>
+  <div class="stat rv d1"><div class="stat-n"><span class="cnt" data-t="100">0</span><em>K+</em></div><div class="stat-l" data-k="st2">Obserwujących</div></div>
+  <div class="stat rv d2"><div class="stat-n"><span class="cnt" data-t="70">0</span><em>K$+</em></div><div class="stat-l" data-k="st3">Budżet reklam</div></div>
+  <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="2">0</span><em>+</em></div><div class="stat-l" data-k="st4">Lata</div></div>
+</div>
+
 
 <!-- PORTFOLIO -->
 <section id="portfolio">
@@ -2593,14 +2597,6 @@
   </div>
 
 </section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat rv"><div class="stat-n"><span class="cnt" data-t="10">0</span><em>M+</em></div><div class="stat-l" data-k="st1">Views generated</div></div>
-  <div class="stat rv d1"><div class="stat-n"><span class="cnt" data-t="100">0</span><em>K+</em></div><div class="stat-l" data-k="st2">Followers grown</div></div>
-  <div class="stat rv d2"><div class="stat-n">$<span class="cnt" data-t="70">0</span><em>K+</em></div><div class="stat-l" data-k="st3">Budgets managed</div></div>
-  <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="8">0</span><em>+</em></div><div class="stat-l" data-k="st4">Years of experience</div></div>
-</div>
 
 <!-- TEAM -->
 <section id="team">
@@ -3097,7 +3093,7 @@ const T = {
     s2t:"Social Media", s2d:"Daily posts, stories, reels — complete profile management across every major platform. We grow audiences that actually buy.",
     s3t:"Paid Advertising", s3d:"Facebook & Instagram campaigns optimised for ROI. We've managed large-budget accounts and know how to turn spend into leads.",
     s4t:"Web Development", s4d:"Modern, functional sites for businesses and individuals — with monthly support or full handover. Built with vibe coding at speed.",
-    st1:"Views generated", st2:"Followers grown", st3:"Budgets managed", st4:"Years of experience",
+    st1:"Views", st2:"Followers", st3:"Ad budget", st4:"Years",
     p_lbl:"Selected work", p_ttl:"Recent projects",
     p1t:"Brand Video Campaign", p1c:"Video Production",
     p2t:"Instagram Growth", p2c:"Social Media",
@@ -3190,7 +3186,7 @@ const T = {
     s2t:"Социальные сети", s2d:"Ежедневные посты, истории, рилсы — полное ведение профилей на всех платформах. Строим аудиторию, которая покупает.",
     s3t:"Платная реклама", s3d:"Рекламные кампании в Facebook и Instagram с ROI-фокусом. Управляем большими бюджетами и умеем превращать показы в заявки.",
     s4t:"Веб-разработка", s4d:"Современные, функциональные сайты для бизнеса и частных лиц. С ежемесячным сопровождением или полной передачей — на ваш выбор.",
-    st1:"Просмотров набрано", st2:"Подписчиков привлечено", st3:"Бюджетов управлено", st4:"Лет опыта",
+    st1:"Просмотров", st2:"Подписчиков", st3:"Бюджет рекламы", st4:"Года",
     p_lbl:"Избранные работы", p_ttl:"Последние проекты",
     p1t:"Брендовая видеокампания", p1c:"Видеопродакшн",
     p2t:"Рост в Instagram", p2c:"Социальные сети",
@@ -3283,7 +3279,7 @@ const T = {
     s2t:"Social media", s2d:"Codzienne posty, stories, reelsy — pełne zarządzanie profilami na wszystkich platformach. Budujemy społeczności, które kupują.",
     s3t:"Reklama płatna", s3d:"Kampanie na Facebooku i Instagramie skupione na ROI. Zarządzamy dużymi budżetami i wiemy, jak zamieniać wyświetlenia w leady.",
     s4t:"Tworzenie stron WWW", s4d:"Nowoczesne strony dla firm i osób prywatnych. Z miesięcznym wsparciem lub pełnym przekazaniem. Zbudowane z vibe codingiem w ekspresowym tempie.",
-    st1:"Wyświetleń wygenerowanych", st2:"Obserwujących zdobytych", st3:"Zarządzanych budżetów", st4:"Lat doświadczenia",
+    st1:"Wyświetleń", st2:"Obserwujących", st3:"Budżet reklam", st4:"Lata",
     p_lbl:"Wybrane prace", p_ttl:"Ostatnie projekty",
     p1t:"Kampania wideo marki", p1c:"Produkcja wideo",
     p2t:"Wzrost na Instagramie", p2c:"Social media",
