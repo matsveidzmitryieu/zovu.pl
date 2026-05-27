@@ -394,6 +394,12 @@
       font-family: var(--display); font-weight: 500; font-size: 13px;
       letter-spacing: .2em; text-transform: uppercase; color: #555;
     }
+    @media (max-width: 600px) {
+      .stats { padding: 26px 18px; gap: 16px; }
+      .stat { padding-left: 12px; border-left-width: 2px; }
+      .stat-n { font-size: 20px; margin-bottom: 5px; }
+      .stat-l { font-size: 9px; letter-spacing: .12em; }
+    }
 
     /* ── PORTFOLIO ── */
     #portfolio { padding: 130px 52px; overflow: visible; position: relative; }
@@ -2328,7 +2334,7 @@
   <div class="stat rv"><div class="stat-n"><span class="cnt" data-t="25">0</span><em>M+</em></div><div class="stat-l" data-k="st1">Wyświetleń</div></div>
   <div class="stat rv d1"><div class="stat-n"><span class="cnt" data-t="400">0</span><em>K+</em></div><div class="stat-l" data-k="st2">Obserwujących</div></div>
   <div class="stat rv d2"><div class="stat-n"><span class="cnt" data-t="100">0</span><em>K$+</em></div><div class="stat-l" data-k="st3">Budżet reklam</div></div>
-  <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="7">0</span><em>+</em></div><div class="stat-l" data-k="st4">Lat</div></div>
+  <div class="stat rv d3"><div class="stat-n"><span class="cnt" data-t="7">0</span><em>+</em></div><div class="stat-l" data-k="st4">Lat na rynku</div></div>
 </div>
 
 
@@ -3093,7 +3099,7 @@ const T = {
     s2t:"Social Media", s2d:"Daily posts, stories, reels — complete profile management across every major platform. We grow audiences that actually buy.",
     s3t:"Paid Advertising", s3d:"Facebook & Instagram campaigns optimised for ROI. We've managed large-budget accounts and know how to turn spend into leads.",
     s4t:"Web Development", s4d:"Modern, functional sites for businesses and individuals — with monthly support or full handover. Built with vibe coding at speed.",
-    st1:"Views", st2:"Followers", st3:"Ad budget", st4:"Years",
+    st1:"Views", st2:"Followers", st3:"Ad budget", st4:"Years on the market",
     p_lbl:"Selected work", p_ttl:"Recent projects",
     p1t:"Brand Video Campaign", p1c:"Video Production",
     p2t:"Instagram Growth", p2c:"Social Media",
@@ -3186,7 +3192,7 @@ const T = {
     s2t:"Социальные сети", s2d:"Ежедневные посты, истории, рилсы — полное ведение профилей на всех платформах. Строим аудиторию, которая покупает.",
     s3t:"Платная реклама", s3d:"Рекламные кампании в Facebook и Instagram с ROI-фокусом. Управляем большими бюджетами и умеем превращать показы в заявки.",
     s4t:"Веб-разработка", s4d:"Современные, функциональные сайты для бизнеса и частных лиц. С ежемесячным сопровождением или полной передачей — на ваш выбор.",
-    st1:"Просмотров", st2:"Подписчиков", st3:"Бюджет рекламы", st4:"Лет",
+    st1:"Просмотров", st2:"Подписчиков", st3:"Бюджет рекламы", st4:"Лет на рынке",
     p_lbl:"Избранные работы", p_ttl:"Последние проекты",
     p1t:"Брендовая видеокампания", p1c:"Видеопродакшн",
     p2t:"Рост в Instagram", p2c:"Социальные сети",
@@ -3279,7 +3285,7 @@ const T = {
     s2t:"Social media", s2d:"Codzienne posty, stories, reelsy — pełne zarządzanie profilami na wszystkich platformach. Budujemy społeczności, które kupują.",
     s3t:"Reklama płatna", s3d:"Kampanie na Facebooku i Instagramie skupione na ROI. Zarządzamy dużymi budżetami i wiemy, jak zamieniać wyświetlenia w leady.",
     s4t:"Tworzenie stron WWW", s4d:"Nowoczesne strony dla firm i osób prywatnych. Z miesięcznym wsparciem lub pełnym przekazaniem. Zbudowane z vibe codingiem w ekspresowym tempie.",
-    st1:"Wyświetleń", st2:"Obserwujących", st3:"Budżet reklam", st4:"Lat",
+    st1:"Wyświetleń", st2:"Obserwujących", st3:"Budżet reklam", st4:"Lat na rynku",
     p_lbl:"Wybrane prace", p_ttl:"Ostatnie projekty",
     p1t:"Kampania wideo marki", p1c:"Produkcja wideo",
     p2t:"Wzrost na Instagramie", p2c:"Social media",
