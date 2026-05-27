@@ -1567,6 +1567,37 @@
     .glass-title { color: rgba(237,233,254,.6) !important; letter-spacing: 2.5px; }
     .tools-tab.t-active { background: rgba(124,58,237,.40) !important; }
 
+    /* ===== PORTFOLIO (Prace) → ZAH.ZOVU.PL STYLE ===== */
+    #portfolio { background: linear-gradient(180deg, #0a0418 0%, #050505 55%); }
+    #portfolio .sec-label {
+      font-family: var(--mono); color: var(--accent-2);
+      font-size: 12px; letter-spacing: 0.3em; font-weight: 500;
+    }
+    #portfolio .sec-title {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      letter-spacing: -0.01em; line-height: 0.95;
+      background: linear-gradient(180deg, #fff 35%, #a78bfa 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    #portfolio .port-filters { gap: 14px; }
+    #portfolio .pf {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,.14);
+      font-family: var(--display); font-weight: 600; font-size: 16px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 11px 26px; border-radius: 100px;
+      transition: all 0.3s;
+    }
+    #portfolio .pf::after { display: none; }
+    #portfolio .pf span { color: rgba(255,255,255,.62); -webkit-text-fill-color: rgba(255,255,255,.62); }
+    #portfolio .pf:hover:not(.on) { opacity: 1; border-color: rgba(167,139,250,.5); }
+    #portfolio .pf:hover:not(.on) span { color: #fff; -webkit-text-fill-color: #fff; }
+    #portfolio .pf.on {
+      background: var(--accent); border-color: var(--accent);
+      transform: none; box-shadow: 0 0 24px rgba(124,58,237,.45);
+    }
+    #portfolio .pf.on span { color: #fff; -webkit-text-fill-color: #fff; }
+
     /* ── GLASSMORPHISM WIDGET ── */
     .glass-widget {
       flex: 0 0 46%; max-width: 46%;
