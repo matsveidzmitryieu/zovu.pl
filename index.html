@@ -65,6 +65,7 @@
       color: var(--text);
       cursor: none;
       overflow-x: hidden;
+      zoom: 0.85; /* match zah.zovu.pl compact scale */
     }
     a, button, input, textarea, select, label { cursor: none; }
 
@@ -173,15 +174,12 @@
       .nav-left, .nav-right { gap: 14px; }
       nav a.nav-link { display: none; }
     }
-    /* narrow phones (iPhone 15 etc.): keep socials (email) visible */
-    @media (max-width: 480px) {
+    /* narrow phones: slightly tighten so socials (email) fit with the ZOVU wordmark */
+    @media (max-width: 460px) {
       .nav-inner { gap: 8px; padding: 6px 12px; }
       .nav-left, .nav-right { gap: 12px; }
-      .nav-logo span { display: none; }
       .nav-lang { gap: 6px; }
       .nav-socials { gap: 11px; }
-      .nav-soc svg { width: 18px; height: 18px; }
-      .nav-btn { padding: 7px 12px; font-size: 11px; }
     }
 
     /* ── COOKIE BANNER ── */
