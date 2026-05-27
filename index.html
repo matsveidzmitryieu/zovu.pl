@@ -403,6 +403,53 @@
     /* ── PORTFOLIO ── */
     #portfolio { padding: 130px 52px; overflow: visible; position: relative; }
     #portfolio .port-section { overflow: visible; }
+
+    /* category rows + running carousels (zah-style rows) */
+    .pf-cats { max-width: 1400px; margin: 50px auto 0; border-top: 1px solid rgba(255,255,255,.1); }
+    .pf-cat {
+      display: block; text-decoration: none; color: inherit;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      padding: 34px 0 30px; position: relative; transition: background .35s;
+    }
+    .pf-cat:hover { background: rgba(124,58,237,.06); }
+    .pf-cat-head {
+      display: flex; align-items: baseline; gap: 22px;
+      padding: 0 clamp(20px, 3vw, 44px); transition: padding-left .35s;
+    }
+    .pf-cat:hover .pf-cat-head { padding-left: clamp(34px, 4.5vw, 64px); }
+    .pf-cat-num { font-family: var(--mono); font-size: 13px; letter-spacing: .15em; color: var(--accent-2); flex-shrink: 0; }
+    .pf-cat-name {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(30px, 5vw, 68px); line-height: 1; letter-spacing: -.01em;
+      color: #fff; transition: color .3s;
+    }
+    .pf-cat:hover .pf-cat-name { color: var(--accent-2); }
+    .pf-cat-desc {
+      margin-left: auto; max-width: 360px; text-align: right; align-self: center;
+      font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.5);
+    }
+    .pf-cat-arrow { font-family: var(--mono); font-size: 20px; color: rgba(255,255,255,.3); align-self: center; transition: transform .3s, color .3s; }
+    .pf-cat:hover .pf-cat-arrow { color: var(--accent-2); transform: translate(5px,-5px); }
+    .pf-strip {
+      overflow: hidden; margin-top: 26px; padding: 0 clamp(20px,3vw,44px);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+    .pf-strip-track { display: flex; gap: 14px; width: max-content; animation: pfscroll 45s linear infinite; }
+    .pf-cat:hover .pf-strip-track { animation-play-state: paused; }
+    .pf-strip-img, .pf-strip-vid {
+      width: 248px; height: 140px; flex-shrink: 0;
+      object-fit: cover; object-position: top center;
+      border-radius: 10px; border: 1px solid rgba(255,255,255,.1);
+      pointer-events: none; background: #111; display: block;
+    }
+    @keyframes pfscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (max-width: 700px) {
+      #portfolio { padding: 90px 20px; }
+      .pf-cat-desc { display: none; }
+      .pf-cat-head { gap: 14px; }
+      .pf-strip-img, .pf-strip-vid { width: 196px; height: 110px; }
+    }
     .port-grid {
       display: flex; flex-direction: row;
       overflow-x: auto; overflow-y: hidden;
@@ -2339,262 +2386,51 @@
       <h2 class="sec-title" data-k="p_ttl">Recent projects</h2>
     </div>
   </div>
-  <div class="port-filters rv">
-    <button class="pf on" data-f="video" data-k="pf_v"><span>Wideo</span></button>
-    <button class="pf" data-f="design" data-k="pf_d"><span>Grafika</span></button>
-    <button class="pf" data-f="web" data-k="pf_w"><span>Strony</span></button>
-    <button class="pf" data-f="ads" data-k="pf_a"><span>Reklama</span></button>
+  <div class="pf-cats rv">
+
+    <!-- STRONY -->
+    <a href="#contact" class="pf-cat">
+      <div class="pf-cat-head">
+        <span class="pf-cat-num">01</span>
+        <span class="pf-cat-name" data-k="pf_w">Strony</span>
+        <span class="pf-cat-desc" data-k="pf_w_d">Landing page, sklepy, strony firmowe — WordPress lub kod własny.</span>
+        <span class="pf-cat-arrow">&#8599;</span>
+      </div>
+      <div class="pf-strip"><div class="pf-strip-track">
+        <img class="pf-strip-img" src="web_shaurma.jpg" alt=""><img class="pf-strip-img" src="web_bee.jpg" alt=""><img class="pf-strip-img" src="web_jewelry.jpg" alt=""><img class="pf-strip-img" src="web_maya.jpg" alt=""><img class="pf-strip-img" src="web_gucio.jpg" alt=""><img class="pf-strip-img" src="web_marketing.jpg" alt=""><img class="pf-strip-img" src="web_pick.jpg" alt=""><img class="pf-strip-img" src="web_potolki.jpg" alt=""><img class="pf-strip-img" src="web_energia.jpg" alt="">
+        <img class="pf-strip-img" src="web_shaurma.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_bee.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_jewelry.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_maya.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_gucio.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_marketing.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_pick.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_potolki.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_energia.jpg" alt="" aria-hidden="true">
+      </div></div>
+    </a>
+
+    <!-- WIDEO -->
+    <a href="#contact" class="pf-cat">
+      <div class="pf-cat-head">
+        <span class="pf-cat-num">02</span>
+        <span class="pf-cat-name" data-k="pf_v">Wideo</span>
+        <span class="pf-cat-desc" data-k="pf_v_d">YouTube, Reels, TikTok, montaż i motion — produkcja pod klucz.</span>
+        <span class="pf-cat-arrow">&#8599;</span>
+      </div>
+      <div class="pf-strip"><div class="pf-strip-track">
+        <video class="pf-strip-vid" src="preview1.mp4" muted autoplay loop playsinline preload="metadata"></video><video class="pf-strip-vid" src="preview2.mp4" muted autoplay loop playsinline preload="metadata"></video><video class="pf-strip-vid" src="preview3_small.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <video class="pf-strip-vid" src="preview1.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><video class="pf-strip-vid" src="preview2.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><video class="pf-strip-vid" src="preview3_small.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video>
+      </div></div>
+    </a>
+
+    <!-- GRAFIKA -->
+    <a href="#contact" class="pf-cat">
+      <div class="pf-cat-head">
+        <span class="pf-cat-num">03</span>
+        <span class="pf-cat-name" data-k="pf_d">Grafika</span>
+        <span class="pf-cat-desc" data-k="pf_d_d">Posty, kreacje reklamowe, miniatury YouTube, grafika marki.</span>
+        <span class="pf-cat-arrow">&#8599;</span>
+      </div>
+      <div class="pf-strip"><div class="pf-strip-track">
+        <img class="pf-strip-img" src="d1.jpg" alt=""><img class="pf-strip-img" src="d2.jpg" alt=""><img class="pf-strip-img" src="d3.jpg" alt=""><img class="pf-strip-img" src="d4.jpg" alt=""><img class="pf-strip-img" src="d5.jpg" alt=""><img class="pf-strip-img" src="d6.jpg" alt=""><img class="pf-strip-img" src="d7.jpg" alt=""><img class="pf-strip-img" src="d8.jpg" alt=""><img class="pf-strip-img" src="d9.jpg" alt=""><img class="pf-strip-img" src="g4.jpg" alt=""><img class="pf-strip-img" src="g5.jpg" alt=""><img class="pf-strip-img" src="g6.jpg" alt=""><img class="pf-strip-img" src="g7.jpg" alt="">
+        <img class="pf-strip-img" src="d1.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d2.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d3.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d4.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d5.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d6.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d7.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d8.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="d9.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="g4.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="g5.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="g6.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="g7.jpg" alt="" aria-hidden="true">
+      </div></div>
+    </a>
+
   </div>
-  <!-- VIDEO -->
-  <div class="port-section active" data-sec="video">
-  <div class="vc-wrap">
-  <div class="vc-outer">
-    <div class="vc-track">
-
-      <div class="vc-card vc-v" data-yt="dB8pCqjlLSE">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Kreatywna produkcja video</li><li>Reels i TikToki</li><li>Wzrost zasięgu organicznego</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-v" data-yt="9_9k6gJKaf8">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Short-form content</li><li>Montaż i efekty wizualne</li><li>Dystrybucja na platformach</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-v" data-yt="X5M7V2L-cQ8">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Produkcja video poziomego</li><li>Branded content</li><li>Strategia publikacji</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-h" data-yt="vZJydBgjaEU">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Film promocyjny</li><li>Reżyseria i post-produkcja</li><li>Kampania zasięgowa</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-v" data-yt="qE1axvAOy6w">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Produkcja video contentowego</li><li>Strategia publikacji</li><li>Analiza wyników</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-v" data-yt="VbD5RKn9lGQ">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Kreatywna produkcja video</li><li>Reels na social media</li><li>Wzrost zasięgu organicznego</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-v" data-yt="GD9FzPFa56w">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">PickActive</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Produkcja video dla social media</li><li>Reels i TikToki promujące klub</li><li>Wzrost rozpoznawalności marki</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-h" data-yt="jJrqbuUJtq0">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Scenariusz i produkcja</li><li>Post-produkcja i montaż</li><li>Dystrybucja na platformach</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-v" data-yt="Rv7KbI3j3q4">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Krótkie video reklamowe</li><li>Branding i identyfikacja wizualna</li><li>Kampania na Instagram</li></ul>
-        </div>
-      </div>
-
-      <div class="vc-card vc-h vc-nero" data-yt="dxj8T0wUGLo">
-        <div class="vc-vid-box"><iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <div class="vc-info">
-          <div class="vc-client"><span class="vc-name">Client</span><span class="vc-type">Video Production</span></div>
-          <div class="vc-lbl" data-k="vc_what">Co zrobiliśmy?</div>
-          <ul class="vc-results"><li>Produkcja video wizerunkowego</li><li>Montaż i efekty wizualne</li><li>Dystrybucja multichannel</li></ul>
-        </div>
-      </div>
-
-    </div>
-    <div class="vc-dots"></div>
-  </div>
-  <div class="vc-arrows">
-    <button class="vc-arrow vc-prev">&#8592;</button>
-    <button class="vc-arrow vc-next">&#8594;</button>
-  </div>
-  </div><!-- /vc-wrap -->
-  <div class="gfx-all-btn" onclick="window.openAllVideo && window.openAllVideo()">
-    <span class="gfx-all-btn-icon">&#9654;</span>
-    <span data-k="vid_all_btn">Wszystkie wideo</span>
-  </div>
-  <div class="mob-port mob-vid-layout">
-    <!-- Pair 1: verticals -->
-    <div class="mob-vid-row">
-      <div class="mob-yt mob-yt-v" data-ytid="dB8pCqjlLSE"><img src="https://img.youtube.com/vi/dB8pCqjlLSE/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-      <div class="mob-yt mob-yt-v" data-ytid="9_9k6gJKaf8"><img src="https://img.youtube.com/vi/9_9k6gJKaf8/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-    <!-- Horizontal 1 -->
-    <div class="mob-vid-row">
-      <div class="mob-yt mob-yt-h" data-ytid="vZJydBgjaEU"><img src="https://img.youtube.com/vi/vZJydBgjaEU/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-    <!-- Pair 2: verticals -->
-    <div class="mob-vid-row">
-      <div class="mob-yt mob-yt-v" data-ytid="X5M7V2L-cQ8"><img src="https://img.youtube.com/vi/X5M7V2L-cQ8/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-      <div class="mob-yt mob-yt-v" data-ytid="qE1axvAOy6w"><img src="https://img.youtube.com/vi/qE1axvAOy6w/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-    <!-- Horizontal 2 -->
-    <div class="mob-vid-row">
-      <div class="mob-yt mob-yt-h" data-ytid="jJrqbuUJtq0"><img src="https://img.youtube.com/vi/jJrqbuUJtq0/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-    <!-- Pair 3: verticals -->
-    <div class="mob-vid-row">
-      <div class="mob-yt mob-yt-v" data-ytid="VbD5RKn9lGQ"><img src="https://img.youtube.com/vi/VbD5RKn9lGQ/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-      <div class="mob-yt mob-yt-v" data-ytid="GD9FzPFa56w"><img src="https://img.youtube.com/vi/GD9FzPFa56w/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-    <!-- Horizontal 3 -->
-    <div class="mob-vid-row">
-      <div class="mob-yt mob-yt-h" data-ytid="dxj8T0wUGLo"><img src="https://img.youtube.com/vi/dxj8T0wUGLo/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-    <!-- Solo vertical (centered) -->
-    <div class="mob-vid-row mob-vid-solo">
-      <div class="mob-yt mob-yt-v" data-ytid="Rv7KbI3j3q4"><img src="https://img.youtube.com/vi/Rv7KbI3j3q4/mqdefault.jpg" alt="" loading="lazy"><div class="mob-yt-overlay"><div class="mob-yt-play-btn">▶</div></div></div>
-    </div>
-  </div>
-  </div><!-- /port-section video -->
-
-  <!-- DESIGN / GRAFIKA -->
-  <div class="port-section" data-sec="design">
-    <div class="trail-outer">
-      <div class="trail-col" id="gfx-col-left"></div>
-      <div class="trail-wrap" id="gfx-trail-wrap">
-        <div class="trail-hint" data-k="trail_hint">Przesuń kursor żeby zobaczyć nasze realizacje</div>
-      </div>
-      <div class="trail-col" id="gfx-col-right"></div>
-    </div>
-    <div class="gfx-all-btn" id="gfx-all-btn" onclick="window.openAllGfx && window.openAllGfx()">
-      <span class="gfx-all-btn-icon">⊞</span>
-      <span data-k="gfx_all_btn">Wszystkie projekty graficzne</span>
-    </div>
-    <div class="mob-port mob-gfx-grid">
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g1.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g7.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g3.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g2.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g4.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g5.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g6.jpg" alt="" loading="lazy"></div>
-      <div class="mob-gfx-wrap"><img class="mob-gfx-img" src="g8.jpg" alt="" loading="lazy"></div>
-    </div>
-  </div>
-
-  <!-- WEB / STRONY -->
-  <div class="port-section" data-sec="web">
-    <div class="web-sites-grid">
-
-      <div class="site-card" data-url="https://inca1122.github.io/gucio_bar/index.html" data-img="web_gucio.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">gucio.bar</span></div>
-          <img src="ws1.png" alt="Gucio Bar" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://dzmzah.github.io/magshaurma/" data-img="web_shaurma.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">magshaurma.pl</span></div>
-          <img src="ws2.png" alt="Mag Shaurma" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://inca1122.github.io/jewelry-katowice/" data-img="web_jewelry.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">jewelry-katowice.pl</span></div>
-          <img src="ws3.png" alt="Jewelry Katowice" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://dzmzah.github.io/maya-gold" data-img="web_maya.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">maya-gold.pl</span></div>
-          <img src="ws4.png" alt="Maya Gold" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://marketingai.energiabiznesu.pl" data-img="web_marketing.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">energiabiznesu.pl</span></div>
-          <img src="ws5.png" alt="Marketing AI" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://beegelato.sk" data-img="web_bee.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">beegelato.sk</span></div>
-          <img src="ws6.png" alt="Bee Gelato" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://adekvatpotolki.netlify.app" data-img="web_potolki.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">adekvatpotolki.pl</span></div>
-          <img src="ws7.png" alt="Adekwat Potolki" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://pickactive.pl/" data-img="web_pick.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">pickactive.pl</span></div>
-          <img src="ws8.png" alt="PickActive" loading="lazy">
-        </div>
-      </div>
-
-      <div class="site-card" data-url="https://energiabiznesu.pl/" data-img="web_energia.jpg">
-        <div class="site-card-browser">
-          <div class="site-bar"><span class="site-dot"></span><span class="site-dot"></span><span class="site-dot"></span><span class="site-name">energiabiznesu.pl</span></div>
-          <img src="ws9.png" alt="Energia Biznesu" loading="lazy">
-        </div>
-      </div>
-
-    </div>
-    <div class="gfx-all-btn" onclick="window.openAllSites && window.openAllSites()">
-      <span class="gfx-all-btn-icon">⊞</span>
-      <span data-k="sites_all_btn">Wszystkie strony</span>
-    </div>
-  </div>
-
-  <!-- ADS -->
-  <div class="port-section" data-sec="ads">
-    <div class="port-soon">
-      <div class="port-soon-icon">📊</div>
-      <p data-k="ps_ads">Portfolio reklam — wkrótce</p>
-    </div>
-  </div>
-
 </section>
 
 <!-- TEAM -->
@@ -3121,7 +2957,10 @@ const T = {
     c_tot:"Total from", c_ord:"Order this package →", c_note:"Final price depends on project details. Free consultation included.",
     ct_lbl:"Ready to start?", ct_h:"something great", ct_d:"Tell us about your project. We'll get back within 24 hours with a tailored proposal.",
     ph_sub:"Call us to schedule a meeting or video call",
-    pf_v:"Video", pf_d:"Design", pf_w:"Web", pf_a:"Ads",
+    pf_v:"Video", pf_d:"Graphics", pf_w:"Websites", pf_a:"Ads",
+    pf_w_d:"Landing pages, stores, company sites — WordPress or custom code.",
+    pf_v_d:"YouTube, Reels, TikTok, editing & motion — full production.",
+    pf_d_d:"Posts, ad creatives, YouTube thumbnails, brand graphics.",
     pr_lbl:"Simple pricing", pr_ttl:"Choose your plan", pr_d:"Flexible monthly packages. Cancel anytime.",
     pl1n:"Starter", pl1op:"500", pl1p:"400", pl1per:"/month", pl1d:"Perfect for small businesses getting started with content marketing.",
     pl1f1:"8 short videos / month", pl1f2:"Social media management (1 platform)", pl1f3:"Basic monthly report", pl1f4:"Email support", pl1f5:"Paid advertising", pl1f6:"Website development",
@@ -3214,7 +3053,10 @@ const T = {
     c_tot:"Итого от", c_ord:"Заказать этот пакет →", c_note:"Финальная цена зависит от деталей проекта. Консультация бесплатно.",
     ct_lbl:"Готовы начать?", ct_h:"что-то крутое", ct_d:"Расскажите о своём проекте. Мы ответим в течение 24 часов с персональным предложением.",
     ph_sub:"Позвоните нам, чтобы назначить встречу или видеозвонок",
-    pf_v:"Видео", pf_d:"Дизайн", pf_w:"Сайты", pf_a:"Реклама",
+    pf_v:"Видео", pf_d:"Графика", pf_w:"Сайты", pf_a:"Реклама",
+    pf_w_d:"Лендинги, магазины, сайты компаний — WordPress или код.",
+    pf_v_d:"YouTube, Reels, TikTok, монтаж и motion — продакшн под ключ.",
+    pf_d_d:"Посты, рекламные креативы, обложки YouTube, графика бренда.",
     pr_lbl:"Прозрачные цены", pr_ttl:"Выберите тариф", pr_d:"Гибкие ежемесячные пакеты. Отмена в любой момент.",
     pl1n:"Стартовый", pl1op:"1 800", pl1p:"1 500", pl1per:"/мес", pl1d:"Идеально для малого бизнеса, делающего первые шаги в контент-маркетинге.",
     pl1f1:"8 коротких видео / мес", pl1f2:"Ведение соцсетей (1 платформа)", pl1f3:"Базовый ежемесячный отчёт", pl1f4:"Поддержка по email", pl1f5:"Платная реклама", pl1f6:"Разработка сайта",
@@ -3308,6 +3150,9 @@ const T = {
     ct_lbl:"Gotowy na start?", ct_h:"coś wspaniałego", ct_d:"Opowiedz nam o swoim projekcie. Odezwiemy się w ciągu 24 godzin z indywidualną propozycją.",
     ph_sub:"Zadzwoń, aby umówić spotkanie lub wideorozmowę",
     pf_v:"Wideo", pf_d:"Grafika", pf_w:"Strony", pf_a:"Reklama",
+    pf_w_d:"Landing page, sklepy, strony firmowe — WordPress lub kod własny.",
+    pf_v_d:"YouTube, Reels, TikTok, montaż i motion — produkcja pod klucz.",
+    pf_d_d:"Posty, kreacje reklamowe, miniatury YouTube, grafika marki.",
     pr_lbl:"Przejrzyste ceny", pr_ttl:"Wybierz pakiet", pr_d:"Elastyczne pakiety miesięczne. Rezygnacja w dowolnym momencie.",
     pl1n:"Starter", pl1op:"1 800", pl1p:"1 500", pl1per:"/mies", pl1d:"Idealny dla małych firm stawiających pierwsze kroki w content marketingu.",
     pl1f1:"8 krótkich wideo / mies", pl1f2:"Zarządzanie social mediami (1 platforma)", pl1f3:"Podstawowy raport miesięczny", pl1f4:"Wsparcie email", pl1f5:"Reklama płatna", pl1f6:"Tworzenie strony WWW",
