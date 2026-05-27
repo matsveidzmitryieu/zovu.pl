@@ -1527,10 +1527,12 @@
     /* title — Oswald, white→purple gradient like zah */
     #hero .hero-h {
       font-family: var(--display); font-weight: 700; text-transform: uppercase;
-      letter-spacing: -.01em; line-height: .9;
+      letter-spacing: .015em; line-height: 1.04;
       font-size: clamp(48px, 7vw, 108px); margin-bottom: 30px;
       text-shadow: 0 0 100px rgba(124,58,237,.3);
     }
+    /* room for Polish diacritics (Ś Ó Ą) — word-wrap overflow was clipping them */
+    #hero .hero-h .word-wrap { padding-top: .16em; margin-top: -.16em; }
     #hero .hero-h .word-inner {
       background: linear-gradient(180deg, #fff 32%, #a78bfa 100%);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
