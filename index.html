@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://img.youtube.com">
   <link rel="dns-prefetch" href="https://www.youtube.com">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -22,7 +22,10 @@
       --sec:     #5c5c78;
       --muted:   #a8a8be;
       --accent:  #7c3aed;
+      --accent-2:#a78bfa;
       --acc-rgb: 124,58,237;
+      --display: 'Oswald', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
     }
 
     html { scroll-behavior: smooth; }
@@ -1492,6 +1495,70 @@
       border-color: var(--border);
     }
 
+    /* ===== HERO → ZAH.ZOVU.PL STYLE (redesign 27.05.2026) ===== */
+    #hero { background: linear-gradient(180deg, #050505 0%, #0a0418 100%); }
+    .hero-bg-grad {
+      background:
+        radial-gradient(ellipse at 28% 38%, rgba(124,58,237,.38) 0%, transparent 52%),
+        radial-gradient(ellipse at 75% 65%, rgba(91,33,182,.30) 0%, transparent 55%) !important;
+      filter: none !important;
+    }
+    .hero-bg-grad::after {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity:.05; mix-blend-mode:overlay;
+    }
+    /* purple-tint floating shapes */
+    .elegant-shape {
+      background: linear-gradient(to right, rgba(124,58,237,.16), transparent) !important;
+      border-color: rgba(167,139,250,.20) !important;
+      box-shadow: 0 8px 40px rgba(124,58,237,.20) !important;
+    }
+    .hero-fade { background: linear-gradient(to bottom, rgba(5,5,5,.7) 0%, transparent 22%, transparent 78%, #050505 100%) !important; }
+
+    /* eyebrow — mono accent, no pill */
+    #hero .hero-tag {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .35em;
+      color: var(--accent-2); text-transform: uppercase;
+      background: none; border: none; padding: 0; margin-bottom: 28px;
+    }
+    #hero .hero-tag-dot { background: var(--accent-2); box-shadow: 0 0 10px var(--accent-2); }
+
+    /* title — Oswald, white→purple gradient like zah */
+    #hero .hero-h {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      letter-spacing: -.01em; line-height: .9;
+      font-size: clamp(48px, 7vw, 108px); margin-bottom: 30px;
+      text-shadow: 0 0 100px rgba(124,58,237,.3);
+    }
+    #hero .hero-h .word-inner {
+      background: linear-gradient(180deg, #fff 32%, #a78bfa 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    #hero .hero-h .word-ac {
+      background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* NEW: prominent services line */
+    .hero-roles {
+      font-family: var(--display); font-weight: 600; text-transform: uppercase;
+      font-size: clamp(16px, 1.7vw, 25px); letter-spacing: .1em; line-height: 1.4;
+      color: #fff; max-width: 600px; margin-bottom: 40px;
+      position: relative; z-index: 2;
+      opacity: 0; animation: fadeup .7s .8s forwards;
+    }
+    .hero-roles .sep { color: var(--accent-2); margin: 0 6px; }
+
+    /* tools glass → dark neon-purple */
+    .glass-inner {
+      background: linear-gradient(160deg, rgba(124,58,237,.16), rgba(10,4,24,.55)) !important;
+      border: 1px solid rgba(167,139,250,.42) !important;
+      box-shadow: 0 0 40px rgba(124,58,237,.25), inset 0 0 30px rgba(167,139,250,.07), 0 32px 50px rgba(0,0,0,.5) !important;
+    }
+    .glass-title { color: rgba(237,233,254,.6) !important; letter-spacing: 2.5px; }
+    .tools-tab.t-active { background: rgba(124,58,237,.40) !important; }
+
     /* ── GLASSMORPHISM WIDGET ── */
     .glass-widget {
       flex: 0 0 46%; max-width: 46%;
@@ -1621,7 +1688,14 @@
     @media (max-width: 860px) {
       #hero { flex-direction: column; padding-top: 110px; }
       .hero-content, .glass-widget { flex: none; max-width: 100%; width: 100%; }
-      .glass-widget { display: none; }
+      .glass-widget { display: flex; margin-top: 40px; }
+    }
+    @media (max-width: 480px) {
+      .glass-inner { padding: 24px 16px; }
+      .glass-icons { gap: 10px; }
+      .g-icon-img, .g-icon::before { width: 58px; height: 58px; }
+      .g-icon-lbl { font-size: 9px; }
+      .hero-roles { font-size: 15px; }
     }
 
     /* ── ANIMATIONS ── */
@@ -1928,6 +2002,7 @@
       <span class="ln"><span class="ac" data-k="hero_ac">content</span> <span data-k="hero_mid">that</span></span>
       <span class="ln" data-k="hero_l3">sells.</span>
     </h1>
+    <div class="hero-roles" id="hero-roles"></div>
     <div class="hero-bot">
       <p class="hero-desc" data-k="hero_d">Video production, social media, advertising & web — all in one team. Three brothers, one mission.</p>
       <div class="hero-acts">
@@ -2935,6 +3010,7 @@ const T = {
   en: {
     nav_cta:"Let's talk",
     hero_tag:"Creative Agency", hero_l1:"We create", hero_ac:"content", hero_mid:"that", hero_l3:"sells.",
+    hero_roles:"Sites · Video · Posts · Ads · Social Media · Automation",
     hero_d:"Video production, social media, advertising & web — all in one team.",
     hero_cta:"Calculate price", hero_p:"View work",
     s_lbl:"What we do", s_ttl:"Our services",
@@ -3027,6 +3103,7 @@ const T = {
   ru: {
     nav_cta:"Связаться",
     hero_tag:"Креативное агентство", hero_l1:"Мы создаём", hero_ac:"контент", hero_mid:"который", hero_l3:"продаёт.",
+    hero_roles:"Сайты · Видео · Посты · Реклама · Соцсети · Автоматизация",
     hero_d:"Видеопродакшн, SMM, реклама и сайты — всё в одном месте.",
     hero_cta:"Рассчитать стоимость", hero_p:"Наши работы",
     s_lbl:"Что мы делаем", s_ttl:"Наши услуги",
@@ -3119,6 +3196,7 @@ const T = {
   pl: {
     nav_cta:"Porozmawiajmy",
     hero_tag:"Agencja Kreatywna", hero_l1:"Tworzymy", hero_ac:"treści", hero_mid:"które", hero_l3:"sprzedają.",
+    hero_roles:"Strony · Wideo · Posty · Reklama · Social Media · Automatyzacja",
     hero_d:"Produkcja wideo, social media, reklama i strony WWW — wszystko w jednym miejscu.",
     hero_cta:"Oblicz cenę", hero_p:"Nasze prace",
     s_lbl:"Co robimy", s_ttl:"Nasze usługi",
@@ -4062,6 +4140,13 @@ function rebuildHeroTitle() {
   const line2 = `<span class="ln">${makeWords(t.hero_ac || '', 'word-ac')} ${makeWords(t.hero_mid || '')}</span>`;
   const line3 = `<span class="ln">${makeWords(t.hero_l3 || '')}</span>`;
   h.innerHTML = line1 + line2 + line3;
+
+  const roles = document.getElementById('hero-roles');
+  if (roles && t.hero_roles) {
+    roles.innerHTML = t.hero_roles.split('·')
+      .map(s => s.trim())
+      .join('<span class="sep">·</span>');
+  }
 }
 
 // ── FILM GRAIN ANIMATION ──────────────────────────────────────────────────────
