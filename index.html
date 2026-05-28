@@ -4299,7 +4299,7 @@ onNavScroll();
         var card = document.createElement('div');
         card.className = 'pfg-card pfg-vid';
         var v = document.createElement('video');
-        v.src = it.src; if (it.poster) v.poster = it.poster;
+        v.src = it.src + '?audio=1'; if (it.poster) v.poster = it.poster;
         v.controls = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
         card.appendChild(v);
         curPageV.appendChild(card);
