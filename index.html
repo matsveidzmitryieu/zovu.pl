@@ -449,6 +449,58 @@
       .pf-cat-head { gap: 14px; }
       .pf-strip-img, .pf-strip-vid { width: 196px; height: 110px; }
     }
+
+    /* ── PORTFOLIO GALLERY OVERLAY ── */
+    .pfg {
+      position: fixed; inset: 0; z-index: 5000;
+      background: linear-gradient(180deg, #0d0820 0%, #060010 100%);
+      display: flex; flex-direction: column;
+      opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility .4s ease;
+      overflow-y: auto;
+    }
+    .pfg.open { opacity: 1; visibility: visible; }
+    .pfg-bar {
+      position: sticky; top: 0; z-index: 2;
+      display: flex; align-items: center; gap: 16px;
+      padding: 22px clamp(20px, 4vw, 56px);
+      background: rgba(8,8,8,.7); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .pfg-num { font-family: var(--mono); font-size: 13px; letter-spacing: .2em; color: var(--accent-2); }
+    .pfg-title {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(22px, 3vw, 38px); letter-spacing: -.01em; color: #fff;
+    }
+    .pfg-close {
+      margin-left: auto; width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15);
+      color: #fff; font-size: 18px; cursor: pointer; transition: all .25s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pfg-close:hover { background: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
+    .pfg-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      max-width: 1400px; margin: 0 auto; padding: 40px clamp(20px, 4vw, 56px) 80px; width: 100%;
+    }
+    @media (max-width: 900px) { .pfg-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .pfg-grid { grid-template-columns: 1fr; } }
+    .pfg-card {
+      display: block; border: 0; padding: 0; background: #111; cursor: pointer;
+      border-radius: 14px; overflow: hidden; aspect-ratio: 16/9;
+      border: 1px solid rgba(167,139,250,.25); box-shadow: 0 0 0 rgba(124,58,237,0);
+      transition: transform .3s, box-shadow .3s, border-color .3s; text-decoration: none;
+    }
+    .pfg-card:hover { transform: translateY(-5px); border-color: var(--accent-2); box-shadow: 0 14px 40px rgba(124,58,237,.35); }
+    .pfg-card img, .pfg-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* lightbox */
+    .pfg-lb {
+      position: fixed; inset: 0; z-index: 6000; background: rgba(0,0,0,.92);
+      display: flex; align-items: center; justify-content: center; padding: 5vw;
+      opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; cursor: zoom-out;
+    }
+    .pfg-lb.open { opacity: 1; visibility: visible; }
+    .pfg-lb img { max-width: 92vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 20px 80px rgba(0,0,0,.6); }
+
     .port-grid {
       display: flex; flex-direction: row;
       overflow-x: auto; overflow-y: hidden;
@@ -2388,7 +2440,7 @@
   <div class="pf-cats rv">
 
     <!-- STRONY -->
-    <a href="#contact" class="pf-cat">
+    <a href="#" class="pf-cat">
       <div class="pf-cat-head">
         <span class="pf-cat-num">01</span>
         <span class="pf-cat-name" data-k="pf_w">Strony</span>
@@ -2402,7 +2454,7 @@
     </a>
 
     <!-- WIDEO -->
-    <a href="#contact" class="pf-cat">
+    <a href="#" class="pf-cat">
       <div class="pf-cat-head">
         <span class="pf-cat-num">02</span>
         <span class="pf-cat-name" data-k="pf_v">Wideo</span>
@@ -2416,7 +2468,7 @@
     </a>
 
     <!-- GRAFIKA -->
-    <a href="#contact" class="pf-cat">
+    <a href="#" class="pf-cat">
       <div class="pf-cat-head">
         <span class="pf-cat-num">03</span>
         <span class="pf-cat-name" data-k="pf_d">Grafika</span>
@@ -2431,6 +2483,17 @@
 
   </div>
 </section>
+
+<!-- PORTFOLIO GALLERY OVERLAY -->
+<div class="pfg" id="pfg" aria-hidden="true">
+  <div class="pfg-bar">
+    <span class="pfg-num"></span>
+    <span class="pfg-title"></span>
+    <button class="pfg-close" id="pfgClose" aria-label="Zamknij">&#10005;</button>
+  </div>
+  <div class="pfg-grid" id="pfgGrid"></div>
+</div>
+<div class="pfg-lb" id="pfgLb" aria-hidden="true"><img src="" alt=""></div>
 
 <!-- TEAM -->
 <section id="team">
@@ -3813,6 +3876,77 @@ onNavScroll();
   } else {
     window.addEventListener('load', function () { setTimeout(hideSplash, 1400); });
   }
+})();
+
+// ── PORTFOLIO GALLERY (click category → open zah-style gallery) ──
+(function () {
+  var cats = document.querySelectorAll('.pf-cats .pf-cat');
+  var pfg = document.getElementById('pfg');
+  if (!cats.length || !pfg) return;
+  var grid = document.getElementById('pfgGrid');
+  var lb = document.getElementById('pfgLb');
+  var lbImg = lb.querySelector('img');
+  var TYPES = ['web', 'video', 'gfx'];
+  var SITE_URL = {
+    'web_fightmode.png': 'https://fightmode.tv', 'web_shaurma.jpg': 'https://magshaurma.com',
+    'web_bee.jpg': 'https://beegelato.sk', 'web_jewelry.jpg': 'https://jewelry-katowice.com',
+    'web_maya.jpg': 'https://maya-gold.com', 'web_gucio.jpg': 'https://gucio-bar.com',
+    'web_marketing.jpg': 'https://marketingai.energiabiznesu.pl', 'web_pick.jpg': 'https://pickactive.pl',
+    'web_potolki.jpg': 'https://adekvatpotolki.netlify.app', 'web_energia.jpg': 'https://energiabiznesu.pl'
+  };
+  function fname(src) { return src.split('/').pop().split('?')[0]; }
+  function open(i) {
+    var cat = cats[i], type = TYPES[i];
+    var num = cat.querySelector('.pf-cat-num').textContent;
+    var name = cat.querySelector('.pf-cat-name').textContent;
+    pfg.querySelector('.pfg-num').textContent = num;
+    pfg.querySelector('.pfg-title').textContent = name;
+    var track = cat.querySelector('.pf-strip-track');
+    var items = Array.prototype.filter.call(track.children, function (el) { return !el.hasAttribute('aria-hidden'); });
+    grid.innerHTML = '';
+    items.forEach(function (el) {
+      if (type === 'video') {
+        var card = document.createElement('div');
+        card.className = 'pfg-card';
+        var v = document.createElement('video');
+        v.src = el.getAttribute('src'); v.controls = true; v.loop = true; v.muted = true; v.playsInline = true; v.preload = 'metadata';
+        card.appendChild(v); grid.appendChild(card);
+      } else if (type === 'web') {
+        var src = el.getAttribute('src');
+        var a = document.createElement('a');
+        a.className = 'pfg-card'; a.href = SITE_URL[fname(src)] || '#'; a.target = '_blank'; a.rel = 'noopener';
+        var img = document.createElement('img'); img.src = src; img.loading = 'lazy';
+        a.appendChild(img); grid.appendChild(a);
+      } else {
+        var src2 = el.getAttribute('src');
+        var b = document.createElement('button');
+        b.className = 'pfg-card'; b.type = 'button';
+        var img2 = document.createElement('img'); img2.src = src2; img2.loading = 'lazy';
+        b.appendChild(img2);
+        b.addEventListener('click', function () { lbImg.src = src2; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
+        grid.appendChild(b);
+      }
+    });
+    pfg.classList.add('open'); pfg.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    pfg.classList.remove('open'); pfg.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    grid.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
+    setTimeout(function () { grid.innerHTML = ''; }, 400);
+  }
+  cats.forEach(function (cat, i) {
+    cat.addEventListener('click', function (e) { e.preventDefault(); open(i); });
+  });
+  document.getElementById('pfgClose').addEventListener('click', close);
+  lb.addEventListener('click', function () { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (lb.classList.contains('open')) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
+      else if (pfg.classList.contains('open')) close();
+    }
+  });
 })();
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
