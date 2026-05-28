@@ -214,7 +214,7 @@
       background: linear-gradient(135deg, #0d0a1e 0%, #0a1525 50%, #13082a 100%);
     }
     .hero-content {
-      flex: 0 0 48%; max-width: 48%;
+      flex: 0 0 42%; max-width: 42%;
       display: flex; flex-direction: column;
       justify-content: center;
     }
@@ -515,7 +515,7 @@
     }
     .pfg-card:hover { transform: translateY(-5px); border-color: var(--accent-2); box-shadow: 0 14px 40px rgba(124,58,237,.35); }
     .pfg-card > img, .pfg-card > video, .pfg-card > iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: 0; }
-    /* VIDEO — carousel of pages (3 reels per page on PC, 2 on mobile), like Strony */
+    /* VIDEO — carousel of pages (3 reels/page PC, 2/page mobile). Reels fill height, centered vertically */
     .pfg-grid--video {
       display: flex !important;
       overflow-x: auto;
@@ -524,6 +524,7 @@
       margin: 0 auto;
       padding: 0;
       width: 100%;
+      height: 100%;
       gap: 0;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
@@ -536,16 +537,30 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
-      padding: 120px clamp(20px, 4vw, 56px) 140px;
+      padding: 110px clamp(20px, 4vw, 56px) 120px;
       scroll-snap-align: start;
       scroll-snap-stop: always;
       box-sizing: border-box;
+      align-content: center;
+      justify-items: center;
+    }
+    .pfg-grid--video .pfg-card.pfg-vid {
+      aspect-ratio: 9/16;
+      height: clamp(320px, calc(100vh - 230px), 620px);
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
     }
     @media (max-width: 700px) {
       .pfg-grid--video .pfg-page {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 100px clamp(14px, 3vw, 24px) 140px;
+        gap: 10px;
+        padding: 90px 10px 100px;
+      }
+      .pfg-grid--video .pfg-card.pfg-vid {
+        height: auto;
+        width: 100%;
+        max-width: 100%;
       }
       .pfg-grid--video { cursor: auto; }
     }
@@ -1889,7 +1904,7 @@
 
     /* ── GLASSMORPHISM WIDGET ── */
     .glass-widget {
-      flex: 0 0 46%; max-width: 46%;
+      flex: 0 0 52%; max-width: 52%;
       position: relative; z-index: 3;
       opacity: 0; animation: fadeup .8s 1.1s forwards;
       display: flex; align-items: center; justify-content: center;
@@ -4073,7 +4088,6 @@ onNavScroll();
       { src: 'video3.mp4', poster: 'vidposter3.jpg' },
       { src: 'video4.mp4', poster: 'vidposter4.jpg' },
       { src: 'video5.mp4', poster: 'vidposter5.jpg' },
-      { src: 'video6.mp4', poster: 'vidposter6.jpg' },
       { src: 'video7.mp4', poster: 'vidposter7.jpg' },
       { src: 'video8.mp4', poster: 'vidposter8.jpg' },
       { src: 'video9.mp4', poster: 'vidposter9.jpg' },
