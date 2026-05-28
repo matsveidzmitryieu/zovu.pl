@@ -1896,14 +1896,62 @@
     .cl-icon.in  { animation: cl-icon-in  .42s cubic-bezier(0.34,1.56,0.64,1) forwards; }
     .cl-icon.out { animation: cl-icon-out .28s ease-in forwards; }
 
-    /* ── FOOTER ── */
+    /* ── FOOTER (zovu style) ── */
     footer {
-      padding: 36px 52px; border-top: 1px solid var(--border);
+      padding: 36px clamp(20px, 4vw, 52px);
+      background: linear-gradient(180deg, #0d0820 0%, #07041a 100%);
+      border-top: 1px solid rgba(167,139,250,.20);
+      box-shadow: 0 -30px 80px rgba(124,58,237,.18);
       display: flex; justify-content: space-between; align-items: center;
+      gap: 20px; flex-wrap: wrap;
     }
-    .f-copy { font-size: 13px; color: var(--muted); }
+    .f-brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .f-brand img { width: 28px; height: 28px; object-fit: contain; }
+    .f-brand span {
+      font-family: var(--display); font-weight: 800; font-size: 18px;
+      letter-spacing: .08em; color: #fff;
+    }
+    .f-copy {
+      font-family: var(--mono); font-size: 12px;
+      color: rgba(255,255,255,.55); letter-spacing: .04em;
+    }
+    .f-copy a {
+      color: rgba(255,255,255,.55); text-decoration: none;
+      transition: color .25s;
+    }
+    .f-copy a:hover { color: var(--accent-2); }
+    .f-phone {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 13px; font-weight: 500;
+      letter-spacing: .06em;
+      color: #fff; text-decoration: none;
+      padding: 9px 16px; border-radius: 100px;
+      background: rgba(124,58,237,.15);
+      border: 1px solid rgba(167,139,250,.4);
+      box-shadow: 0 0 24px rgba(124,58,237,.25);
+      transition: all .3s;
+    }
+    .f-phone::before {
+      content: '';
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,.7);
+    }
+    .f-phone:hover {
+      background: rgba(124,58,237,.30);
+      border-color: var(--accent);
+      box-shadow: 0 0 36px rgba(124,58,237,.55);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 700px) {
+      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+      .f-copy { font-size: 11px; }
+    }
     .f-links { display: flex; gap: 24px; }
-    .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; cursor: none; transition: color .2s; }
+    .f-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
     .f-links a:hover { color: var(--accent); }
 
     /* ── HERO CANVAS ── */
@@ -3261,8 +3309,12 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="f-copy">© 2026 ZOVU. <span data-k="ft_r">All rights reserved.</span> &nbsp;·&nbsp; <a href="privacy-policy.html" style="color:var(--muted);text-decoration:none;transition:color .2s;cursor:none" onmouseenter="this.style.color='var(--accent)'" onmouseleave="this.style.color='var(--muted)'">Privacy Policy</a></div>
-  <a href="tel:+48571795097" style="font-size:13px;color:var(--sec);text-decoration:none;letter-spacing:.5px;transition:color .2s;cursor:none;" onmouseenter="this.style.color='var(--accent)'" onmouseleave="this.style.color='var(--sec)'">+48 571 795 097</a>
+  <a href="#" class="f-brand">
+    <img src="logo_icon.png" alt="ZOVU">
+    <span>ZOVU</span>
+  </a>
+  <div class="f-copy">© 2026 ZOVU. <span data-k="ft_r">Wszelkie prawa zastrzeżone.</span> &nbsp;·&nbsp; <a href="privacy-policy.html" data-k="ft_priv">Privacy Policy</a></div>
+  <a href="tel:+48571795097" class="f-phone">+48 571 795 097</a>
 </footer>
 
 <!-- SITE MODAL -->
@@ -3363,7 +3415,7 @@ const T = {
     pl3f1:"Unlimited short videos", pl3f2:"Full social media management (all platforms)", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page per quarter", pl3f5:"Weekly reports & strategy calls", pl3f6:"Dedicated account manager",
     pl_cta_s:"Get started", pl_cta_p:"Get started", pl_cta_s2:"Book a consultation",
     pr_fine:"All prices net · VAT invoice · Monthly billing · Cancel anytime",
-    ft_r:"All rights reserved.", ft_s:"Services", ft_w:"Work", ft_p:"Pricing", ft_c:"Contact",
+    ft_r:"All rights reserved.", ft_priv:"Privacy Policy", ft_s:"Services", ft_w:"Work", ft_p:"Pricing", ft_c:"Contact",
     nav_tm:"Team",
     ck_t:"Cookies", ck_d:"We use cookies to improve your browsing experience and analyse site traffic.", ck_ok:"Accept", ck_no:"Decline",
     ck_pp:"Privacy Policy", site_visit:"Visit website →",
@@ -3460,7 +3512,7 @@ const T = {
     pl3f1:"Неограниченные короткие видео", pl3f2:"Полное ведение всех соцсетей", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 лендинг в квартал", pl3f5:"Еженедельные отчёты + стратегические сессии", pl3f6:"Персональный менеджер",
     pl_cta_s:"Начать", pl_cta_p:"Начать", pl_cta_s2:"Назначить встречу",
     pr_fine:"Все цены без НДС · Счёт-фактура · Ежемесячная оплата · Отмена в любой момент",
-    ft_r:"Все права защищены.", ft_s:"Услуги", ft_w:"Работы", ft_p:"Цены", ft_c:"Контакт",
+    ft_r:"Все права защищены.", ft_priv:"Политика конфиденциальности", ft_s:"Услуги", ft_w:"Работы", ft_p:"Цены", ft_c:"Контакт",
     nav_tm:"Команда",
     ck_t:"Cookies", ck_d:"Мы используем файлы cookie для улучшения вашего опыта и анализа трафика.", ck_ok:"Принять", ck_no:"Отклонить",
     ck_pp:"Политика конфиденциальности", site_visit:"Перейти на сайт →",
@@ -3557,7 +3609,7 @@ const T = {
     pl3f1:"Nielimitowane krótkie filmy", pl3f2:"Pełne prowadzenie social mediów (wszystkie platformy)", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page na kwartał", pl3f5:"Cotygodniowe raporty + sesje strategiczne", pl3f6:"Dedykowany account manager",
     pl_cta_s:"Zacznij", pl_cta_p:"Zacznij teraz", pl_cta_s2:"Umów konsultację",
     pr_fine:"Wszystkie ceny netto · Faktura VAT · Płatność miesięczna · Anuluj kiedy chcesz",
-    ft_r:"Wszelkie prawa zastrzeżone.", ft_s:"Usługi", ft_w:"Prace", ft_p:"Cennik", ft_c:"Kontakt",
+    ft_r:"Wszelkie prawa zastrzeżone.", ft_priv:"Polityka prywatności", ft_s:"Usługi", ft_w:"Prace", ft_p:"Cennik", ft_c:"Kontakt",
     nav_tm:"Zespół",
     ck_t:"Pliki cookie", ck_d:"Używamy plików cookie, aby poprawić Twoje doświadczenie i analizować ruch na stronie.", ck_ok:"Akceptuj", ck_no:"Odrzuć",
     ck_pp:"Polityka prywatności", site_visit:"Przejdź do strony →",
