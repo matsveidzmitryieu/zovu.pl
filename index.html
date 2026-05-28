@@ -1996,6 +1996,47 @@
       transform: translateY(-2px);
       box-shadow: 0 0 40px rgba(167,139,250,.65);
     }
+    /* Trust bar above pricing */
+    .trust-bar {
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 32px;
+      max-width: 1100px; margin: 36px auto 0;
+      padding: 18px 28px;
+      background: rgba(15,8,30,.55);
+      border: 1px solid rgba(167,139,250,.20);
+      border-radius: 100px;
+    }
+    .trust-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+      letter-spacing: .04em; color: rgba(255,255,255,.78);
+    }
+    .trust-ico {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--accent);
+      color: #fff; font-size: 10px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 12px rgba(124,58,237,.5);
+    }
+    @media (max-width: 760px) {
+      .trust-bar { flex-direction: column; gap: 12px; border-radius: 18px; padding: 16px 22px; }
+    }
+    /* Featured plan micro-badge under CTA */
+    .plan-microbadge {
+      margin-top: 14px;
+      text-align: center;
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent-2);
+    }
+    /* Fine print under pricing grid */
+    .pricing-fine {
+      text-align: center;
+      margin: 36px auto 0;
+      font-family: var(--mono); font-size: 12px;
+      letter-spacing: .04em; color: rgba(255,255,255,.45);
+      max-width: 900px;
+    }
 
     @media (max-width: 1100px) {
       #pricing { padding-left: 32px; padding-right: 32px; }
@@ -3040,6 +3081,13 @@
       Flexible monthly packages. Cancel anytime.
     </p>
   </div>
+  <!-- TRUST BAR -->
+  <div class="trust-bar rv">
+    <div class="trust-item"><span class="trust-ico">✓</span><span data-k="trust1">Bez długoterminowej umowy</span></div>
+    <div class="trust-item"><span class="trust-ico">✓</span><span data-k="trust2">Pierwsza konsultacja gratis</span></div>
+    <div class="trust-item"><span class="trust-ico">✓</span><span data-k="trust3">100+ zadowolonych klientów</span></div>
+  </div>
+
   <div class="pricing-grid">
 
     <!-- STARTER -->
@@ -3051,21 +3099,21 @@
       </div>
       <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl1p">1 500</span></div>
       <div class="plan-period" data-k="pl1per">/mies</div>
-      <div class="plan-desc" data-k="pl1d">Perfect for small businesses getting started with content marketing.</div>
+      <div class="plan-desc" data-k="pl1d">Pierwszy krok dla małej firmy w content marketingu.</div>
       <ul class="plan-feats">
-        <li data-k="pl1f1">8 short videos / month</li>
-        <li data-k="pl1f2">Social media management (1 platform)</li>
-        <li data-k="pl1f3">Basic monthly report</li>
-        <li data-k="pl1f4">Email support</li>
-        <li class="off" data-k="pl1f5">Paid advertising</li>
-        <li class="off" data-k="pl1f6">Website development</li>
+        <li data-k="pl1f1">8 krótkich filmów / miesiąc</li>
+        <li data-k="pl1f2">Prowadzenie social mediów (1 platforma)</li>
+        <li data-k="pl1f3">Podstawowy raport miesięczny</li>
+        <li data-k="pl1f4">Wsparcie e-mail</li>
+        <li class="off" data-k="pl1f5">Płatna reklama</li>
+        <li class="off" data-k="pl1f6">Tworzenie stron WWW</li>
       </ul>
-      <a href="#contact" class="plan-btn sec" data-k="pl_cta_s">Get started</a>
+      <a href="#contact" class="plan-btn sec" data-k="pl_cta_s">Zacznij</a>
     </div>
 
     <!-- GROWTH (featured) -->
     <div class="plan featured rv d2">
-      <div class="plan-badge" data-k="pl_pop">Most popular</div>
+      <div class="plan-badge" data-k="pl_pop">Najpopularniejszy</div>
       <div class="plan-name" data-k="pl2n">Growth</div>
       <div class="plan-price-meta">
         <span class="plan-old"><span class="plan-curr">zł</span><span data-k="pl2op">4 400</span></span>
@@ -3073,40 +3121,44 @@
       </div>
       <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl2p">3 500</span></div>
       <div class="plan-period" data-k="pl2per">/mies</div>
-      <div class="plan-desc" data-k="pl2d">For businesses ready to scale with full content & advertising coverage.</div>
+      <div class="plan-desc" data-k="pl2d">Pełna obsługa marki + reklama z gwarancją wyników.</div>
       <ul class="plan-feats">
-        <li data-k="pl2f1">20 videos / month (short + medium)</li>
-        <li data-k="pl2f2">Social media management (2 platforms)</li>
-        <li data-k="pl2f3">Facebook & Instagram Ads management</li>
-        <li data-k="pl2f4">Monthly performance report</li>
-        <li data-k="pl2f5">Priority support</li>
-        <li class="off" data-k="pl2f6">Website development</li>
+        <li data-k="pl2f1">20 filmów / miesiąc (krótkie + średnie)</li>
+        <li data-k="pl2f2">Prowadzenie social mediów (2 platformy)</li>
+        <li data-k="pl2f3">Reklama Facebook &amp; Instagram</li>
+        <li data-k="pl2f4">Miesięczny raport wyników</li>
+        <li data-k="pl2f5">Priorytetowe wsparcie</li>
+        <li class="off" data-k="pl2f6">Tworzenie stron WWW</li>
       </ul>
-      <a href="#contact" class="plan-btn prim" data-k="pl_cta_p">Get started</a>
+      <a href="#contact" class="plan-btn prim" data-k="pl_cta_p">Zacznij teraz</a>
+      <div class="plan-microbadge" data-k="pl_micro">80% klientów wybiera ten plan</div>
     </div>
 
     <!-- PRO -->
     <div class="plan rv d3">
       <div class="plan-name" data-k="pl3n">Pro</div>
       <div class="plan-price-meta">
-        <span class="plan-old"><span class="plan-curr">zł</span><span data-k="pl3op">8 800</span></span>
+        <span class="plan-old"><span class="plan-curr">zł</span><span data-k="pl3op">10 500</span></span>
         <span class="plan-save">−20%</span>
       </div>
-      <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl3p">7 000</span></div>
+      <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl3p">8 500</span></div>
       <div class="plan-period" data-k="pl3per">/mies</div>
-      <div class="plan-desc" data-k="pl3d">Full-service agency package — content, ads, web & ongoing support.</div>
+      <div class="plan-desc" data-k="pl3d">Cała agencja w Twoim zespole 24/7.</div>
       <ul class="plan-feats">
-        <li data-k="pl3f1">Unlimited short videos</li>
-        <li data-k="pl3f2">Full social media management (all platforms)</li>
-        <li data-k="pl3f3">Facebook, Instagram & Google Ads</li>
-        <li data-k="pl3f4">1 landing page per quarter</li>
-        <li data-k="pl3f5">Weekly reports & strategy calls</li>
-        <li data-k="pl3f6">Dedicated account manager</li>
+        <li data-k="pl3f1">Nielimitowane krótkie filmy</li>
+        <li data-k="pl3f2">Pełne prowadzenie social mediów (wszystkie platformy)</li>
+        <li data-k="pl3f3">Facebook, Instagram &amp; Google Ads</li>
+        <li data-k="pl3f4">1 landing page na kwartał</li>
+        <li data-k="pl3f5">Cotygodniowe raporty + sesje strategiczne</li>
+        <li data-k="pl3f6">Dedykowany account manager</li>
       </ul>
-      <a href="#contact" class="plan-btn sec" data-k="pl_cta_s2">Get started</a>
+      <a href="#contact" class="plan-btn sec" data-k="pl_cta_s2">Umów konsultację</a>
     </div>
 
   </div>
+
+  <!-- FINE PRINT -->
+  <div class="pricing-fine rv" data-k="pr_fine">Wszystkie ceny netto · Faktura VAT · Płatność miesięczna · Anuluj kiedy chcesz</div>
 </section>
 
 <!-- CALCULATOR -->
@@ -3528,13 +3580,15 @@ const T = {
     pf_v_d:"YouTube, Reels, TikTok, editing & motion — full production.",
     pf_d_d:"Posts, ad creatives, YouTube thumbnails, brand graphics.",
     pr_lbl:"Simple pricing", pr_ttl:"Choose your plan", pr_d:"Flexible monthly packages. Cancel anytime.",
-    pl1n:"Starter", pl1op:"500", pl1p:"400", pl1per:"/month", pl1d:"Perfect for small businesses getting started with content marketing.",
+    trust1:"No long-term contract", trust2:"First consultation free", trust3:"100+ happy clients",
+    pl1n:"Starter", pl1op:"500", pl1p:"400", pl1per:"/month", pl1d:"First step for a small business in content marketing.",
     pl1f1:"8 short videos / month", pl1f2:"Social media management (1 platform)", pl1f3:"Basic monthly report", pl1f4:"Email support", pl1f5:"Paid advertising", pl1f6:"Website development",
-    pl2n:"Growth", pl2op:"1 100", pl2p:"900", pl2per:"/month", pl2d:"For businesses ready to scale with full content & advertising coverage.",
+    pl2n:"Growth", pl2op:"1 100", pl2p:"900", pl2per:"/month", pl2d:"Full brand management + ads with results guaranteed.",
     pl2f1:"20 videos / month (short + medium)", pl2f2:"Social media management (2 platforms)", pl2f3:"Facebook & Instagram Ads management", pl2f4:"Monthly performance report", pl2f5:"Priority support", pl2f6:"Website development",
-    pl_pop:"Most popular", pl3n:"Scale", pl3op:"2 200", pl3p:"1 800", pl3per:"/month", pl3d:"Full-service agency package — content, ads, web & ongoing support.",
+    pl_pop:"Most popular", pl_micro:"80% of clients pick this plan", pl3n:"Pro", pl3op:"2 750", pl3p:"2 200", pl3per:"/month", pl3d:"A full agency on your team 24/7.",
     pl3f1:"Unlimited short videos", pl3f2:"Full social media management (all platforms)", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page per quarter", pl3f5:"Weekly reports & strategy calls", pl3f6:"Dedicated account manager",
-    pl_cta_s:"Get started", pl_cta_p:"Get started", pl_cta_s2:"Let's talk",
+    pl_cta_s:"Get started", pl_cta_p:"Get started", pl_cta_s2:"Book a consultation",
+    pr_fine:"All prices net · VAT invoice · Monthly billing · Cancel anytime",
     ft_r:"All rights reserved.", ft_s:"Services", ft_w:"Work", ft_p:"Pricing", ft_c:"Contact",
     nav_tm:"Team",
     ck_t:"Cookies", ck_d:"We use cookies to improve your browsing experience and analyse site traffic.", ck_ok:"Accept", ck_no:"Decline",
@@ -3624,13 +3678,15 @@ const T = {
     pf_v_d:"YouTube, Reels, TikTok, монтаж и motion — продакшн под ключ.",
     pf_d_d:"Посты, рекламные креативы, обложки YouTube, графика бренда.",
     pr_lbl:"Прозрачные цены", pr_ttl:"Выберите тариф", pr_d:"Гибкие ежемесячные пакеты. Отмена в любой момент.",
-    pl1n:"Стартовый", pl1op:"1 800", pl1p:"1 500", pl1per:"/мес", pl1d:"Идеально для малого бизнеса, делающего первые шаги в контент-маркетинге.",
+    trust1:"Без долгосрочного контракта", trust2:"Первая консультация бесплатно", trust3:"100+ довольных клиентов",
+    pl1n:"Стартовый", pl1op:"1 800", pl1p:"1 500", pl1per:"/мес", pl1d:"Первый шаг для малого бизнеса в контент-маркетинге.",
     pl1f1:"8 коротких видео / мес", pl1f2:"Ведение соцсетей (1 платформа)", pl1f3:"Базовый ежемесячный отчёт", pl1f4:"Поддержка по email", pl1f5:"Платная реклама", pl1f6:"Разработка сайта",
-    pl2n:"Рост", pl2op:"4 400", pl2p:"3 500", pl2per:"/мес", pl2d:"Для бизнеса, готового масштабироваться с полным покрытием контента и рекламы.",
+    pl2n:"Рост", pl2op:"4 400", pl2p:"3 500", pl2per:"/мес", pl2d:"Полное ведение бренда + реклама с гарантией результата.",
     pl2f1:"20 видео / мес (короткие + средние)", pl2f2:"Ведение соцсетей (2 платформы)", pl2f3:"Управление рекламой Facebook & Instagram", pl2f4:"Ежемесячный отчёт о результатах", pl2f5:"Приоритетная поддержка", pl2f6:"Разработка сайта",
-    pl_pop:"Самый популярный", pl3n:"Scale", pl3op:"8 800", pl3p:"7 000", pl3per:"/мес", pl3d:"Полный пакет агентства — контент, реклама, сайт и постоянная поддержка.",
-    pl3f1:"Неограниченные короткие видео", pl3f2:"Полное ведение всех соцсетей", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 лендинг в квартал", pl3f5:"Еженедельные отчёты и стратегические звонки", pl3f6:"Персональный менеджер",
-    pl_cta_s:"Начать", pl_cta_p:"Начать", pl_cta_s2:"Поговорим",
+    pl_pop:"Самый популярный", pl_micro:"80% клиентов выбирают этот план", pl3n:"Pro", pl3op:"10 500", pl3p:"8 500", pl3per:"/мес", pl3d:"Целое агентство в твоей команде 24/7.",
+    pl3f1:"Неограниченные короткие видео", pl3f2:"Полное ведение всех соцсетей", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 лендинг в квартал", pl3f5:"Еженедельные отчёты + стратегические сессии", pl3f6:"Персональный менеджер",
+    pl_cta_s:"Начать", pl_cta_p:"Начать", pl_cta_s2:"Назначить встречу",
+    pr_fine:"Все цены без НДС · Счёт-фактура · Ежемесячная оплата · Отмена в любой момент",
     ft_r:"Все права защищены.", ft_s:"Услуги", ft_w:"Работы", ft_p:"Цены", ft_c:"Контакт",
     nav_tm:"Команда",
     ck_t:"Cookies", ck_d:"Мы используем файлы cookie для улучшения вашего опыта и анализа трафика.", ck_ok:"Принять", ck_no:"Отклонить",
@@ -3720,13 +3776,15 @@ const T = {
     pf_v_d:"YouTube, Reels, TikTok, montaż i motion — produkcja pod klucz.",
     pf_d_d:"Posty, kreacje reklamowe, miniatury YouTube, grafika marki.",
     pr_lbl:"Przejrzyste ceny", pr_ttl:"Wybierz pakiet", pr_d:"Elastyczne pakiety miesięczne. Rezygnacja w dowolnym momencie.",
-    pl1n:"Starter", pl1op:"1 800", pl1p:"1 500", pl1per:"/mies", pl1d:"Idealny dla małych firm stawiających pierwsze kroki w content marketingu.",
-    pl1f1:"8 krótkich wideo / mies", pl1f2:"Zarządzanie social mediami (1 platforma)", pl1f3:"Podstawowy raport miesięczny", pl1f4:"Wsparcie email", pl1f5:"Reklama płatna", pl1f6:"Tworzenie strony WWW",
-    pl2n:"Growth", pl2op:"4 400", pl2p:"3 500", pl2per:"/mies", pl2d:"Dla firm gotowych na skalowanie z pełnym pokryciem treści i reklamy.",
-    pl2f1:"20 wideo / mies (krótkie + średnie)", pl2f2:"Zarządzanie social mediami (2 platformy)", pl2f3:"Zarządzanie reklamą Facebook & Instagram", pl2f4:"Miesięczny raport wyników", pl2f5:"Wsparcie priorytetowe", pl2f6:"Tworzenie strony WWW",
-    pl_pop:"Najpopularniejszy", pl3n:"Scale", pl3op:"8 800", pl3p:"7 000", pl3per:"/mies", pl3d:"Pełny pakiet agencyjny — treści, reklama, strona i stałe wsparcie.",
-    pl3f1:"Nieograniczone krótkie wideo", pl3f2:"Pełne zarządzanie wszystkimi platformami", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page na kwartał", pl3f5:"Tygodniowe raporty i rozmowy strategiczne", pl3f6:"Dedykowany opiekun konta",
-    pl_cta_s:"Zacznij", pl_cta_p:"Zacznij teraz", pl_cta_s2:"Porozmawiajmy",
+    trust1:"Bez długoterminowej umowy", trust2:"Pierwsza konsultacja gratis", trust3:"100+ zadowolonych klientów",
+    pl1n:"Starter", pl1op:"1 800", pl1p:"1 500", pl1per:"/mies", pl1d:"Pierwszy krok dla małej firmy w content marketingu.",
+    pl1f1:"8 krótkich filmów / miesiąc", pl1f2:"Prowadzenie social mediów (1 platforma)", pl1f3:"Podstawowy raport miesięczny", pl1f4:"Wsparcie e-mail", pl1f5:"Płatna reklama", pl1f6:"Tworzenie stron WWW",
+    pl2n:"Growth", pl2op:"4 400", pl2p:"3 500", pl2per:"/mies", pl2d:"Pełna obsługa marki + reklama z gwarancją wyników.",
+    pl2f1:"20 filmów / miesiąc (krótkie + średnie)", pl2f2:"Prowadzenie social mediów (2 platformy)", pl2f3:"Reklama Facebook & Instagram", pl2f4:"Miesięczny raport wyników", pl2f5:"Priorytetowe wsparcie", pl2f6:"Tworzenie stron WWW",
+    pl_pop:"Najpopularniejszy", pl_micro:"80% klientów wybiera ten plan", pl3n:"Pro", pl3op:"10 500", pl3p:"8 500", pl3per:"/mies", pl3d:"Cała agencja w Twoim zespole 24/7.",
+    pl3f1:"Nielimitowane krótkie filmy", pl3f2:"Pełne prowadzenie social mediów (wszystkie platformy)", pl3f3:"Facebook, Instagram & Google Ads", pl3f4:"1 landing page na kwartał", pl3f5:"Cotygodniowe raporty + sesje strategiczne", pl3f6:"Dedykowany account manager",
+    pl_cta_s:"Zacznij", pl_cta_p:"Zacznij teraz", pl_cta_s2:"Umów konsultację",
+    pr_fine:"Wszystkie ceny netto · Faktura VAT · Płatność miesięczna · Anuluj kiedy chcesz",
     ft_r:"Wszelkie prawa zastrzeżone.", ft_s:"Usługi", ft_w:"Prace", ft_p:"Cennik", ft_c:"Kontakt",
     nav_tm:"Zespół",
     ck_t:"Pliki cookie", ck_d:"Używamy plików cookie, aby poprawić Twoje doświadczenie i analizować ruch na stronie.", ck_ok:"Akceptuj", ck_no:"Odrzuć",
