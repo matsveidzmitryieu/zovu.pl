@@ -529,9 +529,9 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       cursor: grab;
-      /* fade edges so glow doesn't get clipped abruptly by overflow-x */
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
-              mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+      /* gentle fade only at very edges so glow stays visible */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 2%, #000 98%, transparent 100%);
+              mask-image: linear-gradient(to right, transparent 0%, #000 2%, #000 98%, transparent 100%);
     }
     .pfg-grid--video.dragging { cursor: grabbing; user-select: none; }
     .pfg-grid--video::-webkit-scrollbar { display: none; }
@@ -556,18 +556,20 @@
       border-radius: 14px;
       overflow: hidden;
       border: 1px solid rgba(167,139,250,.30);
-      /* uniform halo on ALL sides — no directional drop shadow */
+      /* brighter uniform halo on ALL sides */
       box-shadow:
-        0 0 120px 10px rgba(124,58,237,.35),
-        0 0 60px rgba(167,139,250,.28);
+        0 0 140px 20px rgba(124,58,237,.65),
+        0 0 70px 8px rgba(167,139,250,.55),
+        0 0 30px rgba(167,139,250,.45);
       transition: border-color .4s, box-shadow .4s, transform .4s;
     }
     .pfg-grid--video .pfg-card.pfg-vid:hover {
-      border-color: rgba(167,139,250,.55);
+      border-color: rgba(167,139,250,.7);
       transform: translateY(-4px);
       box-shadow:
-        0 0 160px 20px rgba(124,58,237,.55),
-        0 0 90px rgba(167,139,250,.4);
+        0 0 180px 30px rgba(124,58,237,.85),
+        0 0 100px 15px rgba(167,139,250,.7),
+        0 0 40px rgba(167,139,250,.55);
     }
     @media (max-width: 700px) {
       .pfg-grid--video .pfg-page {
