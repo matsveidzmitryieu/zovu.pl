@@ -797,7 +797,15 @@
       opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; cursor: zoom-out;
     }
     .pfg-lb.open { opacity: 1; visibility: visible; }
-    .pfg-lb img { max-width: 92vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 20px 80px rgba(0,0,0,.6); }
+    .pfg-lb img {
+      max-width: 92vw; max-height: 90vh; border-radius: 12px;
+      border: 1px solid rgba(167,139,250,.65);
+      box-shadow:
+        0 0 200px rgba(124,58,237,1),
+        0 0 90px rgba(167,139,250,.8),
+        0 38px 120px rgba(124,58,237,.85),
+        0 0 0 1px rgba(167,139,250,.8);
+    }
 
     .port-grid {
       display: flex; flex-direction: row;
