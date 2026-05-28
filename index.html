@@ -529,6 +529,9 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       cursor: grab;
+      /* fade edges so glow doesn't get clipped abruptly by overflow-x */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+              mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
     }
     .pfg-grid--video.dragging { cursor: grabbing; user-select: none; }
     .pfg-grid--video::-webkit-scrollbar { display: none; }
@@ -537,7 +540,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 26px;
-      padding: 110px clamp(80px, 7vw, 120px) 120px;
+      padding: 110px clamp(40px, 5vw, 70px) 120px;
       scroll-snap-align: start;
       scroll-snap-stop: always;
       box-sizing: border-box;
