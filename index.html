@@ -5702,7 +5702,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   var pos = window.scrollY;
   var raf = null;
   var friction = 0.985;    // per-frame decay (higher = longer glide)
-  var impulse = 0.07;      // wheel delta → velocity conversion
+  var impulse = 0.10;      // wheel delta → velocity conversion
+  var wheelMult = 0.5;     // overall wheel power (lower = less distance per tick)
   var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
   function setScroll(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
   function loop() {
@@ -5715,7 +5716,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   window.addEventListener('wheel', function (e) {
     if ((pfg && pfg.classList.contains('open')) || e.ctrlKey) return;
     e.preventDefault();
-    var delta = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+    var delta = e.deltaY * (e.deltaMode === 1 ? 16 : 1) * wheelMult;
     if (!raf) pos = window.scrollY;
     // ADD impulse to velocity — first frame applies most of it immediately
     velocity += delta * impulse;
