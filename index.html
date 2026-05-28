@@ -5860,28 +5860,6 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   });
 })();
 
-// Buttery inertia scrolling — wheel glides to a smooth stop (desktop only)
-(function () {
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return; // skip touch (native momentum)
-  const pfg = document.getElementById('pfg');
-  let target = window.scrollY, raf = null;
-  const ease = 0.45; // higher = snappier
-  const maxY = () => document.documentElement.scrollHeight - window.innerHeight;
-  function tick() {
-    const cur = window.scrollY;
-    if (Math.abs(target - cur) < 0.4) { window.scrollTo(0, target); raf = null; return; }
-    window.scrollTo(0, cur + (target - cur) * ease);
-    raf = requestAnimationFrame(tick);
-  }
-  window.addEventListener('wheel', (e) => {
-    if ((pfg && pfg.classList.contains('open')) || e.ctrlKey) return; // let overlay scroll / allow zoom
-    e.preventDefault();
-    if (raf === null) target = window.scrollY; // re-sync after any non-wheel scroll
-    const step = e.deltaY * (e.deltaMode === 1 ? 16 : 1) * 1.15; // a touch more momentum
-    target = Math.max(0, Math.min(target + step, maxY()));
-    if (raf === null) raf = requestAnimationFrame(tick);
-  }, { passive: false });
-})();
 
 </script>
 
