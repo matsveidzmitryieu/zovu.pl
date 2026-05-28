@@ -515,12 +515,41 @@
     }
     .pfg-card:hover { transform: translateY(-5px); border-color: var(--accent-2); box-shadow: 0 14px 40px rgba(124,58,237,.35); }
     .pfg-card > img, .pfg-card > video, .pfg-card > iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: 0; }
-    /* VIDEO grid: vertical reels (9:16) need different ratio */
-    .pfg-grid--video { grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    @media (max-width: 900px) { .pfg-grid--video { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
-    @media (max-width: 560px) { .pfg-grid--video { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+    /* VIDEO — carousel of pages (3 reels per page on PC, 2 on mobile), like Strony */
+    .pfg-grid--video {
+      display: flex !important;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      gap: 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+    .pfg-grid--video.dragging { cursor: grabbing; user-select: none; }
+    .pfg-grid--video::-webkit-scrollbar { display: none; }
+    .pfg-grid--video .pfg-page {
+      flex: 0 0 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      padding: 120px clamp(20px, 4vw, 56px) 140px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      box-sizing: border-box;
+    }
+    @media (max-width: 700px) {
+      .pfg-grid--video .pfg-page {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 100px clamp(14px, 3vw, 24px) 140px;
+      }
+      .pfg-grid--video { cursor: auto; }
+    }
     .pfg-card.pfg-vid { aspect-ratio: 9/16; }
-    .pfg-card.pfg-vid.pfg-vid-h { aspect-ratio: 16/9; }
     /* GRAFIKA grid: posts (mostly square/4:5) */
     .pfg-card.pfg-gfx { aspect-ratio: auto; height: auto; }
     .pfg-card.pfg-gfx > img { aspect-ratio: auto; height: auto; }
@@ -4069,7 +4098,9 @@ onNavScroll();
     ]}
   ];
 
+  var currentCat = 0;
   function render(idx) {
+    currentCat = idx;
     tabs.forEach(function (t, i) { t.classList.toggle('active', i === idx); });
     // remove any existing pager (sibling of grid)
     var oldPager = pfg.querySelector('.pfg-pager'); if (oldPager) oldPager.remove();
@@ -4101,23 +4132,25 @@ onNavScroll();
       buildPager();
       return;
     } else if (cat.type === 'video') {
-      cat.items.forEach(function (it) {
-        var card = document.createElement('div');
-        card.className = 'pfg-card pfg-vid' + (it.yt ? ' pfg-vid-h' : '');
-        if (it.yt) {
-          var ifr = document.createElement('iframe');
-          ifr.src = 'https://www.youtube.com/embed/' + it.yt + '?rel=0';
-          ifr.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-          ifr.setAttribute('allowfullscreen', '');
-          card.appendChild(ifr);
-        } else {
-          var v = document.createElement('video');
-          v.src = it.src; if (it.poster) v.poster = it.poster;
-          v.controls = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
-          card.appendChild(v);
+      var perPageV = window.innerWidth <= 700 ? 2 : 3;
+      var reels = cat.items.filter(function (it) { return !it.yt; });
+      var curPageV = null;
+      reels.forEach(function (it, i) {
+        if (i % perPageV === 0) {
+          curPageV = document.createElement('div');
+          curPageV.className = 'pfg-page';
+          grid.appendChild(curPageV);
         }
-        grid.appendChild(card);
+        var card = document.createElement('div');
+        card.className = 'pfg-card pfg-vid';
+        var v = document.createElement('video');
+        v.src = it.src; if (it.poster) v.poster = it.poster;
+        v.controls = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+        card.appendChild(v);
+        curPageV.appendChild(card);
       });
+      buildPager();
+      return;
     } else {
       cat.items.forEach(function (it) {
         var b = document.createElement('button');
@@ -4133,8 +4166,9 @@ onNavScroll();
   function buildPager() {
     // clear old pager
     var oldP = pfg.querySelector('.pfg-pager'); if (oldP) oldP.remove();
-    // desktop: single page, no pager/drag needed
-    if (window.innerWidth > 700) return;
+    // Strony on desktop = single flat grid, no pager needed. Video/etc always paged.
+    var isWebDesktop = grid.classList.contains('pfg-grid--web') && window.innerWidth > 700;
+    if (isWebDesktop) return;
     var pager = document.createElement('div');
     pager.className = 'pfg-pager show';
     pager.innerHTML = '<button type="button" data-d="-1" aria-label="Previous">←</button><span class="pfg-pager-dots">1/3</span><button type="button" data-d="1" aria-label="Next">→</button>';
@@ -4236,6 +4270,17 @@ onNavScroll();
     if (e.key === 'Escape') {
       if (lb.classList.contains('open')) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); }
       else if (pfg.classList.contains('open')) close();
+    }
+  });
+  // Re-render on viewport breakpoint cross (3→2 per page swap etc.)
+  var lastBreak = window.innerWidth <= 700;
+  window.addEventListener('resize', function () {
+    var nowBreak = window.innerWidth <= 700;
+    if (nowBreak !== lastBreak && pfg.classList.contains('open')) {
+      lastBreak = nowBreak;
+      render(currentCat);
+    } else {
+      lastBreak = nowBreak;
     }
   });
 })();
