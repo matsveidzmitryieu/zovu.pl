@@ -535,9 +535,9 @@
     .pfg-grid--video .pfg-page {
       flex: 0 0 100%;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      padding: 110px clamp(20px, 4vw, 56px) 120px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      padding: 110px clamp(16px, 3vw, 40px) 120px;
       scroll-snap-align: start;
       scroll-snap-stop: always;
       box-sizing: border-box;
@@ -546,8 +546,7 @@
     }
     .pfg-grid--video .pfg-card.pfg-vid {
       aspect-ratio: 9/16;
-      height: clamp(320px, calc(100vh - 290px), 520px);
-      width: auto;
+      width: 100%;
       max-width: 100%;
       margin: 0 auto;
       border-radius: 14px;
@@ -573,8 +572,8 @@
     @media (max-width: 700px) {
       .pfg-grid--video .pfg-page {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 90px 10px 100px;
+        gap: 8px;
+        padding: 80px 6px 100px;
       }
       .pfg-grid--video .pfg-card.pfg-vid {
         height: auto;
@@ -4182,7 +4181,7 @@ onNavScroll();
       buildPager();
       return;
     } else if (cat.type === 'video') {
-      var perPageV = window.innerWidth <= 700 ? 2 : 3;
+      var perPageV = window.innerWidth <= 700 ? 2 : 4;
       var reels = cat.items.filter(function (it) { return !it.yt; });
       var curPageV = null;
       reels.forEach(function (it, i) {
