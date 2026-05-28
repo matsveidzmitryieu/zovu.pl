@@ -5860,16 +5860,28 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   });
 })();
 
-// ── Slow down wheel scroll (desktop only) ──
+// ── Native-speed wheel with smooth tail-off (desktop only) ──
 (function () {
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   var pfg = document.getElementById('pfg');
+  var target = window.scrollY, raf = null;
+  var ease = 0.18; // higher = snappier catch-up
+  var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
+  function tick() {
+    var cur = window.scrollY;
+    if (Math.abs(target - cur) < 0.4) { window.scrollTo(0, target); raf = null; return; }
+    window.scrollTo(0, cur + (target - cur) * ease);
+    raf = requestAnimationFrame(tick);
+  }
   window.addEventListener('wheel', function (e) {
     if (e.ctrlKey) return;
     if (pfg && pfg.classList.contains('open')) return;
     if (e.target.closest && e.target.closest('.pfg-grid--web, .pfg-grid--video, .pfg-grid--gfx, .tools-slider-wrap')) return;
     e.preventDefault();
-    window.scrollBy(0, e.deltaY * 0.4);
+    if (raf === null) target = window.scrollY;
+    var step = e.deltaY * (e.deltaMode === 1 ? 16 : 1); // native speed (×1.0)
+    target = Math.max(0, Math.min(target + step, maxY()));
+    if (raf === null) raf = requestAnimationFrame(tick);
   }, { passive: false });
 })();
 
