@@ -655,7 +655,7 @@
       transform: scale(1.03);
       filter: grayscale(0) brightness(1);
     }
-    /* Mobile (≤700): swipe carousel, 2×2 per page */
+    /* Mobile (≤700): swipe carousel, vertically centered between top and bottom */
     @media (max-width: 700px) {
       .pfg-grid--gfx {
         display: flex !important;
@@ -665,19 +665,22 @@
         scroll-snap-type: x mandatory;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
-        padding: 90px 0 140px;
+        padding: 0;
+        height: 100%;
+        align-items: center;
       }
       .pfg-grid--gfx::-webkit-scrollbar { display: none; }
       .pfg-grid--gfx .pfg-page {
         display: grid !important;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
-        align-content: start;
+        align-content: center;
         flex: 0 0 100%;
         scroll-snap-align: start;
         scroll-snap-stop: always;
-        padding: 0 14px;
+        padding: 90px 14px 140px;
         box-sizing: border-box;
+        min-height: 100vh;
       }
       .pfg-grid--gfx .pfg-card.pfg-gfx { margin-bottom: 0; }
     }
@@ -4296,20 +4299,15 @@ onNavScroll();
       buildPager();
       return;
     } else {
-      // GRAFIKA: pages of 4 (2x2 on mobile; desktop flat masonry via display:contents on .pfg-page)
-      var perPageG = 4;
-      var curPageG = null;
+      // GRAFIKA: 2 explicit pages (zah-style) — page 1 = first 4 portraits, page 2 = remaining 8 landscapes
+      var page1 = document.createElement('div'); page1.className = 'pfg-page pfg-page--portraits'; grid.appendChild(page1);
+      var page2 = document.createElement('div'); page2.className = 'pfg-page pfg-page--landscapes'; grid.appendChild(page2);
       cat.items.forEach(function (it, i) {
-        if (i % perPageG === 0) {
-          curPageG = document.createElement('div');
-          curPageG.className = 'pfg-page';
-          grid.appendChild(curPageG);
-        }
         var b = document.createElement('button');
         b.className = 'pfg-card pfg-gfx' + (it.phone ? ' phone-only' : ''); b.type = 'button';
         b.innerHTML = '<img src="' + it.src + '" loading="lazy" alt="">';
         b.addEventListener('click', function () { lbImg.src = it.src; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
-        curPageG.appendChild(b);
+        (i < 4 ? page1 : page2).appendChild(b);
       });
       buildPager();
       return;
