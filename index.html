@@ -5704,7 +5704,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   var friction = 0.985;    // per-frame decay (higher = longer glide)
   var impulse = 0.09;      // wheel delta → velocity conversion
   var wheelMult = 0.25;    // overall wheel power (lower = less distance per tick)
-  var stopAt = 0.07;       // px/frame threshold to snap stop (higher = sharper end)
+  var stopAt = 0.1;        // px/frame threshold to snap stop (higher = sharper end)
   var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
   function setScroll(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
   function loop() {
