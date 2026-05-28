@@ -515,13 +515,13 @@
     }
     .pfg-card:hover { transform: translateY(-5px); border-color: var(--accent-2); box-shadow: 0 14px 40px rgba(124,58,237,.35); }
     .pfg-card > img, .pfg-card > video, .pfg-card > iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: 0; }
-    /* VIDEO — carousel of pages (4 reels/page PC, 2/page mobile). Fills viewport, no cap */
+    /* VIDEO — carousel of pages (4 reels/page PC, 2/page mobile) */
     .pfg-grid--video {
       display: flex !important;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      max-width: none;
-      margin: 0;
+      max-width: 1280px;
+      margin: 0 auto;
       padding: 0;
       width: 100%;
       height: 100%;
