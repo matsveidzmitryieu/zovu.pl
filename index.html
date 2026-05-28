@@ -2448,7 +2448,7 @@
         <span class="pf-cat-arrow">&#8599;</span>
       </div>
       <div class="pf-strip"><div class="pf-strip-track">
-        <img class="pf-strip-img" src="web_fightmode.png" alt=""><img class="pf-strip-img" src="web_shaurma.jpg" alt=""><img class="pf-strip-img" src="web_bee.jpg" alt=""><img class="pf-strip-img" src="web_jewelry.jpg" alt=""><img class="pf-strip-img" src="web_maya.jpg" alt=""><img class="pf-strip-img" src="web_gucio.jpg" alt=""><img class="pf-strip-img" src="web_marketing.jpg" alt=""><img class="pf-strip-img" src="web_pick.jpg" alt=""><img class="pf-strip-img" src="web_potolki.jpg" alt=""><img class="pf-strip-img" src="web_energia.jpg" alt="">
+        <img class="pf-strip-img" src="web_fightmode.png" alt=""><img class="pf-strip-img" src="web_shaurma.jpg" alt=""><img class="pf-strip-img" src="web_bee.jpg" alt=""><img class="pf-strip-img" src="web_jewelry.jpg" alt=""><img class="pf-strip-img" src="web_maya.jpg" alt=""><img class="pf-strip-img" src="web_gucio.jpg" alt=""><img class="pf-strip-img" src="web_marketing.jpg" alt=""><img class="pf-strip-img" src="web_pick.jpg" alt=""><img class="pf-strip-img" src="web_energia.jpg" alt="">
         <img class="pf-strip-img" src="web_fightmode.png" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_shaurma.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_bee.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_jewelry.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_maya.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_gucio.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_marketing.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_pick.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_potolki.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_energia.jpg" alt="" aria-hidden="true">
       </div></div>
     </a>
@@ -2462,8 +2462,8 @@
         <span class="pf-cat-arrow">&#8599;</span>
       </div>
       <div class="pf-strip"><div class="pf-strip-track">
-        <video class="pf-strip-vid" src="preview1.mp4" muted autoplay loop playsinline preload="metadata"></video><video class="pf-strip-vid" src="preview2.mp4" muted autoplay loop playsinline preload="metadata"></video><video class="pf-strip-vid" src="preview3_small.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <video class="pf-strip-vid" src="preview1.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><video class="pf-strip-vid" src="preview2.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><video class="pf-strip-vid" src="preview3_small.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video>
+        <video class="pf-strip-vid" src="preview1.mp4" muted autoplay loop playsinline preload="metadata"></video><video class="pf-strip-vid" src="preview2.mp4" muted autoplay loop playsinline preload="metadata"></video><video class="pf-strip-vid" src="preview3_small.mp4" muted autoplay loop playsinline preload="metadata"></video><img class="pf-strip-img" data-yt="1ciGcUa5GyM" src="https://img.youtube.com/vi/1ciGcUa5GyM/hqdefault.jpg" alt=""><img class="pf-strip-img" data-yt="ZkrUFiSeHbE" src="https://img.youtube.com/vi/ZkrUFiSeHbE/hqdefault.jpg" alt=""><img class="pf-strip-img" data-yt="HPNUJlfyxw0" src="https://img.youtube.com/vi/HPNUJlfyxw0/hqdefault.jpg" alt=""><img class="pf-strip-img" data-yt="DO9KQYsyWKQ" src="https://img.youtube.com/vi/DO9KQYsyWKQ/hqdefault.jpg" alt="">
+        <video class="pf-strip-vid" src="preview1.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><video class="pf-strip-vid" src="preview2.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><video class="pf-strip-vid" src="preview3_small.mp4" muted autoplay loop playsinline preload="metadata" aria-hidden="true"></video><img class="pf-strip-img" data-yt="1ciGcUa5GyM" src="https://img.youtube.com/vi/1ciGcUa5GyM/hqdefault.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" data-yt="ZkrUFiSeHbE" src="https://img.youtube.com/vi/ZkrUFiSeHbE/hqdefault.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" data-yt="HPNUJlfyxw0" src="https://img.youtube.com/vi/HPNUJlfyxw0/hqdefault.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" data-yt="DO9KQYsyWKQ" src="https://img.youtube.com/vi/DO9KQYsyWKQ/hqdefault.jpg" alt="" aria-hidden="true">
       </div></div>
     </a>
 
@@ -3325,7 +3325,7 @@ document.querySelectorAll('.lang').forEach(b => b.addEventListener('click', () =
     // Thumbnail
     const img = document.createElement('img');
     img.className = 'vc-thumb';
-    img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     img.onerror = () => { img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; };
     img.alt = '';
     vidBox.prepend(img);
@@ -3908,9 +3908,20 @@ onNavScroll();
       if (type === 'video') {
         var card = document.createElement('div');
         card.className = 'pfg-card';
-        var v = document.createElement('video');
-        v.src = el.getAttribute('src'); v.controls = true; v.loop = true; v.muted = true; v.playsInline = true; v.preload = 'metadata';
-        card.appendChild(v); grid.appendChild(card);
+        var yt = el.getAttribute('data-yt');
+        if (yt) {
+          var ifr = document.createElement('iframe');
+          ifr.src = 'https://www.youtube.com/embed/' + yt + '?rel=0';
+          ifr.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+          ifr.setAttribute('allowfullscreen', '');
+          ifr.style.cssText = 'width:100%;height:100%;border:0;display:block;';
+          card.appendChild(ifr);
+        } else {
+          var v = document.createElement('video');
+          v.src = el.getAttribute('src'); v.controls = true; v.loop = true; v.muted = true; v.playsInline = true; v.preload = 'metadata';
+          card.appendChild(v);
+        }
+        grid.appendChild(card);
       } else if (type === 'web') {
         var src = el.getAttribute('src');
         var a = document.createElement('a');
@@ -3934,6 +3945,7 @@ onNavScroll();
     pfg.classList.remove('open'); pfg.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     grid.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
+    grid.querySelectorAll('iframe').forEach(function (f) { f.src = ''; });
     setTimeout(function () { grid.innerHTML = ''; }, 400);
   }
   cats.forEach(function (cat, i) {
@@ -4664,7 +4676,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     const item = document.createElement('div');
     item.className = 'all-video-thumb';
     const img = document.createElement('img');
-    img.src = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     img.onerror = () => { img.onerror = null; img.src = `https://img.youtube.com/vi/${id}/sddefault.jpg`; };
     img.alt = '';
     item.appendChild(img);
