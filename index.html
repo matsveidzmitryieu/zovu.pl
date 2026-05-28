@@ -5867,8 +5867,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   s.src = 'https://unpkg.com/lenis@1.1.13/dist/lenis.min.js';
   s.onload = function () {
     var lenis = new Lenis({
-      duration: 1.2,
-      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }, // expo-out
+      lerp: 0.1, // instant response, smooth glide (no fixed-duration delay)
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 0
