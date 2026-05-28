@@ -5694,17 +5694,16 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   });
 })();
 
-// ── Instant wheel + tail-off momentum (desktop only) ──
+// ── Physics-based smooth scroll (desktop only) ──
 (function () {
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   var pfg = document.getElementById('pfg');
-  var velocity = 0;
+  var velocity = 0;        // px per frame (integrated each frame)
   var pos = window.scrollY;
   var raf = null;
-  var friction = 0.92;
-  var impulse = 0.08;
+  var friction = 0.88;     // per-frame decay (higher = longer glide)
+  var impulse = 0.22;      // wheel delta → velocity conversion
   var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
-  // bypass CSS scroll-behavior:smooth — we need instant scroll, smoothness is from our momentum loop
   function setScroll(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
   function loop() {
     if (Math.abs(velocity) < 0.3) { velocity = 0; raf = null; return; }
@@ -5718,10 +5717,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     e.preventDefault();
     var delta = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
     if (!raf) pos = window.scrollY;
-    // INSTANT scroll — applies wheel delta right now, bypassing CSS smooth
-    pos = Math.max(0, Math.min(pos + delta, maxY()));
-    setScroll(pos);
-    velocity = velocity * 0.5 + delta * impulse;
+    // ADD impulse to velocity — first frame applies most of it immediately
+    velocity += delta * impulse;
     if (!raf) raf = requestAnimationFrame(loop);
   }, { passive: false });
 })();
