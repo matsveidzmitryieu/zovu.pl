@@ -1848,73 +1848,154 @@
     .port-c.hidden { display: none; }
 
     /* ── PRICING ── */
-    #pricing { padding: 130px 52px; background: var(--bg2); }
+    /* ── PRICING (Cennik) — zah-style ── */
+    #pricing {
+      padding: 130px clamp(20px, 4vw, 52px);
+      background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.14) 0%, transparent 55%),
+                  linear-gradient(180deg, #160e2e 0%, #0d0820 100%);
+    }
+    #pricing .sec-label {
+      font-family: var(--mono); color: var(--accent-2);
+      font-size: 13px; letter-spacing: 0.3em; font-weight: 500;
+    }
+    #pricing .sec-label::before { display: none; }
+    #pricing .sec-title {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(52px, 6vw, 82px); letter-spacing: -0.01em; line-height: 0.95;
+      background: linear-gradient(180deg, #fff 35%, #a78bfa 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
     .pricing-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 20px; margin-top: 64px;
+      gap: 28px; margin-top: 60px;
+      max-width: 1400px; margin-left: auto; margin-right: auto;
     }
     .plan {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 12px; padding: 44px 36px; position: relative;
-      display: flex; flex-direction: column; cursor: none;
-      transition: border-color .3s, transform .4s cubic-bezier(.16,1,.3,1);
+      background: rgba(15,8,30,.55);
+      border: 1px solid rgba(167,139,250,.35);
+      border-radius: 18px; padding: 40px 32px; position: relative;
+      display: flex; flex-direction: column;
+      box-shadow:
+        0 0 80px rgba(124,58,237,.30),
+        0 0 40px rgba(167,139,250,.22),
+        0 18px 50px rgba(0,0,0,.4);
+      transition: border-color .4s, box-shadow .4s, transform .5s cubic-bezier(.16,1,.3,1);
     }
-    .plan:hover { border-color: var(--accent); transform: translateY(-6px); }
+    .plan:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow:
+        0 0 140px rgba(124,58,237,.55),
+        0 0 70px rgba(167,139,250,.40),
+        0 28px 80px rgba(124,58,237,.45);
+    }
     .plan.featured {
-      border-color: var(--accent); background: var(--bg2);
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(124,58,237,.10) 0%, rgba(15,8,30,.55) 100%);
+      box-shadow:
+        0 0 140px rgba(124,58,237,.55),
+        0 0 70px rgba(167,139,250,.40),
+        0 28px 80px rgba(124,58,237,.45);
+    }
+    .plan.featured:hover {
+      box-shadow:
+        0 0 200px rgba(124,58,237,.85),
+        0 0 100px rgba(167,139,250,.6),
+        0 38px 120px rgba(124,58,237,.65);
     }
     .plan-badge {
       position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      background: var(--accent); color: #000;
-      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 5px 16px; border-radius: 100px; white-space: nowrap;
+      background: var(--accent); color: #fff;
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px; white-space: nowrap;
+      box-shadow: 0 0 24px rgba(124,58,237,.6);
     }
     .plan-name {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 16px;
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: 22px; letter-spacing: .04em;
+      color: #fff; margin-bottom: 18px;
     }
     .plan-price {
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(40px, 4vw, 58px);
-      font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 2px;
+      font-family: var(--display);
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 700; letter-spacing: -.01em; line-height: 1; margin-bottom: 2px;
+      color: #fff;
     }
-    .plan-price span { font-size: 22px; font-weight: 500; letter-spacing: 0; vertical-align: super; }
+    .plan-price .plan-curr {
+      font-family: var(--mono); font-size: 18px; font-weight: 500;
+      letter-spacing: 0; vertical-align: super; color: var(--accent-2);
+      margin-right: 4px;
+    }
     .plan-price-meta {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
     }
     .plan-old {
-      font-size: 18px; font-weight: 600; color: var(--sec);
-      text-decoration: line-through; letter-spacing: -.3px; opacity: .6;
+      font-family: var(--mono); font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,.45);
+      text-decoration: line-through; letter-spacing: 0;
+    }
+    .plan-old .plan-curr {
+      font-size: 11px; vertical-align: baseline; color: rgba(255,255,255,.4); margin-right: 2px;
     }
     .plan-save {
-      font-size: 12px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase;
-      color: #fff; background: #16a34a;
-      padding: 5px 13px; border-radius: 100px;
-      box-shadow: 0 2px 14px rgba(22,163,74,.4);
+      font-family: var(--mono); font-size: 11px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: #fff; background: var(--accent);
+      padding: 4px 10px; border-radius: 100px;
+      box-shadow: 0 0 18px rgba(124,58,237,.5);
     }
-    .plan-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
-    .plan-desc { font-size: 14px; color: var(--sec); line-height: 1.7; margin-bottom: 28px; }
-    .plan-feats { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; margin-bottom: 36px; }
+    .plan-period {
+      font-family: var(--mono); font-size: 12px;
+      color: rgba(255,255,255,.5); margin-bottom: 24px; letter-spacing: .04em;
+    }
+    .plan-desc {
+      font-size: 14px; color: rgba(255,255,255,.65);
+      line-height: 1.65; margin-bottom: 26px;
+    }
+    .plan-feats {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 12px; flex: 1; margin-bottom: 32px;
+      padding-top: 22px; border-top: 1px solid rgba(167,139,250,.18);
+    }
     .plan-feats li {
       display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13px; color: var(--sec); line-height: 1.5;
+      font-size: 13.5px; color: rgba(255,255,255,.78); line-height: 1.5;
     }
     .plan-feats li::before {
-      content: '✓'; color: var(--accent); font-weight: 700; font-size: 12px;
-      flex-shrink: 0; margin-top: 2px;
+      content: '✓'; color: var(--accent-2); font-weight: 700; font-size: 13px;
+      flex-shrink: 0; margin-top: 1px;
     }
-    .plan-feats li.off { opacity: .35; }
-    .plan-feats li.off::before { content: '×'; color: var(--muted); }
+    .plan-feats li.off { opacity: .35; color: rgba(255,255,255,.4); }
+    .plan-feats li.off::before { content: '×'; color: rgba(255,255,255,.4); }
     .plan-btn {
       display: block; text-align: center; padding: 14px;
-      border-radius: 8px; font-size: 14px; font-weight: 600;
-      text-decoration: none; cursor: none;
-      transition: background .25s, transform .25s;
+      border-radius: 100px;
+      font-family: var(--display); font-size: 13px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      text-decoration: none;
+      transition: all .3s;
     }
-    .plan-btn.sec { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
-    .plan-btn.sec:hover { background: var(--border); }
-    .plan-btn.prim { background: var(--accent); color: #fff; border: none; }
-    .plan-btn.prim:hover { background: #5b21b6; }
+    .plan-btn.sec {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(167,139,250,.35);
+      color: #fff;
+    }
+    .plan-btn.sec:hover {
+      background: rgba(124,58,237,.18);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .plan-btn.prim {
+      background: var(--accent); color: #fff; border: 1px solid var(--accent);
+      box-shadow: 0 0 24px rgba(124,58,237,.5);
+    }
+    .plan-btn.prim:hover {
+      background: var(--accent-2);
+      border-color: var(--accent-2);
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(167,139,250,.65);
+    }
 
     @media (max-width: 1100px) {
       #pricing { padding-left: 32px; padding-right: 32px; }
