@@ -3,73 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Polityka Prywatności & Cookies – ZOVU</title>
+  <title>Polityka Prywatności & Cookies — ZOVU</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Oswald:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #7c3aed;
+      --accent-2: #a78bfa;
+      --display: 'Oswald', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --body: 'Manrope', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Manrope', sans-serif;
-      background: #0d0d0d;
-      color: #e0e0e0;
+      font-family: var(--body);
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124,58,237,.18) 0%, transparent 60%),
+        linear-gradient(180deg, #160e2e 0%, #0d0820 50%, #07041a 100%);
+      color: rgba(255,255,255,.78);
       line-height: 1.75;
-      padding: 60px 20px 100px;
+      min-height: 100vh;
+      padding: 90px clamp(20px, 4vw, 40px) 80px;
     }
-    .wrap { max-width: 780px; margin: 0 auto; }
+    ::selection { background: var(--accent); color: #fff; }
+    .wrap { max-width: 880px; margin: 0 auto; }
     .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #7c3aed;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 48px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono); font-size: 12px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent-2); text-decoration: none;
+      padding: 10px 18px; border-radius: 100px;
+      background: rgba(15,8,30,.55);
+      border: 1px solid rgba(167,139,250,.35);
+      box-shadow: 0 0 24px rgba(124,58,237,.20);
+      margin-bottom: 56px;
+      transition: all .3s;
     }
-    .back-link:hover { color: #a78bfa; }
-    h1 {
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 700;
+    .back-link:hover {
+      border-color: var(--accent);
       color: #fff;
-      margin-bottom: 12px;
+      box-shadow: 0 0 40px rgba(124,58,237,.45);
+      transform: translateY(-2px);
     }
-    .subtitle { font-size: 14px; color: #666; margin-bottom: 56px; }
-    h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      margin: 48px 0 16px;
-      padding-left: 16px;
-      border-left: 3px solid #7c3aed;
+    .pp-hero { margin-bottom: 56px; }
+    .pp-label {
+      display: inline-block;
+      font-family: var(--mono); font-size: 12px; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 18px;
     }
-    p { font-size: 15px; color: #aaa; margin-bottom: 14px; }
-    ul { padding-left: 20px; margin-bottom: 14px; }
-    li { font-size: 15px; color: #aaa; margin-bottom: 6px; }
-    a { color: #7c3aed; text-decoration: underline; }
-    a:hover { color: #a78bfa; }
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-    th {
-      text-align: left;
-      padding: 10px 14px;
-      background: #1a1a1a;
-      color: #fff;
-      font-weight: 700;
-      border-bottom: 2px solid #2a2a2a;
+    .pp-title {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(36px, 6vw, 64px); letter-spacing: -0.01em; line-height: 1;
+      background: linear-gradient(180deg, #fff 35%, var(--accent-2) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
     }
-    td { padding: 10px 14px; color: #aaa; border-bottom: 1px solid #1e1e1e; vertical-align: top; }
-    tr:hover td { background: #111; }
-    .divider { border: none; border-top: 1px solid #1e1e1e; margin: 56px 0; }
+    .pp-meta {
+      font-family: var(--mono); font-size: 12px;
+      color: rgba(255,255,255,.45); letter-spacing: .04em;
+    }
+    .section {
+      padding: 28px 28px 20px;
+      border-radius: 16px;
+      background: rgba(15,8,30,.55);
+      border: 1px solid rgba(167,139,250,.18);
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+      margin-bottom: 18px;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .section:hover {
+      border-color: rgba(167,139,250,.45);
+      box-shadow: 0 14px 50px rgba(124,58,237,.20);
+    }
     .section-tag {
       display: inline-block;
-      background: #1a1a1a;
-      color: #7c3aed;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 4px;
-      margin-bottom: 8px;
+      font-family: var(--mono); font-size: 11px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: #fff; background: var(--accent);
+      padding: 5px 12px; border-radius: 100px;
+      box-shadow: 0 0 18px rgba(124,58,237,.5);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(20px, 2.4vw, 26px);
+      color: #fff;
+      letter-spacing: .01em; text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    p {
+      font-size: 14.5px; color: rgba(255,255,255,.72);
+      margin-bottom: 12px; line-height: 1.75;
+    }
+    p:last-child { margin-bottom: 0; }
+    strong { color: #fff; font-weight: 600; }
+    ul { padding-left: 22px; margin-bottom: 12px; }
+    li {
+      font-size: 14.5px; color: rgba(255,255,255,.72);
+      margin-bottom: 6px; line-height: 1.7;
+    }
+    li::marker { color: var(--accent-2); }
+    a {
+      color: var(--accent-2); text-decoration: none;
+      border-bottom: 1px solid rgba(167,139,250,.4);
+      transition: color .2s, border-color .2s;
+    }
+    a:hover { color: #fff; border-bottom-color: #fff; }
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 18px 0; font-size: 13.5px;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid rgba(167,139,250,.18);
+    }
+    th {
+      text-align: left; padding: 12px 16px;
+      background: rgba(124,58,237,.18);
+      color: #fff; font-weight: 600;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: .14em; text-transform: uppercase;
+      border-bottom: 1px solid rgba(167,139,250,.25);
+    }
+    td {
+      padding: 12px 16px;
+      color: rgba(255,255,255,.7);
+      border-bottom: 1px solid rgba(167,139,250,.10);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(124,58,237,.08); }
+    .divider {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(167,139,250,.3), transparent);
+      margin: 36px 0;
+    }
+    /* Footer */
+    footer {
+      max-width: 880px;
+      margin: 64px auto 0;
+      padding: 28px 28px;
+      border-top: 1px solid rgba(167,139,250,.20);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .f-copy {
+      font-family: var(--mono); font-size: 11px;
+      color: rgba(255,255,255,.45); letter-spacing: .04em;
+    }
+    .f-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .f-links a {
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      border-bottom: none;
+    }
+    .f-links a:hover { color: var(--accent-2); }
+    .f-links a.active { color: var(--accent-2); }
+    @media (max-width: 600px) {
+      body { padding: 60px 16px 60px; }
+      .section { padding: 22px 20px; }
+      footer { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -78,95 +174,111 @@
 
   <a href="index.html" class="back-link">&larr; Wróć do ZOVU</a>
 
-<div class="pp-hero">
-  <div class="pp-label">Dokument prawny</div>
-  <h1 class="pp-title">Polityka Prywatności &amp; Cookies</h1>
-  <p class="pp-meta">Ostatnia aktualizacja: kwiecień 2026 &nbsp;·&nbsp; ZOVU Creative Agency, Katowice</p>
-</div>
+  <div class="pp-hero">
+    <div class="pp-label">Dokument prawny</div>
+    <h1 class="pp-title">Polityka Prywatności &amp; Cookies</h1>
+    <p class="pp-meta">Ostatnia aktualizacja: kwiecień 2026 &nbsp;·&nbsp; ZOVU Creative Agency, Katowice</p>
+  </div>
 
-  <span class="section-tag">1</span>
-  <h2>Administrator danych</h2>
-  <p>Administratorem Twoich danych osobowych jest <strong>ZOVU Creative Agency</strong> z siedzibą w Katowicach, Polska. Kontakt: <a href="mailto:hello@zovu.pl">hello@zovu.pl</a></p>
+  <div class="section">
+    <span class="section-tag">01</span>
+    <h2>Administrator danych</h2>
+    <p>Administratorem Twoich danych osobowych jest <strong>ZOVU Creative Agency</strong> z siedzibą w Katowicach, Polska. Kontakt: <a href="mailto:zovu.pl@gmail.com">zovu.pl@gmail.com</a></p>
+  </div>
 
-  <span class="section-tag">2</span>
-  <h2>Jakie dane zbieramy</h2>
-  <ul>
-    <li>Dane kontaktowe podane w formularzu (imię, e-mail, treść wiadomości)</li>
-    <li>Dane techniczne: adres IP, przeglądarka, system operacyjny, przeglądane strony, czas wizyty</li>
-    <li>Dane analityczne zbierane przez Google Analytics</li>
-  </ul>
+  <div class="section">
+    <span class="section-tag">02</span>
+    <h2>Jakie dane zbieramy</h2>
+    <ul>
+      <li>Dane kontaktowe podane w formularzu (imię, e-mail, treść wiadomości)</li>
+      <li>Dane techniczne: adres IP, przeglądarka, system operacyjny, przeglądane strony, czas wizyty</li>
+      <li>Dane analityczne zbierane przez Google Analytics</li>
+    </ul>
+  </div>
 
-  <span class="section-tag">3</span>
-  <h2>Cele i podstawy przetwarzania</h2>
-  <table>
-    <tr><th>Cel</th><th>Podstawa prawna</th></tr>
-    <tr>
-      <td>Odpowiedź na zapytanie przez formularz kontaktowy</td>
-      <td>Art. 6 ust. 1 lit. b RODO</td>
-    </tr>
-    <tr>
-      <td>Analiza ruchu i poprawa działania serwisu</td>
-      <td>Art. 6 ust. 1 lit. f RODO – prawnie uzasadniony interes</td>
-    </tr>
-    <tr>
-      <td>Zapamiętanie preferencji cookies</td>
-      <td>Art. 6 ust. 1 lit. a RODO – zgoda użytkownika</td>
-    </tr>
-  </table>
+  <div class="section">
+    <span class="section-tag">03</span>
+    <h2>Cele i podstawy przetwarzania</h2>
+    <table>
+      <tr><th>Cel</th><th>Podstawa prawna</th></tr>
+      <tr>
+        <td>Odpowiedź na zapytanie przez formularz kontaktowy</td>
+        <td>Art. 6 ust. 1 lit. b RODO</td>
+      </tr>
+      <tr>
+        <td>Analiza ruchu i poprawa działania serwisu</td>
+        <td>Art. 6 ust. 1 lit. f RODO – prawnie uzasadniony interes</td>
+      </tr>
+      <tr>
+        <td>Zapamiętanie preferencji cookies</td>
+        <td>Art. 6 ust. 1 lit. a RODO – zgoda użytkownika</td>
+      </tr>
+    </table>
+  </div>
 
-  <span class="section-tag">4</span>
-  <h2>Twoje prawa</h2>
-  <p>Masz prawo do: dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia, sprzeciwu oraz cofnięcia zgody w dowolnym momencie. Możesz też złożyć skargę do <a href="https://uodo.gov.pl" target="_blank" rel="noopener">Prezesa UODO</a>.</p>
-  <p>Kontakt w sprawie danych: <a href="mailto:hello@zovu.pl">hello@zovu.pl</a></p>
+  <div class="section">
+    <span class="section-tag">04</span>
+    <h2>Twoje prawa</h2>
+    <p>Masz prawo do: dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia, sprzeciwu oraz cofnięcia zgody w dowolnym momencie. Możesz też złożyć skargę do <a href="https://uodo.gov.pl" target="_blank" rel="noopener">Prezesa UODO</a>.</p>
+    <p>Kontakt w sprawie danych: <a href="mailto:zovu.pl@gmail.com">zovu.pl@gmail.com</a></p>
+  </div>
 
   <hr class="divider">
 
-  <span class="section-tag">5</span>
-  <h2>Polityka plików cookies</h2>
-  <p>Pliki cookies to małe pliki tekstowe zapisywane na Twoim urządzeniu. Serwis zovu.pl używa:</p>
-  <table>
-    <tr><th>Kategoria</th><th>Nazwa / dostawca</th><th>Cel</th><th>Ważność</th></tr>
-    <tr>
-      <td><strong>Niezbędne</strong></td>
-      <td>zovu_cookie_consent (localStorage)</td>
-      <td>Zapamiętanie decyzji o cookies</td>
-      <td>Do wyczyszczenia danych przeglądarki</td>
-    </tr>
-    <tr>
-      <td><strong>Analityczne</strong></td>
-      <td>_ga, _gid (Google Analytics)</td>
-      <td>Statystyki ruchu: liczba wizyt, źródła, czas na stronie</td>
-      <td>2 lata / 24 godziny</td>
-    </tr>
-  </table>
-  <p>Możesz zarządzać cookies w ustawieniach przeglądarki lub klikając „Odmów" w banerze na stronie głównej.</p>
+  <div class="section">
+    <span class="section-tag">05</span>
+    <h2>Polityka plików cookies</h2>
+    <p>Pliki cookies to małe pliki tekstowe zapisywane na Twoim urządzeniu. Serwis zovu.pl używa:</p>
+    <table>
+      <tr><th>Kategoria</th><th>Nazwa / dostawca</th><th>Cel</th><th>Ważność</th></tr>
+      <tr>
+        <td><strong>Niezbędne</strong></td>
+        <td>zovu_cookie_consent (localStorage)</td>
+        <td>Zapamiętanie decyzji o cookies</td>
+        <td>Do wyczyszczenia danych przeglądarki</td>
+      </tr>
+      <tr>
+        <td><strong>Analityczne</strong></td>
+        <td>_ga, _gid (Google Analytics)</td>
+        <td>Statystyki ruchu: liczba wizyt, źródła, czas na stronie</td>
+        <td>2 lata / 24 godziny</td>
+      </tr>
+    </table>
+    <p>Możesz zarządzać cookies w ustawieniach przeglądarki lub klikając „Odmów" w banerze na stronie głównej.</p>
+  </div>
 
-  <span class="section-tag">6</span>
-  <h2>Przekazywanie danych</h2>
-  <ul>
-    <li><strong>Google LLC</strong> – Google Analytics (serwery w UE lub z odpowiednimi zabezpieczeniami)</li>
-    <li><strong>GitHub, Inc.</strong> – hosting serwisu przez GitHub Pages</li>
-  </ul>
-  <p>Nie sprzedajemy danych osobowych podmiotom trzecim.</p>
+  <div class="section">
+    <span class="section-tag">06</span>
+    <h2>Przekazywanie danych</h2>
+    <ul>
+      <li><strong>Google LLC</strong> – Google Analytics (serwery w UE lub z odpowiednimi zabezpieczeniami)</li>
+      <li><strong>GitHub, Inc.</strong> – hosting serwisu przez GitHub Pages</li>
+    </ul>
+    <p>Nie sprzedajemy danych osobowych podmiotom trzecim.</p>
+  </div>
 
-  <span class="section-tag">7</span>
-  <h2>Okres przechowywania</h2>
-  <p>Dane z formularza kontaktowego przechowujemy przez okres niezbędny do obsługi zapytania, nie dłużej niż 3 lata. Dane analityczne są anonimizowane zgodnie z polityką Google Analytics.</p>
+  <div class="section">
+    <span class="section-tag">07</span>
+    <h2>Okres przechowywania</h2>
+    <p>Dane z formularza kontaktowego przechowujemy przez okres niezbędny do obsługi zapytania, nie dłużej niż 3 lata. Dane analityczne są anonimizowane zgodnie z polityką Google Analytics.</p>
+  </div>
 
-  <span class="section-tag">8</span>
-  <h2>Zmiany polityki</h2>
-  <p>Aktualna wersja polityki jest zawsze dostępna pod adresem <a href="https://zovu.pl/privacy-policy.html">zovu.pl/privacy-policy.html</a>. Data ostatniej aktualizacji widnieje na początku dokumentu.</p>
+  <div class="section">
+    <span class="section-tag">08</span>
+    <h2>Zmiany polityki</h2>
+    <p>Aktualna wersja polityki jest zawsze dostępna pod adresem <a href="https://zovu.pl/privacy-policy.html">zovu.pl/privacy-policy.html</a>. Data ostatniej aktualizacji widnieje na początku dokumentu.</p>
+  </div>
 
 </div>
 
 <footer>
   <div class="f-copy">© 2026 ZOVU. Wszelkie prawa zastrzeżone.</div>
   <div class="f-links">
-    <a href="index.html#services">Usługi</a>
     <a href="index.html#portfolio">Prace</a>
+    <a href="index.html#team">Zespół</a>
     <a href="index.html#pricing">Cennik</a>
     <a href="index.html#contact">Kontakt</a>
-    <a href="privacy-policy.html" style="color:var(--accent)">Polityka prywatności</a>
+    <a href="privacy-policy.html" class="active">Polityka prywatności</a>
   </div>
 </footer>
 
