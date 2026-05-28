@@ -520,16 +520,18 @@
       display: flex !important;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      scroll-padding-inline: 80px;
-      max-width: 1860px;
+      max-width: 1700px;
       margin: 0 auto;
-      padding: 0 80px;
+      padding: 0;
       width: 100%;
       height: 100%;
       gap: 0;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       cursor: grab;
+      /* subtle edge fade so glow doesn't clip abruptly */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 1.5%, #000 98.5%, transparent 100%);
+              mask-image: linear-gradient(to right, transparent 0%, #000 1.5%, #000 98.5%, transparent 100%);
     }
     .pfg-grid--video.dragging { cursor: grabbing; user-select: none; }
     .pfg-grid--video::-webkit-scrollbar { display: none; }
