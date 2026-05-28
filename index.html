@@ -450,20 +450,21 @@
       .pf-strip-img, .pf-strip-vid { width: 196px; height: 110px; }
     }
 
-    /* ── PORTFOLIO GALLERY OVERLAY ── */
+    /* ── PORTFOLIO GALLERY OVERLAY (below navbar, navbar stays visible) ── */
     .pfg {
-      position: fixed; inset: 0; z-index: 5000;
+      position: fixed; top: 90px; left: 0; right: 0; bottom: 0; z-index: 990;
       background: linear-gradient(180deg, #0d0820 0%, #060010 100%);
       display: flex; flex-direction: column;
       opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility .4s ease;
       overflow-y: auto;
     }
+    @media (max-width: 600px) { .pfg { top: 78px; } }
     .pfg.open { opacity: 1; visibility: visible; }
     .pfg-bar {
       position: sticky; top: 0; z-index: 2;
       display: flex; align-items: center; gap: 16px;
-      padding: 22px clamp(20px, 4vw, 56px);
-      background: rgba(8,8,8,.7); backdrop-filter: blur(16px);
+      padding: 18px clamp(20px, 4vw, 56px);
+      background: rgba(8,8,8,.75); backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.1);
     }
     /* Tabs */
@@ -515,16 +516,18 @@
       overflow: visible; box-shadow: none; padding: 0;
       transition: transform .5s cubic-bezier(.16,1,.3,1);
     }
-    .pfg-card.pfg-site:hover { transform: translateY(-8px); box-shadow: none; }
+    .pfg-card.pfg-site:hover { transform: translateY(-8px); }
     .pfg-browser {
       border-radius: 12px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.1); background: #161616;
-      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      border: 1px solid rgba(167,139,250,.4); background: #161616;
+      /* GLOW always visible */
+      box-shadow: 0 14px 40px rgba(124,58,237,.30), 0 0 0 1px rgba(167,139,250,.18), 0 8px 24px rgba(0,0,0,.45);
       transition: border-color .4s, box-shadow .4s;
     }
     .pfg-card.pfg-site:hover .pfg-browser {
       border-color: var(--accent);
-      box-shadow: 0 22px 64px rgba(124,58,237,.45), 0 0 0 1px rgba(167,139,250,.35); /* GLOW */
+      /* intensified glow on hover */
+      box-shadow: 0 24px 72px rgba(124,58,237,.55), 0 0 0 1px rgba(167,139,250,.5), 0 0 80px rgba(124,58,237,.25);
     }
     .pfg-bar2 {
       background: #1c1c1c; padding: 9px 13px; display: flex; align-items: center; gap: 6px;
@@ -546,18 +549,39 @@
       transition: filter .5s, transform 1.4s cubic-bezier(.16,1,.3,1);
     }
     .pfg-card.pfg-site:hover .pfg-shot img { filter: none; transform: scale(1.06); }
-    /* SITES pager: 3 per page on mobile (zah-style) */
-    .pfg-grid--web { position: relative; }
+    /* SITES — zah mobile: 3 stacked per page, swipe horizontally */
     @media (max-width: 700px) {
-      .pfg-grid--web { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 90px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .pfg-grid--web {
+        display: grid;
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-template-rows: repeat(3, auto);
+        grid-auto-columns: 100%;
+        row-gap: 14px;
+        column-gap: 0;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding: 24px clamp(20px, 4vw, 40px) 24px;
+      }
       .pfg-grid--web::-webkit-scrollbar { display: none; }
-      .pfg-grid--web .pfg-card.pfg-site { flex: 0 0 calc((100% - 28px) / 3); scroll-snap-align: start; min-width: 110px; }
+      .pfg-grid--web .pfg-card.pfg-site { scroll-snap-align: start; }
+      .pfg-shot { aspect-ratio: auto; height: 168px; }
     }
-    .pfg-pager { display: none; position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); gap: 10px; padding: 8px 14px; background: rgba(20,12,40,.92); backdrop-filter: blur(10px); border: 1px solid rgba(167,139,250,.3); border-radius: 100px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
-    .pfg-grid--web.has-pager .pfg-pager { display: flex; align-items: center; }
-    .pfg-pager-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; font-size: 16px; }
-    .pfg-pager-btn:hover { background: var(--accent); border-color: var(--accent); }
-    .pfg-pager-dots { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.6); padding: 0 4px; letter-spacing: .1em; }
+    /* Pager — arrow circles below grid (zah-style), mobile only */
+    .pfg-pager { display: none; }
+    .pfg-pager.show { display: flex; justify-content: center; gap: 18px; padding: 8px 0 28px; }
+    .pfg-pager button {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(20,12,40,.6); border: 1px solid rgba(167,139,250,.3); color: #fff;
+      font-family: var(--display); font-size: 22px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .pfg-pager button:active, .pfg-pager button:hover { border-color: var(--accent); color: var(--accent-2); background: rgba(124,58,237,.15); }
+    .pfg-pager button:disabled { opacity: .3; cursor: default; }
+    .pfg-pager-dots { font-family: var(--mono); font-size: 12px; color: rgba(255,255,255,.6); align-self: center; letter-spacing: .12em; }
     /* lightbox */
     .pfg-lb {
       position: fixed; inset: 0; z-index: 6000; background: rgba(0,0,0,.92);
@@ -4002,6 +4026,8 @@ onNavScroll();
 
   function render(idx) {
     tabs.forEach(function (t, i) { t.classList.toggle('active', i === idx); });
+    // remove any existing pager (sibling of grid)
+    var oldPager = pfg.querySelector('.pfg-pager'); if (oldPager) oldPager.remove();
     var cat = DATA[idx];
     grid.innerHTML = '';
     grid.className = 'pfg-grid pfg-grid--' + cat.type;
@@ -4020,8 +4046,9 @@ onNavScroll();
           '</div>';
         grid.appendChild(a);
       });
-      // pager for ≤700px (3-per-page swipe)
+      // pager for ≤700px (3-per-page swipe, sibling below grid)
       buildPager();
+      return;
     } else if (cat.type === 'video') {
       cat.items.forEach(function (it) {
         var card = document.createElement('div');
@@ -4053,28 +4080,33 @@ onNavScroll();
   }
 
   function buildPager() {
+    // clear old pager
+    var oldP = pfg.querySelector('.pfg-pager'); if (oldP) oldP.remove();
     if (window.innerWidth > 700) return;
     var pager = document.createElement('div');
-    pager.className = 'pfg-pager';
-    pager.innerHTML = '<button class="pfg-pager-btn" data-d="-1">←</button><span class="pfg-pager-dots">1/3</span><button class="pfg-pager-btn" data-d="1">→</button>';
-    grid.classList.add('has-pager');
-    grid.appendChild(pager);
+    pager.className = 'pfg-pager show';
+    pager.innerHTML = '<button type="button" data-d="-1" aria-label="Previous">←</button><span class="pfg-pager-dots">1/3</span><button type="button" data-d="1" aria-label="Next">→</button>';
+    grid.insertAdjacentElement('afterend', pager);
     var dots = pager.querySelector('.pfg-pager-dots');
+    var btns = pager.querySelectorAll('button');
     var pages = Math.ceil(grid.querySelectorAll('.pfg-card.pfg-site').length / 3);
     var page = 0;
+    function update() {
+      dots.textContent = (page + 1) + '/' + pages;
+      btns[0].disabled = page === 0;
+      btns[1].disabled = page === pages - 1;
+    }
     function go(d) {
       page = Math.max(0, Math.min(pages - 1, page + d));
       grid.scrollTo({ left: page * grid.clientWidth, behavior: 'smooth' });
-      dots.textContent = (page + 1) + '/' + pages;
+      update();
     }
-    pager.querySelectorAll('.pfg-pager-btn').forEach(function (b) {
-      b.addEventListener('click', function () { go(+b.dataset.d); });
-    });
+    btns.forEach(function (b) { b.addEventListener('click', function () { go(+b.dataset.d); }); });
     grid.addEventListener('scroll', function () {
       var p = Math.round(grid.scrollLeft / grid.clientWidth);
-      if (p !== page) { page = p; dots.textContent = (page + 1) + '/' + pages; }
+      if (p !== page) { page = p; update(); }
     });
-    dots.textContent = '1/' + pages;
+    update();
   }
 
   function openCat(i) {
@@ -4087,7 +4119,10 @@ onNavScroll();
     document.body.style.overflow = '';
     grid.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
     grid.querySelectorAll('iframe').forEach(function (f) { f.src = ''; });
-    setTimeout(function () { grid.innerHTML = ''; grid.className = 'pfg-grid'; }, 400);
+    setTimeout(function () {
+      grid.innerHTML = ''; grid.className = 'pfg-grid';
+      var p = pfg.querySelector('.pfg-pager'); if (p) p.remove();
+    }, 400);
   }
 
   // category-row clicks (main page) — open matching tab
