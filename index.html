@@ -5860,6 +5860,18 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   });
 })();
 
+// ── Slow down wheel scroll (desktop only) ──
+(function () {
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var pfg = document.getElementById('pfg');
+  window.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) return;
+    if (pfg && pfg.classList.contains('open')) return;
+    if (e.target.closest && e.target.closest('.pfg-grid--web, .pfg-grid--video, .pfg-grid--gfx, .tools-slider-wrap')) return;
+    e.preventDefault();
+    window.scrollBy(0, e.deltaY * 0.4);
+  }, { passive: false });
+})();
 
 </script>
 
