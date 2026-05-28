@@ -546,10 +546,29 @@
     }
     .pfg-grid--video .pfg-card.pfg-vid {
       aspect-ratio: 9/16;
-      height: clamp(320px, calc(100vh - 230px), 620px);
+      height: clamp(320px, calc(100vh - 290px), 520px);
       width: auto;
       max-width: 100%;
       margin: 0 auto;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(167,139,250,.55);
+      /* same GLOW as site cards */
+      box-shadow:
+        0 0 80px rgba(124,58,237,.55),
+        0 0 30px rgba(167,139,250,.35),
+        0 18px 50px rgba(124,58,237,.4),
+        0 0 0 1px rgba(167,139,250,.3);
+      transition: border-color .4s, box-shadow .4s, transform .4s;
+    }
+    .pfg-grid--video .pfg-card.pfg-vid:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow:
+        0 0 120px rgba(124,58,237,.75),
+        0 0 50px rgba(167,139,250,.5),
+        0 28px 80px rgba(124,58,237,.6),
+        0 0 0 1px rgba(167,139,250,.55);
     }
     @media (max-width: 700px) {
       .pfg-grid--video .pfg-page {
@@ -655,11 +674,14 @@
     .pfg-pager { display: none; }
     .pfg-pager.show {
       display: flex;
-      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+      position: fixed; bottom: 115px; left: 50%; transform: translateX(-50%);
       z-index: 1001; gap: 14px; align-items: center;
       padding: 6px 10px; background: rgba(15,8,30,.85); backdrop-filter: blur(16px);
       border: 1px solid rgba(167,139,250,.25); border-radius: 100px;
       box-shadow: 0 8px 30px rgba(124,58,237,.3);
+    }
+    @media (max-width: 700px) {
+      .pfg-pager.show { bottom: 80px; }
     }
     .pfg-pager button {
       width: 36px; height: 36px; border-radius: 50%;
@@ -2026,9 +2048,12 @@
     }
     .tools-panel {
       flex: 0 0 100%;
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 8px 8px;
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 10px 8px;
     }
+    @media (max-width: 1100px) { .tools-panel { grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width: 860px)  { .tools-panel { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 480px)  { .tools-panel { grid-template-columns: repeat(3, 1fr); } }
 
     /* Responsive glass widget */
     @media (max-width: 860px) {
