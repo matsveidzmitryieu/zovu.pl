@@ -5865,7 +5865,7 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return; // skip touch (native momentum)
   const pfg = document.getElementById('pfg');
   let target = window.scrollY, raf = null;
-  const ease = 0.038; // lower = more float / longer glide (artalto-style)
+  const ease = 0.22; // higher = snappier, lower = floatier (zah uses 0.038 but it needs body{zoom:.85})
   const maxY = () => document.documentElement.scrollHeight - window.innerHeight;
   function tick() {
     const cur = window.scrollY;
