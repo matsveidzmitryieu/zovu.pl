@@ -556,14 +556,11 @@
       border-radius: 14px;
       overflow: hidden;
       border: 1px solid rgba(167,139,250,.30);
-      /* uniform halo + boosted side echo */
+      /* uniform halo — same extent on all sides */
       box-shadow:
         0 0 140px 20px rgba(124,58,237,.55),
         0 0 70px 8px rgba(167,139,250,.5),
-        0 0 30px rgba(167,139,250,.4),
-        /* extra lateral echo (left + right) */
-         100px 0 140px rgba(124,58,237,.45),
-        -100px 0 140px rgba(124,58,237,.45);
+        0 0 30px rgba(167,139,250,.4);
       transition: border-color .4s, box-shadow .4s, transform .4s;
     }
     .pfg-grid--video .pfg-card.pfg-vid:hover {
@@ -572,9 +569,7 @@
       box-shadow:
         0 0 180px 30px rgba(124,58,237,.75),
         0 0 100px 15px rgba(167,139,250,.65),
-        0 0 40px rgba(167,139,250,.55),
-         130px 0 180px rgba(124,58,237,.6),
-        -130px 0 180px rgba(124,58,237,.6);
+        0 0 40px rgba(167,139,250,.55);
     }
     @media (max-width: 700px) {
       .pfg-grid--video .pfg-page {
