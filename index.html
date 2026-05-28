@@ -1875,7 +1875,7 @@
     /* NEW: prominent services line — 2 rows of 3 */
     .hero-roles {
       font-family: var(--display); font-weight: 700; text-transform: uppercase;
-      font-size: clamp(18px, 2.1vw, 30px); letter-spacing: .04em; line-height: 1.3;
+      font-size: clamp(18px, 2.4vw, 36px); letter-spacing: .04em; line-height: 1.3;
       color: #fff; margin-bottom: 40px;
       position: relative; z-index: 2;
       opacity: 0; animation: fadeup .7s .8s forwards;
@@ -2058,6 +2058,14 @@
       .hero-content, .glass-widget { flex: none; max-width: 100%; width: 100%; }
       .glass-widget { display: flex; margin-top: 18px; }
       .hero-roles { margin-bottom: 16px; }
+    }
+    /* PC: bigger widget text to match enlarged icons */
+    @media (min-width: 861px) {
+      .glass-title { font-size: 15px; letter-spacing: 3px; margin-bottom: 22px; }
+      .tools-tab { font-size: 13px; padding: 10px 4px; letter-spacing: .8px; }
+      .tools-tabs { margin-bottom: 22px; border-radius: 12px; padding: 4px; }
+      .g-icon-lbl { font-size: 13px; }
+      .g-icon { gap: 10px; }
     }
     @media (max-width: 860px) {
       .g-icon-img, .g-icon::before { width: 68px; height: 68px; border-radius: 18px; }
