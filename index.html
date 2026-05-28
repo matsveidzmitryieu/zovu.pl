@@ -1500,6 +1500,35 @@
       transform: translateY(-2px);
     }
 
+    /* ── MARQUEE TICKER (zah-style) ── */
+    .marquee {
+      overflow: hidden;
+      padding: 28px 0;
+      background: var(--accent);
+      color: #fff;
+      white-space: nowrap;
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+    .marquee-track span {
+      display: inline-block;
+      padding: 0 32px;
+    }
+    .marquee-track .star { color: #000; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
     /* ── CALCULATOR ── */
     #calc { padding: 130px 52px; }
     .calc-wrap {
@@ -2900,6 +2929,24 @@
     </div>
   </div>
 </section>
+
+<!-- MARQUEE TICKER -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>SITES</span><span class="star">✦</span>
+    <span>VIDEO</span><span class="star">✦</span>
+    <span>AI</span><span class="star">✦</span>
+    <span>AUTOMATION</span><span class="star">✦</span>
+    <span>CONTENT</span><span class="star">✦</span>
+    <span>ADS</span><span class="star">✦</span>
+    <span>SITES</span><span class="star">✦</span>
+    <span>VIDEO</span><span class="star">✦</span>
+    <span>AI</span><span class="star">✦</span>
+    <span>AUTOMATION</span><span class="star">✦</span>
+    <span>CONTENT</span><span class="star">✦</span>
+    <span>ADS</span><span class="star">✦</span>
+  </div>
+</div>
 
 <!-- PRICING -->
 <section id="pricing">
