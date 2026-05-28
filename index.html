@@ -5698,16 +5698,18 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
 (function () {
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   var pfg = document.getElementById('pfg');
-  var velocity = 0;        // px per frame
+  var velocity = 0;
   var pos = window.scrollY;
   var raf = null;
-  var friction = 0.92;     // per-frame decay (higher = longer glide)
-  var impulse = 0.08;      // share of wheel delta that becomes momentum
+  var friction = 0.92;
+  var impulse = 0.08;
   var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
+  // bypass CSS scroll-behavior:smooth — we need instant scroll, smoothness is from our momentum loop
+  function setScroll(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
   function loop() {
     if (Math.abs(velocity) < 0.3) { velocity = 0; raf = null; return; }
     pos = Math.max(0, Math.min(pos + velocity, maxY()));
-    window.scrollTo(0, pos);
+    setScroll(pos);
     velocity *= friction;
     raf = requestAnimationFrame(loop);
   }
@@ -5715,12 +5717,10 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
     if ((pfg && pfg.classList.contains('open')) || e.ctrlKey) return;
     e.preventDefault();
     var delta = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
-    // sync if external scroll happened
     if (!raf) pos = window.scrollY;
-    // INSTANT scroll: apply full wheel delta now (no delay)
+    // INSTANT scroll — applies wheel delta right now, bypassing CSS smooth
     pos = Math.max(0, Math.min(pos + delta, maxY()));
-    window.scrollTo(0, pos);
-    // build momentum for the tail-off after wheel stops
+    setScroll(pos);
     velocity = velocity * 0.5 + delta * impulse;
     if (!raf) raf = requestAnimationFrame(loop);
   }, { passive: false });
