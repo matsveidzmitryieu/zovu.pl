@@ -599,6 +599,10 @@
       overflow: visible;
     }
     .pfg-grid--gfx .pfg-page { display: contents; }
+    /* phone-only posts hidden on desktop masonry */
+    @media (min-width: 701px) {
+      .pfg-grid--gfx .pfg-card.pfg-gfx.phone-only { display: none; }
+    }
     .pfg-grid--gfx .pfg-card.pfg-gfx {
       display: block;
       break-inside: avoid;
@@ -4210,18 +4214,18 @@ onNavScroll();
       { yt: 'DO9KQYsyWKQ' }
     ]},
     { type: 'gfx', items: [
+      { src: 'post_beegelato.jpg' },
+      { src: 'post_wymiana.jpg' },
+      { src: 'post_pickactive.jpg' },
+      { src: 'post_greenproject.jpg' },
+      { src: 'post_upwork.jpg' },
       { src: 'post_marketing.jpg' },
       { src: 'post_yt1.jpg' },
       { src: 'post_yt2.jpg' },
-      { src: 'post_yturzednik.jpg' },
-      { src: 'post_ytpalant.jpg' },
-      { src: 'post_babajaga.jpg' },
-      { src: 'post_pickladies.jpg' },
-      { src: 'post_upwork.jpg' },
-      { src: 'post_pickactive.jpg' },
-      { src: 'post_beegelato.jpg' },
-      { src: 'post_greenproject.jpg' },
-      { src: 'post_wymiana.jpg' }
+      { src: 'post_pickladies.jpg', phone: true },
+      { src: 'post_yturzednik.jpg', phone: true },
+      { src: 'post_ytpalant.jpg', phone: true },
+      { src: 'post_babajaga.jpg' }
     ]}
   ];
 
@@ -4289,7 +4293,7 @@ onNavScroll();
           grid.appendChild(curPageG);
         }
         var b = document.createElement('button');
-        b.className = 'pfg-card pfg-gfx'; b.type = 'button';
+        b.className = 'pfg-card pfg-gfx' + (it.phone ? ' phone-only' : ''); b.type = 'button';
         b.innerHTML = '<img src="' + it.src + '" loading="lazy" alt="">';
         b.addEventListener('click', function () { lbImg.src = it.src; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
         curPageG.appendChild(b);
