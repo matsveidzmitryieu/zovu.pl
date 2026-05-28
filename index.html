@@ -5694,6 +5694,37 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   });
 })();
 
+// ── Instant wheel + tail-off momentum (desktop only) ──
+(function () {
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var pfg = document.getElementById('pfg');
+  var velocity = 0;        // px per frame
+  var pos = window.scrollY;
+  var raf = null;
+  var friction = 0.92;     // per-frame decay (higher = longer glide)
+  var impulse = 0.08;      // share of wheel delta that becomes momentum
+  var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
+  function loop() {
+    if (Math.abs(velocity) < 0.3) { velocity = 0; raf = null; return; }
+    pos = Math.max(0, Math.min(pos + velocity, maxY()));
+    window.scrollTo(0, pos);
+    velocity *= friction;
+    raf = requestAnimationFrame(loop);
+  }
+  window.addEventListener('wheel', function (e) {
+    if ((pfg && pfg.classList.contains('open')) || e.ctrlKey) return;
+    e.preventDefault();
+    var delta = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+    // sync if external scroll happened
+    if (!raf) pos = window.scrollY;
+    // INSTANT scroll: apply full wheel delta now (no delay)
+    pos = Math.max(0, Math.min(pos + delta, maxY()));
+    window.scrollTo(0, pos);
+    // build momentum for the tail-off after wheel stops
+    velocity = velocity * 0.5 + delta * impulse;
+    if (!raf) raf = requestAnimationFrame(loop);
+  }, { passive: false });
+})();
 
 </script>
 
