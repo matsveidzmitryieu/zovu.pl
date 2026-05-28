@@ -5701,8 +5701,8 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   var velocity = 0;        // px per frame (integrated each frame)
   var pos = window.scrollY;
   var raf = null;
-  var friction = 0.94;     // per-frame decay (higher = longer glide)
-  var impulse = 0.16;      // wheel delta → velocity conversion
+  var friction = 0.97;     // per-frame decay (higher = longer glide)
+  var impulse = 0.10;      // wheel delta → velocity conversion
   var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
   function setScroll(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
   function loop() {
