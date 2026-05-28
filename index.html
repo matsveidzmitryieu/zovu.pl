@@ -588,8 +588,82 @@
     }
     .pfg-card.pfg-vid { aspect-ratio: 9/16; }
     /* GRAFIKA grid: posts (mostly square/4:5) */
-    .pfg-card.pfg-gfx { aspect-ratio: auto; height: auto; }
-    .pfg-card.pfg-gfx > img { aspect-ratio: auto; height: auto; }
+    /* GRAFIKA — desktop: zah-style masonry (column-count), mobile: 2x2 swipe carousel */
+    .pfg-grid--gfx {
+      display: block !important;
+      column-count: 3;
+      column-gap: 22px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 120px clamp(40px, 5vw, 70px) 130px;
+      overflow: visible;
+    }
+    .pfg-grid--gfx .pfg-page { display: contents; }
+    .pfg-grid--gfx .pfg-card.pfg-gfx {
+      display: block;
+      break-inside: avoid;
+      margin-bottom: 22px;
+      width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+      padding: 0;
+      background: transparent;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(167,139,250,.65);
+      box-shadow:
+        0 0 130px rgba(124,58,237,.8),
+        0 0 60px rgba(167,139,250,.55),
+        0 26px 80px rgba(124,58,237,.6),
+        0 0 0 1px rgba(167,139,250,.5);
+      transition: transform .4s cubic-bezier(.16,1,.3,1), border-color .4s, box-shadow .4s;
+    }
+    .pfg-grid--gfx .pfg-card.pfg-gfx > img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: grayscale(.18) brightness(.88);
+      transition: filter .5s, transform .5s cubic-bezier(.16,1,.3,1);
+    }
+    .pfg-grid--gfx .pfg-card.pfg-gfx:hover {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 200px rgba(124,58,237,1),
+        0 0 90px rgba(167,139,250,.8),
+        0 38px 120px rgba(124,58,237,.85),
+        0 0 0 1px rgba(167,139,250,.8);
+    }
+    .pfg-grid--gfx .pfg-card.pfg-gfx:hover > img {
+      transform: scale(1.03);
+      filter: grayscale(0) brightness(1);
+    }
+    /* Mobile (≤700): swipe carousel, 2×2 per page */
+    @media (max-width: 700px) {
+      .pfg-grid--gfx {
+        display: flex !important;
+        column-count: initial;
+        column-gap: 0;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding: 90px 0 140px;
+      }
+      .pfg-grid--gfx::-webkit-scrollbar { display: none; }
+      .pfg-grid--gfx .pfg-page {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        align-content: start;
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        padding: 0 14px;
+        box-sizing: border-box;
+      }
+      .pfg-grid--gfx .pfg-card.pfg-gfx { margin-bottom: 0; }
+    }
     /* SITES — browser-frame card + GLOW (zah style) */
     .pfg-card.pfg-site {
       background: transparent; border: 0; border-radius: 14px; aspect-ratio: auto;
@@ -4205,13 +4279,23 @@ onNavScroll();
       buildPager();
       return;
     } else {
-      cat.items.forEach(function (it) {
+      // GRAFIKA: pages of 4 (2x2 on mobile; desktop flat masonry via display:contents on .pfg-page)
+      var perPageG = 4;
+      var curPageG = null;
+      cat.items.forEach(function (it, i) {
+        if (i % perPageG === 0) {
+          curPageG = document.createElement('div');
+          curPageG.className = 'pfg-page';
+          grid.appendChild(curPageG);
+        }
         var b = document.createElement('button');
         b.className = 'pfg-card pfg-gfx'; b.type = 'button';
         b.innerHTML = '<img src="' + it.src + '" loading="lazy" alt="">';
         b.addEventListener('click', function () { lbImg.src = it.src; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
-        grid.appendChild(b);
+        curPageG.appendChild(b);
       });
+      buildPager();
+      return;
     }
     grid.scrollTop = 0;
   }
@@ -4219,9 +4303,9 @@ onNavScroll();
   function buildPager() {
     // clear old pager
     var oldP = pfg.querySelector('.pfg-pager'); if (oldP) oldP.remove();
-    // Strony on desktop = single flat grid, no pager needed. Video/etc always paged.
-    var isWebDesktop = grid.classList.contains('pfg-grid--web') && window.innerWidth > 700;
-    if (isWebDesktop) return;
+    // Strony + Grafika on desktop = flat (single grid or masonry), no pager. Video always paged.
+    var isFlatDesktop = (grid.classList.contains('pfg-grid--web') || grid.classList.contains('pfg-grid--gfx')) && window.innerWidth > 700;
+    if (isFlatDesktop) return;
     var pager = document.createElement('div');
     pager.className = 'pfg-pager show';
     pager.innerHTML = '<button type="button" data-d="-1" aria-label="Previous">←</button><span class="pfg-pager-dots">1/3</span><button type="button" data-d="1" aria-label="Next">→</button>';
