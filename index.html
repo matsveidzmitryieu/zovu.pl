@@ -4225,6 +4225,12 @@ onNavScroll();
     });
   });
   document.getElementById('pfgClose').addEventListener('click', close);
+  // ANY navbar link/button click while gallery is open → close gallery first, then let link navigate
+  document.querySelectorAll('nav a, nav button').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (pfg.classList.contains('open')) close();
+    });
+  });
   lb.addEventListener('click', function () { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
