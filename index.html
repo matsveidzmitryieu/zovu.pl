@@ -5704,10 +5704,11 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   var friction = 0.985;    // per-frame decay (higher = longer glide)
   var impulse = 0.06;      // wheel delta → velocity conversion
   var wheelMult = 0.25;    // overall wheel power (lower = less distance per tick)
+  var stopAt = 1.5;        // px/frame threshold to snap stop (higher = sharper end)
   var maxY = function () { return document.documentElement.scrollHeight - window.innerHeight; };
   function setScroll(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
   function loop() {
-    if (Math.abs(velocity) < 0.3) { velocity = 0; raf = null; return; }
+    if (Math.abs(velocity) < stopAt) { velocity = 0; raf = null; return; }
     pos = Math.max(0, Math.min(pos + velocity, maxY()));
     setScroll(pos);
     velocity *= friction;
