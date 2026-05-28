@@ -556,20 +556,25 @@
       border-radius: 14px;
       overflow: hidden;
       border: 1px solid rgba(167,139,250,.30);
-      /* brighter uniform halo on ALL sides */
+      /* uniform halo + boosted side echo */
       box-shadow:
-        0 0 140px 20px rgba(124,58,237,.65),
-        0 0 70px 8px rgba(167,139,250,.55),
-        0 0 30px rgba(167,139,250,.45);
+        0 0 140px 20px rgba(124,58,237,.55),
+        0 0 70px 8px rgba(167,139,250,.5),
+        0 0 30px rgba(167,139,250,.4),
+        /* extra lateral echo (left + right) */
+         100px 0 140px rgba(124,58,237,.45),
+        -100px 0 140px rgba(124,58,237,.45);
       transition: border-color .4s, box-shadow .4s, transform .4s;
     }
     .pfg-grid--video .pfg-card.pfg-vid:hover {
       border-color: rgba(167,139,250,.7);
       transform: translateY(-4px);
       box-shadow:
-        0 0 180px 30px rgba(124,58,237,.85),
-        0 0 100px 15px rgba(167,139,250,.7),
-        0 0 40px rgba(167,139,250,.55);
+        0 0 180px 30px rgba(124,58,237,.75),
+        0 0 100px 15px rgba(167,139,250,.65),
+        0 0 40px rgba(167,139,250,.55),
+         130px 0 180px rgba(124,58,237,.6),
+        -130px 0 180px rgba(124,58,237,.6);
     }
     @media (max-width: 700px) {
       .pfg-grid--video .pfg-page {
