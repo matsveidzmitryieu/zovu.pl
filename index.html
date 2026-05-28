@@ -466,32 +466,98 @@
       background: rgba(8,8,8,.7); backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.1);
     }
-    .pfg-num { font-family: var(--mono); font-size: 13px; letter-spacing: .2em; color: var(--accent-2); }
-    .pfg-title {
-      font-family: var(--display); font-weight: 700; text-transform: uppercase;
-      font-size: clamp(22px, 3vw, 38px); letter-spacing: -.01em; color: #fff;
+    /* Tabs */
+    .pfg-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pfg-tab {
+      font-family: var(--display); font-weight: 600; font-size: 13px;
+      letter-spacing: .14em; text-transform: uppercase;
+      padding: 10px 22px; border-radius: 100px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.55); cursor: pointer;
+      transition: all .25s;
     }
+    .pfg-tab:hover { color: #fff; border-color: rgba(167,139,250,.5); }
+    .pfg-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 20px rgba(124,58,237,.45); }
     .pfg-close {
       margin-left: auto; width: 44px; height: 44px; border-radius: 50%;
       background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15);
       color: #fff; font-size: 18px; cursor: pointer; transition: all .25s;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .pfg-close:hover { background: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
     .pfg-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
       max-width: 1400px; margin: 0 auto; padding: 40px clamp(20px, 4vw, 56px) 80px; width: 100%;
     }
-    @media (max-width: 900px) { .pfg-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) { .pfg-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
     @media (max-width: 560px) { .pfg-grid { grid-template-columns: 1fr; } }
+    /* default card (used by videos + graphics) */
     .pfg-card {
       display: block; border: 0; padding: 0; background: #111; cursor: pointer;
       border-radius: 14px; overflow: hidden; aspect-ratio: 16/9;
-      border: 1px solid rgba(167,139,250,.25); box-shadow: 0 0 0 rgba(124,58,237,0);
-      transition: transform .3s, box-shadow .3s, border-color .3s; text-decoration: none;
+      border: 1px solid rgba(167,139,250,.25);
+      transition: transform .3s, box-shadow .3s, border-color .3s; text-decoration: none; position: relative;
     }
     .pfg-card:hover { transform: translateY(-5px); border-color: var(--accent-2); box-shadow: 0 14px 40px rgba(124,58,237,.35); }
-    .pfg-card img, .pfg-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pfg-card > img, .pfg-card > video, .pfg-card > iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: 0; }
+    /* VIDEO grid: vertical reels (9:16) need different ratio */
+    .pfg-grid--video { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 900px) { .pfg-grid--video { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
+    @media (max-width: 560px) { .pfg-grid--video { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+    .pfg-card.pfg-vid { aspect-ratio: 9/16; }
+    .pfg-card.pfg-vid.pfg-vid-h { aspect-ratio: 16/9; }
+    /* GRAFIKA grid: posts (mostly square/4:5) */
+    .pfg-card.pfg-gfx { aspect-ratio: auto; height: auto; }
+    .pfg-card.pfg-gfx > img { aspect-ratio: auto; height: auto; }
+    /* SITES — browser-frame card + GLOW (zah style) */
+    .pfg-card.pfg-site {
+      background: transparent; border: 0; border-radius: 14px; aspect-ratio: auto;
+      overflow: visible; box-shadow: none; padding: 0;
+      transition: transform .5s cubic-bezier(.16,1,.3,1);
+    }
+    .pfg-card.pfg-site:hover { transform: translateY(-8px); box-shadow: none; }
+    .pfg-browser {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.1); background: #161616;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      transition: border-color .4s, box-shadow .4s;
+    }
+    .pfg-card.pfg-site:hover .pfg-browser {
+      border-color: var(--accent);
+      box-shadow: 0 22px 64px rgba(124,58,237,.45), 0 0 0 1px rgba(167,139,250,.35); /* GLOW */
+    }
+    .pfg-bar2 {
+      background: #1c1c1c; padding: 9px 13px; display: flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid #000;
+    }
+    .pfg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .pfg-dot.r { background: #ff5f56; }
+    .pfg-dot.y { background: #ffbd2e; }
+    .pfg-dot.g { background: #27c93f; }
+    .pfg-url {
+      margin-left: 8px; flex: 1; text-align: center;
+      font-family: var(--mono); font-size: 11px; letter-spacing: .02em;
+      color: rgba(255,255,255,.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pfg-shot { aspect-ratio: 16/10; overflow: hidden; background: #0a0a0a; }
+    .pfg-shot img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      display: block; filter: grayscale(.25) brightness(.85);
+      transition: filter .5s, transform 1.4s cubic-bezier(.16,1,.3,1);
+    }
+    .pfg-card.pfg-site:hover .pfg-shot img { filter: none; transform: scale(1.06); }
+    /* SITES pager: 3 per page on mobile (zah-style) */
+    .pfg-grid--web { position: relative; }
+    @media (max-width: 700px) {
+      .pfg-grid--web { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 90px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .pfg-grid--web::-webkit-scrollbar { display: none; }
+      .pfg-grid--web .pfg-card.pfg-site { flex: 0 0 calc((100% - 28px) / 3); scroll-snap-align: start; min-width: 110px; }
+    }
+    .pfg-pager { display: none; position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); gap: 10px; padding: 8px 14px; background: rgba(20,12,40,.92); backdrop-filter: blur(10px); border: 1px solid rgba(167,139,250,.3); border-radius: 100px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+    .pfg-grid--web.has-pager .pfg-pager { display: flex; align-items: center; }
+    .pfg-pager-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; font-size: 16px; }
+    .pfg-pager-btn:hover { background: var(--accent); border-color: var(--accent); }
+    .pfg-pager-dots { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.6); padding: 0 4px; letter-spacing: .1em; }
     /* lightbox */
     .pfg-lb {
       position: fixed; inset: 0; z-index: 6000; background: rgba(0,0,0,.92);
@@ -2487,8 +2553,11 @@
 <!-- PORTFOLIO GALLERY OVERLAY -->
 <div class="pfg" id="pfg" aria-hidden="true">
   <div class="pfg-bar">
-    <span class="pfg-num"></span>
-    <span class="pfg-title"></span>
+    <div class="pfg-tabs">
+      <button class="pfg-tab" type="button" data-cat="0">Strony</button>
+      <button class="pfg-tab" type="button" data-cat="1">Wideo</button>
+      <button class="pfg-tab" type="button" data-cat="2">Grafika</button>
+    </div>
     <button class="pfg-close" id="pfgClose" aria-label="Zamknij">&#10005;</button>
   </div>
   <div class="pfg-grid" id="pfgGrid"></div>
@@ -3878,66 +3947,138 @@ onNavScroll();
   }
 })();
 
-// ── PORTFOLIO GALLERY (click category → open zah-style gallery) ──
+// ── PORTFOLIO GALLERY (zah 1:1: tabs + browser-frame + glow + zah assets) ──
 (function () {
   var cats = document.querySelectorAll('.pf-cats .pf-cat');
   var pfg = document.getElementById('pfg');
-  if (!cats.length || !pfg) return;
+  if (!pfg) return;
   var grid = document.getElementById('pfgGrid');
   var lb = document.getElementById('pfgLb');
   var lbImg = lb.querySelector('img');
-  var TYPES = ['web', 'video', 'gfx'];
-  var SITE_URL = {
-    'web_fightmode.png': 'https://fightmode.tv', 'web_shaurma.jpg': 'https://magshaurma.com',
-    'web_bee.jpg': 'https://beegelato.sk', 'web_jewelry.jpg': 'https://jewelry-katowice.com',
-    'web_maya.jpg': 'https://maya-gold.com', 'web_gucio.jpg': 'https://gucio-bar.com',
-    'web_marketing.jpg': 'https://marketingai.energiabiznesu.pl', 'web_pick.jpg': 'https://pickactive.pl',
-    'web_potolki.jpg': 'https://adekvatpotolki.netlify.app', 'web_energia.jpg': 'https://energiabiznesu.pl'
-  };
-  function fname(src) { return src.split('/').pop().split('?')[0]; }
-  function open(i) {
-    var cat = cats[i], type = TYPES[i];
-    var num = cat.querySelector('.pf-cat-num').textContent;
-    var name = cat.querySelector('.pf-cat-name').textContent;
-    pfg.querySelector('.pfg-num').textContent = num;
-    pfg.querySelector('.pfg-title').textContent = name;
-    var track = cat.querySelector('.pf-strip-track');
-    var items = Array.prototype.filter.call(track.children, function (el) { return !el.hasAttribute('aria-hidden'); });
+  var tabs = pfg.querySelectorAll('.pfg-tab');
+
+  // DATA — 1:1 zah order
+  var DATA = [
+    { type: 'web', items: [
+      { src: 'shot_fightmode.png',   url: 'https://fightmode.tv',                       label: 'fightmode.tv' },
+      { src: 'shot_shaurma.png',     url: 'https://magshaurma.com',                     label: 'magshaurma.com' },
+      { src: 'shot_beegelato.png',   url: 'https://beegelato.sk',                       label: 'beegelato.sk' },
+      { src: 'shot_maya.png',        url: 'https://maya-gold.com',                      label: 'maya-gold.com' },
+      { src: 'shot_marketing.png',   url: 'https://marketingai.energiabiznesu.pl',      label: 'marketingai.energiabiznesu.pl' },
+      { src: 'shot_jewelry.png',     url: 'https://jewelry-katowice.com',               label: 'jewelry-katowice.com' },
+      { src: 'shot_gucio.png',       url: 'https://gucio-bar.com',                      label: 'gucio-bar.com' },
+      { src: 'shot_pickactive.png',  url: 'https://pickactive.pl',                      label: 'pickactive.pl' }
+    ]},
+    { type: 'video', items: [
+      { src: 'video1.mp4', poster: 'vidposter1.jpg' },
+      { src: 'video2.mp4', poster: 'vidposter2.jpg' },
+      { src: 'video3.mp4', poster: 'vidposter3.jpg' },
+      { src: 'video4.mp4', poster: 'vidposter4.jpg' },
+      { src: 'video5.mp4', poster: 'vidposter5.jpg' },
+      { src: 'video6.mp4', poster: 'vidposter6.jpg' },
+      { src: 'video7.mp4', poster: 'vidposter7.jpg' },
+      { src: 'video8.mp4', poster: 'vidposter8.jpg' },
+      { src: 'video9.mp4', poster: 'vidposter9.jpg' },
+      { yt: '1ciGcUa5GyM' },
+      { yt: 'ZkrUFiSeHbE' },
+      { yt: 'HPNUJlfyxw0' },
+      { yt: 'DO9KQYsyWKQ' }
+    ]},
+    { type: 'gfx', items: [
+      { src: 'post_marketing.jpg' },
+      { src: 'post_yt1.jpg' },
+      { src: 'post_yt2.jpg' },
+      { src: 'post_yturzednik.jpg' },
+      { src: 'post_ytpalant.jpg' },
+      { src: 'post_babajaga.jpg' },
+      { src: 'post_pickladies.jpg' },
+      { src: 'post_upwork.jpg' },
+      { src: 'post_pickactive.jpg' },
+      { src: 'post_beegelato.jpg' },
+      { src: 'post_greenproject.jpg' },
+      { src: 'post_wymiana.jpg' }
+    ]}
+  ];
+
+  function render(idx) {
+    tabs.forEach(function (t, i) { t.classList.toggle('active', i === idx); });
+    var cat = DATA[idx];
     grid.innerHTML = '';
-    items.forEach(function (el) {
-      if (type === 'video') {
+    grid.className = 'pfg-grid pfg-grid--' + cat.type;
+    if (cat.type === 'web') {
+      cat.items.forEach(function (it) {
+        var a = document.createElement('a');
+        a.className = 'pfg-card pfg-site';
+        a.href = it.url; a.target = '_blank'; a.rel = 'noopener';
+        a.innerHTML =
+          '<div class="pfg-browser">' +
+            '<div class="pfg-bar2">' +
+              '<span class="pfg-dot r"></span><span class="pfg-dot y"></span><span class="pfg-dot g"></span>' +
+              '<span class="pfg-url">' + it.label + '</span>' +
+            '</div>' +
+            '<div class="pfg-shot"><img src="' + it.src + '" loading="lazy" alt=""></div>' +
+          '</div>';
+        grid.appendChild(a);
+      });
+      // pager for ≤700px (3-per-page swipe)
+      buildPager();
+    } else if (cat.type === 'video') {
+      cat.items.forEach(function (it) {
         var card = document.createElement('div');
-        card.className = 'pfg-card';
-        var yt = el.getAttribute('data-yt');
-        if (yt) {
+        card.className = 'pfg-card pfg-vid' + (it.yt ? ' pfg-vid-h' : '');
+        if (it.yt) {
           var ifr = document.createElement('iframe');
-          ifr.src = 'https://www.youtube.com/embed/' + yt + '?rel=0';
+          ifr.src = 'https://www.youtube.com/embed/' + it.yt + '?rel=0';
           ifr.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
           ifr.setAttribute('allowfullscreen', '');
-          ifr.style.cssText = 'width:100%;height:100%;border:0;display:block;';
           card.appendChild(ifr);
         } else {
           var v = document.createElement('video');
-          v.src = el.getAttribute('src'); v.controls = true; v.loop = true; v.muted = true; v.playsInline = true; v.preload = 'metadata';
+          v.src = it.src; if (it.poster) v.poster = it.poster;
+          v.controls = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
           card.appendChild(v);
         }
         grid.appendChild(card);
-      } else if (type === 'web') {
-        var src = el.getAttribute('src');
-        var a = document.createElement('a');
-        a.className = 'pfg-card'; a.href = SITE_URL[fname(src)] || '#'; a.target = '_blank'; a.rel = 'noopener';
-        var img = document.createElement('img'); img.src = src; img.loading = 'lazy';
-        a.appendChild(img); grid.appendChild(a);
-      } else {
-        var src2 = el.getAttribute('src');
+      });
+    } else {
+      cat.items.forEach(function (it) {
         var b = document.createElement('button');
-        b.className = 'pfg-card'; b.type = 'button';
-        var img2 = document.createElement('img'); img2.src = src2; img2.loading = 'lazy';
-        b.appendChild(img2);
-        b.addEventListener('click', function () { lbImg.src = src2; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
+        b.className = 'pfg-card pfg-gfx'; b.type = 'button';
+        b.innerHTML = '<img src="' + it.src + '" loading="lazy" alt="">';
+        b.addEventListener('click', function () { lbImg.src = it.src; lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
         grid.appendChild(b);
-      }
+      });
+    }
+    grid.scrollTop = 0;
+  }
+
+  function buildPager() {
+    if (window.innerWidth > 700) return;
+    var pager = document.createElement('div');
+    pager.className = 'pfg-pager';
+    pager.innerHTML = '<button class="pfg-pager-btn" data-d="-1">←</button><span class="pfg-pager-dots">1/3</span><button class="pfg-pager-btn" data-d="1">→</button>';
+    grid.classList.add('has-pager');
+    grid.appendChild(pager);
+    var dots = pager.querySelector('.pfg-pager-dots');
+    var pages = Math.ceil(grid.querySelectorAll('.pfg-card.pfg-site').length / 3);
+    var page = 0;
+    function go(d) {
+      page = Math.max(0, Math.min(pages - 1, page + d));
+      grid.scrollTo({ left: page * grid.clientWidth, behavior: 'smooth' });
+      dots.textContent = (page + 1) + '/' + pages;
+    }
+    pager.querySelectorAll('.pfg-pager-btn').forEach(function (b) {
+      b.addEventListener('click', function () { go(+b.dataset.d); });
     });
+    grid.addEventListener('scroll', function () {
+      var p = Math.round(grid.scrollLeft / grid.clientWidth);
+      if (p !== page) { page = p; dots.textContent = (page + 1) + '/' + pages; }
+    });
+    dots.textContent = '1/' + pages;
+  }
+
+  function openCat(i) {
+    render(i);
     pfg.classList.add('open'); pfg.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
@@ -3946,10 +4087,21 @@ onNavScroll();
     document.body.style.overflow = '';
     grid.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
     grid.querySelectorAll('iframe').forEach(function (f) { f.src = ''; });
-    setTimeout(function () { grid.innerHTML = ''; }, 400);
+    setTimeout(function () { grid.innerHTML = ''; grid.className = 'pfg-grid'; }, 400);
   }
+
+  // category-row clicks (main page) — open matching tab
   cats.forEach(function (cat, i) {
-    cat.addEventListener('click', function (e) { e.preventDefault(); open(i); });
+    cat.addEventListener('click', function (e) { e.preventDefault(); openCat(i); });
+  });
+  // tab clicks inside overlay — switch without close
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () {
+      // stop current videos/iframes before re-render
+      grid.querySelectorAll('video').forEach(function (v) { try { v.pause(); } catch (e) {} });
+      grid.querySelectorAll('iframe').forEach(function (f) { f.src = ''; });
+      render(i);
+    });
   });
   document.getElementById('pfgClose').addEventListener('click', close);
   lb.addEventListener('click', function () { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); });
