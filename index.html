@@ -393,7 +393,8 @@
     }
     .stats-inner {
       max-width: 1400px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      display: grid; grid-template-columns: repeat(4, max-content);
+      justify-content: center; gap: clamp(48px, 7vw, 110px);
     }
     .stat { border-left: 2px solid #000; padding-left: 24px; }
     .stat-value {
@@ -1776,13 +1777,13 @@
     #contact .sec-label::before { display: none; }
     .contact-h-new {
       font-family: var(--display); font-weight: 700; text-transform: uppercase;
-      font-size: clamp(52px, 7vw, 96px); letter-spacing: -0.01em; line-height: 0.95;
+      font-size: clamp(52px, 7vw, 96px); letter-spacing: -0.01em; line-height: 1.08;
       background: linear-gradient(180deg, #fff 35%, #a78bfa 100%);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 24px;
+      margin-bottom: 24px; padding-bottom: 0.12em;
     }
     .contact-h-new .ac-em {
-      font-style: italic; font-weight: 700;
+      font-style: italic; font-weight: 700; display: inline-block; padding-bottom: 0.08em;
       background: linear-gradient(180deg, var(--accent-2) 0%, var(--accent) 100%);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
@@ -1917,7 +1918,9 @@
     .f-copy {
       font-family: var(--mono); font-size: 12px;
       color: rgba(255,255,255,.55); letter-spacing: .04em;
+      text-align: center; line-height: 1.7;
     }
+    .f-copy .f-sep { white-space: nowrap; }
     .f-copy a {
       color: rgba(255,255,255,.55); text-decoration: none;
       transition: color .25s;
@@ -3087,8 +3090,8 @@
         <span class="pf-cat-arrow">&#8599;</span>
       </div>
       <div class="pf-strip"><div class="pf-strip-track">
-        <img class="pf-strip-img" src="web_fightmode.png" alt=""><img class="pf-strip-img" src="web_shaurma.jpg" alt=""><img class="pf-strip-img" src="web_bee.jpg" alt=""><img class="pf-strip-img" src="web_jewelry.jpg" alt=""><img class="pf-strip-img" src="web_maya.jpg" alt=""><img class="pf-strip-img" src="web_gucio.jpg" alt=""><img class="pf-strip-img" src="web_marketing.jpg" alt=""><img class="pf-strip-img" src="web_pick.jpg" alt=""><img class="pf-strip-img" src="web_energia.jpg" alt="">
-        <img class="pf-strip-img" src="web_fightmode.png" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_shaurma.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_bee.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_jewelry.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_maya.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_gucio.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_marketing.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_pick.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_potolki.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_energia.jpg" alt="" aria-hidden="true">
+        <img class="pf-strip-img" src="web_fightmode.jpg" alt=""><img class="pf-strip-img" src="web_shaurma.jpg" alt=""><img class="pf-strip-img" src="web_bee.jpg" alt=""><img class="pf-strip-img" src="web_jewelry.jpg" alt=""><img class="pf-strip-img" src="web_maya.jpg" alt=""><img class="pf-strip-img" src="web_gucio.jpg" alt=""><img class="pf-strip-img" src="web_marketing.jpg" alt=""><img class="pf-strip-img" src="web_pick.jpg" alt=""><img class="pf-strip-img" src="web_energia.jpg" alt="">
+        <img class="pf-strip-img" src="web_fightmode.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_shaurma.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_bee.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_jewelry.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_maya.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_gucio.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_marketing.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_pick.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_potolki.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_energia.jpg" alt="" aria-hidden="true">
       </div></div>
     </a>
 
@@ -3313,7 +3316,7 @@
     <img src="logo_icon.png" alt="ZOVU">
     <span>ZOVU</span>
   </a>
-  <div class="f-copy">© 2026 ZOVU. <span data-k="ft_r">Wszelkie prawa zastrzeżone.</span> &nbsp;·&nbsp; <a href="/privacypolicy" data-k="ft_priv">Privacy Policy</a></div>
+  <div class="f-copy">© 2026 ZOVU. <span data-k="ft_r">Wszelkie prawa zastrzeżone.</span> <span class="f-sep">·&nbsp;<a href="/privacypolicy" data-k="ft_priv">Privacy Policy</a></span></div>
   <a href="tel:+48571795097" class="f-phone">+48 571 795 097</a>
 </footer>
 
@@ -4278,15 +4281,15 @@ onNavScroll();
   // DATA — 1:1 zah order
   var DATA = [
     { type: 'web', items: [
-      { src: 'shot_fightmode.png',   url: 'https://fightmode.tv',                       label: 'fightmode.tv' },
-      { src: 'shot_shaurma.png',     url: 'https://magshaurma.com',                     label: 'magshaurma.com' },
-      { src: 'shot_beegelato.png',   url: 'https://beegelato.sk',                       label: 'beegelato.sk' },
-      { src: 'shot_maya.png',        url: 'https://maya-gold.com',                      label: 'maya-gold.com' },
+      { src: 'shot_fightmode.jpg',   url: 'https://fightmode.tv',                       label: 'fightmode.tv' },
+      { src: 'shot_shaurma.jpg',     url: 'https://magshaurma.com',                     label: 'magshaurma.com' },
+      { src: 'shot_beegelato.jpg',   url: 'https://beegelato.sk',                       label: 'beegelato.sk' },
+      { src: 'shot_maya.jpg',        url: 'https://maya-gold.com',                      label: 'maya-gold.com' },
       { src: 'web_energia.jpg',      url: 'https://energiabiznesu.pl',                  label: 'energiabiznesu.pl' },
-      { src: 'shot_marketing.png',   url: 'https://marketingai.energiabiznesu.pl',      label: 'marketingai.energiabiznesu.pl' },
-      { src: 'shot_jewelry.png',     url: 'https://jewelry-katowice.com',               label: 'jewelry-katowice.com' },
-      { src: 'shot_gucio.png',       url: 'https://gucio-bar.com',                      label: 'gucio-bar.com' },
-      { src: 'shot_pickactive.png',  url: 'https://pickactive.pl',                      label: 'pickactive.pl' }
+      { src: 'shot_marketing.jpg',   url: 'https://marketingai.energiabiznesu.pl',      label: 'marketingai.energiabiznesu.pl' },
+      { src: 'shot_jewelry.jpg',     url: 'https://jewelry-katowice.com',               label: 'jewelry-katowice.com' },
+      { src: 'shot_gucio.jpg',       url: 'https://gucio-bar.com',                      label: 'gucio-bar.com' },
+      { src: 'shot_pickactive.jpg',  url: 'https://pickactive.pl',                      label: 'pickactive.pl' }
     ]},
     { type: 'video', items: [
       { src: 'video1.mp4', poster: 'vidposter1.jpg' },
