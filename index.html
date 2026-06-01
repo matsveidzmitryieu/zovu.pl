@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>ZOVU — Creative Agency</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -5770,6 +5772,37 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   </defs>
 </svg>
 
+<script>
+  /* iOS Safari: dopasuj kolor pasków (theme-color) do sekcji na górze ekranu,
+     żeby nie było białych pasków na ciemnych sekcjach (splash, footer). */
+  (function () {
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) return;
+    function topColor() {
+      // próbka przy lewej krawędzi u góry (omija wyśrodkowaną pigułkę nawigacji)
+      var node = document.elementFromPoint(6, 4);
+      while (node) {
+        var bg = getComputedStyle(node).backgroundColor;
+        if (bg && bg !== 'transparent' && !/rgba\(0, 0, 0, 0\)/.test(bg)) return bg;
+        node = node.parentElement;
+      }
+      return null;
+    }
+    var raf;
+    function update() {
+      var c = topColor();
+      if (c) meta.setAttribute('content', c);
+    }
+    function schedule() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    }
+    addEventListener('scroll', schedule, { passive: true });
+    addEventListener('resize', schedule, { passive: true });
+    addEventListener('load', function () { setTimeout(update, 80); });
+    setTimeout(update, 300);
+  })();
+</script>
 
 </body>
 </html>
