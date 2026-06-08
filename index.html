@@ -2771,7 +2771,6 @@
       <span>ZOVU</span>
     </a>
     <div class="nav-right">
-      <a href="#pricing" class="nav-link" data-k="ft_p">Pricing</a>
       <div class="nav-lang">
         <button class="lang on" data-l="pl">PL</button>
         <button class="lang"    data-l="en">EN</button>
@@ -3204,89 +3203,7 @@
   </div>
 </div>
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="sec-hd rv">
-    <div>
-      <div class="sec-label" data-k="pr_lbl">Simple pricing</div>
-      <h2 class="sec-title" data-k="pr_ttl">Choose your plan</h2>
-    </div>
-    <p style="max-width:340px;font-size:14px;color:var(--sec);line-height:1.75" class="rv" data-k="pr_d">
-      Flexible monthly packages. Cancel anytime.
-    </p>
-  </div>
-  <div class="pricing-grid">
-
-    <!-- STARTER -->
-    <div class="plan rv d1">
-      <div class="plan-name" data-k="pl1n">Starter</div>
-      <div class="plan-price-meta">
-        <span class="plan-old"><span class="plan-curr">zł</span><span data-k="pl1op">3 125</span></span>
-        <span class="plan-save">−20%</span>
-      </div>
-      <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl1p">2 500</span></div>
-      <div class="plan-period" data-k="pl1per">/mies</div>
-      <div class="plan-desc" data-k="pl1d">Pierwszy krok dla małej firmy w content marketingu.</div>
-      <ul class="plan-feats">
-        <li data-k="pl1f1">8 krótkich filmów / miesiąc</li>
-        <li data-k="pl1f2">Prowadzenie social mediów (1 platforma)</li>
-        <li data-k="pl1f3">Podstawowy raport miesięczny</li>
-        <li data-k="pl1f4">Wsparcie e-mail</li>
-        <li class="off" data-k="pl1f5">Płatna reklama</li>
-        <li class="off" data-k="pl1f6">Tworzenie stron WWW</li>
-      </ul>
-      <a href="#contact" class="plan-btn sec" data-k="pl_cta_s">Zacznij</a>
-    </div>
-
-    <!-- GROWTH (featured) -->
-    <div class="plan featured rv d2">
-      <div class="plan-badge" data-k="pl_pop">Najpopularniejszy</div>
-      <div class="plan-name" data-k="pl2n">Growth</div>
-      <div class="plan-price-meta">
-        <span class="plan-old"><span class="plan-curr">zł</span><span data-k="pl2op">6 250</span></span>
-        <span class="plan-save">−20%</span>
-      </div>
-      <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl2p">5 000</span></div>
-      <div class="plan-period" data-k="pl2per">/mies</div>
-      <div class="plan-desc" data-k="pl2d">Pełna obsługa marki + reklama z gwarancją wyników.</div>
-      <ul class="plan-feats">
-        <li data-k="pl2f1">20 filmów / miesiąc (krótkie + średnie)</li>
-        <li data-k="pl2f2">Prowadzenie social mediów (2 platformy)</li>
-        <li data-k="pl2f3">Reklama Facebook &amp; Instagram</li>
-        <li data-k="pl2f4">Miesięczny raport wyników</li>
-        <li data-k="pl2f5">Priorytetowe wsparcie</li>
-        <li class="off" data-k="pl2f6">Tworzenie stron WWW</li>
-      </ul>
-      <a href="#contact" class="plan-btn prim" data-k="pl_cta_p">Zacznij teraz</a>
-      <div class="plan-microbadge" data-k="pl_micro">80% klientów wybiera ten plan</div>
-    </div>
-
-    <!-- PRO -->
-    <div class="plan rv d3">
-      <div class="plan-name" data-k="pl3n">Pro</div>
-      <div class="plan-price-meta">
-        <span class="plan-old"><span class="plan-curr">zł</span><span data-k="pl3op">16 250</span></span>
-        <span class="plan-save">−20%</span>
-      </div>
-      <div class="plan-price"><span class="plan-curr">zł</span><span data-k="pl3p">13 000</span></div>
-      <div class="plan-period" data-k="pl3per">/mies</div>
-      <div class="plan-desc" data-k="pl3d">Cała agencja w Twoim zespole 24/7.</div>
-      <ul class="plan-feats">
-        <li data-k="pl3f1">Nielimitowane krótkie filmy</li>
-        <li data-k="pl3f2">Pełne prowadzenie social mediów (wszystkie platformy)</li>
-        <li data-k="pl3f3">Facebook, Instagram &amp; Google Ads</li>
-        <li data-k="pl3f4">1 landing page na kwartał</li>
-        <li data-k="pl3f5">Cotygodniowe raporty + sesje strategiczne</li>
-        <li data-k="pl3f6">Dedykowany account manager</li>
-      </ul>
-      <a href="#contact" class="plan-btn sec" data-k="pl_cta_s2">Umów konsultację</a>
-    </div>
-
-  </div>
-
-  <!-- FINE PRINT -->
-  <div class="pricing-fine rv" data-k="pr_fine">Wszystkie ceny netto · Faktura VAT · Płatność miesięczna · Anuluj kiedy chcesz</div>
-</section>
+<!-- CENNIK / PRICING — секция удалена по запросу (цены обсуждаются индивидуально) -->
 
 
 <!-- CONTACT -->
@@ -4989,7 +4906,7 @@ applyLang('pl');
 // ── NAV ACTIVE LINK ───────────────────────────────────────────────────────────
 (function(){
   const links = document.querySelectorAll('.nav-link');
-  const sections = ['services','portfolio','team','pricing','contact'];
+  const sections = ['services','portfolio','team','contact'];
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
