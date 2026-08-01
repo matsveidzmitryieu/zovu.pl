@@ -124,6 +124,18 @@
   .stat .v{font-family:'Oswald';font-size:clamp(26px,3.4vw,38px);color:#fff}
   .stat .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:6px}
 
+  /* REELS */
+  .reels{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .reel{
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);
+    box-shadow:0 0 0 1px rgba(124,58,237,.10), 0 20px 52px -28px rgba(124,58,237,.6);
+    transition:.3s;
+  }
+  .reel:hover{border-color:rgba(167,139,250,.42);transform:translateY(-3px)}
+  .reel video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#000}
+  .reel figcaption{padding:14px 15px 17px;font-size:12.5px;color:var(--dim);line-height:1.5}
+  .reel figcaption b{display:block;color:var(--txt);font-weight:500;font-size:13.5px;margin-bottom:5px}
+
   /* WORKS */
   .works{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   .work{
@@ -165,7 +177,7 @@
 
   @media(max-width:900px){
     .steps,.cards,.team{grid-template-columns:1fr}
-    .works{grid-template-columns:repeat(2,1fr)}
+    .works,.reels{grid-template-columns:repeat(2,1fr)}
     .stats{grid-template-columns:repeat(2,1fr)}
     header{padding:72px 0 60px}
     section{padding:60px 0}
@@ -190,7 +202,8 @@
   </p>
   <div class="herobtns">
     <a class="btn btn-p" href="#kontakt">Pierwszy materiał za darmo</a>
-    <a class="btn btn-s" href="#cennik">Zobacz stawki</a>
+    <a class="btn btn-s" href="#montaz">Zobacz montaż</a>
+    <a class="btn btn-s" href="#cennik">Stawki</a>
   </div>
 </header>
 
@@ -214,6 +227,30 @@
       <p>Pliki są Wasze, bez znaków wodnych i bez wzmianki o nas. Rozliczenie fakturą VAT.</p>
     </div>
   </div>
+</section>
+
+<section class="wrap" id="montaz">
+  <h2>Montaż — zobaczcie sami</h2>
+  <p class="sub">Cztery różne rzeczy, żeby było widać zakres, a nie jeden szczęśliwy przypadek. Wszystko z realnych zleceń klienckich. Dźwięk włączony.</p>
+  <div class="reels">
+    <figure class="reel">
+      <video controls playsinline preload="none" poster="v/talking.jpg"><source src="v/talking.mp4" type="video/mp4"></video>
+      <figcaption><b>Talking head z napisami</b>Napisy, które da się czytać bez dźwięku. Cięcie oddechów i pauz — z trzech minut zostaje trzydzieści sekund bez dłużyzn.</figcaption>
+    </figure>
+    <figure class="reel">
+      <video controls playsinline preload="none" poster="v/lifestyle.jpg"><source src="v/lifestyle.mp4" type="video/mp4"></video>
+      <figcaption><b>Lifestyle i b-roll</b>Materiał z miejsca pracy klienta. Montaż pod rytm, korekcja koloru, tempo trzymające do końca.</figcaption>
+    </figure>
+    <figure class="reel">
+      <video controls playsinline preload="none" poster="v/kinetic.jpg"><source src="v/kinetic.mp4" type="video/mp4"></video>
+      <figcaption><b>Kinetyczna typografia</b>Liczby i hasła w ruchu, bez stocku i bez szablonów. Ten sam mechanizm, którym renderujemy infografiki ze skryptu.</figcaption>
+    </figure>
+    <figure class="reel">
+      <video controls playsinline preload="none" poster="v/produkt.jpg"><source src="v/produkt.mp4" type="video/mp4"></video>
+      <figcaption><b>Produkt i e-commerce</b>Prezentacja produktu pod sprzedaż — mockupy, animacja interfejsu, wyraźne CTA na końcu.</figcaption>
+    </figure>
+  </div>
+  <p class="note">To fragmenty. Pełne wersje wysyłam na życzenie, razem z surówką, żeby było widać, co dokładnie zrobiliśmy z materiałem.</p>
 </section>
 
 <section class="wrap" id="cennik">
