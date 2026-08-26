@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regulamin &amp; Warunki współpracy — ZOVU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Oswald:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #7c3aed;
+      --accent-2: #a78bfa;
+      --display: 'Oswald', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --body: 'Manrope', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--body);
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124,58,237,.18) 0%, transparent 60%),
+        linear-gradient(180deg, #160e2e 0%, #0d0820 50%, #07041a 100%);
+      color: rgba(255,255,255,.78);
+      line-height: 1.75;
+      min-height: 100vh;
+      padding: 90px clamp(20px, 4vw, 40px) 80px;
+    }
+    ::selection { background: var(--accent); color: #fff; }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono); font-size: 12px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent-2); text-decoration: none;
+      padding: 10px 18px; border-radius: 100px;
+      background: rgba(15,8,30,.55);
+      border: 1px solid rgba(167,139,250,.35);
+      box-shadow: 0 0 24px rgba(124,58,237,.20);
+      margin-bottom: 56px;
+      transition: all .3s;
+    }
+    .back-link:hover {
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 40px rgba(124,58,237,.45);
+      transform: translateY(-2px);
+    }
+    .pp-hero { margin-bottom: 56px; }
+    .pp-label {
+      display: inline-block;
+      font-family: var(--mono); font-size: 12px; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 18px;
+    }
+    .pp-title {
+      font-family: var(--display); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(36px, 6vw, 64px); letter-spacing: -0.01em; line-height: 1;
+      background: linear-gradient(180deg, #fff 35%, var(--accent-2) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+    .pp-meta {
+      font-family: var(--mono); font-size: 12px;
+      color: rgba(255,255,255,.45); letter-spacing: .04em;
+    }
+    .section {
+      padding: 28px 28px 20px;
+      border-radius: 16px;
+      background: rgba(15,8,30,.55);
+      border: 1px solid rgba(167,139,250,.18);
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+      margin-bottom: 18px;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .section:hover {
+      border-color: rgba(167,139,250,.45);
+      box-shadow: 0 14px 50px rgba(124,58,237,.20);
+    }
+    .section-tag {
+      display: inline-block;
+      font-family: var(--mono); font-size: 11px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: #fff; background: var(--accent);
+      padding: 5px 12px; border-radius: 100px;
+      box-shadow: 0 0 18px rgba(124,58,237,.5);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(20px, 2.4vw, 26px);
+      color: #fff;
+      letter-spacing: .01em; text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    p {
+      font-size: 14.5px; color: rgba(255,255,255,.72);
+      margin-bottom: 12px; line-height: 1.75;
+    }
+    p:last-child { margin-bottom: 0; }
+    strong { color: #fff; font-weight: 600; }
+    ul { padding-left: 22px; margin-bottom: 12px; }
+    li {
+      font-size: 14.5px; color: rgba(255,255,255,.72);
+      margin-bottom: 6px; line-height: 1.7;
+    }
+    li::marker { color: var(--accent-2); }
+    a {
+      color: var(--accent-2); text-decoration: none;
+      border-bottom: 1px solid rgba(167,139,250,.4);
+      transition: color .2s, border-color .2s;
+    }
+    a:hover { color: #fff; border-bottom-color: #fff; }
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 18px 0; font-size: 13.5px;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid rgba(167,139,250,.18);
+    }
+    th {
+      text-align: left; padding: 12px 16px;
+      background: rgba(124,58,237,.18);
+      color: #fff; font-weight: 600;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: .14em; text-transform: uppercase;
+      border-bottom: 1px solid rgba(167,139,250,.25);
+    }
+    td {
+      padding: 12px 16px;
+      color: rgba(255,255,255,.7);
+      border-bottom: 1px solid rgba(167,139,250,.10);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(124,58,237,.08); }
+    .divider {
+      border: none; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(167,139,250,.3), transparent);
+      margin: 36px 0;
+    }
+    code {
+      font-family: var(--mono); font-size: 12.5px;
+      background: rgba(124,58,237,.15);
+      color: var(--accent-2);
+      padding: 2px 7px; border-radius: 4px;
+      letter-spacing: 0;
+    }
+    /* Footer */
+    footer {
+      max-width: 880px;
+      margin: 64px auto 0;
+      padding: 28px 28px;
+      border-top: 1px solid rgba(167,139,250,.20);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .f-copy {
+      font-family: var(--mono); font-size: 11px;
+      color: rgba(255,255,255,.45); letter-spacing: .04em;
+    }
+    .f-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .f-links a {
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      border-bottom: none;
+    }
+    .f-links a:hover { color: var(--accent-2); }
+    .f-links a.active { color: var(--accent-2); }
+    @media (max-width: 600px) {
+      body { padding: 60px 16px 60px; }
+      .section { padding: 22px 20px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="/" class="back-link">&larr; Wróć do ZOVU</a>
+
+  <div class="pp-hero">
+    <div class="pp-label">Dokument prawny &nbsp;·&nbsp; Regulamin usług</div>
+    <h1 class="pp-title">Regulamin &amp; Warunki współpracy</h1>
+    <p class="pp-meta">Ostatnia aktualizacja: sierpień 2026 &nbsp;·&nbsp; ZOVU Creative Agency, Katowice, Polska</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">01</span>
+    <h2>Kto świadczy usługi</h2>
+    <p>Usługi opisane w&nbsp;niniejszym regulaminie świadczy <strong>ZOVU Creative Agency</strong> z&nbsp;siedzibą w&nbsp;Katowicach (dalej: „ZOVU”, „my”).</p>
+    <p>Kontakt: <a href="mailto:zovu.pl@gmail.com">zovu.pl@gmail.com</a></p>
+    <p>Rozliczenia z&nbsp;klientami prowadzimy za&nbsp;pośrednictwem platformy <strong>Useme.com</strong>, która wystawia fakturę i&nbsp;odprowadza należne podatki. Klient otrzymuje pełną dokumentację księgową do&nbsp;każdego zlecenia.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">02</span>
+    <h2>Zakres usług</h2>
+    <ul>
+      <li><strong>Krótkie formy wideo</strong> — rolki i&nbsp;Shorts w&nbsp;formacie pionowym 9:16, montaż, napisy, lektor, oprawa dźwiękowa</li>
+      <li><strong>Strony internetowe</strong> — projekt, wdrożenie, treści</li>
+      <li><strong>Grafika</strong> — materiały do&nbsp;mediów społecznościowych i&nbsp;reklamy</li>
+      <li><strong>Automatyzacja publikacji</strong> — narzędzia własne przygotowujące i&nbsp;publikujące treści na&nbsp;kontach należących do&nbsp;klienta lub&nbsp;do&nbsp;ZOVU</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">03</span>
+    <h2>Zawarcie umowy, terminy i&nbsp;płatności</h2>
+    <p>Umowa zostaje zawarta w&nbsp;momencie pisemnego potwierdzenia zakresu prac i&nbsp;ceny — mailem, przez komunikator albo przez formularz zlecenia na&nbsp;Useme.</p>
+    <p>Termin realizacji ustalamy przy&nbsp;zamówieniu. Jeżeli realizacja zależy od&nbsp;materiałów klienta (zdjęcia, logo, dostępy, treści), termin biegnie od&nbsp;chwili ich&nbsp;otrzymania.</p>
+    <p>Płatność następuje po&nbsp;akceptacji pracy, na&nbsp;podstawie faktury wystawionej przez Useme, chyba że&nbsp;ustalono inaczej. Prace demonstracyjne wykonane przed&nbsp;zawarciem umowy są&nbsp;bezpłatne i&nbsp;nie&nbsp;rodzą po&nbsp;stronie klienta żadnych zobowiązań.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">04</span>
+    <h2>Prawa autorskie i&nbsp;licencje</h2>
+    <p>Po&nbsp;opłaceniu zlecenia klient otrzymuje prawo do&nbsp;korzystania z&nbsp;gotowego materiału bez&nbsp;ograniczeń czasowych i&nbsp;terytorialnych, w&nbsp;tym w&nbsp;płatnej reklamie.</p>
+    <p>Muzyka, materiały zdjęciowe i&nbsp;filmowe pochodzące z&nbsp;bibliotek zewnętrznych są&nbsp;wykorzystywane na&nbsp;licencjach zezwalających na&nbsp;użytek komercyjny. Na&nbsp;życzenie wskazujemy źródło każdego użytego elementu.</p>
+    <p>Materiały przekazane przez klienta pozostają jego własnością. Wykorzystujemy je&nbsp;wyłącznie do&nbsp;realizacji zlecenia.</p>
+    <p>Gotową pracę możemy pokazać w&nbsp;naszym portfolio. Jeżeli klient sobie tego nie&nbsp;życzy — wystarczy jedna wiadomość, usuwamy materiał z&nbsp;portfolio bez&nbsp;pytań.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">05</span>
+    <h2>Publikacja w&nbsp;mediach społecznościowych</h2>
+    <p>Część naszych narzędzi publikuje przygotowane treści bezpośrednio na&nbsp;kontach w&nbsp;serwisach TikTok, Instagram, Facebook i&nbsp;YouTube. Obowiązują przy&nbsp;tym następujące zasady:</p>
+    <ul>
+      <li>publikujemy wyłącznie na&nbsp;kontach należących do&nbsp;ZOVU albo na&nbsp;kontach klienta, który wyraźnie udzielił nam&nbsp;dostępu;</li>
+      <li>dostęp jest udzielany przez oficjalne mechanizmy logowania danego serwisu (OAuth) i&nbsp;może zostać cofnięty przez właściciela konta w&nbsp;dowolnym momencie, bez&nbsp;naszego udziału;</li>
+      <li>publikujemy wyłącznie materiały przygotowane dla&nbsp;danego konta — nie&nbsp;prowadzimy masowej wysyłki, nie&nbsp;kopiujemy cudzych treści i&nbsp;nie&nbsp;publikujemy na&nbsp;kontach osób trzecich;</li>
+      <li>tokeny dostępu przechowujemy w&nbsp;zaszyfrowanej formie i&nbsp;nie&nbsp;udostępniamy ich&nbsp;nikomu;</li>
+      <li>przestrzegamy regulaminów i&nbsp;wytycznych każdej z&nbsp;platform, w&nbsp;tym zasad dotyczących oznaczania treści generowanych przez&nbsp;AI.</li>
+    </ul>
+    <p>Szczegóły przetwarzania danych opisuje nasza <a href="/privacypolicy">Polityka Prywatności</a>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">06</span>
+    <h2>Poprawki i&nbsp;reklamacje</h2>
+    <p>Do&nbsp;każdego materiału przysługują <strong>dwie tury poprawek</strong> w&nbsp;ramach ustalonej ceny. Poprawki zgłoszone po&nbsp;akceptacji pracy albo wykraczające poza&nbsp;pierwotny zakres wyceniamy osobno, zawsze po&nbsp;wcześniejszym uzgodnieniu.</p>
+    <p>Reklamacje przyjmujemy na&nbsp;adres <a href="mailto:zovu.pl@gmail.com">zovu.pl@gmail.com</a>. Odpowiadamy w&nbsp;ciągu 14&nbsp;dni. Jeżeli materiał nie&nbsp;odpowiada uzgodnionemu zakresowi, poprawiamy go&nbsp;na&nbsp;własny koszt albo zwracamy wynagrodzenie.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">07</span>
+    <h2>Odpowiedzialność</h2>
+    <p>Odpowiadamy za&nbsp;jakość i&nbsp;terminowość wykonanej pracy. <strong>Nie&nbsp;gwarantujemy natomiast wyników marketingowych</strong> — zasięgów, liczby obserwujących ani&nbsp;sprzedaży. Zależą one&nbsp;od&nbsp;algorytmów platform, oferty i&nbsp;rynku, czyli od&nbsp;czynników poza&nbsp;naszą kontrolą. Każdy, kto obiecuje konkretne liczby, obiecuje coś, czego nie&nbsp;kontroluje.</p>
+    <p>Klient odpowiada za&nbsp;zgodność z&nbsp;prawem przekazanych materiałów, w&nbsp;tym za&nbsp;prawa do&nbsp;zdjęć, znaków towarowych i&nbsp;wizerunku osób na&nbsp;nich przedstawionych.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-tag">08</span>
+    <h2>Zmiany regulaminu</h2>
+    <p>Możemy zmienić niniejszy regulamin. Do&nbsp;zleceń rozpoczętych przed&nbsp;zmianą stosuje się wersję obowiązującą w&nbsp;dniu zawarcia umowy. Aktualna wersja jest zawsze dostępna pod&nbsp;adresem <strong>zovu.pl/terms</strong>.</p>
+    <p>W&nbsp;sprawach nieuregulowanych stosuje się przepisy prawa polskiego.</p>
+  </div>
+
+</div>
+</body>
+</html>
