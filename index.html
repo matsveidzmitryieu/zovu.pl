@@ -2979,6 +2979,63 @@
   /* Полоса цифр и так белая — правим только её границу со светлым верхом. */
   html.jasny .stats { border-top: 1px solid rgba(20,18,28,.08); }
 </style>
+
+<style data-zaufanie>
+  /* Подпись под скриншотом сайта: ЧТО сдали. Метрику результата сюда
+     ставим только когда она есть в аналитике, а не «на глаз». */
+  .pfg-co {
+    margin-top: 10px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .06em; color: rgba(255,255,255,.55); text-align: center;
+    line-height: 1.5;
+  }
+  /* Галерея открывается тёмным оверлеем в ОБЕИХ темах, поэтому подпись
+     тут всегда светлая: тёмный текст на фиолетовом не читался. */
+
+  #jak-pracujemy { padding: 110px clamp(20px, 4vw, 52px); background: #0d0820; }
+  html.jasny #jak-pracujemy { background: #fff; }
+  .jp-in { max-width: 1240px; margin: 0 auto; }
+  .jp-kroki {
+    list-style: none; margin: 54px 0 0; padding: 0;
+    display: grid; gap: 26px; grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) { .jp-kroki { grid-template-columns: repeat(3, 1fr); gap: 30px; } }
+  .jp-krok {
+    padding: 30px 28px 32px; border-radius: 18px;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+  }
+  html.jasny .jp-krok { background: #fbfaf8; border-color: rgba(20,18,28,.1); }
+  .jp-nr {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .2em;
+    color: var(--accent-2); display: block; margin-bottom: 16px;
+  }
+  html.jasny .jp-nr { color: var(--accent); }
+  .jp-krok h3 {
+    font-family: var(--display); font-weight: 600; text-transform: uppercase;
+    font-size: 21px; line-height: 1.12; margin: 0 0 12px; color: #fff;
+  }
+  html.jasny .jp-krok h3 { color: #16141b; }
+  .jp-krok p {
+    margin: 0; font-size: 15.5px; line-height: 1.6; color: rgba(255,255,255,.68);
+  }
+  html.jasny .jp-krok p { color: #4a4757; }
+  /* Полоса фактов — только проверяемое: годы, наши просмотры, состав
+     команды и языки. Ничего про сроки ответа и ничего про чужие продажи. */
+  .jp-fakty {
+    margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px 34px;
+    padding-top: 26px; border-top: 1px solid rgba(255,255,255,.1);
+  }
+  html.jasny .jp-fakty { border-top-color: rgba(20,18,28,.12); }
+  .jp-fakt { display: inline-flex; align-items: baseline; gap: 9px; }
+  .jp-fakt b {
+    font-family: var(--display); font-weight: 700; font-size: 27px; color: #fff;
+  }
+  html.jasny .jp-fakt b { color: #16141b; }
+  .jp-fakt i {
+    font-style: normal; font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.5);
+  }
+  html.jasny .jp-fakt i { color: #6c6878; }
+</style>
 </head>
 <body>
 
@@ -3207,6 +3264,40 @@
       </a>
     </div>
 </div>
+</section>
+
+
+<!-- JAK PRACUJEMY -->
+<section id="jak-pracujemy">
+  <div class="jp-in">
+    <div class="sec-head">
+      <div class="sec-label" data-k="jp_label">JAK PRACUJEMY</div>
+      <h2 class="sec-title" data-k="jp_title">Bez niespodzianek</h2>
+    </div>
+    <ol class="jp-kroki">
+      <li class="jp-krok">
+        <span class="jp-nr">01</span>
+        <h3 data-k="jp_k1t">Rozmowa, nie brief na pięć stron</h3>
+        <p data-k="jp_k1o">Piszesz na WhatsApp — odpowiada ten, kto będzie robił twoją robotę. Pytamy o firmę, klientów i o to, co już próbowaliście. Bez działu sprzedaży.</p>
+      </li>
+      <li class="jp-krok">
+        <span class="jp-nr">02</span>
+        <h3 data-k="jp_k2t">Próbka przed umową</h3>
+        <p data-k="jp_k2o">Pokazujemy, jak to będzie wyglądać u ciebie: jedna rolka, jeden ekran strony albo jeden post. Dopiero potem rozmawiamy o całości.</p>
+      </li>
+      <li class="jp-krok">
+        <span class="jp-nr">03</span>
+        <h3 data-k="jp_k3t">Publikujemy, ty odbierasz telefony</h3>
+        <p data-k="jp_k3o">Scenariusz, zdjęcia, montaż i publikacja są po naszej stronie. Materiały zostają twoje — pliki źródłowe dostajesz zawsze.</p>
+      </li>
+    </ol>
+    <div class="jp-fakty">
+      <span class="jp-fakt"><b>7</b> <i data-k="jp_f1">lat na rynku</i></span>
+      <span class="jp-fakt"><b>25M+</b> <i data-k="jp_f2">wyświetleń</i></span>
+      <span class="jp-fakt"><b>3</b> <i data-k="jp_f3">osoby, zero pośredników</i></span>
+      <span class="jp-fakt"><b>PL · EN · RU</b> <i data-k="jp_f4">rozmawiamy</i></span>
+    </div>
+  </div>
 </section>
 
 <!-- MARQUEE TICKER -->
@@ -4266,15 +4357,15 @@ onNavScroll();
   // DATA — 1:1 zah order
   var DATA = [
     { type: 'web', items: [
-      { src: 'shot_fightmode.jpg',   url: 'https://fightmode.tv',                       label: 'fightmode.tv' },
-      { src: 'shot_shaurma.jpg',     url: 'https://dzmzah.github.io/magshaurma/',        label: 'magshaurma.com' },
-      { src: 'shot_beegelato.jpg',   url: 'https://beegelato.sk',                       label: 'beegelato.sk' },
-      { src: 'shot_maya.jpg',        url: 'https://dzmzah.github.io/maya-gold/',         label: 'maya-gold.com' },
-      { src: 'web_energia.jpg',      url: 'https://energiabiznesu.pl',                  label: 'energiabiznesu.pl' },
-      { src: 'shot_marketing.jpg',   url: 'https://marketingai.energiabiznesu.pl',      label: 'marketingai.energiabiznesu.pl' },
-      { src: 'shot_jewelry.jpg',     url: 'https://inca1122.github.io/jewelry-katowice/', label: 'jewelry-katowice.com' },
-      { src: 'shot_gucio.jpg',       url: 'https://inca1122.github.io/gucio_bar/',       label: 'gucio-bar.com' },
-      { src: 'shot_pickactive.jpg',  url: 'https://pickactive.pl',                      label: 'pickactive.pl' }
+      { src: 'shot_fightmode.jpg',   url: 'https://fightmode.tv',                       label: 'fightmode.tv' , co: "Strona gali · plakaty · spoty na LED" },
+      { src: 'shot_shaurma.jpg',     url: 'https://dzmzah.github.io/magshaurma/',        label: 'magshaurma.com' , co: "Strona · menu · zdjęcia dań" },
+      { src: 'shot_beegelato.jpg',   url: 'https://beegelato.sk',                       label: 'beegelato.sk' , co: "Strona · logo · film produktowy" },
+      { src: 'shot_maya.jpg',        url: 'https://dzmzah.github.io/maya-gold/',         label: 'maya-gold.com' , co: "Strona · sesja produktowa · posty" },
+      { src: 'web_energia.jpg',      url: 'https://energiabiznesu.pl',                  label: 'energiabiznesu.pl' , co: "Strona · formularze · automatyzacje" },
+      { src: 'shot_marketing.jpg',   url: 'https://marketingai.energiabiznesu.pl',      label: 'marketingai.energiabiznesu.pl' , co: "Landing kursu · reklamy · e-maile" },
+      { src: 'shot_jewelry.jpg',     url: 'https://inca1122.github.io/jewelry-katowice/', label: 'jewelry-katowice.com' , co: "Strona · katalog · grafiki" },
+      { src: 'shot_gucio.jpg',       url: 'https://inca1122.github.io/gucio_bar/',       label: 'gucio-bar.com' , co: "Strona baru · menu · social media" },
+      { src: 'shot_pickactive.jpg',  url: 'https://pickactive.pl',                      label: 'pickactive.pl' , co: "Strona · rolki · prowadzenie IG" }
     ]},
     { type: 'video', items: [
       { src: 'video1.mp4', poster: 'vidposter1.jpg' },
@@ -4334,7 +4425,8 @@ onNavScroll();
               '<span class="pfg-url">' + it.label + '</span>' +
             '</div>' +
             '<div class="pfg-shot"><img src="' + it.src + '" loading="lazy" alt=""></div>' +
-          '</div>';
+          '</div>' +
+          (it.co ? '<div class="pfg-co">' + it.co + '</div>' : '');
         curPage.appendChild(a);
       });
       buildPager();
