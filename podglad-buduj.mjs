@@ -72,7 +72,16 @@ const CSS = `
      белом, фиолетовый остался номерами строк и подсветкой при наведении.
      Обложки крупнее и с тенью: на белом тонкая рамка не держит карточку.
      Правила по id/тегу перебивают классовые — отсюда #portfolio впереди. */
-  #portfolio { background: #fff; }
+  /* Фиолетовый как СВЕТ, а не как заливка: сверху секции он падает мягким
+     пятном и гаснет через 380 пикселей. Сплошной градиент во всю страницу
+     не берём — площадь фиолетового остаётся та же, только размазанная, а
+     текст посреди такой заливки всегда сидит либо на слишком светлом, либо
+     на слишком тёмном. */
+  #portfolio {
+    background:
+      radial-gradient(120% 380px at 50% 0%, rgba(124,58,237,.16) 0%, rgba(124,58,237,0) 100%),
+      #fff;
+  }
   /* Заголовок секции залит градиентом через background-clip, поэтому одним
      color его не перекрасить: пока не снят -webkit-text-fill-color, буквы
      остаются светло-сиреневыми и на белом просто исчезают. */
@@ -232,7 +241,19 @@ const HERO_KULISY = `<section id="hero" class="pg-hero pg-kulisy">
     position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(5,5,5,.72) 0%, rgba(5,5,5,.3) 45%, rgba(5,5,5,.68) 100%);
   }
-  #hero.pg-kulisy .pg-tresc { position: relative; padding: 74px 22px 30px; width: 100%; }
+  #hero.pg-kulisy .pg-tresc { position: relative; padding: 74px 22px 86px; width: 100%; z-index: 2; }
+  /* Мягкий шов вместо линии: низ кадра растворяется в белом через фиолет.
+     Резкий стык тёмного и белого читается как две разные страницы,
+     склеенные встык, — а это ровно то ощущение, от которого уходим. */
+  #hero.pg-kulisy .pg-gora::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 128px; z-index: 1;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0) 0%,
+      rgba(124,58,237,.20) 46%,
+      rgba(255,255,255,.86) 84%,
+      #fff 100%);
+    pointer-events: none;
+  }
   /* Цифр здесь НЕТ намеренно: сразу под первым экраном идёт своя полоса
      сайта с 25M+/400K+/100K$+/7+, и вторые такие же читались бы как сбой. */
   #hero.pg-kulisy .pg-dol { padding: 24px 0 30px; display: grid; gap: 20px; background: #fff; }
@@ -279,7 +300,7 @@ const HERO_KULISY = `<section id="hero" class="pg-hero pg-kulisy">
   #hero.pg-kulisy .pg-karta img { width: 100%; height: 100%; object-fit: cover; display: block; }
   @media (min-width: 900px) {
     #hero.pg-kulisy .pg-gora { min-height: 48svh; }
-    #hero.pg-kulisy .pg-tresc { max-width: 1240px; margin: 0 auto; padding: 90px 40px 42px; }
+    #hero.pg-kulisy .pg-tresc { max-width: 1240px; margin: 0 auto; padding: 90px 40px 104px; }
     #hero.pg-kulisy .pg-dol { padding: 34px 0 44px; gap: 26px; }
     #hero.pg-kulisy .pg-naglowek {
       max-width: 1240px; margin: 0 auto; padding: 0 40px; width: 100%;
