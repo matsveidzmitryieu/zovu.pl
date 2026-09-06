@@ -3066,6 +3066,39 @@
   }
   @media (min-width: 900px) { #hero .pg-uslugi { font-size: 12.5px; max-width: none; margin-top: 22px; } }
 </style>
+
+<style data-pasek>
+  .pasek { display: none; }
+  @media (max-width: 700px) {
+    .pasek {
+      display: flex; gap: 8px; position: fixed; z-index: 995;
+      left: 10px; right: 10px; bottom: 10px; padding: 8px;
+      border-radius: 44px; background: rgba(13,8,32,.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 12px 34px rgba(0,0,0,.4);
+      transform: translateY(140%); transition: transform .35s cubic-bezier(.16,1,.3,1);
+    }
+    html.jasny .pasek {
+      background: rgba(255,255,255,.94); border-color: rgba(20,18,28,.1);
+      box-shadow: 0 12px 34px rgba(20,18,28,.22);
+    }
+    .pasek.widac { transform: translateY(0); }
+    .pasek[hidden] { display: flex; }
+    .pasek-btn {
+      flex: 1; display: inline-flex; align-items: center; justify-content: center;
+      padding: 13px 10px; border-radius: 40px; text-decoration: none;
+      font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 14px;
+      color: #fff; background: rgba(255,255,255,.1); white-space: nowrap;
+    }
+    html.jasny .pasek-btn { color: #16141b; background: rgba(20,18,28,.07); }
+    .pasek-btn.glowna { flex: 1.5; background: #25D366; color: #05230f; }
+    /* Селектор с html перебивает .pasek-btn.glowna по весу, поэтому
+       зелёный в светлой теме надо задать явно — иначе кнопка серая. */
+    html.jasny .pasek-btn.glowna { background: #25D366; color: #05230f; }
+  }
+  @media (prefers-reduced-motion: reduce) { .pasek { transition: none; } }
+</style>
 </head>
 <body>
 
@@ -3448,6 +3481,8 @@
 // ── TRANSLATIONS ──────────────────────────────────────────────────────────────
 const T = {
   en: {
+    pasek_prace:"Work",
+    pasek_pisz:"Message on WhatsApp",
     hero_uslugi:"WEBSITES · VIDEO · SOCIAL MEDIA · ADS · AUTOMATION",
     /* jak pracujemy */
     jp_label:"HOW WE WORK",
@@ -3566,6 +3601,8 @@ const T = {
     tools_ttl:"Tools we use", tools_t0:"Videos", tools_t1:"Design", tools_t2:"Web Sites", tools_t3:"ADS"
   },
   ru: {
+    pasek_prace:"Работы",
+    pasek_pisz:"Написать в WhatsApp",
     hero_uslugi:"САЙТЫ · ВИДЕО · СОЦСЕТИ · РЕКЛАМА · АВТОМАТИЗАЦИЯ",
     /* jak pracujemy */
     jp_label:"КАК МЫ РАБОТАЕМ",
@@ -3684,6 +3721,8 @@ const T = {
     tools_ttl:"Инструменты которые мы используем", tools_t0:"Видео", tools_t1:"Дизайн", tools_t2:"Сайты", tools_t3:"Реклама"
   },
   pl: {
+    pasek_prace:"Prace",
+    pasek_pisz:"Napisz na WhatsApp",
     hero_uslugi:"STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA",
     /* jak pracujemy */
     jp_label:"JAK PRACUJEMY",
@@ -5907,6 +5946,35 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
       });
     });
   }, { threshold: 0.15 }).observe(tasma);
+})();
+</script>
+
+<div class="pasek" hidden>
+  <a class="pasek-btn" href="#portfolio" data-k="pasek_prace">Prace</a>
+  <a class="pasek-btn glowna" href="https://wa.me/48571795097" target="_blank" rel="noopener" data-k="pasek_pisz">Napisz na WhatsApp</a>
+</div>
+
+<script>
+// Панель выезжает, когда человек ушёл ниже первого экрана: наверху она
+// перекрывала бы ленту работ, а именно её мы и хотим показать первой.
+// Прячется на секции контактов — там кнопки уже есть, две подряд выглядят
+// как ошибка. И не мешает баннеру cookie, пока он не закрыт.
+(function () {
+  var pasek = document.querySelector('.pasek');
+  if (!pasek) return;
+  var hero = document.getElementById('hero');
+  var kontakt = document.getElementById('contact');
+  var ck = document.getElementById('cookie-banner');
+  function odswiez() {
+    var poHero = window.scrollY > (hero ? hero.offsetHeight * 0.75 : 500);
+    var wKontakcie = kontakt && kontakt.getBoundingClientRect().top < window.innerHeight * 0.8;
+    var ckWidac = ck && ck.classList.contains('show');
+    pasek.classList.toggle('widac', poHero && !wKontakcie && !ckWidac);
+  }
+  window.addEventListener('scroll', odswiez, { passive: true });
+  window.addEventListener('resize', odswiez);
+  document.addEventListener('click', function () { setTimeout(odswiez, 60); });
+  odswiez();
 })();
 </script>
 </body>
