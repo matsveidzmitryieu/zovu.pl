@@ -2818,6 +2818,57 @@
   .pg-btn.ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.28); }
   .pg-btn.dark { background: #16141b; color: #fff; }
   @media (prefers-reduced-motion: reduce) { .pg-btn { transition: none; } }
+
+  /* ── Белая плашка навбара ──────────────────────────────────────────
+     Пробуем светлый верх: чёрная пилюля на тёмном первом экране сливалась
+     в одно пятно, а белая сразу задаёт «сайт светлый». Перекрашиваем
+     только цвета — форма, поведение при скролле и разметка остаются
+     сайтовыми. Селекторы усилены тегом nav, иначе исходные правила
+     по тегу и по классу перебивают наши. */
+  nav .nav-inner {
+    background: rgba(255,255,255,.94);
+    border-color: rgba(20,18,28,.1);
+    box-shadow: 0 10px 30px rgba(20,18,28,.16);
+  }
+  nav.scrolled .nav-inner { box-shadow: 0 4px 18px rgba(20,18,28,.14); }
+  nav a.nav-link { color: #26232f; }
+  nav a.nav-link:hover { color: #6d28d9; }
+  nav .nav-logo span { color: #16141b; }
+  nav .nav-lang .lang { color: rgba(38,35,47,.55); }
+  nav .nav-lang .lang:hover { color: #16141b; }
+  nav .nav-lang .lang.on { color: #6d28d9; }
+  nav .nav-soc { color: rgba(38,35,47,.55); }
+  nav .nav-soc:hover { color: #6d28d9; }
+
+  /* ── Портфолио на светлом ──────────────────────────────────────────
+     Первый экран стал светлым, а сразу под ним снова начинался сплошной
+     фиолетовый — переход читался как другой сайт. Секция работ теперь на
+     белом, фиолетовый остался номерами строк и подсветкой при наведении.
+     Обложки крупнее и с тенью: на белом тонкая рамка не держит карточку.
+     Правила по id/тегу перебивают классовые — отсюда #portfolio впереди. */
+  #portfolio { background: #fff; }
+  /* Заголовок секции залит градиентом через background-clip, поэтому одним
+     color его не перекрасить: пока не снят -webkit-text-fill-color, буквы
+     остаются светло-сиреневыми и на белом просто исчезают. */
+  #portfolio .sec-title {
+    background: none; color: #16141b; -webkit-text-fill-color: #16141b;
+  }
+  #portfolio .pf-cat-name { color: #16141b; }
+  #portfolio .sec-label { color: #6d28d9; }
+  #portfolio .pf-cats { border-top-color: rgba(20,18,28,.12); }
+  #portfolio .pf-cat { border-bottom-color: rgba(20,18,28,.12); }
+  #portfolio .pf-cat:hover { background: rgba(109,40,217,.05); }
+  #portfolio .pf-cat-desc { color: #5d5a6b; }
+  #portfolio .pf-cat-arrow { color: rgba(20,18,28,.32); }
+  #portfolio .pf-strip-img, #portfolio .pf-strip-vid {
+    width: 290px; height: 164px; border-radius: 14px;
+    border: 1px solid rgba(20,18,28,.08);
+    box-shadow: 0 10px 26px rgba(20,18,28,.13);
+    background: #eceaf0;
+  }
+  @media (max-width: 700px) {
+    #portfolio .pf-strip-img, #portfolio .pf-strip-vid { width: 214px; height: 120px; }
+  }
 </style>
 </head>
 <body>
@@ -3048,16 +3099,6 @@
       </a>
     </div>
     <div class="tm rv d2">
-      <img class="tm-av" src="саша.jpg" alt="Alex" loading="lazy" decoding="async">
-      <div class="tm-role" data-k="m2r">Producent wideo i marketer</div>
-      <div class="tm-name">Alex</div>
-      <p class="tm-bio" data-k="m2b">Montażysta, specjalista od reklam i vibe coder. Łączy produkcję kreatywną z marketingiem efektywnościowym.</p>
-      <a class="tm-ig" href="https://www.instagram.com/dmitriev.creative/" target="_blank" rel="noopener" aria-label="Instagram Alex">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="igtm2" cx="30%" cy="107%" r="135%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><path fill="url(#igtm2)" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84M12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4m6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44"/></svg>
-        <span>@dmitriev.creative</span>
-      </a>
-    </div>
-    <div class="tm rv d3">
       <img class="tm-av" src="захар.jpg" alt="Zah" loading="lazy" decoding="async">
       <div class="tm-role" data-k="m3r">Deweloper i twórca</div>
       <div class="tm-name">Zah</div>
@@ -3067,7 +3108,17 @@
         <span>@zahcreator</span>
       </a>
     </div>
-  </div>
+    <div class="tm rv d3">
+      <img class="tm-av" src="саша.jpg" alt="Alex" loading="lazy" decoding="async">
+      <div class="tm-role" data-k="m2r">Producent wideo i marketer</div>
+      <div class="tm-name">Alex</div>
+      <p class="tm-bio" data-k="m2b">Montażysta, specjalista od reklam i vibe coder. Łączy produkcję kreatywną z marketingiem efektywnościowym.</p>
+      <a class="tm-ig" href="https://www.instagram.com/dmitriev.creative/" target="_blank" rel="noopener" aria-label="Instagram Alex">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="igtm2" cx="30%" cy="107%" r="135%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><path fill="url(#igtm2)" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.43-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0m0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84M12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4m6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44"/></svg>
+        <span>@dmitriev.creative</span>
+      </a>
+    </div>
+</div>
 </section>
 
 <!-- MARQUEE TICKER -->
