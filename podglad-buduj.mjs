@@ -104,6 +104,33 @@ const CSS = `
   @media (max-width: 700px) {
     #portfolio .pf-strip-img, #portfolio .pf-strip-vid { width: 214px; height: 120px; }
   }
+
+  /* ── Команда на белом, карточки тёмные ─────────────────────────────
+     Тут фиолетового было больше всего: фон, свечение на 140px вокруг
+     каждой карточки, рамки и градиентный заголовок разом. Меняем не
+     оттенок, а роль: фон белый, а карточки становятся тёмными плитками.
+     Портреты сняты на чёрном поролоне, поэтому на тёмной плитке они
+     садятся ровно, а на белом фоне выглядели бы тремя дырами. */
+  #team { background: #fff; position: relative; }
+  #team .sec-title { background: none; color: #16141b; -webkit-text-fill-color: #16141b; }
+  #team .sec-label { color: #6d28d9; }
+  #team .tm {
+    background: #16141b; border-color: rgba(20,18,28,.1);
+    box-shadow: 0 20px 48px rgba(20,18,28,.20);
+  }
+  #team .tm:hover { box-shadow: 0 30px 66px rgba(109,40,217,.34); }
+  /* Шов вниз: белое растворяется в тёмном через фиолетовый — тот же приём,
+     что и под первым экраном, только зеркально. */
+  #team::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 150px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0) 0%,
+      rgba(124,58,237,.18) 44%,
+      rgba(22,14,46,.88) 86%,
+      #160e2e 100%);
+    pointer-events: none; z-index: 0;
+  }
+  #team .sec-head, #team .team-grid { position: relative; z-index: 1; }
 </style>`;
 
 // ── Вариант 3: человек на весь экран ────────────────────────────────
