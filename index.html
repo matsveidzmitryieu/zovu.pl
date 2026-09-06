@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pl" class="loading">
 <head>
+  <script>
+    // Светлая тема — по умолчанию. Тёмная («наш режим») включается кнопкой
+    // и запоминается. Читаем ДО первой отрисовки, иначе моргает.
+    (function () {
+      var m = null;
+      try { m = localStorage.getItem('motyw'); } catch (e) {}
+      document.documentElement.classList.add(m === 'ciemny' ? 'ciemny' : 'jasny');
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0d0820">
@@ -2789,6 +2798,187 @@
       .mob-gfx-grid { grid-template-columns: 1fr; }
     }
   </style>
+
+<style data-motyw-gotowe>
+  /* ══ НОВЫЙ ПЕРВЫЙ ЭКРАН ══════════════════════════════════════════════
+     Работает в обеих темах: тёмная — это сайт как был, светлая живёт на
+     html.jasny. Свои правила усилены #hero, потому что у сайта правило по
+     id и его класс бы не перебил. */
+  #hero.pg-hero { position: relative; width: 100%; overflow: hidden; display: block; padding: 0; background: #050505; }
+  #hero.pg-hero * { box-sizing: border-box; }
+  #hero .pg-gora { position: relative; min-height: 46svh; display: flex; align-items: flex-end; }
+  #hero .pg-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #hero .pg-cien {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(5,5,5,.72) 0%, rgba(5,5,5,.3) 45%, rgba(5,5,5,.68) 100%);
+  }
+  #hero .pg-tresc { position: relative; z-index: 2; padding: 74px 22px 86px; width: 100%; }
+  /* Мягкий шов вместо линии: низ кадра растворяется в цвете следующего
+     блока через фиолетовый. Резкий стык читался как две склеенные страницы. */
+  #hero .pg-gora::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 128px; z-index: 1;
+    background: linear-gradient(180deg,
+      rgba(13,8,32,0) 0%, rgba(124,58,237,.20) 46%, rgba(13,8,32,.86) 84%, #0d0820 100%);
+    pointer-events: none;
+  }
+  #hero .pg-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .22em;
+    text-transform: uppercase; color: rgba(255,255,255,.62); margin-bottom: 14px;
+  }
+  #hero .pg-h1 {
+    font-family: var(--display); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(40px, 12vw, 82px); line-height: .94; color: #fff; margin: 0;
+  }
+  #hero .pg-dol { padding: 24px 0 30px; display: grid; gap: 20px; background: #0d0820; }
+  #hero .pg-naglowek { padding: 0 22px; display: grid; gap: 16px; }
+  #hero .pg-eyebrow-akcent { color: var(--accent-2); margin-bottom: 9px; }
+  #hero .pg-naglowek p {
+    font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.5;
+    color: rgba(255,255,255,.72); margin: 0; max-width: 44ch; font-weight: 500;
+  }
+  #hero .pg-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  #hero .pg-btn {
+    display: inline-flex; align-items: center; text-decoration: none;
+    font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px;
+    padding: 14px 24px; border-radius: 40px; transition: transform .18s ease;
+  }
+  #hero .pg-btn:hover { transform: translateY(-2px); }
+  #hero .pg-btn.main { background: #25D366; color: #05230f; }
+  #hero .pg-btn.dark { background: #fff; color: #16141b; }
+  /* Лента работ во всю ширину — то живое, ради чего блок и нужен.
+     Под курсором НЕ останавливается: обрыв движения читался как поломка. */
+  #hero .pg-tasma {
+    overflow: hidden; width: 100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 42px, #000 calc(100% - 42px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 42px, #000 calc(100% - 42px), transparent);
+  }
+  #hero .pg-tor { display: flex; gap: 12px; width: max-content; animation: pgJedzie 56s linear infinite; }
+  @keyframes pgJedzie { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  #hero .pg-karta {
+    flex: 0 0 132px; width: 132px; aspect-ratio: 9/16; border-radius: 14px; overflow: hidden;
+    background: #1b1a21; display: block; text-decoration: none;
+    box-shadow: 0 8px 22px rgba(0,0,0,.35);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  #hero .pg-karta:hover { transform: translateY(-6px); box-shadow: 0 16px 34px rgba(124,58,237,.4); }
+  #hero .pg-karta:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 3px; }
+  #hero .pg-karta video, #hero .pg-karta img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (prefers-reduced-motion: reduce) {
+    #hero .pg-tor { animation: none; }
+    #hero .pg-tasma { overflow-x: auto; }
+    #hero .pg-btn, #hero .pg-karta { transition: none; }
+  }
+  @media (max-width: 480px) {
+    /* Кнопки в один ряд: вертикально они съедали треть экрана, и лента
+       уезжала под сгиб — а она тут главное. */
+    #hero .pg-cta { flex-wrap: nowrap; gap: 8px; }
+    #hero .pg-btn { padding: 13px 16px; font-size: 14px; white-space: nowrap; }
+  }
+  @media (min-width: 900px) {
+    #hero .pg-gora { min-height: 48svh; }
+    #hero .pg-tresc { max-width: 1240px; margin: 0 auto; padding: 90px 40px 104px; }
+    #hero .pg-dol { padding: 34px 0 44px; gap: 26px; }
+    #hero .pg-naglowek {
+      max-width: 1240px; margin: 0 auto; padding: 0 40px; width: 100%;
+      grid-template-columns: 1fr auto; align-items: end; gap: 40px;
+    }
+    #hero .pg-naglowek p { font-size: 18px; max-width: 52ch; }
+    #hero .pg-karta { flex: 0 0 152px; width: 152px; }
+    #hero .pg-tor { gap: 16px; }
+  }
+
+  /* ══ КНОПКА ТЕМЫ ═════════════════════════════════════════════════════ */
+  .motyw {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%;
+    background: transparent; cursor: pointer; color: rgba(255,255,255,.5);
+    transition: color .3s, background .3s;
+  }
+  .motyw:hover { color: var(--accent-2); background: rgba(124,58,237,.14); }
+  .motyw svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+  .motyw .motyw-sl { display: none; }
+  html.ciemny .motyw .motyw-ks { display: none; }
+  html.ciemny .motyw .motyw-sl { display: block; }
+
+  /* ══ СВЕТЛАЯ ТЕМА ════════════════════════════════════════════════════
+     Тёмная тема — это сайт без этих правил, поэтому её не надо
+     поддерживать отдельно: сняли класс и всё вернулось. */
+  html.jasny body { background: #fff; }
+
+  /* Верхняя плашка */
+  html.jasny nav .nav-inner {
+    background: rgba(255,255,255,.94); border-color: rgba(20,18,28,.1);
+    box-shadow: 0 10px 30px rgba(20,18,28,.16);
+  }
+  html.jasny nav.scrolled .nav-inner { box-shadow: 0 4px 18px rgba(20,18,28,.14); }
+  html.jasny nav a.nav-link { color: #26232f; }
+  html.jasny nav a.nav-link:hover { color: var(--accent); }
+  html.jasny nav .nav-logo span { color: #16141b; }
+  html.jasny nav .nav-lang .lang { color: rgba(38,35,47,.55); }
+  html.jasny nav .nav-lang .lang:hover { color: #16141b; }
+  html.jasny nav .nav-lang .lang.on { color: var(--accent); }
+  html.jasny nav .nav-soc { color: rgba(38,35,47,.55); }
+  html.jasny nav .nav-soc:hover { color: var(--accent); }
+  html.jasny .motyw { color: rgba(38,35,47,.55); }
+  html.jasny .motyw:hover { color: var(--accent); }
+
+  /* Первый экран */
+  html.jasny #hero .pg-dol { background: #fff; }
+  html.jasny #hero .pg-gora::after {
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0) 0%, rgba(124,58,237,.20) 46%, rgba(255,255,255,.86) 84%, #fff 100%);
+  }
+  html.jasny #hero .pg-naglowek p { color: #3f3c4b; }
+  html.jasny #hero .pg-eyebrow-akcent { color: var(--accent); }
+  html.jasny #hero .pg-btn.dark { background: #16141b; color: #fff; }
+  html.jasny #hero .pg-karta { background: #eceaf0; box-shadow: 0 8px 22px rgba(20,18,28,.16); }
+  html.jasny #hero .pg-karta:hover { box-shadow: 0 16px 34px rgba(20,18,28,.28); }
+
+  /* Работы. Фиолетовый тут СВЕТ, а не заливка: пятно сверху гаснет через
+     380 пикселей. Сплошной градиент во всю страницу не берём — площадь
+     фиолетового остаётся та же, а текст посреди заливки всегда сидит либо
+     на слишком светлом, либо на слишком тёмном. */
+  html.jasny #portfolio {
+    background: radial-gradient(120% 380px at 50% 0%, rgba(124,58,237,.16) 0%, rgba(124,58,237,0) 100%), #fff;
+  }
+  /* Заголовки залиты градиентом через background-clip — одним color их не
+     перекрасить, пока не снят -webkit-text-fill-color. */
+  html.jasny #portfolio .sec-title, html.jasny #team .sec-title {
+    background: none; color: #16141b; -webkit-text-fill-color: #16141b;
+  }
+  html.jasny #portfolio .sec-label, html.jasny #team .sec-label { color: var(--accent); }
+  html.jasny #portfolio .pf-cat-name { color: #16141b; }
+  html.jasny #portfolio .pf-cats { border-top-color: rgba(20,18,28,.12); }
+  html.jasny #portfolio .pf-cat { border-bottom-color: rgba(20,18,28,.12); }
+  html.jasny #portfolio .pf-cat:hover { background: rgba(124,58,237,.05); }
+  html.jasny #portfolio .pf-cat-desc { color: #5d5a6b; }
+  html.jasny #portfolio .pf-cat-arrow { color: rgba(20,18,28,.32); }
+  html.jasny #portfolio .pf-strip-img, html.jasny #portfolio .pf-strip-vid {
+    width: 290px; height: 164px; border-radius: 14px;
+    border: 1px solid rgba(20,18,28,.08); box-shadow: 0 10px 26px rgba(20,18,28,.13);
+    background: #eceaf0;
+  }
+  @media (max-width: 700px) {
+    html.jasny #portfolio .pf-strip-img, html.jasny #portfolio .pf-strip-vid { width: 214px; height: 120px; }
+  }
+
+  /* Команда. Портреты сняты на чёрном поролоне, поэтому карточки остаются
+     тёмными плитками — на белом фоне без них вышли бы три дыры. */
+  html.jasny #team { background: #fff; position: relative; }
+  html.jasny #team .tm { background: #16141b; border-color: rgba(20,18,28,.1); box-shadow: 0 20px 48px rgba(20,18,28,.2); }
+  html.jasny #team .tm:hover { box-shadow: 0 30px 66px rgba(124,58,237,.34); }
+  /* Зеркальный шов: белое растворяется в тёмном перед контактами. */
+  html.jasny #team::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 150px; z-index: 0;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0) 0%, rgba(124,58,237,.18) 44%, rgba(22,14,46,.88) 86%, #160e2e 100%);
+    pointer-events: none;
+  }
+  html.jasny #team .sec-head, html.jasny #team .team-grid { position: relative; z-index: 1; }
+
+  /* Полоса цифр и так белая — правим только её границу со светлым верхом. */
+  html.jasny .stats { border-top: 1px solid rgba(20,18,28,.08); }
+</style>
 </head>
 <body>
 
@@ -2831,6 +3021,10 @@
       <span>ZOVU</span>
     </a>
     <div class="nav-right">
+      <button class="motyw" type="button" aria-label="Zmień motyw" title="Ciemny / jasny">
+        <svg class="motyw-ks" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="motyw-sl" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+      </button>
       <div class="nav-lang">
         <button class="lang on" data-l="pl">PL</button>
         <button class="lang"    data-l="en">EN</button>
@@ -2852,277 +3046,47 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <!-- Background -->
-  <div class="hero-bg-grad"></div>
-
-  <!-- Floating shapes -->
-  <div class="hero-shapes">
-    <div class="sh-wrap" style="left:-5%;top:20%;--rf:-3deg;--rt:12deg;animation-delay:.3s">
-      <div class="elegant-shape" style="width:600px;height:140px;--sc:rgba(99,102,241,.15);animation-delay:0s"></div>
-    </div>
-    <div class="sh-wrap" style="right:0%;top:75%;--rf:-30deg;--rt:-15deg;animation-delay:.5s">
-      <div class="elegant-shape" style="width:500px;height:120px;--sc:rgba(244,63,94,.15);animation-delay:1.5s"></div>
-    </div>
-    <div class="sh-wrap" style="left:10%;bottom:10%;--rf:-23deg;--rt:-8deg;animation-delay:.4s">
-      <div class="elegant-shape" style="width:300px;height:80px;--sc:rgba(139,92,246,.15);animation-delay:3s"></div>
-    </div>
-    <div class="sh-wrap" style="right:20%;top:15%;--rf:5deg;--rt:20deg;animation-delay:.6s">
-      <div class="elegant-shape" style="width:200px;height:60px;--sc:rgba(245,158,11,.15);animation-delay:4.5s"></div>
-    </div>
-    <div class="sh-wrap" style="left:25%;top:10%;--rf:-40deg;--rt:-25deg;animation-delay:.7s">
-      <div class="elegant-shape" style="width:150px;height:40px;--sc:rgba(6,182,212,.15);animation-delay:6s"></div>
+<section id="hero" class="pg-hero">
+  <div class="pg-gora">
+    <img class="pg-foto" src="hero_montaz.jpg" alt="Montaż rolki: oś czasu na ekranie" fetchpriority="high">
+    <div class="pg-cien"></div>
+    <div class="pg-tresc">
+      <div class="pg-eyebrow" data-k="hero_tagn">AGENCJA KREATYWNA · KATOWICE</div>
+      <h1 class="pg-h1"><span data-k="hero_n1">Rolka dziennie.</span><br><span data-k="hero_n2">Bez twojego czasu</span></h1>
     </div>
   </div>
-
-  <div class="hero-fade"></div>
-  <canvas id="hero-canvas"></canvas>
-
-  <!-- LEFT: текст -->
-  <div class="hero-content">
-    <div class="hero-tag" data-k="hero_tag" style="display:inline-flex;align-items:center;gap:8px"><span class="hero-tag-dot"></span>Creative Agency</div>
-    <h1 class="hero-h">
-      <span class="ln" data-k="hero_l1">Tworzymy</span>
-      <span class="ln"><span class="ac" data-k="hero_ac">treści</span> <span data-k="hero_mid">które</span></span>
-      <span class="ln" data-k="hero_l3">sprzedają.</span>
-    </h1>
-    <div class="hero-roles" id="hero-roles"></div>
-  </div>
-
-  <!-- RIGHT: glassmorphism tools widget -->
-  <div class="glass-widget">
-    <div class="glass-inner" id="tools-widget">
-      <div class="glass-title" data-k="tools_ttl">Narzędzia które używamy</div>
-      <!-- Tab buttons -->
-      <div class="tools-tabs">
-        <button class="tools-tab t-active" data-ti="0" data-k="tools_t0">Wideo</button>
-        <button class="tools-tab" data-ti="1" data-k="tools_t1">Grafika</button>
-        <button class="tools-tab" data-ti="2" data-k="tools_t2">Strony</button>
-        <button class="tools-tab" data-ti="3" data-k="tools_t3">Reklama</button>
+  <div class="pg-dol">
+    <div class="pg-naglowek">
+      <div>
+        <div class="pg-eyebrow pg-eyebrow-akcent" data-k="hero_prace">OSTATNIE ROLKI DLA KLIENTÓW</div>
+        <p data-k="hero_opis">Scenariusz, zdjęcia, montaż i publikacja — po naszej stronie. Ty tylko odbierasz telefony.</p>
       </div>
-
-      <!-- Slider -->
-      <div class="tools-slider-wrap">
-        <div class="tools-slider" id="tools-slider">
-
-          <!-- PANEL: Videos -->
-          <div class="tools-panel">
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#2B0A3D">
-                <img class="g-ci" src="icon-premiere.png" alt="Premiere Pro">
-              </div>
-              <span class="g-icon-lbl">Premiere Pro</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#ffffff">
-                <img class="g-ci" src="icon-veo3.png" alt="veo 3">
-              </div>
-              <span class="g-icon-lbl">veo 3</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-kling.jpg" alt="kling">
-              </div>
-              <span class="g-icon-lbl">kling</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#130053">
-                <img class="g-ci" src="icon-aftereffects.png" alt="after effects">
-              </div>
-              <span class="g-icon-lbl">after effects</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-grok.svg" alt="Grok">
-              </div>
-              <span class="g-icon-lbl">Grok</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#000000">
-                <img class="g-ci" src="icon-capcut.png" alt="CapCut">
-              </div>
-              <span class="g-icon-lbl">CapCut</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-heygen.jpg" alt="HeyGen">
-              </div>
-              <span class="g-icon-lbl">HeyGen</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#000000">
-                <img class="g-ci" src="icon-elevenlabs.webp" alt="Eleven Labs">
-              </div>
-              <span class="g-icon-lbl">Eleven Labs</span>
-            </div>
-          </div>
-
-          <!-- PANEL: Design -->
-          <div class="tools-panel">
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#001E36">
-                <img class="g-ci" src="icon-photoshop.png" alt="Photoshop">
-              </div>
-              <span class="g-icon-lbl">Photoshop</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#FFE600">
-                <img class="g-ci" src="icon-nanobanana.png" alt="Nano Banana">
-              </div>
-              <span class="g-icon-lbl">Nano Banana</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#7D2AE7">
-                <img class="g-ci" src="icon-canva.webp" alt="Canva">
-              </div>
-              <span class="g-icon-lbl">Canva</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#ffffff">
-                <img class="g-ci" src="icon-midjourney.svg" alt="Midjourney">
-              </div>
-              <span class="g-icon-lbl">Midjourney</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-figma.png" alt="Figma" style="object-fit:contain">
-              </div>
-              <span class="g-icon-lbl">Figma</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-grok.svg" alt="Grok">
-              </div>
-              <span class="g-icon-lbl">Grok</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#FF7C00">
-                <img class="g-ci" src="icon-illustrator.png" alt="Adobe Illustrator">
-              </div>
-              <span class="g-icon-lbl">Adobe Illustrator</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#0d0d0d">
-                <img class="g-ci" src="icon-sora.png" alt="Sora">
-              </div>
-              <span class="g-icon-lbl">Sora</span>
-            </div>
-          </div>
-
-          <!-- PANEL: Web Sites -->
-          <div class="tools-panel">
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#D97757">
-                <img class="g-ci" src="icon-claude.svg" alt="Claude Code">
-              </div>
-              <span class="g-icon-lbl">Claude Code</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#21759B">
-                <img class="g-ci" src="icon-wordpress.svg" alt="WordPress">
-              </div>
-              <span class="g-icon-lbl">WordPress</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#181717">
-                <img class="g-ci" src="icon-github.svg" alt="GitHub">
-              </div>
-              <span class="g-icon-lbl">GitHub</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-lovable.jpg" alt="Lovable">
-              </div>
-              <span class="g-icon-lbl">Lovable</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#0d0d0d">
-                <img class="g-ci" src="icon-chatgpt.png" alt="ChatGPT">
-              </div>
-              <span class="g-icon-lbl">ChatGPT</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1c1c1e">
-                <img class="g-ci" src="icon-cursor.webp" alt="Cursor">
-              </div>
-              <span class="g-icon-lbl">Cursor</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-figma.png" alt="Figma" style="object-fit:contain">
-              </div>
-              <span class="g-icon-lbl">Figma</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#ffffff">
-                <img class="g-ci" src="icon-google-ai.svg" alt="Google AI" style="transform:rotate(90deg);object-fit:contain">
-              </div>
-              <span class="g-icon-lbl">Google AI</span>
-            </div>
-          </div>
-
-          <!-- PANEL: ADS -->
-          <div class="tools-panel">
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#ffffff">
-                <img class="g-ci" src="icon-meta-ads.png" alt="Meta ADS" style="object-fit:contain">
-              </div>
-              <span class="g-icon-lbl">Meta ADS</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#1a1a1a">
-                <img class="g-ci" src="icon-google-ads.jpg" alt="Google ADS">
-              </div>
-              <span class="g-icon-lbl">Google ADS</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#6D00CC">
-                <img class="g-ci" src="icon-make.svg" alt="Make">
-              </div>
-              <span class="g-icon-lbl">Make</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#EA4B71">
-                <img class="g-ci" src="icon-n8n.svg" alt="n8n">
-              </div>
-              <span class="g-icon-lbl">n8n</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#000000">
-                <img class="g-ci" src="icon-tiktok.svg" alt="TikTok Ads">
-              </div>
-              <span class="g-icon-lbl">TikTok Ads</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#E37400">
-                <img class="g-ci" src="icon-analytics.svg" alt="Analytics">
-              </div>
-              <span class="g-icon-lbl">Analytics</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#0A84FF">
-                <img class="g-ci" src="icon-chatplace.jpg" alt="ChatPlace">
-              </div>
-              <span class="g-icon-lbl">ChatPlace</span>
-            </div>
-            <div class="g-icon">
-              <div class="g-icon-img" style="background:#217346">
-                <img class="g-ci" src="icon-excel.png" alt="Excel">
-              </div>
-              <span class="g-icon-lbl">Excel</span>
-            </div>
-          </div>
-
-        </div>
+      <div class="pg-cta">
+        <a class="pg-btn dark" href="#portfolio" data-k="hero_cta1">Zobacz prace</a>
+        <a class="pg-btn main" href="https://wa.me/48571795097" data-k="hero_cta2">Napisz na WhatsApp</a>
       </div>
-      <div class="glass-div"></div>
-      <div class="glass-footer">
-        <div class="glass-footer-dot"></div>
-        AI-powered marketing
+    </div>
+    <div class="pg-tasma" aria-label="Rolki zrobione przez ZOVU">
+      <div class="pg-tor">
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><video src="video1.mp4" poster="vidposter1.jpg" muted loop playsinline preload="none"></video></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><video src="video4.mp4" poster="vidposter4.jpg" muted loop playsinline preload="none"></video></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><video src="video5.mp4" poster="vidposter5.jpg" muted loop playsinline preload="none"></video></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter2.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter3.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter7.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter8.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter1.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter4.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter5.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter2.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter3.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter7.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter8.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
       </div>
     </div>
   </div>
-
 </section>
 
 <!-- STATS -->
@@ -3363,6 +3327,14 @@
 // ── TRANSLATIONS ──────────────────────────────────────────────────────────────
 const T = {
   en: {
+    /* новый первый экран */
+    hero_tagn:"CREATIVE AGENCY · KATOWICE",
+    hero_n1:"A reel a day.",
+    hero_n2:"Without your time",
+    hero_prace:"LATEST REELS FOR CLIENTS",
+    hero_opis:"Script, filming, editing and publishing — on us. You just answer the phone.",
+    hero_cta1:"See our work",
+    hero_cta2:"Message on WhatsApp",
     nav_cta:"Let's talk",
     hero_tag:"Creative Agency", hero_l1:"We create", hero_ac:"content", hero_mid:"that", hero_l3:"sells.",
     hero_roles:"Sites · Video · Posts · Ads · Social Media · Automation",
@@ -3460,6 +3432,14 @@ const T = {
     tools_ttl:"Tools we use", tools_t0:"Videos", tools_t1:"Design", tools_t2:"Web Sites", tools_t3:"ADS"
   },
   ru: {
+    /* новый первый экран */
+    hero_tagn:"КРЕАТИВНОЕ АГЕНТСТВО · КАТОВИЦЕ",
+    hero_n1:"Ролик в день.",
+    hero_n2:"Без вашего времени",
+    hero_prace:"ПОСЛЕДНИЕ РИЛСЫ ДЛЯ КЛИЕНТОВ",
+    hero_opis:"Сценарий, съёмка, монтаж и публикация — на нас. Вы только отвечаете на звонки.",
+    hero_cta1:"Смотреть работы",
+    hero_cta2:"Написать в WhatsApp",
     nav_cta:"Связаться",
     hero_tag:"Креативное агентство", hero_l1:"Мы создаём", hero_ac:"контент", hero_mid:"который", hero_l3:"продаёт.",
     hero_roles:"Сайты · Видео · Посты · Реклама · Соцсети · Автоматизация",
@@ -3557,6 +3537,14 @@ const T = {
     tools_ttl:"Инструменты которые мы используем", tools_t0:"Видео", tools_t1:"Дизайн", tools_t2:"Сайты", tools_t3:"Реклама"
   },
   pl: {
+    /* новый первый экран */
+    hero_tagn:"AGENCJA KREATYWNA · KATOWICE",
+    hero_n1:"Rolka dziennie.",
+    hero_n2:"Bez twojego czasu",
+    hero_prace:"OSTATNIE ROLKI DLA KLIENTÓW",
+    hero_opis:"Scenariusz, zdjęcia, montaż i publikacja — po naszej stronie. Ty tylko odbierasz telefony.",
+    hero_cta1:"Zobacz prace",
+    hero_cta2:"Napisz na WhatsApp",
     nav_cta:"Porozmawiajmy",
     hero_tag:"Agencja Kreatywna", hero_l1:"Tworzymy", hero_ac:"treści", hero_mid:"które", hero_l3:"sprzedają.",
     hero_roles:"Strony · Wideo · Posty · Reklama · Social Media · Automatyzacja",
@@ -5729,5 +5717,36 @@ function ckDecline() { localStorage.setItem('ck','declined'); document.getElemen
   </defs>
 </svg>
 
+
+<script>
+// Переключатель темы. Светлая — по умолчанию, тёмная запоминается.
+(function () {
+  var el = document.querySelector('.motyw');
+  if (!el) return;
+  el.addEventListener('click', function () {
+    var ciemny = document.documentElement.classList.toggle('ciemny');
+    document.documentElement.classList.toggle('jasny', !ciemny);
+    try { localStorage.setItem('motyw', ciemny ? 'ciemny' : 'jasny'); } catch (e) {}
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', ciemny ? '#0d0820' : '#ffffff');
+  });
+})();
+
+// Видео в ленте включаем только когда полоса реально на экране: иначе
+// браузер тянет файлы у человека, который до них не долистал.
+(function () {
+  var tasma = document.querySelector('#hero .pg-tasma');
+  if (!tasma) return;
+  var filmy = tasma.querySelectorAll('video');
+  if (!filmy.length) return;
+  new IntersectionObserver(function (wpisy) {
+    wpisy.forEach(function (w) {
+      filmy.forEach(function (f) {
+        if (w.isIntersecting) { f.play().catch(function () {}); } else { f.pause(); }
+      });
+    });
+  }, { threshold: 0.15 }).observe(tasma);
+})();
+</script>
 </body>
 </html>
