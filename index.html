@@ -3099,6 +3099,23 @@
   }
   @media (prefers-reduced-motion: reduce) { .pasek { transition: none; } }
 </style>
+
+<style data-palec>
+  /* Цели для пальца. Apple и Google просят минимум 44px, у нас в шапке
+     кнопки были по 28-30: на ходу в такую попадают через раз, а это
+     единственная кнопка «написать» на первом экране. Увеличиваем зону
+     нажатия, не трогая вид: padding у кнопки и невидимые поля у мелочи. */
+  @media (max-width: 700px) {
+    .nav-btn { padding: 12px 16px; }
+    .nav-lang .lang { padding: 13px 5px; }
+    /* Пилюли категорий в галерее — тоже палец, не мышь. */
+    .pfg-cat, .pfg-close { min-height: 40px; }
+    .motyw { width: 40px; height: 40px; }
+    .nav-soc { padding: 8px 2px; }
+    /* Надстрочники на телефоне были 11px — на ходу это уже щурится. */
+    #hero .pg-eyebrow, #hero .pg-uslugi { font-size: 12px; }
+  }
+</style>
 </head>
 <body>
 
