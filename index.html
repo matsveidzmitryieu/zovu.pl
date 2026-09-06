@@ -2804,7 +2804,12 @@
      Работает в обеих темах: тёмная — это сайт как был, светлая живёт на
      html.jasny. Свои правила усилены #hero, потому что у сайта правило по
      id и его класс бы не перебил. */
-  #hero.pg-hero { position: relative; width: 100%; overflow: hidden; display: block; padding: 0; background: #050505; }
+  /* min-height: 0 обязателен: у сайта #hero держал высоту в целый экран,
+     и под лентой висела полоса голого фона в 173 пикселя. */
+  #hero.pg-hero {
+    position: relative; width: 100%; overflow: hidden; display: block;
+    padding: 0; min-height: 0; background: #050505;
+  }
   #hero.pg-hero * { box-sizing: border-box; }
   #hero .pg-gora { position: relative; min-height: 46svh; display: flex; align-items: flex-end; }
   #hero .pg-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -3044,12 +3049,29 @@
   }
   html.jasny .jp-fakt i { color: #6c6878; }
 </style>
+
+<style data-splash-jasny>
+  /* Заставка в светлой теме — светлая: чёрная вспышка на белом сайте
+     читается как «загрузилось что-то другое». */
+  html.jasny .splash { background: #fbfaf8; }
+  html.jasny .splash-text { color: #16141b; }
+  html.jasny .splash-sub { color: rgba(22,20,27,.45); }
+</style>
+
+<style data-uslugi>
+  #hero .pg-uslugi {
+    margin-top: 18px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: .18em; line-height: 1.9; color: rgba(255,255,255,.72);
+    max-width: 32ch;
+  }
+  @media (min-width: 900px) { #hero .pg-uslugi { font-size: 12.5px; max-width: none; margin-top: 22px; } }
+</style>
 </head>
 <body>
 
 <!-- SPLASH PRELOADER -->
 <div class="splash" id="splash">
-  <img src="logo_icon.png" alt="ZOVU">
+  <img width="564" height="564" src="logo_icon.png" alt="ZOVU">
   <div class="splash-text">ZOVU</div>
   <div class="splash-sub">Created by ZOVU Agency</div>
 </div>
@@ -3082,7 +3104,7 @@
       <a href="#team" class="nav-link" data-k="nav_tm">Zespół</a>
     </div>
     <a href="#" class="nav-logo">
-      <img src="logo_icon.png" alt="ZOVU">
+      <img width="564" height="564" src="logo_icon.png" alt="ZOVU">
       <span>ZOVU</span>
     </a>
     <div class="nav-right">
@@ -3113,11 +3135,12 @@
 <!-- HERO -->
 <section id="hero" class="pg-hero">
   <div class="pg-gora">
-    <img class="pg-foto" src="hero_montaz.jpg" alt="Montaż rolki: oś czasu na ekranie" fetchpriority="high">
+    <img width="1920" height="1080" class="pg-foto" src="hero_montaz.jpg" alt="Montaż rolki: oś czasu na ekranie" fetchpriority="high">
     <div class="pg-cien"></div>
     <div class="pg-tresc">
       <div class="pg-eyebrow" data-k="hero_tagn">AGENCJA KREATYWNA · KATOWICE</div>
       <h1 class="pg-h1"><span data-k="hero_n1">Rolka dziennie.</span><br><span data-k="hero_n2">Bez twojego czasu</span></h1>
+      <div class="pg-uslugi" data-k="hero_uslugi">STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA</div>
     </div>
   </div>
   <div class="pg-dol">
@@ -3136,19 +3159,19 @@
         <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><video src="video1.mp4" poster="vidposter1.jpg" muted loop playsinline preload="none"></video></a>
         <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><video src="video4.mp4" poster="vidposter4.jpg" muted loop playsinline preload="none"></video></a>
         <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><video src="video5.mp4" poster="vidposter5.jpg" muted loop playsinline preload="none"></video></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter2.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter3.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter7.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter8.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter1.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter4.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter5.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter2.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter3.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter7.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter8.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
-        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter2.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter3.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter7.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter8.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter1.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter4.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter5.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter2.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter3.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter7.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter8.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
+        <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
       </div>
     </div>
   </div>
@@ -3184,8 +3207,8 @@
         <span class="pf-cat-arrow">&#8599;</span>
       </div>
       <div class="pf-strip"><div class="pf-strip-track">
-        <img class="pf-strip-img" src="web_fightmode.jpg" alt=""><img class="pf-strip-img" src="web_shaurma.jpg" alt=""><img class="pf-strip-img" src="web_bee.jpg" alt=""><img class="pf-strip-img" src="web_jewelry.jpg" alt=""><img class="pf-strip-img" src="web_maya.jpg" alt=""><img class="pf-strip-img" src="web_gucio.jpg" alt=""><img class="pf-strip-img" src="web_marketing.jpg" alt=""><img class="pf-strip-img" src="web_pick.jpg" alt=""><img class="pf-strip-img" src="web_energia.jpg" alt="">
-        <img class="pf-strip-img" src="web_fightmode.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_shaurma.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_bee.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_jewelry.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_maya.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_gucio.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_marketing.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_pick.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_potolki.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="web_energia.jpg" alt="" aria-hidden="true">
+        <img width="1920" height="1080" class="pf-strip-img" src="web_fightmode.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_shaurma.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_bee.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_jewelry.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_maya.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_gucio.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_marketing.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_pick.jpg" alt=""><img width="1280" height="800" class="pf-strip-img" src="web_energia.jpg" alt="">
+        <img width="1920" height="1080" class="pf-strip-img" src="web_fightmode.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_shaurma.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_bee.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_jewelry.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_maya.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_gucio.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_marketing.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_pick.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_potolki.jpg" alt="" aria-hidden="true"><img width="1280" height="800" class="pf-strip-img" src="web_energia.jpg" alt="" aria-hidden="true">
       </div></div>
     </a>
 
@@ -3212,8 +3235,8 @@
         <span class="pf-cat-arrow">&#8599;</span>
       </div>
       <div class="pf-strip"><div class="pf-strip-track">
-        <img class="pf-strip-img" src="post_babajaga.jpg" alt=""><img class="pf-strip-img" src="post_marketing.jpg" alt=""><img class="pf-strip-img" src="post_yt1.jpg" alt=""><img class="pf-strip-img" src="post_yturzednik.jpg" alt=""><img class="pf-strip-img" src="post_yt2.jpg" alt=""><img class="pf-strip-img" src="post_ytpalant.jpg" alt=""><img class="pf-strip-img" src="post_upwork.jpg" alt=""><img class="pf-strip-img" src="post_pickladies.jpg" alt="">
-        <img class="pf-strip-img" src="post_babajaga.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_marketing.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_yt1.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_yturzednik.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_yt2.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_ytpalant.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_upwork.jpg" alt="" aria-hidden="true"><img class="pf-strip-img" src="post_pickladies.jpg" alt="" aria-hidden="true">
+        <img width="1280" height="769" class="pf-strip-img" src="post_babajaga.jpg" alt=""><img width="1200" height="628" class="pf-strip-img" src="post_marketing.jpg" alt=""><img width="1500" height="844" class="pf-strip-img" src="post_yt1.jpg" alt=""><img width="1500" height="844" class="pf-strip-img" src="post_yturzednik.jpg" alt=""><img width="1500" height="844" class="pf-strip-img" src="post_yt2.jpg" alt=""><img width="1500" height="844" class="pf-strip-img" src="post_ytpalant.jpg" alt=""><img width="1500" height="837" class="pf-strip-img" src="post_upwork.jpg" alt=""><img width="1200" height="630" class="pf-strip-img" src="post_pickladies.jpg" alt="">
+        <img width="1280" height="769" class="pf-strip-img" src="post_babajaga.jpg" alt="" aria-hidden="true"><img width="1200" height="628" class="pf-strip-img" src="post_marketing.jpg" alt="" aria-hidden="true"><img width="1500" height="844" class="pf-strip-img" src="post_yt1.jpg" alt="" aria-hidden="true"><img width="1500" height="844" class="pf-strip-img" src="post_yturzednik.jpg" alt="" aria-hidden="true"><img width="1500" height="844" class="pf-strip-img" src="post_yt2.jpg" alt="" aria-hidden="true"><img width="1500" height="844" class="pf-strip-img" src="post_ytpalant.jpg" alt="" aria-hidden="true"><img width="1500" height="837" class="pf-strip-img" src="post_upwork.jpg" alt="" aria-hidden="true"><img width="1200" height="630" class="pf-strip-img" src="post_pickladies.jpg" alt="" aria-hidden="true">
       </div></div>
     </a>
 
@@ -3242,7 +3265,7 @@
   </div>
   <div class="team-grid">
     <div class="tm rv d1">
-      <img class="tm-av" src="Митя.jpg" alt="Mat" loading="lazy" decoding="async">
+      <img width="640" height="640" class="tm-av" src="Митя.jpg" alt="Mat" loading="lazy" decoding="async">
       <div class="tm-role" data-k="m1r">Starszy dyrektor kreatywny</div>
       <div class="tm-name">Mat <span class="tm-ceo">CEO</span></div>
       <p class="tm-bio" data-k="m1b">Filar doświadczenia. Prowadzi kampanie z dużymi budżetami, tworzy wirusowe treści i wie, jak zamieniać uwagę w zyski.</p>
@@ -3252,7 +3275,7 @@
       </a>
     </div>
     <div class="tm rv d2">
-      <img class="tm-av" src="захар.jpg" alt="Zah" loading="lazy" decoding="async">
+      <img width="600" height="600" class="tm-av" src="захар.jpg" alt="Zah" loading="lazy" decoding="async">
       <div class="tm-role" data-k="m3r">Deweloper i twórca</div>
       <div class="tm-name">Zah</div>
       <p class="tm-bio" data-k="m3b">Budowniczy grupy. Specjalizuje się w vibe codingu — zamienia pomysły w szybkie, piękne strony, które konwertują.</p>
@@ -3262,7 +3285,7 @@
       </a>
     </div>
     <div class="tm rv d3">
-      <img class="tm-av" src="саша.jpg" alt="Alex" loading="lazy" decoding="async">
+      <img width="800" height="800" class="tm-av" src="саша.jpg" alt="Alex" loading="lazy" decoding="async">
       <div class="tm-role" data-k="m2r">Producent wideo i marketer</div>
       <div class="tm-name">Alex</div>
       <p class="tm-bio" data-k="m2b">Montażysta, specjalista od reklam i vibe coder. Łączy produkcję kreatywną z marketingiem efektywnościowym.</p>
@@ -3372,7 +3395,7 @@
 <!-- FOOTER -->
 <footer>
   <a href="#" class="f-brand">
-    <img src="logo_icon.png" alt="ZOVU">
+    <img width="564" height="564" src="logo_icon.png" alt="ZOVU">
     <span>ZOVU</span>
   </a>
   <div class="f-copy">© 2026 ZOVU. <span data-k="ft_r">Wszelkie prawa zastrzeżone.</span> <span class="f-sep">·&nbsp;<a href="/privacypolicy" data-k="ft_priv">Polityka prywatności</a></span></div>
@@ -3425,6 +3448,7 @@
 // ── TRANSLATIONS ──────────────────────────────────────────────────────────────
 const T = {
   en: {
+    hero_uslugi:"WEBSITES · VIDEO · SOCIAL MEDIA · ADS · AUTOMATION",
     /* jak pracujemy */
     jp_label:"HOW WE WORK",
     jp_title:"No surprises",
@@ -3542,6 +3566,7 @@ const T = {
     tools_ttl:"Tools we use", tools_t0:"Videos", tools_t1:"Design", tools_t2:"Web Sites", tools_t3:"ADS"
   },
   ru: {
+    hero_uslugi:"САЙТЫ · ВИДЕО · СОЦСЕТИ · РЕКЛАМА · АВТОМАТИЗАЦИЯ",
     /* jak pracujemy */
     jp_label:"КАК МЫ РАБОТАЕМ",
     jp_title:"Без сюрпризов",
@@ -3659,6 +3684,7 @@ const T = {
     tools_ttl:"Инструменты которые мы используем", tools_t0:"Видео", tools_t1:"Дизайн", tools_t2:"Сайты", tools_t3:"Реклама"
   },
   pl: {
+    hero_uslugi:"STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA",
     /* jak pracujemy */
     jp_label:"JAK PRACUJEMY",
     jp_title:"Bez niespodzianek",
