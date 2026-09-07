@@ -3267,7 +3267,10 @@
     /* Строка услуг из-под заголовка уходит вниз: три строки моноширинным
        наезжали на подбородок. */
     #hero .pg-tresc .pg-uslugi { display: none; }
-    #hero .pg-uslugi-tel { display: block; margin: 0; max-width: none; }
+    #hero .pg-uslugi-tel {
+      display: block; margin: 0; max-width: none;
+      padding: 0 22px; opacity: .72;
+    }
   }
   @media (min-width: 701px) { #hero .pg-uslugi-tel { display: none; } }
   html.jasny #hero .pg-uslugi-tel { color: #3f3c4b; }
@@ -3351,7 +3354,6 @@
   </div>
   <div class="pg-dol">
     <div class="pg-naglowek">
-      <div class="pg-uslugi pg-uslugi-tel" data-k="hero_uslugi">STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA</div>
       <div>
         <div class="pg-eyebrow pg-eyebrow-akcent" data-k="hero_prace">OSTATNIE ROLKI DLA KLIENTÓW</div>
         <p data-k="hero_opis">Scenariusz, zdjęcia, montaż i publikacja — po naszej stronie. Ty tylko odbierasz telefony.</p>
@@ -3381,6 +3383,7 @@
         <a class="pg-karta" href="#portfolio" aria-label="Zobacz nasze prace"><img width="450" height="800" src="vidposter9.jpg" alt="Kadr z rolki zrobionej przez ZOVU" loading="lazy" decoding="async"></a>
       </div>
     </div>
+    <div class="pg-uslugi pg-uslugi-tel" data-k="hero_uslugi">STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA</div>
   </div>
 </section>
 

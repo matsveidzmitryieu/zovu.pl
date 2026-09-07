@@ -55,15 +55,22 @@ if (h.includes(staryImg) && !h.includes('<source media="(max-width: 700px)"')) {
   console.log('подставлен <picture>');
 }
 
-// ── 3. Строка услуг — копия в нижнем блоке ──────────────────────────────
+// ── 3. Строка услуг — копия ПОД лентой рилсов ───────────────────────────
+// Захар: «тут как-то много текста». До кнопки шли подряд два надстрочника
+// капслоком с разрядкой — серый и фиолетовый; по отдельности нормальные,
+// вместе читаются одной стеной, и глаз проскакивает мимо кнопки. Услуги
+// не выкидываем (без них сайт говорит только про рилсы, и человек с
+// запросом «сайт» уходит) — ставим ПОСЛЕ ленты, тише и мельче. Порядок
+// для читателя: обещание → доказательство → кнопка.
 // Ключ data-k тот же: applyLang идёт по querySelectorAll, обе копии
 // переводятся сами, новых ключей заводить не нужно.
-const kotwica = '  <div class="pg-dol">\n    <div class="pg-naglowek">\n';
-const kopia = kotwica +
-  '      <div class="pg-uslugi pg-uslugi-tel" data-k="hero_uslugi">STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA</div>\n';
+const kotwica = '      </div>\n    </div>\n  </div>\n</section>';
+const kopia = '      </div>\n    </div>\n' +
+  '    <div class="pg-uslugi pg-uslugi-tel" data-k="hero_uslugi">STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA</div>\n' +
+  '  </div>\n</section>';
 if (h.includes(kotwica) && !h.includes('pg-uslugi-tel')) {
   h = h.replace(kotwica, kopia);
-  console.log('строка услуг продублирована в нижний блок');
+  console.log('строка услуг поставлена под лентой рилсов');
 }
 
 // ── 4. Стили ────────────────────────────────────────────────────────────
@@ -89,10 +96,15 @@ const style = `
     #hero .pg-eyebrow { margin-bottom: 16px; }
     #hero .pg-tresc { padding: 74px 20px 44px; }
 
-    /* Строка услуг из-под заголовка уходит вниз: три строки моноширинным
-       наезжали на подбородок. */
+    /* Строка услуг из-под заголовка уходит под ленту рилсов: под заголовком
+       три строки моноширинным наезжали на подбородок, а в блоке с кнопкой
+       она была вторым надстрочником подряд. Отступ свой: лента идёт во всю
+       ширину, поля есть только у соседнего блока. */
     #hero .pg-tresc .pg-uslugi { display: none; }
-    #hero .pg-uslugi-tel { display: block; margin: 0; max-width: none; }
+    #hero .pg-uslugi-tel {
+      display: block; margin: 0; max-width: none;
+      padding: 0 22px; opacity: .72;
+    }
   }
   @media (min-width: 701px) { #hero .pg-uslugi-tel { display: none; } }
   html.jasny #hero .pg-uslugi-tel { color: #3f3c4b; }
