@@ -3193,6 +3193,49 @@
   .jp-fakt i { display: block; line-height: 1.45; max-width: 24ch; }
   #jak-pracujemy { padding-bottom: 84px; }
 </style>
+
+<style data-ruch>
+  /* Полоса обещаний: три равные строки с галочкой. Ровность тут даёт не
+     выравнивание, а одинаковость — одинаковый тип строки, один размер,
+     одна высота. Прежний ряд смешивал число, языки и процент, и никакая
+     сетка этого не спасала. */
+  .jp-fakty {
+    list-style: none; margin: 30px 0 0; padding: 26px 0 0;
+    display: grid; gap: 14px; grid-template-columns: 1fr;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  html.jasny .jp-fakty { border-top-color: rgba(20,18,28,.12); }
+  @media (min-width: 900px) { .jp-fakty { grid-template-columns: repeat(3, 1fr); gap: 16px 36px; } }
+  .jp-fakty li {
+    display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start;
+    font-family: 'Manrope', sans-serif; font-size: 15.5px; line-height: 1.5;
+    color: rgba(255,255,255,.72);
+  }
+  html.jasny .jp-fakty li { color: #3f3c4b; }
+  .jp-fakty li::before {
+    content: '✓'; color: var(--accent-2); font-weight: 800; line-height: 1.4;
+  }
+  html.jasny .jp-fakty li::before { color: var(--accent); }
+
+  /* Имена клиентов — ссылки, но выглядят как часть ленты. */
+  .marquee-klienci a { color: inherit; text-decoration: none; display: inline-block; padding: 0 24px; }
+  .marquee-klienci a:hover { color: #fff; }
+  html.jasny .marquee-klienci a:hover { color: var(--accent); }
+
+  /* ГЛАВНОЕ. У Захара в Windows выключены анимации, и браузер сообщает
+     сайту prefers-reduced-motion: reduce — прежнее правило честно
+     ОСТАНАВЛИВАЛО ленты и включало полосу прокрутки. Для человека с
+     укачиванием от движения полная остановка правильна, но бегущая строка
+     без движения выглядит поломкой. Компромисс: движение остаётся, но
+     втрое медленнее и без рывков, а полосы прокрутки нет. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-klienci .marquee-track { animation: marquee 150s linear infinite !important; }
+    .marquee-klienci { overflow: hidden !important; }
+    #hero .pg-tor { animation: pgJedzie 170s linear infinite !important; }
+    #hero .pg-tasma { overflow: hidden !important; }
+    .pf-strip-track { animation: pfscroll 140s linear infinite !important; }
+  }
+</style>
 </head>
 <body>
 
@@ -3449,35 +3492,35 @@
         <p data-k="jp_k3o">Scenariusz, zdjęcia, montaż i publikacja są po naszej stronie. Materiały zostają twoje — pliki źródłowe dostajesz zawsze.</p>
       </li>
     </ol>
-    <div class="jp-fakty">
-      <span class="jp-fakt"><b>3</b> <i data-k="jp_f3">osoby, zero pośredników</i></span>
-      <span class="jp-fakt"><b>PL · EN · RU</b> <i data-k="jp_f4">rozmawiamy w twoim języku</i></span>
-      <span class="jp-fakt"><b>100%</b> <i data-k="jp_f5">plików źródłowych zostaje u ciebie</i></span>
-    </div>
+    <ul class="jp-fakty">
+      <li data-k="jp_f3">Trzy osoby — piszesz do tego, kto robi robotę</li>
+      <li data-k="jp_f4">Rozmawiamy po polsku, angielsku i rosyjsku</li>
+      <li data-k="jp_f5">Pliki źródłowe zawsze zostają u ciebie</li>
+    </ul>
   </div>
 </section>
 
 <!-- MARQUEE TICKER -->
 <div class="marquee marquee-klienci" aria-label="Klienci ZOVU">
   <div class="marquee-track">
-    <span>FIGHT MODE</span><span class="star">✦</span>
-    <span>BEE GELATO</span><span class="star">✦</span>
-    <span>MAG SHAURMA</span><span class="star">✦</span>
-    <span>MAYA GOLD</span><span class="star">✦</span>
-    <span>PICKACTIVE</span><span class="star">✦</span>
-    <span>ENERGIA DLA BIZNESU</span><span class="star">✦</span>
-    <span>JEWELRY KATOWICE</span><span class="star">✦</span>
-    <span>BAR GUCIO</span><span class="star">✦</span>
-    <span>GREEN SPORT</span><span class="star">✦</span>
-    <span>FIGHT MODE</span><span class="star">✦</span>
-    <span>BEE GELATO</span><span class="star">✦</span>
-    <span>MAG SHAURMA</span><span class="star">✦</span>
-    <span>MAYA GOLD</span><span class="star">✦</span>
-    <span>PICKACTIVE</span><span class="star">✦</span>
-    <span>ENERGIA DLA BIZNESU</span><span class="star">✦</span>
-    <span>JEWELRY KATOWICE</span><span class="star">✦</span>
-    <span>BAR GUCIO</span><span class="star">✦</span>
-    <span>GREEN SPORT</span><span class="star">✦</span>
+    <a href="#portfolio">FIGHT MODE</a><span class="star">✦</span>
+    <a href="#portfolio">BEE GELATO</a><span class="star">✦</span>
+    <a href="#portfolio">MAG SHAURMA</a><span class="star">✦</span>
+    <a href="#portfolio">MAYA GOLD</a><span class="star">✦</span>
+    <a href="#portfolio">PICKACTIVE</a><span class="star">✦</span>
+    <a href="#portfolio">ENERGIA DLA BIZNESU</a><span class="star">✦</span>
+    <a href="#portfolio">JEWELRY KATOWICE</a><span class="star">✦</span>
+    <a href="#portfolio">BAR GUCIO</a><span class="star">✦</span>
+    <a href="#portfolio">GREEN SPORT</a><span class="star">✦</span>
+    <a href="#portfolio">FIGHT MODE</a><span class="star">✦</span>
+    <a href="#portfolio">BEE GELATO</a><span class="star">✦</span>
+    <a href="#portfolio">MAG SHAURMA</a><span class="star">✦</span>
+    <a href="#portfolio">MAYA GOLD</a><span class="star">✦</span>
+    <a href="#portfolio">PICKACTIVE</a><span class="star">✦</span>
+    <a href="#portfolio">ENERGIA DLA BIZNESU</a><span class="star">✦</span>
+    <a href="#portfolio">JEWELRY KATOWICE</a><span class="star">✦</span>
+    <a href="#portfolio">BAR GUCIO</a><span class="star">✦</span>
+    <a href="#portfolio">GREEN SPORT</a><span class="star">✦</span>
   </div>
 </div>
 
@@ -3593,9 +3636,9 @@ const T = {
     jp_k2o:"We show how it will look for you: one reel, one screen of the site or one post. Only then do we talk about the whole thing.",
     jp_k3t:"We publish, you answer the phone",
     jp_k3o:"Script, filming, editing and publishing are on us. The material stays yours — you always get the source files.",
-    jp_f3:"people, zero middlemen",
-    jp_f4:"we speak your language",
-    jp_f5:"of source files stay with you",
+    jp_f3:"Three people — you write to the one doing the work",
+    jp_f4:"We speak Polish, English and Russian",
+    jp_f5:"Source files always stay with you",
     /* новый первый экран */
     hero_tagn:"CREATIVE AGENCY · KATOWICE",
     hero_n1:"A reel a day.",
@@ -3713,9 +3756,9 @@ const T = {
     jp_k2o:"Показываем, как это будет у вас: одна рилса, один экран сайта или один пост. И только потом обсуждаем всё остальное.",
     jp_k3t:"Публикуем мы, вы отвечаете на звонки",
     jp_k3o:"Сценарий, съёмка, монтаж и публикация — на нас. Материалы остаются вашими, исходники отдаём всегда.",
-    jp_f3:"человека, без посредников",
-    jp_f4:"говорим на вашем языке",
-    jp_f5:"исходников остаётся у вас",
+    jp_f3:"Три человека — пишете тому, кто делает работу",
+    jp_f4:"Говорим по-польски, по-английски и по-русски",
+    jp_f5:"Исходники всегда остаются у вас",
     /* новый первый экран */
     hero_tagn:"КРЕАТИВНОЕ АГЕНТСТВО · КАТОВИЦЕ",
     hero_n1:"Ролик в день.",
@@ -3833,9 +3876,9 @@ const T = {
     jp_k2o:"Pokazujemy, jak to będzie wyglądać u ciebie: jedna rolka, jeden ekran strony albo jeden post. Dopiero potem rozmawiamy o całości.",
     jp_k3t:"Publikujemy, ty odbierasz telefony",
     jp_k3o:"Scenariusz, zdjęcia, montaż i publikacja są po naszej stronie. Materiały zostają twoje — pliki źródłowe dostajesz zawsze.",
-    jp_f3:"osoby, zero pośredników",
-    jp_f4:"rozmawiamy w twoim języku",
-    jp_f5:"plików źródłowych zostaje u ciebie",
+    jp_f3:"Trzy osoby — piszesz do tego, kto robi robotę",
+    jp_f4:"Rozmawiamy po polsku, angielsku i rosyjsku",
+    jp_f5:"Pliki źródłowe zawsze zostają u ciebie",
     /* новый первый экран */
     hero_tagn:"AGENCJA KREATYWNA · KATOWICE",
     hero_n1:"Rolka dziennie.",
