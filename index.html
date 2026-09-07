@@ -3121,6 +3121,24 @@
     #hero .pg-eyebrow, #hero .pg-uslugi { font-size: 12px; }
   }
 </style>
+
+<style data-klienci>
+  /* Лента клиентов: в тёмной теме остаётся фирменной фиолетовой, в светлой
+     становится белой с тёмными буквами — сплошная фиолетовая полоса посреди
+     светлой страницы была самым громким пятном, а сказать ей нечего. */
+  .marquee-klienci { padding: 26px 0; }
+  .marquee-klienci .marquee-track { font-size: clamp(24px, 3.2vw, 42px); letter-spacing: .01em; }
+  .marquee-klienci .marquee-track span { padding: 0 24px; }
+  html.jasny .marquee-klienci {
+    background: #fff; color: #16141b;
+    border-top: 1px solid rgba(20,18,28,.1); border-bottom: 1px solid rgba(20,18,28,.1);
+  }
+  html.jasny .marquee-klienci .star { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-klienci .marquee-track { animation: none; }
+    .marquee-klienci { overflow-x: auto; }
+  }
+</style>
 </head>
 <body>
 
@@ -3386,20 +3404,26 @@
 </section>
 
 <!-- MARQUEE TICKER -->
-<div class="marquee" aria-hidden="true">
+<div class="marquee marquee-klienci" aria-label="Klienci ZOVU">
   <div class="marquee-track">
-    <span>SITES</span><span class="star">✦</span>
-    <span>VIDEO</span><span class="star">✦</span>
-    <span>AI</span><span class="star">✦</span>
-    <span>AUTOMATION</span><span class="star">✦</span>
-    <span>CONTENT</span><span class="star">✦</span>
-    <span>ADS</span><span class="star">✦</span>
-    <span>SITES</span><span class="star">✦</span>
-    <span>VIDEO</span><span class="star">✦</span>
-    <span>AI</span><span class="star">✦</span>
-    <span>AUTOMATION</span><span class="star">✦</span>
-    <span>CONTENT</span><span class="star">✦</span>
-    <span>ADS</span><span class="star">✦</span>
+    <span>FIGHT MODE</span><span class="star">✦</span>
+    <span>BEE GELATO</span><span class="star">✦</span>
+    <span>MAG SHAURMA</span><span class="star">✦</span>
+    <span>MAYA GOLD</span><span class="star">✦</span>
+    <span>PICKACTIVE</span><span class="star">✦</span>
+    <span>ENERGIA DLA BIZNESU</span><span class="star">✦</span>
+    <span>JEWELRY KATOWICE</span><span class="star">✦</span>
+    <span>BAR GUCIO</span><span class="star">✦</span>
+    <span>GREEN SPORT</span><span class="star">✦</span>
+    <span>FIGHT MODE</span><span class="star">✦</span>
+    <span>BEE GELATO</span><span class="star">✦</span>
+    <span>MAG SHAURMA</span><span class="star">✦</span>
+    <span>MAYA GOLD</span><span class="star">✦</span>
+    <span>PICKACTIVE</span><span class="star">✦</span>
+    <span>ENERGIA DLA BIZNESU</span><span class="star">✦</span>
+    <span>JEWELRY KATOWICE</span><span class="star">✦</span>
+    <span>BAR GUCIO</span><span class="star">✦</span>
+    <span>GREEN SPORT</span><span class="star">✦</span>
   </div>
 </div>
 
