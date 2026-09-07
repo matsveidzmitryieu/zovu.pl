@@ -3339,14 +3339,20 @@
 </style>
 
 
+
+
+
 <style data-galeria-jasna>
   html.jasny .pfg { background: linear-gradient(180deg, #fbfaf8 0%, #f1eff5 100%); }
 
-  /* Плавающая таблетка снизу: на белом фоне тёмное стекло с фиолетовым
-     свечением выглядело как чужой элемент. */
+  /* Плавающая таблетка снизу: стекло становится белым, но фирменное
+     свечение остаётся — на белом оно просто плотнее и ближе к элементу. */
   html.jasny .pfg-nav {
-    background: rgba(255,255,255,.92); border-color: rgba(20,18,28,.12);
-    box-shadow: 0 14px 44px rgba(20,18,28,.18), 0 0 0 1px rgba(20,18,28,.05);
+    background: rgba(255,255,255,.92); border-color: rgba(124,58,237,.28);
+    box-shadow:
+      0 14px 44px rgba(124,58,237,.28),
+      0 0 44px rgba(139,92,246,.22),
+      0 0 0 1px rgba(124,58,237,.16);
   }
   html.jasny .pfg-tab { color: #4a4757; }
   html.jasny .pfg-tab:hover { color: #16141b; }
@@ -3354,21 +3360,30 @@
   html.jasny .pfg-close { color: #4a4757; border-left-color: rgba(20,18,28,.14); }
   html.jasny .pfg-close:hover { color: #16141b; }
 
-  /* Карточки. Фиолетовое гало на 130 px было рассчитано на чёрный фон; на
-     белом оно превращается в грязное пятно, поэтому даём обычную тень. */
-  html.jasny .pfg-card { background: #eceaf0; border-color: rgba(20,18,28,.12); }
-  html.jasny .pfg-card:hover { border-color: var(--accent); box-shadow: 0 14px 40px rgba(20,18,28,.22); }
+  /* Карточки. Неоновое свечение остаётся — оно фирменное, — но перенастроено
+     под белый фон. В тёмной теме гало 130 px при прозрачности .8 читается
+     как свет; на белом такой же радиус даёт серую грязь, потому что светлее
+     фона уже некуда. Поэтому на светлой: радиус вдвое меньше, цвет плотнее
+     и добавлено фиолетовое кольцо в 1 px — свечение видно, грязи нет. */
+  html.jasny .pfg-card { background: #eceaf0; border-color: rgba(124,58,237,.28); }
   html.jasny .pfg-browser,
   html.jasny .pfg-grid--video .pfg-card.pfg-vid,
   html.jasny .pfg-grid--gfx .pfg-card.pfg-gfx {
-    border-color: rgba(20,18,28,.14);
-    box-shadow: 0 18px 50px rgba(20,18,28,.18), 0 0 0 1px rgba(20,18,28,.06);
+    border-color: rgba(124,58,237,.45);
+    box-shadow:
+      0 0 0 1px rgba(124,58,237,.28),
+      0 12px 36px rgba(124,58,237,.30),
+      0 0 72px rgba(139,92,246,.44);
   }
+  html.jasny .pfg-card:hover,
   html.jasny .pfg-card.pfg-site:hover .pfg-browser,
   html.jasny .pfg-grid--video .pfg-card.pfg-vid:hover,
   html.jasny .pfg-grid--gfx .pfg-card.pfg-gfx:hover {
     border-color: var(--accent);
-    box-shadow: 0 26px 70px rgba(124,58,237,.28), 0 0 0 1px rgba(124,58,237,.35);
+    box-shadow:
+      0 0 0 1px rgba(124,58,237,.55),
+      0 18px 48px rgba(124,58,237,.38),
+      0 0 90px rgba(139,92,246,.5);
   }
 
   /* Подпись под скриншотом «что сдали» была всегда светлой — раньше галерея
@@ -3377,8 +3392,8 @@
 
   /* Листалка страниц. */
   html.jasny .pfg-pager.show {
-    background: rgba(255,255,255,.94); border-color: rgba(20,18,28,.12);
-    box-shadow: 0 8px 26px rgba(20,18,28,.16);
+    background: rgba(255,255,255,.94); border-color: rgba(124,58,237,.25);
+    box-shadow: 0 8px 26px rgba(124,58,237,.26), 0 0 34px rgba(139,92,246,.18);
   }
   html.jasny .pfg-pager button { color: #4a4757; border-color: rgba(20,18,28,.18); }
   html.jasny .pfg-pager button:active,
@@ -3388,9 +3403,25 @@
   /* Просмотр картинки во весь экран остаётся тёмным намеренно: фотографию
      смотрят на нейтральном тёмном, так её видно, а не рамку вокруг. */
   html.jasny .pfg-lb { background: rgba(20,18,28,.9); }
-  html.jasny .pfg-lb img {
-    border-color: rgba(255,255,255,.45);
-    box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.12);
+  /* Тень самой картинки НЕ трогаем: фон под ней тёмный, там родное неоновое
+     гало работает как задумано. */
+</style>
+
+<style data-neon-jasny>
+  /* Лента рилсов на первом экране: в тёмной теме карточки светятся
+     фиолетовым, в светлой были серыми. */
+  html.jasny #hero .pg-karta {
+    background: #eceaf0;
+    box-shadow:
+      0 0 0 1px rgba(124,58,237,.26),
+      0 10px 28px rgba(124,58,237,.28),
+      0 0 46px rgba(139,92,246,.32);
+  }
+  html.jasny #hero .pg-karta:hover {
+    box-shadow:
+      0 0 0 1px rgba(124,58,237,.45),
+      0 16px 40px rgba(124,58,237,.34),
+      0 0 70px rgba(139,92,246,.42);
   }
 </style>
 </head>
