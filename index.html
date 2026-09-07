@@ -3242,6 +3242,36 @@
     .pf-strip-track { animation: pfscroll 140s linear infinite !important; }
   }
 </style>
+
+<style data-telefon>
+  /* Телефон: кадр стал вертикальным, значит блоку нужна высота, иначе лицо
+     снова окажется под шапкой. Минимум в ПИКСЕЛЯХ, а не только в svh: шапка
+     у всех телефонов одной высоты, а svh на маленьком экране даёт мало. */
+  @media (max-width: 700px) {
+    #hero .pg-gora { min-height: clamp(560px, 68svh, 640px); }
+    #hero .pg-foto { object-position: 50% 0%; }
+
+    /* Затемнение: середину отпускаем, чтобы лицо не уходило в серость,
+       а низ давим сильнее — там лежит белый заголовок. */
+    #hero .pg-cien {
+      background: linear-gradient(180deg,
+        rgba(5,5,5,.55) 0%, rgba(5,5,5,.12) 30%, rgba(5,5,5,.10) 50%,
+        rgba(5,5,5,.60) 74%, rgba(5,5,5,.90) 100%);
+    }
+
+    /* Воздух в заголовке: .94 склеивало три строки капслоком в кирпич. */
+    #hero .pg-h1 { font-size: clamp(38px, 11.5vw, 60px); line-height: 1.06; }
+    #hero .pg-eyebrow { margin-bottom: 16px; }
+    #hero .pg-tresc { padding: 74px 20px 44px; }
+
+    /* Строка услуг из-под заголовка уходит вниз: три строки моноширинным
+       наезжали на подбородок. */
+    #hero .pg-tresc .pg-uslugi { display: none; }
+    #hero .pg-uslugi-tel { display: block; margin: 0; max-width: none; }
+  }
+  @media (min-width: 701px) { #hero .pg-uslugi-tel { display: none; } }
+  html.jasny #hero .pg-uslugi-tel { color: #3f3c4b; }
+</style>
 </head>
 <body>
 
@@ -3311,7 +3341,7 @@
 <!-- HERO -->
 <section id="hero" class="pg-hero">
   <div class="pg-gora">
-    <img width="1600" height="900" class="pg-foto" src="hero_montaz.jpg" alt="Montaż rolki: oś czasu na ekranie" fetchpriority="high">
+    <picture><source media="(max-width: 700px)" srcset="hero_montaz_tel.jpg" width="1176" height="1578"><img width="1600" height="900" class="pg-foto" src="hero_montaz.jpg" alt="Montaż rolki: oś czasu na ekranie" fetchpriority="high"></picture>
     <div class="pg-cien"></div>
     <div class="pg-tresc">
       <div class="pg-eyebrow" data-k="hero_tagn">AGENCJA KREATYWNA · KATOWICE</div>
@@ -3321,6 +3351,7 @@
   </div>
   <div class="pg-dol">
     <div class="pg-naglowek">
+      <div class="pg-uslugi pg-uslugi-tel" data-k="hero_uslugi">STRONY · WIDEO · SOCIAL MEDIA · REKLAMA · AUTOMATYZACJA</div>
       <div>
         <div class="pg-eyebrow pg-eyebrow-akcent" data-k="hero_prace">OSTATNIE ROLKI DLA KLIENTÓW</div>
         <p data-k="hero_opis">Scenariusz, zdjęcia, montaż i publikacja — po naszej stronie. Ty tylko odbierasz telefony.</p>
