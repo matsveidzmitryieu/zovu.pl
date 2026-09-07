@@ -3110,13 +3110,41 @@
      кнопки были по 28-30: на ходу в такую попадают через раз, а это
      единственная кнопка «написать» на первом экране. Увеличиваем зону
      нажатия, не трогая вид: padding у кнопки и невидимые поля у мелочи. */
-  @media (max-width: 700px) {
+  /* Правило выбирает не ширину экрана, а СПОСОБ ввода: на iPad ширина
+     768-1024, но палец там такой же, как на телефоне. hover:none ловит все
+     сенсорные устройства и не трогает мышь. */
+  @media (hover: none), (pointer: coarse) {
     .nav-btn { padding: 12px 16px; }
     .nav-lang .lang { padding: 13px 5px; }
-    /* Пилюли категорий в галерее — тоже палец, не мышь. */
-    .pfg-cat, .pfg-close { min-height: 40px; }
-    .motyw { width: 40px; height: 40px; }
+    .pfg-tab, .pfg-close { min-height: 42px; min-width: 42px; }
+    .pfg-close { width: 42px; height: 42px; }
+    .motyw { width: 42px; height: 42px; }
     .nav-soc { padding: 8px 2px; }
+    .pfg-nav { min-width: 42px; min-height: 42px; }
+    /* Иконки соцсетей — самые мелкие цели на странице: 19px значок в шапке
+       и в контактах. Добавляем поля, картинка не меняется, зона нажатия
+       дорастает до сорока. */
+    .nav-soc { padding: 11px 7px; }
+    .nav-logo { padding: 4px 0; }
+    .tm-ig { padding-top: 11px; padding-bottom: 11px; }
+    .contact-icon { min-height: 44px; }
+    /* Узкие, но высокие цели: языки, стрелки галереи, ссылки в подвале.
+       По высоте они уже в норме, не хватало ширины под палец. */
+    .nav-lang .lang { padding: 13px 9px; }
+    .pfg-nav, .pfg-close { min-width: 44px; min-height: 44px; }
+    .f-links a, .footer a { padding: 8px 0; display: inline-block; }
+    nav a.nav-link { padding: 10px 2px; }
+    .f-copy a, .f-phone { padding: 10px 4px; display: inline-block; }
+    .nav-logo { padding: 6px 8px; }
+    .pfg-nav { width: 44px; height: 44px; }
+    /* Закрытия и стрелки старых модалок — они ещё в разметке, и если
+       кто-то до них доберётся, пальцем попасть должно быть можно. */
+    .site-modal-close, .all-sites-close, .site-modal-nav, .pfg-lb button {
+      min-width: 44px; min-height: 44px;
+    }
+    .f-brand { padding: 6px 4px; }
+  }
+  @media (max-width: 700px) {
     /* Надстрочники на телефоне были 11px — на ходу это уже щурится. */
     #hero .pg-eyebrow, #hero .pg-uslugi { font-size: 12px; }
   }
