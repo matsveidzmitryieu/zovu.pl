@@ -10,11 +10,11 @@
 // один и тот же. Уменьшить лицо можно только одним способом — дать картинке
 // поле по бокам, чтобы сама сцена занимала меньше её ширины.
 //
-// Поэтому холст расширен с 16:9 до 2240×1080: настоящий кадр 1920 px стоит
-// по центру, а по 160 px слева и справа — размытая и притемнённая растяжка
+// Поэтому холст расширен с 16:9 до 2560×1080: настоящий кадр 1920 px стоит
+// по центру, а по 320 px слева и справа — размытая и притемнённая растяжка
 // его же краёв. Слева кадр и так чёрный, справа тёмно-фиолетовая стена, шва
-// не видно. На экране 1920 масштаб падает с 1,2 до 0,857: лицо меньше почти
-// на треть, и в кадр входит рука на клавиатуре, которой раньше не было.
+// не видно. На экране 1920 масштаб падает с 1,2 до 0,75: лицо меньше почти
+// вдвое, и в кадр целиком входит рука на клавиатуре, которой раньше не было.
 //
 // Телефон не трогаем: у него свой файл hero_montaz_tel.jpg и своя обрезка,
 // см. telefon-buduj.mjs.
@@ -26,7 +26,7 @@ const PLIK = 'index.html';
 const KADR = 'hero_montaz.jpg';
 const ZRODLO = 'D:/My AI/Zovu.pl/Portfolio/Wideo-Portfolio/A WIDEO CV.mp4';
 const STARY = '<img width="1600" height="900" class="pg-foto" src="hero_montaz.jpg"';
-const NOWY = '<img width="2240" height="1080" class="pg-foto" src="hero_montaz.jpg"';
+const NOWY = '<img width="2560" height="1080" class="pg-foto" src="hero_montaz.jpg"';
 
 let h = readFileSync(PLIK, 'utf8');
 
@@ -37,8 +37,8 @@ if (h.includes(STARY)) {
     '-ss', '6.5', '-i', ZRODLO, '-frames:v', '1',
     '-filter_complex',
       '[0:v]split=3[main][l][r];' +
-      '[l]crop=60:1080:0:0,scale=160:1080,gblur=sigma=40,eq=brightness=-0.10[lb];' +
-      '[r]crop=60:1080:1860:0,scale=160:1080,gblur=sigma=40,eq=brightness=-0.10[rb];' +
+      '[l]crop=70:1080:0:0,scale=320:1080,gblur=sigma=40,eq=brightness=-0.10[lb];' +
+      '[r]crop=70:1080:1850:0,scale=320:1080,gblur=sigma=40,eq=brightness=-0.10[rb];' +
       '[lb][main][rb]hstack=inputs=3[out]',
     '-map', '[out]', '-q:v', '4', KADR, '-y',
   ]);
@@ -46,16 +46,16 @@ if (h.includes(STARY)) {
   // width/height рвут пропорцию до загрузки картинки.
   h = h.replace(STARY, NOWY);
   writeFileSync(PLIK, h);
-  console.log('кадр расширен до 2240×1080, размеры в разметке обновлены');
+  console.log('кадр расширен до 2560×1080, размеры в разметке обновлены');
 }
 
 // На ноутбуке 1440 полоса кадра всего 432 px, и при окне «от 16% сверху»
 // макушка уезжала под плавающую шапку — голова была срезана. Опускаем окно
-// до 8%: на широком мониторе полоса выше и правило не нужно, там своё.
+// до 0%: холст стал шире, картинка в контейнере мельче, и голова поднялась.
 const style = `
 <style data-kadr-pc>
   @media (min-width: 900px) and (max-width: 1499px) {
-    #hero .pg-foto { object-position: 50% 8%; }
+    #hero .pg-foto { object-position: 50% 0%; }
   }
 </style>
 `;
