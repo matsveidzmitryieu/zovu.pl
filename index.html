@@ -3167,6 +3167,32 @@
     .marquee-klienci { overflow-x: auto; }
   }
 </style>
+
+<style data-kadr-fakty>
+  /* Кадр монтажа: на широком экране картинка масштабируется по ширине, а по
+     высоте обрезается почти вдвое — при центровке под нож уходил верх, где
+     на мониторе видно лицо. Смещаем окно кадра вверх. */
+  @media (min-width: 900px) {
+    #hero .pg-foto { object-position: 50% 16%; }
+  }
+  @media (min-width: 1500px) {
+    #hero .pg-gora { min-height: 54svh; }
+    #hero .pg-foto { object-position: 50% 12%; }
+  }
+
+  /* Полоса фактов лежала одной строкой: число и подпись шли встык, строки
+     разной высоты, а под ними оставался провал в сотню пикселей. Теперь
+     сетка: число сверху, подпись под ним, у всех колонок общая база. */
+  .jp-fakty {
+    display: grid; grid-template-columns: 1fr; gap: 22px 40px;
+    margin-top: 30px; padding-top: 26px;
+  }
+  @media (min-width: 640px) { .jp-fakty { grid-template-columns: repeat(3, 1fr); } }
+  .jp-fakt { display: block; }
+  .jp-fakt b { display: block; line-height: 1; margin-bottom: 7px; }
+  .jp-fakt i { display: block; line-height: 1.45; max-width: 24ch; }
+  #jak-pracujemy { padding-bottom: 84px; }
+</style>
 </head>
 <body>
 
