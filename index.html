@@ -3144,7 +3144,9 @@
     }
     .f-brand { padding: 6px 4px; }
     /* Имена клиентов в ленте — теперь ссылки, значит цели для пальца. */
-    .marquee-klienci a { padding: 12px 24px; }
+    /* Вес выше, чем у общего правила ленты: то объявлено ПОЗЖЕ в файле
+       и при равной специфичности побеждало. */
+    .marquee.marquee-klienci a { padding: 12px 24px; }
     /* Листалка страниц в галерее и стрелки в графике. */
     .pfg-pager button, .gfx-page-btn { min-width: 44px; min-height: 44px; }
   }
