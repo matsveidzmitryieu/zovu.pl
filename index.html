@@ -1853,10 +1853,15 @@
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
       margin-bottom: 24px; padding-bottom: 0.12em;
     }
+    /* Как заголовок «Zespół»: свой градиент от белого к сиреневому на всю
+       высоту строки. Раньше тут стоял сплошной цвет — прежний градиент шёл
+       по ВСЕЙ высоте заголовка, и вторая строка попадала в его тёмный конец.
+       Собственный градиент этой строки такой проблемы не имеет. */
     .contact-h-new .ac-em {
-      font-style: italic; font-weight: 700; display: inline-block; padding-bottom: 0.08em;
-      background: none;
-      color: #a78bfa; -webkit-text-fill-color: #a78bfa;
+      font-style: italic; font-weight: 700; display: inline-block; padding-bottom: 0.14em;
+      background: linear-gradient(180deg, #fff 32%, #a78bfa 100%);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent; -webkit-text-fill-color: transparent;
     }
     .contact-d-new {
       font-size: 16px; color: rgba(255,255,255,.68);
