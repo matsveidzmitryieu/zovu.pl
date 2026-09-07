@@ -36,7 +36,7 @@ if (kroki) {
   h = h.replace(kroki[0],
 `    <div class="jp-oferta">
       <p class="jp-lead" data-k="jp_lead">Zanim cokolwiek podpiszesz, zrobimy jedną rzecz na twojej firmie: rolkę, ekran strony albo post. Zobaczysz, jak to wygląda u ciebie, a nie w cudzym portfolio.</p>
-      <p class="jp-rozmowa" data-k="jp_rozmowa">Zaczynamy od rozmowy na WhatsApp — odpowiada ten, kto będzie robił twoją robotę. Pytamy o firmę, o klientów i o to, co już próbowaliście. Bez działu sprzedaży i briefu na pięć stron.</p>
+      <p class="jp-rozmowa" data-k="jp_rozmowa">Zaczynamy od rozmowy na WhatsApp. Bez działu sprzedaży i briefu na pięć stron.</p>
       <a class="jp-btn" href="https://wa.me/48571795097" data-k="jp_cta">Poproś o próbkę</a>
     </div>
 `);
@@ -47,17 +47,17 @@ const nowe = [
   // порядок словарей в файле: EN, RU, PL
   `    jp_tytul2:"First a sample, then a contract",
     jp_lead:"Before you sign anything, we make one thing for your business: a reel, one screen of your site or a post. You see how it looks for you, not in someone else's portfolio.",
-    jp_rozmowa:"We start with a conversation on WhatsApp — the person who will do the work answers. We ask about your business, your clients and what you have already tried. No sales department, no five-page brief.",
+    jp_rozmowa:"We start with a conversation on WhatsApp. No sales department, no five-page brief.",
     jp_cta:"Ask for a sample",
 `,
   `    jp_tytul2:"Сначала проба, потом договор",
     jp_lead:"Прежде чем вы что-то подпишете, сделаем одну вещь на вашем материале: рилс, экран сайта или пост. Увидите, как это выглядит у вас, а не в чужом портфолио.",
-    jp_rozmowa:"Начинаем с разговора в WhatsApp — отвечает тот, кто будет делать работу. Спрашиваем про бизнес, клиентов и что уже пробовали. Без отдела продаж и брифа на пять страниц.",
+    jp_rozmowa:"Начинаем с разговора в WhatsApp. Без отдела продаж и брифа на пять страниц.",
     jp_cta:"Попросить пробу",
 `,
   `    jp_tytul2:"Najpierw próbka, potem umowa",
     jp_lead:"Zanim cokolwiek podpiszesz, zrobimy jedną rzecz na twojej firmie: rolkę, ekran strony albo post. Zobaczysz, jak to wygląda u ciebie, a nie w cudzym portfolio.",
-    jp_rozmowa:"Zaczynamy od rozmowy na WhatsApp — odpowiada ten, kto będzie robił twoją robotę. Pytamy o firmę, o klientów i o to, co już próbowaliście. Bez działu sprzedaży i briefu na pięć stron.",
+    jp_rozmowa:"Zaczynamy od rozmowy na WhatsApp. Bez działu sprzedaży i briefu na pięć stron.",
     jp_cta:"Poproś o próbkę",
 `,
 ];
