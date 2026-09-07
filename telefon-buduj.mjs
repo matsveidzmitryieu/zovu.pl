@@ -25,16 +25,21 @@ const ZRODLO = 'D:/My AI/Zovu.pl/Portfolio/Wideo-Portfolio/A WIDEO CV.mp4';
 
 // ── 1. Кадр для телефона ────────────────────────────────────────────────
 // Исходник 1920×1080, кадр на 6,5 с. Лицо на мониторе в точке (1290, 276).
-// Окно 588×789 от левого верхнего угла (996, 0): выше лица в кадре всего
-// 156 px, поэтому окно начинается от самого верха — только так лицо попадает
-// на 40% высоты, а не под шапку сайта. Увеличиваем вдвое: 588 px на экран
-// с тройной плотностью — это мыло.
+// Окно 700×1030 от левого верхнего угла (905, 0). Оно начинается от самого
+// верха, потому что выше лица в кадре всего 156 px — только так лицо
+// оказывается ниже плавающей шапки сайта.
+// Ширину выбирали не «покрупнее лицо», а «видно, что он монтирует»: в окно
+// целиком входит монтажная линейка с клипами и рука на клавиатуре в левом
+// нижнем углу. Первая версия была ýже (588×789) — Захар: «чуть близко и не
+// видно, что его монтируют». Пропорция 0,68 совпадает с телефонами от SE до
+// Pro Max, поэтому по бокам почти ничего не срезается.
+// Увеличиваем вдвое: 700 px на экран с тройной плотностью — это мыло.
 if (!existsSync(KADR_TEL)) {
   if (!existsSync(ZRODLO)) throw new Error('Нет исходного видео: ' + ZRODLO);
   execFileSync('ffmpeg', [
     '-hide_banner', '-loglevel', 'error',
     '-ss', '6.5', '-i', ZRODLO, '-frames:v', '1',
-    '-vf', 'crop=588:789:996:0,scale=1176:1578:flags=lanczos',
+    '-vf', 'crop=700:1030:905:0,scale=1400:2060:flags=lanczos',
     '-q:v', '4', KADR_TEL, '-y',
   ]);
   console.log('кадр для телефона собран:', KADR_TEL);
@@ -47,7 +52,7 @@ const bylo = h;
 const staryImg = '<img width="1600" height="900" class="pg-foto" src="hero_montaz.jpg" alt="Montaż rolki: oś czasu na ekranie" fetchpriority="high">';
 const nowyImg =
   '<picture>' +
-    `<source media="(max-width: 700px)" srcset="${KADR_TEL}" width="1176" height="1578">` +
+    `<source media="(max-width: 700px)" srcset="${KADR_TEL}" width="1400" height="2060">` +
     staryImg +
   '</picture>';
 if (h.includes(staryImg) && !h.includes('<source media="(max-width: 700px)"')) {
@@ -80,7 +85,7 @@ const style = `
      снова окажется под шапкой. Минимум в ПИКСЕЛЯХ, а не только в svh: шапка
      у всех телефонов одной высоты, а svh на маленьком экране даёт мало. */
   @media (max-width: 700px) {
-    #hero .pg-gora { min-height: clamp(560px, 68svh, 640px); }
+    #hero .pg-gora { min-height: clamp(580px, 70svh, 660px); }
     #hero .pg-foto { object-position: 50% 0%; }
 
     /* Затемнение: середину отпускаем, чтобы лицо не уходило в серость,
