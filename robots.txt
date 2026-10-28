@@ -1,4 +1,23 @@
 User-agent: *
 Allow: /
 
+# Wyszukiwarki i asystenci AI mogą czytać i cytować stronę
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
 Sitemap: https://zovu.pl/sitemap.xml
